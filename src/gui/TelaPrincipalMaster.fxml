@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane prefHeight="674.0" prefWidth="961.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.TelaPrincipalMasterController">
+   <content>
+      <VBox styleClass="telaPrincipalBg" stylesheets="@../gui.styles/telaPrincipal.css">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="Clientes">
+                  <items>
+                    <MenuItem fx:id="menuItemClienteCadastro" mnemonicParsing="false" onAction="#onMenuItemClienteCadastroAction" text="Cadastrar cliente" />
+                        <MenuItem fx:id="menuItemClienteVisualizar" mnemonicParsing="false" onAction="#onMenuItemClienteVisualizarAction" text="Visualizar clientes" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Empresas">
+                  <items>
+                    <MenuItem fx:id="menuItemEmpresaCadastrar" mnemonicParsing="false" onAction="#onMenuItemEmpresaCadastrarAction" text="Cadastrar empresa" />
+                        <MenuItem fx:id="menuItemEmpresaVisualizar" mnemonicParsing="false" onAction="#onMenuItemEmpresaVisualizarAction" text="Visualizar empresas" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Fornecedores">
+                  <items>
+                    <MenuItem fx:id="menuItemFornecedorCadastro" mnemonicParsing="false" onAction="#onMenuItemFornecedorCadastrarAction" text="Cadastrar fornecedor" />
+                        <MenuItem fx:id="menuItemFornecedorVisualizar" mnemonicParsing="false" onAction="#onMenuItemFornecedorVisualizarAction" text="Visualizar fornecedores" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="Funcionários ">
+                     <items>
+                        <MenuItem fx:id="menuItemFuncionarioCadastrar" mnemonicParsing="false" onAction="#onMenuItemFuncionarioCadastrarAction" text="Cadastrar funcionário" />
+                        <MenuItem fx:id="menuItemFuncionarioVisualizar" mnemonicParsing="false" onAction="#onMenuItemFuncionarioVisualizarAction" text="Visualizar funcionários" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Notas de compra">
+                     <items>
+                        <MenuItem fx:id="menuItemNotaCompraCadastro" mnemonicParsing="false" onAction="#onMenuItemNotaCompraCadastrarAction" text="Cadastrar nota de compra" />
+                        <MenuItem fx:id="menuItemNotaCompraVisualizar" mnemonicParsing="false" onAction="#onMenuItemNotaCompraVisualizarrAction" text="Visualizar notas de compra" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Entrada de produtos">
+                     <items>
+                        <MenuItem fx:id="menuItemEntradaProdutoCadastrar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoCadastroAction" text="Entrada de produtos via NF" />
+                        <MenuItem fx:id="menuItemEntradaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Visualizar todas as entradas" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Estoque">
+                     <items>
+                        <MenuItem fx:id="menuItemEstoqueProdutoCadastrar" mnemonicParsing="false" onAction="#onMenuItemEstoqueCadastrarAction" text="Cadastrar produto no estoque" />
+                        <MenuItem fx:id="menuItemEstoqueVisualizar" mnemonicParsing="false" onAction="#onMenuItemEstoqueVisualizarAction" text="Visualizar estoque" />
+                        <MenuItem fx:id="menuItemEstoqueSaidaProduto" mnemonicParsing="false" onAction="#onMenuItemEstoqueSaidaProdutoAction" text="Saída de produtos" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Produtos">
+                     <items>
+                        <MenuItem fx:id="menuItemProdutoCadastrar" mnemonicParsing="false" onAction="#onMenuItemProdutoCadastrarAction" text="Cadastrar produto " />
+                        <MenuItem fx:id="menuItemProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemProdutoVisualizarAction" text="Visualizar produtos" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Ordens de serviço de clientes">
+                     <items>
+                        <MenuItem fx:id="menuItemOrdemServicoClienteCadastrar" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoClienteGerarAction" text="Gerar ordem de serviço" />
+                        <MenuItem fx:id="menuItemOrdemServicoClienteVisualizar" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoClienteVisualizarAction" text="Visualizar todas as ordens de serviço" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Ordens de servico de empresas">
+                     <items>
+                        <MenuItem fx:id="menuItemOrdemServicoEmpresaCadastrar" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoEmpresaGerarAction" text="Gerar ordem de serviço" />
+                        <MenuItem fx:id="menuItemOrdemServicoEmpresaVisualizar" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoEmpresaVisualizarAction" text="Visualizar todas as ordens de serviço" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Orçamentos">
+                     <items>
+                        <MenuItem fx:id="menuItemOrcamentoCadastrar" mnemonicParsing="false" onAction="#onMenuItemOrcamentoGerarAction" text="Gerar novo orçamento" />
+                        <MenuItem fx:id="menuItemOrcamentoVisualizar" mnemonicParsing="false" onAction="#onMenuItemOrcamentoVisualizarAction" text="Visualizar orçamentos" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Usuários">
+                     <items>
+                        <MenuItem fx:id="menuItemUsuarioCadastrar" mnemonicParsing="false" onAction="#onMenuItemUsuarioCadastrarAction" text="Cadastrar novo usuário no sistema" />
+                        <MenuItem fx:id="menuItemUsuarioVisualizar" mnemonicParsing="false" onAction="#onMenuItemUsuarioVisualizarAction" text="Visualizar usuários" />
+                     </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
