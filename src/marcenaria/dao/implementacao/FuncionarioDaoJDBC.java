@@ -26,9 +26,10 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO MARCENARIA.FUNCIONARIO"
-					+ "(NOME, RG, CPF, CTPS, RUA, NUMERO, COMPLEMENTO, BAIRRO, CEP, DDD, TELEFONE, CELULAR, DATA_NASC, "
+					+ "(NOME, RG, CPF, CTPS, RUA, NUMERO, COMPLEMENTO, BAIRRO, CEP,  CIDADE, ESTADO, UF, DDD, TELEFONE, CELULAR, DATA_NASC, "
 					+ " DATA_ADMISSAO, TIPO_SANG, FUNCAO, SETOR, SALARIO, OBS)" + " VALUES "
-					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getNome().toUpperCase());
 			st.setString(2, obj.getRg());
@@ -42,18 +43,21 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 			}
 			st.setString(8, obj.getBairro().toUpperCase());
 			st.setString(9, obj.getCep());
-			st.setInt(10, obj.getDdd());
-			st.setString(11, obj.getTelefone());
-			st.setString(12, obj.getCelular());
-			st.setDate(13, new java.sql.Date(obj.getDataNasc().getTime()));
-			st.setDate(14, new java.sql.Date(obj.getDataAdmissao().getTime()));
-			st.setString(15, obj.getTipoSang());
-			st.setString(16, obj.getFuncao().toUpperCase());
-			st.setString(17, obj.getSetor().toUpperCase());
-			st.setDouble(18, obj.getSalario());
-			st.setString(19, obj.getObs());
+			st.setString(10, obj.getCidade().toUpperCase());
+			st.setString(11, obj.getEstado().toUpperCase());
+			st.setString(12, obj.getUf().toUpperCase());
+			st.setInt(13, obj.getDdd());
+			st.setString(14, obj.getTelefone());
+			st.setString(15, obj.getCelular());
+			st.setDate(16, new java.sql.Date(obj.getDataNasc().getTime()));
+			st.setDate(17, new java.sql.Date(obj.getDataAdmissao().getTime()));
+			st.setString(18, obj.getTipoSang());
+			st.setString(19, obj.getFuncao().toUpperCase());
+			st.setString(20, obj.getSetor().toUpperCase());
+			st.setDouble(21, obj.getSalario());
+			st.setString(22, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(19, obj.getObs().toUpperCase());
+				st.setString(22, obj.getObs().toUpperCase());
 			}
 
 			int rowsAffected = st.executeUpdate();
@@ -80,7 +84,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.FUNCIONARIO "
-					+ "SET NOME = ?, RG = ?, CPF = ?, CTPS = ?, RUA = ?, NUMERO = ?, COMPLEMENTO = ?, BAIRRO = ?, CEP = ?, DDD = ?, TELEFONE = ?, "
+					+ "SET NOME = ?, RG = ?, CPF = ?, CTPS = ?, RUA = ?, NUMERO = ?, COMPLEMENTO = ?, BAIRRO = ?, CEP = ?, CIDADE = ?, ESTADO = ?, UF = ?, DDD = ?, TELEFONE = ?, "
 					+ "CELULAR = ?, DATA_NASC = ?, DATA_ADMISSAO = ?, TIPO_SANG = ?, FUNCAO = ?, SETOR = ?, SALARIO = ?, OBS = ? "
 					+ "WHERE REGISTRO_FUNC = ?");
 
@@ -96,20 +100,23 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 			}
 			st.setString(8, obj.getBairro().toUpperCase());
 			st.setString(9, obj.getCep());
-			st.setInt(10, obj.getDdd());
-			st.setString(11, obj.getTelefone());
-			st.setString(12, obj.getCelular());
-			st.setDate(13, new java.sql.Date(obj.getDataNasc().getTime()));
-			st.setDate(14, new java.sql.Date(obj.getDataAdmissao().getTime()));
-			st.setString(15, obj.getTipoSang());
-			st.setString(16, obj.getFuncao().toUpperCase());
-			st.setString(17, obj.getSetor().toUpperCase());
-			st.setDouble(18, obj.getSalario());
-			st.setString(19, obj.getObs());
+			st.setString(10, obj.getCidade().toUpperCase());
+			st.setString(11, obj.getEstado().toUpperCase());
+			st.setString(12, obj.getUf().toUpperCase());
+			st.setInt(13, obj.getDdd());
+			st.setString(14, obj.getTelefone());
+			st.setString(15, obj.getCelular());
+			st.setDate(16, new java.sql.Date(obj.getDataNasc().getTime()));
+			st.setDate(17, new java.sql.Date(obj.getDataAdmissao().getTime()));
+			st.setString(18, obj.getTipoSang());
+			st.setString(19, obj.getFuncao().toUpperCase());
+			st.setString(20, obj.getSetor().toUpperCase());
+			st.setDouble(21, obj.getSalario());
+			st.setString(22, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(19, obj.getObs().toUpperCase());
+				st.setString(22, obj.getObs().toUpperCase());
 			}
-			st.setInt(20, obj.getRegistroFunc());
+			st.setInt(23, obj.getRegistroFunc());
 
 			st.executeUpdate();
 
@@ -193,6 +200,9 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setCelular(rs.getString("CELULAR"));

@@ -1,4 +1,4 @@
-package model.services;
+package entities.services;
 
 import java.util.List;
 
@@ -21,5 +21,20 @@ public class ClienteService {
 		else {
 			clienteDao.update(obj);
 		}
+	}
+	
+	public void removerCliente(Cliente obj) {
+		clienteDao.deleteByCodCliente(obj.getCodCliente());
+	}
+	
+	public Cliente findByCodCliente(Integer codCliente) {
+		List<Cliente> list = clienteDao.findAll();
+		
+		for (Cliente cliente : list) {
+			if (cliente.getCodCliente() == codCliente) {
+				return cliente;
+			}
+		}
+		return null;
 	}
 }

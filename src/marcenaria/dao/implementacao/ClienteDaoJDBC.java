@@ -26,8 +26,9 @@ public class ClienteDaoJDBC implements ClienteDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO MARCENARIA.CLIENTE"
-					+ "(NOME, RG, CPF, RUA, NUMERO, COMPLEMENTO, BAIRRO, CEP, DDD, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO, OBS)"
-					+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					+ "(NOME, RG, CPF, RUA, NUMERO, COMPLEMENTO, BAIRRO, CEP, CIDADE, ESTADO, UF, DDD, TELEFONE, CELULAR, EMAIL, DATA_CADASTRO, OBS) "
+					+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getNome().toUpperCase());
 			st.setString(2, obj.getRg());
@@ -40,14 +41,17 @@ public class ClienteDaoJDBC implements ClienteDao {
 			}
 			st.setString(7, obj.getBairro().toUpperCase());
 			st.setString(8, obj.getCep());
-			st.setInt(9, obj.getDdd());
-			st.setString(10, obj.getTelefone());
-			st.setString(11, obj.getCelular());
-			st.setString(12, obj.getEmail());
-			st.setDate(13, new java.sql.Date(obj.getDataCadastro().getTime()));
-			st.setString(14, obj.getObs());
+			st.setString(9, obj.getCidade().toUpperCase());
+			st.setString(10, obj.getEstado().toUpperCase());
+			st.setString(11, obj.getUf().toUpperCase());
+			st.setInt(12, obj.getDdd());
+			st.setString(13, obj.getTelefone());
+			st.setString(14, obj.getCelular());
+			st.setString(15, obj.getEmail());
+			st.setDate(16, new java.sql.Date(obj.getDataCadastro().getTime()));
+			st.setString(17, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(14, obj.getObs().toUpperCase());
+				st.setString(17, obj.getObs().toUpperCase());
 			}
 
 			int rowsAffected = st.executeUpdate();
@@ -74,8 +78,8 @@ public class ClienteDaoJDBC implements ClienteDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.CLIENTE "
-					+ "SET NOME = ?, RG = ?, CPF = ?, RUA = ?, NUMERO = ?, COMPLEMENTO = ?, BAIRRO = ?, CEP = ?, DDD = ?, "
-					+ "TELEFONE = ?, CELULAR = ?, EMAIL = ?, DATA_CADASTRO = ?, OBS = ?" + "WHERE COD_CLIENTE = ?");
+					+ "SET NOME = ?, RG = ?, CPF = ?, RUA = ?, NUMERO = ?, COMPLEMENTO = ?, BAIRRO = ?, CEP = ?, CIDADE = ?, ESTADO = ?, UF = ?, DDD = ?, "
+					+ "TELEFONE = ?, CELULAR = ?, EMAIL = ?, DATA_CADASTRO = ?, OBS = ? " + "WHERE COD_CLIENTE = ?");
 
 			st.setString(1, obj.getNome().toUpperCase());
 			st.setString(2, obj.getRg());
@@ -97,7 +101,10 @@ public class ClienteDaoJDBC implements ClienteDao {
 			if (obj.getObs() != null) {
 				st.setString(14, obj.getObs().toUpperCase());
 			}
-			st.setInt(15, obj.getCodCliente());
+			st.setString(15, obj.getCidade());
+			st.setString(16, obj.getEstado());
+			st.setString(17, obj.getUf());
+			st.setInt(18, obj.getCodCliente());
 
 			st.executeUpdate();
 
@@ -180,6 +187,9 @@ public class ClienteDaoJDBC implements ClienteDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setCelular(rs.getString("CELULAR"));

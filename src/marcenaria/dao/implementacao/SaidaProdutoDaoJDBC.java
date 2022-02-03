@@ -67,7 +67,8 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 			Estoque estoque = estoqueDao.findByCodProduto(codProdutoEstoque);
 			qtdAtual = estoque.getEstoqueAtual();
 
-			atualizaEstoque = conn.prepareStatement("UPDATE MARCENARIA.ESTOQUE SET ESTOQUE.ESTOQUE_ATUAL = ? WHERE COD_PRODUTO = ?");
+			atualizaEstoque = conn
+					.prepareStatement("UPDATE MARCENARIA.ESTOQUE SET ESTOQUE.ESTOQUE_ATUAL = ? WHERE COD_PRODUTO = ?");
 
 			atualizaEstoque.setInt(1, qtdAtual - qtdRemovida);
 			atualizaEstoque.setInt(2, codProdutoEstoque);
@@ -325,6 +326,9 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setCelular(rs.getString("CELULAR"));
@@ -337,4 +341,5 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 		obj.setObs(rs.getString("OBS"));
 		return obj;
 	}
+
 }

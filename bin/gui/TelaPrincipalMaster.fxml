@@ -48,6 +48,11 @@
                         <MenuItem fx:id="menuItemEntradaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Visualizar todas as entradas" />
                      </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Saída de produtos">
+                     <items>
+                        <MenuItem fx:id="menuItemSaidaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Registro de saídas" />
+                     </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Estoque">
                      <items>
                         <MenuItem fx:id="menuItemEstoqueProdutoCadastrar" mnemonicParsing="false" onAction="#onMenuItemEstoqueCadastrarAction" text="Cadastrar produto no estoque" />

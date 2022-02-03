@@ -401,6 +401,9 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setCelular(rs.getString("CELULAR"));
@@ -411,7 +414,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setSetor(rs.getString("SETOR"));
 		obj.setSalario(rs.getDouble("SALARIO"));
 		obj.setObs(rs.getString("OBS"));
-
 		return obj;
 	}
 
@@ -443,6 +445,9 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setSite(rs.getString("SITE"));

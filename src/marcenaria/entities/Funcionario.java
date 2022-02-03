@@ -17,6 +17,9 @@ public class Funcionario implements Serializable {
 	private String complemento;
 	private String bairro;
 	private String cep;
+	private String cidade;
+	private String estado;
+	private String uf;
 	private Integer ddd;
 	private String telefone;
 	private String celular;
@@ -33,9 +36,10 @@ public class Funcionario implements Serializable {
 	}
 
 	public Funcionario(Integer registroFunc, String nome, String rg, String cpf, String ctps, String rua,
-			Integer numero, String complemento, String bairro, String cep, Integer ddd, String telefone, String celular,
-			Date dataNasc, Date dataAdmissao, String tipoSang, String funcao, String setor, Double salario,
-			String obs) {
+			Integer numero, String complemento, String bairro, String cep, String cidade, String estado, String uf,
+			Integer ddd, String telefone, String celular, Date dataNasc, Date dataAdmissao, String tipoSang,
+			String funcao, String setor, Double salario, String obs) {
+		super();
 		this.registroFunc = registroFunc;
 		this.nome = nome;
 		this.rg = rg;
@@ -46,6 +50,9 @@ public class Funcionario implements Serializable {
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.cep = cep;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.uf = uf;
 		this.ddd = ddd;
 		this.telefone = telefone;
 		this.celular = celular;
@@ -136,6 +143,30 @@ public class Funcionario implements Serializable {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
 	public Integer getDdd() {
@@ -239,9 +270,10 @@ public class Funcionario implements Serializable {
 	public String toString() {
 		return "Funcionario [registroFunc=" + registroFunc + ", nome=" + nome + ", rg=" + rg + ", cpf=" + cpf
 				+ ", ctps=" + ctps + ", rua=" + rua + ", numero=" + numero + ", complemento=" + complemento
-				+ ", bairro=" + bairro + ", cep=" + cep + ", ddd=" + ddd + ", telefone=" + telefone + ", celular="
-				+ celular + ", dataNasc=" + dataNasc + ", dataAdmissao=" + dataAdmissao + ", tipoSang=" + tipoSang
-				+ ", funcao=" + funcao + ", setor=" + setor + ", salario=" + salario + ", obs=" + obs + "]";
+				+ ", bairro=" + bairro + ", cep=" + cep + ", cidade=" + cidade + ", estado=" + estado + ", uf=" + uf
+				+ ", ddd=" + ddd + ", telefone=" + telefone + ", celular=" + celular + ", dataNasc=" + dataNasc
+				+ ", dataAdmissao=" + dataAdmissao + ", tipoSang=" + tipoSang + ", funcao=" + funcao + ", setor="
+				+ setor + ", salario=" + salario + ", obs=" + obs + "]";
 	}
 
 }

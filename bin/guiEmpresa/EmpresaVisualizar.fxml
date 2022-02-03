@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1452.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiEmpresa.EmpresaVisualizarController">
+   <children>
+      <ToolBar prefHeight="23.0" prefWidth="602.0">
+         <items>
+            <Label text="LISTA DE CLIENTES" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+         </items>
+      </ToolBar>
+      <ToolBar prefHeight="27.0" prefWidth="602.0">
+        <items>
+          <Button fx:id="btNovoEmpresa" mnemonicParsing="false" onAction="#onBtNovoEmpresa" text="Novo cliente" />
+            <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos os clientes" />
+            <TextField fx:id="searchByCod" />
+            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" text="Buscar" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tableViewEmpresa" prefHeight="357.0" prefWidth="1366.0">
+        <columns>
+          <TableColumn fx:id="tableColumnCodEmpresa" editable="false" prefWidth="34.0" resizable="false" text="COD" />
+          <TableColumn fx:id="tableColumnRazaoSocial" prefWidth="96.0" text="RAZÃO SOCIAL" />
+            <TableColumn fx:id="tableColumnNomeFantasia" minWidth="2.0" prefWidth="78.0" text="NOME FANTASIA" />
+            <TableColumn fx:id="tableColumnAtividadeFim" prefWidth="56.0" text="ATIVIDADE FIM" />
+            <TableColumn fx:id="tableColumnCnpj" prefWidth="60.0" text="CNPJ" />
+            <TableColumn fx:id="tableColumnRua" prefWidth="53.0" text="RUA" />
+            <TableColumn fx:id="tableColumnNumero" prefWidth="51.0" resizable="false" text="Nº" />
+            <TableColumn fx:id="tableColumnComplemento" prefWidth="67.0" text="COMPLEMENTO" />
+            <TableColumn fx:id="tableColumnBairro" prefWidth="49.0" text="BAIRRO" />
+            <TableColumn fx:id="tableColumnCep" prefWidth="59.0" text="CEP" />
+            <TableColumn fx:id="tableColumnCidade" prefWidth="78.0" text="CIDADE" />
+            <TableColumn fx:id="tableColumnEstado" prefWidth="68.0" text="ESTADO" />
+            <TableColumn fx:id="tableColumnUF" prefWidth="38.0" resizable="false" text="UF" />
+            <TableColumn fx:id="tableColumnDDD" prefWidth="34.0" resizable="false" text="DDD" />
+            <TableColumn fx:id="tableColumnTelefone" prefWidth="155.0" text="TELEFONE" />
+            <TableColumn fx:id="tableColumnEmail" prefWidth="90.0" text="E-MAIL" />
+            <TableColumn fx:id="tableColumnSite" prefWidth="63.0" text="SITE" />
+            <TableColumn fx:id="tableColumnObs" prefWidth="49.0" text="OBS" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="66.0" resizable="false" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="63.0" resizable="false" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

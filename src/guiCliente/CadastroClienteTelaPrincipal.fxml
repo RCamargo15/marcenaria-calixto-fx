@@ -35,8 +35,8 @@
       <GridPane fx:id="gpPessoal" prefHeight="364.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
         <columnConstraints>
           <ColumnConstraints maxWidth="632.0" minWidth="10.0" prefWidth="153.0" />
-            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="1060.0" minWidth="10.0" prefWidth="613.0" />
-            <ColumnConstraints maxWidth="608.0" minWidth="73.0" prefWidth="514.0" />
+            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="1060.0" minWidth="10.0" prefWidth="579.0" />
+            <ColumnConstraints maxWidth="618.0" minWidth="73.0" prefWidth="548.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -93,7 +93,11 @@
                <GridPane.margin>
                   <Insets right="100.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtTelefone" minWidth="88.0" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="txtRg" minWidth="77.0" prefHeight="25.0" prefWidth="133.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="450.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtCpf" minWidth="77.0" prefHeight="25.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="450.0" />
                </GridPane.margin></TextField>
@@ -101,11 +105,11 @@
                <GridPane.margin>
                   <Insets right="500.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtCpf" minWidth="77.0" prefHeight="25.0" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="txtTelefone" minWidth="88.0" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="450.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtRg" minWidth="77.0" prefHeight="25.0" prefWidth="133.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="txtCelular" minWidth="84.0" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets right="450.0" />
                </GridPane.margin></TextField>
@@ -113,19 +117,41 @@
                <GridPane.margin>
                   <Insets right="100.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtCelular" minWidth="84.0" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <GridPane.margin>
-                  <Insets right="450.0" />
-               </GridPane.margin></TextField>
-            <DatePicker fx:id="dataCadastro" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label fx:id="errorRg" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label fx:id="errorCpf" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="errorDdd" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="errorNome" prefHeight="17.0" prefWidth="64.0" textFill="#e80b0b" GridPane.columnIndex="2" />
-            <Label textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <Label fx:id="errorEmail" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Label fx:id="errorCelular" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Label fx:id="errorTelefone" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dpDataCadastro" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="errorRg" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorCpf" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorDdd" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorDataCadastro" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorEmail" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorCelular" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorTelefone" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <TextField fx:id="txtCodCliente" disable="true" editable="false" prefHeight="25.0" prefWidth="481.0" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="errorNome" textFill="#e80b0b" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
          <VBox.margin>
             <Insets />
@@ -143,16 +169,17 @@
       <GridPane fx:id="gpEndereco" prefHeight="297.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
         <columnConstraints>
           <ColumnConstraints fillWidth="false" maxWidth="-Infinity" minWidth="10.0" />
-          <ColumnConstraints hgrow="ALWAYS" maxWidth="908.0" minWidth="10.0" prefWidth="512.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="825.0" minWidth="10.0" prefWidth="212.0" />
-            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="35.0" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="410.0" minWidth="10.0" prefWidth="410.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="908.0" minWidth="10.0" prefWidth="621.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="825.0" minWidth="10.0" prefWidth="548.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -186,7 +213,7 @@
                <GridPane.margin>
                   <Insets />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtNumero" maxWidth="-Infinity" minWidth="22.0" prefHeight="25.0" prefWidth="144.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="txtNumero" maxWidth="-Infinity" minWidth="22.0" prefHeight="25.0" prefWidth="77.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="1.0" right="400.0" />
                </GridPane.margin></TextField>
@@ -194,39 +221,87 @@
                <GridPane.margin>
                   <Insets right="100.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtBairro" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets right="15.0" />
-               </GridPane.margin></TextField>
             <TextField fx:id="txtCep" maxWidth="-Infinity" minWidth="113.0" prefHeight="25.0" prefWidth="131.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="450.0" />
                </GridPane.margin></TextField>
-            <Label fx:id="errorRua" textFill="#e80b0b" GridPane.columnIndex="2" />
-            <Label fx:id="errorComplemento" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="errorBairro" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Label fx:id="errorCep" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="errorNumero" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label fx:id="errorTelefone1" text="OBS" GridPane.rowIndex="5">
+            <TextField fx:id="txtBairro" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtCidade" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtEstado" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtUF" maxWidth="-Infinity" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="txtObs" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="errorRua" textFill="#e80b0b" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorComplemento" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorBairro" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorCep" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorNumero" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorTelefone1" text="OBS" GridPane.rowIndex="8">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtObs" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <GridPane.margin>
-                  <Insets right="15.0" />
-               </GridPane.margin></TextField>
+            <Label text="CIDADE" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="ESTADO" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="UF" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorCidade" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorEstado" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorUF" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
-      <ToolBar prefHeight="97.0" prefWidth="1280.0" styleClass="buttonBar" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
+      <ToolBar prefHeight="63.0" prefWidth="1280.0" styleClass="buttonBar" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
          <items>
-            <Button fx:id="btCadastrar" mnemonicParsing="false" text="CADASTRAR" />
+            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="CADASTRAR" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
             <Label>
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btCancelar" mnemonicParsing="false" text="CANCELAR" />
          </items>
       </ToolBar>
    </children>

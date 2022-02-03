@@ -16,6 +16,9 @@ public class Fornecedor implements Serializable {
 	private String complemento;
 	private String bairro;
 	private String cep;
+	private String cidade;
+	private String estado;
+	private String uf;
 	private Integer ddd;
 	private String telefone;
 	private String site;
@@ -27,8 +30,9 @@ public class Fornecedor implements Serializable {
 	}
 
 	public Fornecedor(Integer codFornecedor, String razaoSocial, String nomeFantasia, String cnpj, String atividadeFim,
-			String rua, Integer numero, String complemento, String bairro, String cep, Integer ddd, String  telefone,
-			String site, String email, String obs) {
+			String rua, Integer numero, String complemento, String bairro, String cep, String cidade, String estado,
+			String uf, Integer ddd, String telefone, String site, String email, String obs) {
+		super();
 		this.codFornecedor = codFornecedor;
 		this.razaoSocial = razaoSocial;
 		this.nomeFantasia = nomeFantasia;
@@ -39,6 +43,9 @@ public class Fornecedor implements Serializable {
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.cep = cep;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.uf = uf;
 		this.ddd = ddd;
 		this.telefone = telefone;
 		this.site = site;
@@ -126,6 +133,30 @@ public class Fornecedor implements Serializable {
 		this.cep = cep;
 	}
 
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
 	public Integer getDdd() {
 		return ddd;
 	}
@@ -188,8 +219,9 @@ public class Fornecedor implements Serializable {
 	public String toString() {
 		return "Fornecedor [codFornecedor=" + codFornecedor + ", razaoSocial=" + razaoSocial + ", nomeFantasia="
 				+ nomeFantasia + ", cnpj=" + cnpj + ", atividadeFim=" + atividadeFim + ", rua=" + rua + ", numero="
-				+ numero + ", complemento=" + complemento + ", bairro=" + bairro + ", cep=" + cep + ", ddd=" + ddd
-				+ ", telefone=" + telefone + ", site=" + site + ", email=" + email + ", obs=" + obs + "]";
+				+ numero + ", complemento=" + complemento + ", bairro=" + bairro + ", cep=" + cep + ", cidade=" + cidade
+				+ ", estado=" + estado + ", uf=" + uf + ", ddd=" + ddd + ", telefone=" + telefone + ", site=" + site
+				+ ", email=" + email + ", obs=" + obs + "]";
 	}
 
 }

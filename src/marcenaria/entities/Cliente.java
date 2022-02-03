@@ -16,6 +16,9 @@ public class Cliente implements Serializable {
 	private String complemento;
 	private String bairro;
 	private String cep;
+	private String cidade;
+	private String estado;
+	private String uf;
 	private Integer ddd;
 	private String telefone;
 	private String celular;
@@ -28,8 +31,9 @@ public class Cliente implements Serializable {
 	}
 
 	public Cliente(Integer codCliente, String nome, String rg, String cpf, String rua, Integer numero,
-			String complemento, String bairro, String cep, Integer ddd, String telefone, String celular, String email,
-			Date dataCadastro, String obs) {
+			String complemento, String bairro, String cep, String cidade, String estado, String uf, Integer ddd,
+			String telefone, String celular, String email, Date dataCadastro, String obs) {
+		super();
 		this.codCliente = codCliente;
 		this.nome = nome;
 		this.rg = rg;
@@ -39,6 +43,9 @@ public class Cliente implements Serializable {
 		this.complemento = complemento;
 		this.bairro = bairro;
 		this.cep = cep;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.uf = uf;
 		this.ddd = ddd;
 		this.telefone = telefone;
 		this.celular = celular;
@@ -119,6 +126,30 @@ public class Cliente implements Serializable {
 		this.cep = cep;
 	}
 
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
 	public Integer getDdd() {
 		return ddd;
 	}
@@ -188,8 +219,8 @@ public class Cliente implements Serializable {
 	public String toString() {
 		return "Cliente [codCliente=" + codCliente + ", nome=" + nome + ", rg=" + rg + ", cpf=" + cpf + ", rua=" + rua
 				+ ", numero=" + numero + ", complemento=" + complemento + ", bairro=" + bairro + ", cep=" + cep
-				+ ", ddd=" + ddd + ", telefone=" + telefone + ", celular=" + celular + ", email=" + email
-				+ ", dataCadastro=" + dataCadastro + ", obs=" + obs + "]";
+				+ ", cidade=" + cidade + ", estado=" + estado + ", uf=" + uf + ", ddd=" + ddd + ", telefone=" + telefone
+				+ ", celular=" + celular + ", email=" + email + ", dataCadastro=" + dataCadastro + ", obs=" + obs + "]";
 	}
 
 }

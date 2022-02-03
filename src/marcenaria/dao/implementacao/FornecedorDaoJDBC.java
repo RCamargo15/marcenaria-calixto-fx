@@ -26,8 +26,9 @@ public class FornecedorDaoJDBC implements FornecedorDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO MARCENARIA.FORNECEDOR"
-					+ "(RAZAO_SOCIAL, NOME_FANTASIA, CNPJ, ATIVIDADE_FIM, RUA, NUMERO, COMPLEMENTO, BAIRRO, CEP, DDD, TELEFONE, SITE, EMAIL, OBS)"
-					+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					+ "(RAZAO_SOCIAL, NOME_FANTASIA, CNPJ, ATIVIDADE_FIM, RUA, NUMERO, COMPLEMENTO, BAIRRO, CEP, CIDADE, ESTADO, UF, DDD, TELEFONE, SITE, EMAIL, OBS) "
+					+ "VALUES " + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getRazaoSocial().toUpperCase());
 			st.setString(2, obj.getNomeFantasia().toUpperCase());
@@ -41,13 +42,16 @@ public class FornecedorDaoJDBC implements FornecedorDao {
 			}
 			st.setString(8, obj.getBairro().toUpperCase());
 			st.setString(9, obj.getCep());
-			st.setInt(10, obj.getDdd());
-			st.setString(11, obj.getTelefone());
-			st.setString(12, obj.getSite());
-			st.setString(13, obj.getEmail());
-			st.setString(14, obj.getObs());
+			st.setString(10, obj.getCidade().toUpperCase());
+			st.setString(11, obj.getEstado().toUpperCase());
+			st.setString(12, obj.getUf().toUpperCase());
+			st.setInt(13, obj.getDdd());
+			st.setString(14, obj.getTelefone());
+			st.setString(15, obj.getSite());
+			st.setString(16, obj.getEmail());
+			st.setString(17, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(14, obj.getObs().toUpperCase());
+				st.setString(17, obj.getObs().toUpperCase());
 			}
 
 			int rowsAffected = st.executeUpdate();
@@ -74,7 +78,7 @@ public class FornecedorDaoJDBC implements FornecedorDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.FORNECEDOR "
-					+ "SET RAZAO_SOCIAL = ?, NOME_FANTASIA = ?, CNPJ = ?, ATIVIDADE_FIM = ?, RUA = ?, NUMERO = ?, COMPLEMENTO = ?, BAIRRO = ?, CEP = ?, "
+					+ "SET RAZAO_SOCIAL = ?, NOME_FANTASIA = ?, CNPJ = ?, ATIVIDADE_FIM = ?, RUA = ?, NUMERO = ?, COMPLEMENTO = ?, BAIRRO = ?, CEP = ?, CIDADE = ?, ESTADO = ?, UF = ?,  "
 					+ "DDD = ?, TELEFONE = ?, SITE= ?, EMAIL = ?, OBS = ?" + " WHERE COD_FORNECEDOR = ?");
 
 			st.setString(1, obj.getRazaoSocial().toUpperCase());
@@ -89,15 +93,19 @@ public class FornecedorDaoJDBC implements FornecedorDao {
 			}
 			st.setString(8, obj.getBairro().toUpperCase());
 			st.setString(9, obj.getCep());
-			st.setInt(10, obj.getDdd());
-			st.setString(11, obj.getTelefone());
-			st.setString(12, obj.getSite());
-			st.setString(13, obj.getEmail());
-			st.setString(14, obj.getObs());
+			st.setString(10, obj.getCidade().toUpperCase());
+			st.setString(11, obj.getEstado().toUpperCase());
+			st.setString(12, obj.getUf().toUpperCase());
+			st.setInt(13, obj.getDdd());
+			st.setString(14, obj.getTelefone());
+			st.setString(15, obj.getSite());
+			st.setString(16, obj.getEmail());
+			st.setString(17, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(14, obj.getObs().toUpperCase());
+				st.setString(17, obj.getObs().toUpperCase());
 			}
-			st.setInt(15, obj.getCodFornecedor());
+
+			st.setInt(18, obj.getCodFornecedor());
 
 			st.executeUpdate();
 
@@ -181,6 +189,9 @@ public class FornecedorDaoJDBC implements FornecedorDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setSite(rs.getString("SITE"));

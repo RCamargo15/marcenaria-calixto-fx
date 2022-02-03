@@ -323,6 +323,9 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setCelular(rs.getString("CELULAR"));
@@ -344,6 +347,9 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setCelular(rs.getString("CELULAR"));
@@ -356,4 +362,5 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 		obj.setObs(rs.getString("OBS"));
 		return obj;
 	}
+
 }
