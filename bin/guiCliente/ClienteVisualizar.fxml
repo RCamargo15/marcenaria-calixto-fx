@@ -28,32 +28,44 @@
         <items>
           <Button fx:id="btNovoCliente" mnemonicParsing="false" onAction="#onBtNovoCliente" text="Novo cliente" />
             <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos os clientes" />
-            <TextField fx:id="searchByCod" />
+            <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
             <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" text="Buscar" />
         </items>
       </ToolBar>
       <TableView fx:id="tableViewCliente" prefHeight="357.0" prefWidth="602.0">
         <columns>
-          <TableColumn fx:id="tableColumnCodCliente" editable="false" prefWidth="50.0" resizable="false" text="COD" />
-          <TableColumn fx:id="tableColumnNome" prefWidth="167.0" text="NOME" />
-            <TableColumn fx:id="tableColumnRg" minWidth="2.0" prefWidth="24.0" text="RG" />
-            <TableColumn fx:id="tableColumnCpf" prefWidth="44.0" text="CPF" />
-            <TableColumn fx:id="tableColumnRua" prefWidth="62.0" text="RUA" />
-            <TableColumn fx:id="tableColumnNumero" prefWidth="40.0" resizable="false" text="Nº" />
-            <TableColumn fx:id="tableColumnComplemento" prefWidth="88.0" text="COMPLEMENTO" />
-            <TableColumn fx:id="tableColumnBairro" prefWidth="75.0" text="BAIRRO" />
-            <TableColumn fx:id="tableColumnCep" prefWidth="75.0" text="CEP" />
-            <TableColumn fx:id="tableColumnCidade" prefWidth="75.0" text="CIDADE" />
-            <TableColumn fx:id="tableColumnEstado" prefWidth="75.0" text="ESTADO" />
-            <TableColumn fx:id="tableColumnUF" prefWidth="46.0" resizable="false" text="UF" />
-            <TableColumn fx:id="tableColumnDDD" prefWidth="51.0" resizable="false" text="DDD" />
-            <TableColumn fx:id="tableColumnTelefone" prefWidth="128.0" text="TELEFONE" />
-            <TableColumn fx:id="tableColumnCelular" prefWidth="89.0" text="CELULAR" />
-            <TableColumn fx:id="tableColumnEmail" prefWidth="61.0" text="E-MAIL" />
-            <TableColumn fx:id="tableColumnDataCadastro" prefWidth="125.0" text="DATA DE CADASTRO" />
-            <TableColumn fx:id="tableColumnObs" prefWidth="68.0" text="OBS" />
-            <TableColumn fx:id="tableColumnEditar" prefWidth="52.0" />
-            <TableColumn fx:id="tableColumnRemover" prefWidth="57.0" />
+            <TableColumn prefWidth="75.0" text="DADOS PESSOAIS">
+               <columns>
+                <TableColumn fx:id="tableColumnCodCliente" editable="false" prefWidth="45.0" resizable="false" text="COD" />
+                <TableColumn fx:id="tableColumnNome" prefWidth="300.0" text="NOME" />
+                  <TableColumn fx:id="tableColumnRg" minWidth="2.0" prefWidth="100.0" text="RG" />
+                  <TableColumn fx:id="tableColumnCpf" prefWidth="120.0" text="CPF" />
+                  <TableColumn fx:id="tableColumnDataCadastro" prefWidth="130.0" text="DATA DE CADASTRO" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="75.0" text="ENDEREÇO">
+               <columns>
+                  <TableColumn fx:id="tableColumnRua" prefWidth="250.0" text="RUA" />
+                  <TableColumn fx:id="tableColumnNumero" prefWidth="55.0" resizable="false" text="Nº" />
+                  <TableColumn fx:id="tableColumnComplemento" prefWidth="120.0" text="COMPLEMENTO" />
+                  <TableColumn fx:id="tableColumnBairro" prefWidth="130.0" text="BAIRRO" />
+                  <TableColumn fx:id="tableColumnCep" resizable="false" text="CEP" />
+                  <TableColumn fx:id="tableColumnCidade" prefWidth="120.0" text="CIDADE" />
+                  <TableColumn fx:id="tableColumnEstado" text="ESTADO" />
+                  <TableColumn fx:id="tableColumnUF" prefWidth="40.0" resizable="false" text="UF" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="75.0" text="CONTATO">
+               <columns>
+                  <TableColumn fx:id="tableColumnDDD" prefWidth="45.0" resizable="false" text="DDD" />
+                  <TableColumn fx:id="tableColumnTelefone" prefWidth="90.0" text="TELEFONE" />
+                  <TableColumn fx:id="tableColumnCelular" prefWidth="90.0" text="CELULAR" />
+                  <TableColumn fx:id="tableColumnEmail" prefWidth="160.0" text="E-MAIL" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="tableColumnObs" prefWidth="160.0" text="OBS" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="70.0" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="70.0" />
         </columns>
       </TableView>
    </children>

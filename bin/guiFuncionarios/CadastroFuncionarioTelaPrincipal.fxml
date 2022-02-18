@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="881.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFuncionarios.CadastroFuncionarioTelaPrincipalController">
+   <children>
+      <ToolBar prefHeight="47.0" prefWidth="1280.0">
+         <items>
+            <Label text="CADASTRO DE FUNCIONÁRIOS">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <ToolBar prefHeight="42.0" prefWidth="1280.0">
+         <items>
+            <Label text="DADOS PESSOAIS">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <GridPane fx:id="gpPessoal" prefHeight="252.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
+        <columnConstraints>
+          <ColumnConstraints maxWidth="632.0" minWidth="10.0" percentWidth="0.0" prefWidth="181.0" />
+            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="1060.0" minWidth="10.0" prefWidth="590.0" />
+            <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="1060.0" minWidth="10.0" percentWidth="0.0" prefWidth="500.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="48.0" minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="48.0" minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="48.0" minHeight="10.0" percentHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="NOME">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="RG" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="CPF" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="DDD" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="TELEFONE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="CELULAR" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="DATA DE NASCIMENTO" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtNome" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtRg" minWidth="77.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtCpf" minWidth="77.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <DatePicker fx:id="dpDataNasc" prefHeight="25.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></DatePicker>
+            <TextField fx:id="txtTipoSang" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtDdd" minWidth="68.0" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtTelefone" minWidth="84.0" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="txtCelular" minWidth="84.0" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="errorRg" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorCpf" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorTipoSang" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorDdd" prefHeight="20.0" prefWidth="169.0" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorTelefone" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label text="TIPO SANGUÍNEO" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorDataNasc" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorCelular" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtRegistroFunc" disable="true" editable="false" minWidth="77.0" prefHeight="25.0" prefWidth="133.0" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="errorNome" textFill="#e80b0b" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </GridPane>
+      <ToolBar prefHeight="43.0" prefWidth="1280.0">
+         <items>
+            <Label text="ENDEREÇO">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <GridPane fx:id="gpEndereco" prefHeight="271.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
+        <columnConstraints>
+          <ColumnConstraints fillWidth="false" maxWidth="198.0" minWidth="0.0" percentWidth="0.0" prefWidth="181.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="908.0" minWidth="10.0" prefWidth="590.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="908.0" minWidth="10.0" percentWidth="0.0" prefWidth="500.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="RUA">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="BAIRRO" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="CEP" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="COMPLEMENTO" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="Nº" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtRua" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtNumero" maxWidth="-Infinity" minWidth="22.0" prefHeight="25.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtComplemento" maxWidth="-Infinity" minWidth="100.0" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtCep" maxWidth="-Infinity" minWidth="113.0" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtBairro" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtCidade" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtEstado" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtUF" maxWidth="-Infinity" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtObs" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="errorRua" textFill="#e80b0b" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorComplemento" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorBairro" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorCep" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorNumero" textFill="#e80b0b" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorTelefone1" text="OBS" GridPane.rowIndex="8">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="CIDADE" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="ESTADO" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="UF" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorCidade" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorEstado" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorUF" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <ToolBar prefHeight="42.0" prefWidth="1280.0">
+         <items>
+            <Label text="FUNCIONAL">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <GridPane fx:id="gpFuncional" prefHeight="151.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroCliente.css">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.0" minWidth="10.0" percentWidth="0.0" prefWidth="181.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" percentWidth="0.0" prefWidth="590.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" percentWidth="0.0" prefWidth="500.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="CTPS">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="FUNÇÃO" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="DATA DE ADMISSAO" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="SETOR" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="REMUNERAÇÃO" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtCtps" prefWidth="400.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <DatePicker fx:id="dpDataAdmissao" prefHeight="25.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></DatePicker>
+            <TextField fx:id="txtFuncao" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtSetor" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtSalario" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <Label fx:id="errorCtps" textFill="#ee0909" GridPane.columnIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorDataAdmissao" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorFuncao" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorSetor" text="err" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorSalario" text="err" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <ToolBar prefHeight="12.0" prefWidth="1280.0" styleClass="buttonBar" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
+         <items>
+            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="CADASTRAR" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+            <Label>
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+   </children>
+</VBox>

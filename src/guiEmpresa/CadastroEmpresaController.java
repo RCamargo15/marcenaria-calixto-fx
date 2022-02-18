@@ -107,18 +107,15 @@ public class CadastroEmpresaController implements Initializable {
 
 	@FXML
 	private TextField txtSite;
-	@FXML
-	private Label errorSite;
+
 
 	@FXML
 	private TextField txtEmail;
-	@FXML
-	private Label errorEmail;
+	
 	
 	@FXML
 	private TextField txtObs;
-	@FXML
-	private Label errorObs;
+	
 
 	@FXML
 	private Button btCadastrar;
@@ -147,13 +144,11 @@ public class CadastroEmpresaController implements Initializable {
 	@FXML
 	public void onBtCadastrarAction(ActionEvent event) {
 		if (empresa == null) {
-			throw new IllegalStateException("Cliente vazio");
+			throw new IllegalStateException("Empresa vazio");
 		}
 		if (empresaService == null) {
-			throw new IllegalStateException("ClienteService vazio");
+			throw new IllegalStateException("EmpresaService vazio");
 		}
-
-		Empresa empresa= new Empresa();
 		try {
 			empresa = getEmpresaData();
 			empresaService.saveOrUpdate(empresa);
@@ -237,7 +232,7 @@ public class CadastroEmpresaController implements Initializable {
 		}
 
 		if (txtUF.getText() == null || txtUF.getText().trim().equals("")) {
-			exception.addError("UFf", "Necessário adicionar a sigla do estado");
+			exception.addError("UF", "Necessário adicionar a sigla do estado");
 		}
 
 		if (txtDdd.getText() == null || txtDdd.getText().trim().equals("")) {
@@ -299,7 +294,8 @@ public class CadastroEmpresaController implements Initializable {
 		errorDdd.setText(fields.contains("DDD") ? errors.get("DDD") : "");
 		errorCidade.setText(fields.contains("Cidade") ? errors.get("Cidade") : "");
 		errorEstado.setText(fields.contains("Estado") ? errors.get("Estado") : "");
-		errorUF.setText(fields.contains("UF") ? errors.get("UF") : ""); 
+		errorUF.setText(fields.contains("UF") ? errors.get("UF") : "");
+		errorTelefone.setText(fields.contains("Contatos") ? errors.get("Contatos") : "");
 
 	}
 

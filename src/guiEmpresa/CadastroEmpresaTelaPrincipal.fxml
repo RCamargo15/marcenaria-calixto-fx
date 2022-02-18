@@ -15,7 +15,7 @@
    <children>
       <ToolBar prefHeight="65.0" prefWidth="1280.0">
          <items>
-            <Label text="CADASTRAR UMA NOVA EMPRESA">
+            <Label text="CADASTRO DE EMPRESAS">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
@@ -229,6 +229,9 @@
                <GridPane.margin>
                   <Insets right="15.0" />
                </GridPane.margin></TextField>
+            <TextField fx:id="txtCidade" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="txtEstado" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtUF" maxWidth="-Infinity" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <TextField fx:id="txtObs" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets right="15.0" />
@@ -273,9 +276,6 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtCidade" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="txtEstado" maxWidth="-Infinity" prefHeight="25.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="txtUF" maxWidth="-Infinity" prefHeight="25.0" prefWidth="40.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Label fx:id="errorCidade" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <font>
                   <Font name="Arial Bold" size="14.0" />

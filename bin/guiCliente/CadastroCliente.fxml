@@ -16,7 +16,7 @@
    <children>
       <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="CADASTRAR UM NOVO CLIENTE">
+            <Label text="CADASTRO DE CLIENTES">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

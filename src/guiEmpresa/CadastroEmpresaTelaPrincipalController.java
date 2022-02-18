@@ -116,13 +116,9 @@ public class CadastroEmpresaTelaPrincipalController implements Initializable {
 
 	@FXML
 	private TextField txtSite;
-	@FXML
-	private Label errorSite;
 
 	@FXML
 	private TextField txtEmail;
-	@FXML
-	private Label errorEmail;
 
 	@FXML
 	private TextField txtObs;
@@ -154,13 +150,11 @@ public class CadastroEmpresaTelaPrincipalController implements Initializable {
 	@FXML
 	public void onBtCadastrarAction(ActionEvent event) {
 		if (empresa == null) {
-			throw new IllegalStateException("Cliente vazio");
+			throw new IllegalStateException("Empresa vazio");
 		}
 		if (empresaService == null) {
-			throw new IllegalStateException("ClienteService vazio");
+			throw new IllegalStateException("EmpresaService vazio");
 		}
-
-		Empresa empresa = new Empresa();
 		try {
 			empresa = getEmpresaData();
 			empresaService.saveOrUpdate(empresa);
@@ -300,6 +294,7 @@ public class CadastroEmpresaTelaPrincipalController implements Initializable {
 		errorCidade.setText(fields.contains("Cidade") ? errors.get("Cidade") : "");
 		errorEstado.setText(fields.contains("Estado") ? errors.get("Estado") : "");
 		errorUF.setText(fields.contains("UF") ? errors.get("UF") : "");
+		errorTelefone.setText(fields.contains("Contatos") ? errors.get("Contatos") : "");
 
 	}
 

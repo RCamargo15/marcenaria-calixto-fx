@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1452.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFornecedor.FornecedorVisualizarController">
+   <children>
+      <ToolBar prefHeight="23.0" prefWidth="602.0">
+         <items>
+            <Label text="LISTA DE FORNECEDORES" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Label>
+         </items>
+      </ToolBar>
+      <ToolBar prefHeight="27.0" prefWidth="602.0">
+        <items>
+          <Button fx:id="btNovoFornecedor" mnemonicParsing="false" onAction="#onBtNovoFornecedor" text="Novo fornecedor" />
+            <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos fornecedores" />
+            <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
+            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" text="Buscar" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tableViewFornecedor" prefHeight="357.0" prefWidth="1366.0">
+        <columns>
+            <TableColumn prefWidth="75.0" text="DADOS DA EMPRESA">
+               <columns>
+                <TableColumn fx:id="tableColumnCodFornecedor" editable="false" prefWidth="34.0" resizable="false" text="COD" />
+                <TableColumn fx:id="tableColumnRazaoSocial" prefWidth="300.0" text="RAZÃO SOCIAL" />
+                  <TableColumn fx:id="tableColumnNomeFantasia" prefWidth="230.0" text="NOME FANTASIA" />
+                  <TableColumn fx:id="tableColumnAtividadeFim" prefWidth="280.0" text="ATIVIDADE FIM" />
+                  <TableColumn fx:id="tableColumnCnpj" prefWidth="130.0" text="CNPJ" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="75.0" text="ENDEREÇO">
+               <columns>
+                  <TableColumn fx:id="tableColumnRua" prefWidth="250.0" text="RUA" />
+                  <TableColumn fx:id="tableColumnNumero" prefWidth="55.0" resizable="false" text="Nº" />
+                  <TableColumn fx:id="tableColumnComplemento" prefWidth="120.0" text="COMPLEMENTO" />
+                  <TableColumn fx:id="tableColumnBairro" prefWidth="130.0" text="BAIRRO" />
+                  <TableColumn fx:id="tableColumnCep" resizable="false" text="CEP" />
+                  <TableColumn fx:id="tableColumnCidade" prefWidth="120.0" text="CIDADE" />
+                  <TableColumn fx:id="tableColumnEstado" prefWidth="100.0" text="ESTADO" />
+                  <TableColumn fx:id="tableColumnUF" prefWidth="35.0" resizable="false" text="UF" />
+               </columns>
+            </TableColumn>
+            <TableColumn prefWidth="75.0" text="CONTATO">
+               <columns>
+                  <TableColumn fx:id="tableColumnDDD" prefWidth="35.0" resizable="false" text="DDD" />
+                  <TableColumn fx:id="tableColumnTelefone" prefWidth="90.0" text="TELEFONE" />
+                  <TableColumn fx:id="tableColumnEmail" prefWidth="160.0" text="E-MAIL" />
+                  <TableColumn fx:id="tableColumnSite" prefWidth="160.0" text="SITE" />
+               </columns>
+            </TableColumn>
+            <TableColumn fx:id="tableColumnObs" prefWidth="160.0" text="OBS" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="60.0" resizable="false" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="70.0" resizable="false" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

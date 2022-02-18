@@ -155,8 +155,6 @@ public class CadastroClienteController implements Initializable {
 		if (clienteService == null) {
 			throw new IllegalStateException("ClienteService vazio");
 		}
-
-		Cliente cliente = new Cliente();
 		try {
 			cliente = getClienteData();
 			clienteService.saveOrUpdate(cliente);
@@ -323,13 +321,13 @@ public class CadastroClienteController implements Initializable {
 		Constraints.setTextFieldInteger(txtCelular);
 		Constraints.setTextFieldInteger(txtTelefone);
 
-		Constraints.setTextFieldMaxLength(txtDdd, 2);
+		
 		Constraints.setTextFieldMaxLength(txtCelular, 9);
 		Constraints.setTextFieldMaxLength(txtCep, 9);
 		Constraints.setTextFieldMaxLength(txtTelefone, 9);
 		Constraints.setTextFieldMaxLength(txtCpf, 15);
 		Constraints.setTextFieldMaxLength(txtRg, 15);
-		Constraints.setTextFieldMaxLength(txtUF, 2);
+		
 
 		Utils.formatDatePicker(dpDataCadastro, "dd/MM/yyyy");
 

@@ -15,7 +15,7 @@
    <children>
       <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="CADASTRAR UMA NOVA EMPRESA">
+            <Label text="CADASTRO DE EMPRESAS">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -67,15 +67,18 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label fx:id="errorDataCadastro" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textAlignment="RIGHT" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="9">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Label>
             <TextField fx:id="txtRazaoSocial" prefHeight="25.0" prefWidth="341.0" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets right="100.0" />
                </GridPane.margin></TextField>
+            <TextField fx:id="txtNomeFantasia" prefHeight="25.0" prefWidth="341.0" GridPane.columnIndex="3">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets right="20.0" />
+               </GridPane.margin>
+            </TextField>
             <TextField fx:id="txtCnpj" prefHeight="25.0" prefWidth="157.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="100.0" />
@@ -86,17 +89,17 @@
                   <Insets right="150.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorNome" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="errorRazaoSocial" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorCpf" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Label fx:id="errorAtividadeFim" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorRg" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="errorCnpj" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
@@ -125,9 +128,9 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="txtDdd" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="txtDdd" prefHeight="25.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
-                  <Insets right="450.0" />
+                  <Insets right="350.0" />
                </GridPane.margin>
             </TextField>
             <TextField fx:id="txtTelefone" GridPane.columnIndex="3" GridPane.rowIndex="4">
@@ -153,16 +156,6 @@
                   <Insets right="100.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorCelular" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="7">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="errorEmail" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="7">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Label>
             <Label fx:id="errorDdd" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="Arial Bold" size="14.0" />
@@ -211,14 +204,11 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="txtNomeFantasia" prefHeight="25.0" prefWidth="341.0" GridPane.columnIndex="3">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets right="20.0" />
-               </GridPane.margin>
-            </TextField>
+            <Label fx:id="errorNomeFantasia" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
       <ToolBar fx:id="bbEnd" prefHeight="40.0" prefWidth="200.0">

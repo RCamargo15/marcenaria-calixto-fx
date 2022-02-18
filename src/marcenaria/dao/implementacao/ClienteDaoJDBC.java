@@ -92,18 +92,19 @@ public class ClienteDaoJDBC implements ClienteDao {
 			}
 			st.setString(7, obj.getBairro());
 			st.setString(8, obj.getCep());
-			st.setInt(9, obj.getDdd());
-			st.setString(10, obj.getTelefone());
-			st.setString(11, obj.getCelular());
-			st.setString(12, obj.getEmail());
-			st.setDate(13, new java.sql.Date(obj.getDataCadastro().getTime()));
-			st.setString(14, obj.getObs());
+			st.setString(9, obj.getCidade());
+			st.setString(10, obj.getEstado());
+			st.setString(11, obj.getUf());
+			st.setInt(12, obj.getDdd());
+			st.setString(13, obj.getTelefone());
+			st.setString(14, obj.getCelular());
+			st.setString(15, obj.getEmail());
+			st.setDate(16, new java.sql.Date(obj.getDataCadastro().getTime()));
+			st.setString(17, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(14, obj.getObs().toUpperCase());
+				st.setString(17, obj.getObs().toUpperCase());
 			}
-			st.setString(15, obj.getCidade());
-			st.setString(16, obj.getEstado());
-			st.setString(17, obj.getUf());
+
 			st.setInt(18, obj.getCodCliente());
 
 			st.executeUpdate();

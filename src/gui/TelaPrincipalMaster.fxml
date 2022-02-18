@@ -55,14 +55,12 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Estoque">
                      <items>
-                        <MenuItem fx:id="menuItemEstoqueProdutoCadastrar" mnemonicParsing="false" onAction="#onMenuItemEstoqueCadastrarAction" text="Cadastrar produto no estoque" />
                         <MenuItem fx:id="menuItemEstoqueVisualizar" mnemonicParsing="false" onAction="#onMenuItemEstoqueVisualizarAction" text="Visualizar estoque" />
                         <MenuItem fx:id="menuItemEstoqueSaidaProduto" mnemonicParsing="false" onAction="#onMenuItemEstoqueSaidaProdutoAction" text="Saída de produtos" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Produtos">
                      <items>
-                        <MenuItem fx:id="menuItemProdutoCadastrar" mnemonicParsing="false" onAction="#onMenuItemProdutoCadastrarAction" text="Cadastrar produto " />
                         <MenuItem fx:id="menuItemProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemProdutoVisualizarAction" text="Visualizar produtos" />
                      </items>
                   </Menu>
