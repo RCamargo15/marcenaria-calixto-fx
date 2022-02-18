@@ -36,6 +36,17 @@
                         <MenuItem fx:id="menuItemFuncionarioVisualizar" mnemonicParsing="false" onAction="#onMenuItemFuncionarioVisualizarAction" text="Visualizar funcionários" />
                      </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Estoque">
+                     <items>
+                        <MenuItem fx:id="menuItemEstoqueVisualizar" mnemonicParsing="false" onAction="#onMenuItemEstoqueVisualizarAction" text="Visualizar estoque" />
+                        <MenuItem fx:id="menuItemEstoqueSaidaProduto" mnemonicParsing="false" onAction="#onMenuItemEstoqueSaidaProdutoAction" text="Saída de produtos" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Produtos">
+                     <items>
+                        <MenuItem fx:id="menuItemProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemProdutoVisualizarAction" text="Visualizar produtos" />
+                     </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Notas de compra">
                      <items>
                         <MenuItem fx:id="menuItemNotaCompraCadastro" mnemonicParsing="false" onAction="#onMenuItemNotaCompraCadastrarAction" text="Cadastrar nota de compra" />
@@ -51,17 +62,6 @@
                   <Menu mnemonicParsing="false" text="Saída de produtos">
                      <items>
                         <MenuItem fx:id="menuItemSaidaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Registro de saídas" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Estoque">
-                     <items>
-                        <MenuItem fx:id="menuItemEstoqueVisualizar" mnemonicParsing="false" onAction="#onMenuItemEstoqueVisualizarAction" text="Visualizar estoque" />
-                        <MenuItem fx:id="menuItemEstoqueSaidaProduto" mnemonicParsing="false" onAction="#onMenuItemEstoqueSaidaProdutoAction" text="Saída de produtos" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Produtos">
-                     <items>
-                        <MenuItem fx:id="menuItemProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemProdutoVisualizarAction" text="Visualizar produtos" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ordens de serviço de clientes">

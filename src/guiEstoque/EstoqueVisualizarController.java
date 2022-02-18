@@ -9,7 +9,9 @@ import java.util.ResourceBundle;
 import Db.DbException;
 import application.Main;
 import entities.services.EstoqueService;
+import entities.services.FuncionarioService;
 import entities.services.ProdutoService;
+import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -34,6 +36,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Estoque;
 import marcenaria.entities.Produto;
+import marcenaria.entities.SaidaProduto;
 
 public class EstoqueVisualizarController implements Initializable, DataChangeListener {
 
@@ -73,6 +76,9 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 
 	@FXML
 	private Button btNovoEstoque;
+	
+	@FXML 
+	private Button btSaidaDeProdutos;
 
 	private ObservableList<Estoque> obsList;
 	
@@ -86,6 +92,13 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		Stage parentStage = Utils.currentStage(event);
 		Estoque obj = new Estoque();
 		createCadastroEstoqueForm(obj, parentStage, "/guiEstoque/CadastroEstoque.fxml");
+	}
+	
+	@FXML
+	public void onBtSaidaDeProduto(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		SaidaProduto obj = new SaidaProduto();
+		createSaidaDeProdutoForm(obj, parentStage, "/guiEstoque/SaideDeProdutosEstoque.fxml");
 	}
 
 	@FXML
@@ -165,6 +178,32 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 			cadastroEstoqueStage.initModality(Modality.WINDOW_MODAL);
 			cadastroEstoqueStage.showAndWait();
 		} catch (IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public void createSaidaDeProdutosEstoqueForm(SaidaProduto obj, Stage parentStage, String absoluteName) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox vBox = loader.load();
+			
+			SaidaDeProdutoEstoqueController saidaProdutoController = loader.getController();
+			saidaProdutoController.setSaidaProduto(obj);
+			saidaProdutoController.setSaidaProdutoServices(new SaidaProdutoService(), estoqueService, new FuncionarioService(), produtoService);
+			saidaProdutoController.subscribeDataListenerChange(this);
+			saidaProdutoController.loadEstoque();
+			saidaProdutoController.loadFuncionario();
+			saidaProdutoController.updateSaidaProdutoData();
+			
+			Stage saidaProdutoEstoqueStage = new Stage();
+			saidaProdutoEstoqueStage.setTitle("Registro de saída de produtos do estoque");
+			saidaProdutoEstoqueStage.setScene(new Scene(vBox));
+			saidaProdutoEstoqueStage.setResizable(false);
+			saidaProdutoEstoqueStage.initOwner(parentStage);
+			saidaProdutoEstoqueStage.initModality(Modality.WINDOW_MODAL);
+			saidaProdutoEstoqueStage.showAndWait();
+		}
+		catch(IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
