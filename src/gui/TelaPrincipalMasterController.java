@@ -14,6 +14,7 @@ import entities.services.EstoqueService;
 import entities.services.FornecedorService;
 import entities.services.FuncionarioService;
 import entities.services.ProdutoService;
+import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import guiCliente.CadastroClienteTelaPrincipalController;
@@ -21,6 +22,7 @@ import guiCliente.ClienteVisualizarController;
 import guiEmpresa.CadastroEmpresaTelaPrincipalController;
 import guiEmpresa.EmpresaVisualizarController;
 import guiEstoque.EstoqueVisualizarController;
+import guiEstoque.SaidaProdutoVisualizarController;
 import guiFornecedor.CadastroFornecedorTelaPrincipalController;
 import guiFornecedor.FornecedorVisualizarController;
 import guiFuncionarios.CadastroFuncionarioTelaPrincipalController;
@@ -204,7 +206,10 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemEstoqueSaidaProdutoAction() {
-
+		loadSaidaProdutoVisualizar("/guiEstoque/SaidaProdutoVisualizar.fxml", (SaidaProdutoVisualizarController controller) ->{
+			controller.setServices(new SaidaProdutoService(), new ProdutoService(), new FuncionarioService(), new EstoqueService());
+			controller.updateTableViewSaidaProduto();
+		});
 	}
 
 	@FXML
@@ -495,6 +500,28 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 		catch(IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public synchronized <T> void loadSaidaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+			
+		}
+		catch(IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 	@Override

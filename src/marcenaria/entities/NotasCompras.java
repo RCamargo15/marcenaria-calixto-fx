@@ -17,6 +17,7 @@ public class NotasCompras implements Serializable {
 	private Double valorTotalNota;
 	private String chaveNF;
 	private Date dataEmissao;
+	private Date dataEntrada;
 	private String obs;
 
 	public NotasCompras() {
@@ -25,7 +26,7 @@ public class NotasCompras implements Serializable {
 
 	public NotasCompras(Integer codNota, Fornecedor codFornecedor, String numeroNF, Produto codProduto,
 			Integer quantidade, Double valorUnit, Double valorTotal, Double valorTotalNota, String chaveNF,
-			Date dataEmissao, String obs) {
+			Date dataEmissao, Date dataEntrada, String obs) {
 		this.codNota = codNota;
 		this.codFornecedor = codFornecedor;
 		this.numeroNF = numeroNF;
@@ -36,6 +37,7 @@ public class NotasCompras implements Serializable {
 		this.valorTotalNota = valorTotalNota;
 		this.chaveNF = chaveNF;
 		this.dataEmissao = dataEmissao;
+		this.dataEntrada = dataEntrada;
 		this.obs = obs;
 	}
 
@@ -119,6 +121,14 @@ public class NotasCompras implements Serializable {
 		this.dataEmissao = dataEmissao;
 	}
 
+	public Date getDataEntrada() {
+		return dataEntrada;
+	}
+
+	public void setDataEntrada(Date dataEntrada) {
+		this.dataEntrada = dataEntrada;
+	}
+
 	public String getObs() {
 		return obs;
 	}
@@ -152,7 +162,7 @@ public class NotasCompras implements Serializable {
 		return "NotasCompras [codNota=" + codNota + ", codFornecedor=" + codFornecedor + ", numeroNF=" + numeroNF
 				+ ", codProduto=" + codProduto + ", quantidade=" + quantidade + ", valorUnit=" + valorUnit
 				+ ", valorTotal=" + valorTotal + ", valorTotalNota=" + valorTotalNota + ", chaveNF=" + chaveNF
-				+ ", dataEmissao=" + dataEmissao + ", obs=" + obs + "]";
+				+ ", dataEmissao=" + dataEmissao + ", dataEntrada=" + dataEntrada + ", obs=" + obs + "]";
 	}
 
 }

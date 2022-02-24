@@ -1,6 +1,7 @@
 package marcenaria.dao.implementacao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +32,7 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO MARCENARIA.NOTA_COMPRA_MATERIAL(COD_FORNECEDOR, NUMERO_NF, COD_PRODUTO, QUANTIDADE, VALOR_UNIT, VALOR_TOTAL, VALOR_TOTAL_NOTA, "
-							+ "CHAVE_NF, DATA_EMISSAO, OBS)" + "VALUES(?, ?, ? ,?, ?, ?, ?, ?, ? ,?)",
+							+ "CHAVE_NF, DATA_EMISSAO, DATA_ENTRADA, OBS)" + "VALUES(?, ?, ? ,?, ?, ?, ?, ?, ?, ? ,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setInt(1, obj.getCodFornecedor().getCodFornecedor());
@@ -43,9 +44,10 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 			st.setDouble(7, obj.getValorTotalNota());
 			st.setString(8, obj.getChaveNF());
 			st.setDate(9, new java.sql.Date(obj.getDataEmissao().getTime()));
-			st.setString(10, obj.getObs());
+			st.setDate(10, new java.sql.Date(obj.getDataEntrada().getTime()));
+			st.setString(11, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(10, obj.getObs().toUpperCase());
+				st.setString(11, obj.getObs().toUpperCase());
 			}
 
 			int rowsAffected = st.executeUpdate();
@@ -72,7 +74,7 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL"
 					+ " SET COD_FORNECEDOR = ?, NUMERO_NF=?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_TOTAL_NOTA = ?, CHAVE_NF = ?, "
-					+ "DATA_EMISSAO = ?, OBS = ? WHERE COD_NOTA = ?");
+					+ "DATA_EMISSAO = ?, DATA_ENTRADA = ?, OBS = ? WHERE COD_NOTA = ?");
 
 			st.setInt(1, obj.getCodFornecedor().getCodFornecedor());
 			st.setString(2, obj.getNumeroNF());
@@ -83,9 +85,10 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 			st.setDouble(7, obj.getValorTotalNota());
 			st.setString(8, obj.getChaveNF());
 			st.setDate(9, new java.sql.Date(obj.getDataEmissao().getTime()));
-			st.setString(10, obj.getObs());
+			st.setDate(10, new java.sql.Date(obj.getDataEntrada().getTime()));
+			st.setString(11, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(10, obj.getObs().toUpperCase());
+				st.setString(11, obj.getObs().toUpperCase());
 			}
 			st.setInt(11, obj.getCodNota());
 
@@ -268,6 +271,7 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		obj.setValorTotalNota(rs.getDouble("VALOR_TOTAL_NOTA"));
 		obj.setChaveNF(rs.getString("CHAVE_NF"));
 		obj.setDataEmissao(rs.getDate("DATA_EMISSAO"));
+		obj.setDataEntrada(rs.getDate("DATA_ENTRADA"));
 		obj.setObs(rs.getString("OBS"));
 		return obj;
 	}

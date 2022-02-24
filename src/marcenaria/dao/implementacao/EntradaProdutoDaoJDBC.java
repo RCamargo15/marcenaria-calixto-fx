@@ -429,6 +429,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setValorTotalNota(rs.getDouble("VALOR_TOTAL_NOTA"));
 		obj.setChaveNF(rs.getString("CHAVE_NF"));
 		obj.setDataEmissao(rs.getDate("DATA_EMISSAO"));
+		obj.setDataEntrada(rs.getDate("DATA_ENTRADA"));
 		obj.setObs(rs.getString("OBS"));
 		return obj;
 	}

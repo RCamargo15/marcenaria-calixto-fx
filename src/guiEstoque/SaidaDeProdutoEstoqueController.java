@@ -14,7 +14,6 @@ import java.util.Set;
 import Db.DbException;
 import entities.services.EstoqueService;
 import entities.services.FuncionarioService;
-import entities.services.ProdutoService;
 import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -29,10 +28,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import marcenaria.entities.Estoque;
 import marcenaria.entities.Funcionario;
-import marcenaria.entities.Produto;
 import marcenaria.entities.SaidaProduto;
 import model.exceptions.ValidationException;
 
@@ -45,9 +46,7 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 	private EstoqueService estoqueService;
 
 	private FuncionarioService funcionarioService;
-
-	private ProdutoService produtoService;
-
+	
 	private List<DataChangeListener> dataChangeListener = new ArrayList<>();
 
 	@FXML
@@ -83,15 +82,14 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 	private ObservableList<Funcionario> obsListFuncionario;
 
 	public void setSaidaProduto(SaidaProduto saidaProduto) {
-		this.saidaProduto = saidaProduto;
-	}
+	this.saidaProduto = saidaProduto;
+}
 
-	public void setSaidaProdutoServices(SaidaProdutoService saidaProdutoService, EstoqueService estoqueService,
-			FuncionarioService funcionarioService, ProdutoService produtoService) {
+	public void setServices(SaidaProdutoService saidaProdutoService, EstoqueService estoqueService,
+			FuncionarioService funcionarioService) {
 		this.saidaProdutoService = saidaProdutoService;
 		this.estoqueService = estoqueService;
 		this.funcionarioService = funcionarioService;
-		this.produtoService = produtoService;
 	}
 
 	public void subscribeDataListenerChange(DataChangeListener listener) {
@@ -129,7 +127,7 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 		SaidaProduto obj = new SaidaProduto();
 
 		obj.setCodSaida(Utils.tryParseToInt(txtCodSaida.getText()));
-		obj.setIdEstoque(comboBoxIdEstoque.getValue());
+		obj.setIdEstoque(comboBoxProdutoEstoque.getValue());
 		obj.setCodProduto(comboBoxProdutoEstoque.getValue());
 
 		if (dpDataSaida.getValue() == null) {
@@ -165,8 +163,10 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 			comboBoxProdutoEstoque.setValue(saidaProduto.getCodProduto());
 		}
 
-		if (saidaProduto.getDataSaida() != null) {
-			dpDataSaida.setValue(LocalDate.ofInstant(saidaProduto.getDataSaida().toInstant(), ZoneId.systemDefault()));
+		if(saidaProduto.getDataSaida() != null) {
+			java.sql.Date sqlDate = (java.sql.Date) saidaProduto.getDataSaida();
+			LocalDate calendarDate = sqlDate.toLocalDate();
+			dpDataSaida.setValue(calendarDate);
 		}
 
 		txtQuantidade.setText(String.valueOf(saidaProduto.getQuantidade()));
@@ -179,13 +179,16 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 
 	}
 
-	private void onBtCancelarAction(ActionEvent event) {
+	public void onBtCancelarAction(ActionEvent event) {
 		Utils.currentStage(event).close();
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
+		initializeComboBoxIdEstoque();
+		initializeComboBoxCodProduto();
+		initializeComboBoxFuncionario();
+		Utils.formatDatePicker(dpDataSaida, "dd/MM/yyyy");
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {
@@ -201,7 +204,6 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 		obsListEstoque = FXCollections.observableArrayList(list);
 		comboBoxIdEstoque.setItems(obsListEstoque);
 		comboBoxProdutoEstoque.setItems(obsListEstoque);
-
 	}
 
 	public void loadFuncionario() {
@@ -213,5 +215,41 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 		obsListFuncionario = FXCollections.observableArrayList(list);
 		comboBoxFuncionario.setItems(obsListFuncionario);
 	}
-
+	
+	private void initializeComboBoxIdEstoque() {
+		Callback<ListView<Estoque>, ListCell<Estoque>> factory = lv -> new ListCell<Estoque>() {
+			@Override
+			protected void updateItem(Estoque item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : String.valueOf(item.getId()));
+			}
+		};
+		comboBoxIdEstoque.setCellFactory(factory);
+		comboBoxIdEstoque.setButtonCell(factory.call(null));
+	}
+	
+	private void initializeComboBoxCodProduto() {
+		Callback<ListView<Estoque>, ListCell<Estoque>> factory = lv -> new ListCell<Estoque>() {
+			@Override
+			protected void updateItem(Estoque item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : String.valueOf(item.getCodProduto()));
+			}
+		};
+		comboBoxProdutoEstoque.setCellFactory(factory);
+		comboBoxProdutoEstoque.setButtonCell(factory.call(null));
+	}
+	
+	private void initializeComboBoxFuncionario() {
+		Callback<ListView<Funcionario>, ListCell<Funcionario>> factory = lv -> new ListCell<Funcionario>() {
+			@Override
+			protected void updateItem(Funcionario item, boolean empty) {
+				super.updateItem(item, empty);
+				setText(empty ? "" : String.valueOf(item.getRegistroFunc()));
+			}
+		};
+		comboBoxFuncionario.setCellFactory(factory);
+		comboBoxFuncionario.setButtonCell(factory.call(null));
+	}
 }
+	

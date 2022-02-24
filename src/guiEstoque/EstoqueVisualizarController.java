@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import Db.DbException;
 import application.Main;
@@ -22,10 +23,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -79,6 +82,9 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 	
 	@FXML 
 	private Button btSaidaDeProdutos;
+	
+	@FXML 
+	private Button btVisualizarSaidas;
 
 	private ObservableList<Estoque> obsList;
 	
@@ -98,7 +104,15 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 	public void onBtSaidaDeProduto(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		SaidaProduto obj = new SaidaProduto();
-		createSaidaDeProdutoForm(obj, parentStage, "/guiEstoque/SaideDeProdutosEstoque.fxml");
+		createSaidaDeProdutosEstoqueForm(obj, parentStage, "/guiEstoque/SaidaDeProdutoEstoque.fxml");
+	}
+	
+	@FXML
+	public void onBtVisualizarSaidasAction() {
+		loadSaidaProdutoVisualizar("/guiEstoque/SaidaProdutoVisualizar.fxml", (SaidaProdutoVisualizarController controller) ->{
+			controller.setServices(new SaidaProdutoService(), produtoService, new FuncionarioService(), estoqueService);
+			controller.updateTableViewSaidaProduto();
+		});
 	}
 
 	@FXML
@@ -189,7 +203,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 			
 			SaidaDeProdutoEstoqueController saidaProdutoController = loader.getController();
 			saidaProdutoController.setSaidaProduto(obj);
-			saidaProdutoController.setSaidaProdutoServices(new SaidaProdutoService(), estoqueService, new FuncionarioService(), produtoService);
+			saidaProdutoController.setServices(new SaidaProdutoService(), estoqueService, new FuncionarioService());
 			saidaProdutoController.subscribeDataListenerChange(this);
 			saidaProdutoController.loadEstoque();
 			saidaProdutoController.loadFuncionario();
@@ -263,6 +277,27 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 			} catch (DbException e) {
 				Alerts.showAlert("Erro ao excluir estoque", null, e.getMessage(), AlertType.ERROR);
 			}
+		}
+	}
+	
+	public synchronized <T> void loadSaidaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+		}
+		catch(IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 
