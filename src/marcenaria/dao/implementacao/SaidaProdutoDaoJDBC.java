@@ -290,7 +290,7 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 		obj.setCodSaida(rs.getInt("COD_SAIDA"));
 		obj.setIdEstoque(stock);
 		obj.setCodProduto(stock);
-		obj.setDataSaida(rs.getDate("DATA_SAIDA"));
+		obj.setDataSaida(new java.util.Date(rs.getTimestamp("DATA_SAIDA").getTime()));
 		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setRespSaida(func);
 

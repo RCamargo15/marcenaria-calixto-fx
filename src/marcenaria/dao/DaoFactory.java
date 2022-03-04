@@ -8,6 +8,8 @@ import marcenaria.dao.implementacao.EstoqueDaoJDBC;
 import marcenaria.dao.implementacao.FornecedorDaoJDBC;
 import marcenaria.dao.implementacao.FuncionarioDaoJDBC;
 import marcenaria.dao.implementacao.NotasComprasDaoJDBC;
+import marcenaria.dao.implementacao.OrcamentoClienteDaoJDBC;
+import marcenaria.dao.implementacao.OrcamentoEmpresaDaoJDBC;
 import marcenaria.dao.implementacao.OrdemServicoClienteDaoJDBC;
 import marcenaria.dao.implementacao.OrdemServicoEmpresaDaoJDBC;
 import marcenaria.dao.implementacao.ProdutoDaoJDBC;
@@ -56,5 +58,13 @@ public class DaoFactory {
 	
 	public static OrdemServicoEmpresaDao createOrdemServicoEmpresaDao() {
 		return new OrdemServicoEmpresaDaoJDBC(Db.getConnection());
+	}
+	
+	public static OrcamentoClienteDao createOrcamentoClienteDao() {
+		return new OrcamentoClienteDaoJDBC(Db.getConnection());
+	}
+	
+	public static OrcamentoEmpresaDao createOrcamentoEmpresaDao() {
+		return new OrcamentoEmpresaDaoJDBC(Db.getConnection());
 	}
 }

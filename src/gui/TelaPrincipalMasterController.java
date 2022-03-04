@@ -13,6 +13,8 @@ import entities.services.EmpresaService;
 import entities.services.EstoqueService;
 import entities.services.FornecedorService;
 import entities.services.FuncionarioService;
+import entities.services.NotasComprasService;
+import entities.services.OrcamentoClienteService;
 import entities.services.ProdutoService;
 import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
@@ -27,6 +29,8 @@ import guiFornecedor.CadastroFornecedorTelaPrincipalController;
 import guiFornecedor.FornecedorVisualizarController;
 import guiFuncionarios.CadastroFuncionarioTelaPrincipalController;
 import guiFuncionarios.FuncionarioVisualizarController;
+import guiNotasCompras.NotasComprasVisualizarController;
+import guiOrcamentos.OrcamentoClienteVisualizarController;
 import guiProduto.ProdutoVisualizarController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,9 +83,6 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	private MenuItem menuItemEntradaProdutoCadastrar;
-
-	@FXML
-	private MenuItem menuItemSaidaProdutoVisualizar;
 
 	@FXML
 	private MenuItem menuItemEntradaProdutoVisualizar;
@@ -183,7 +184,10 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemNotaCompraVisualizarrAction() {
-
+		loadNotasComprasVisualizar("/guiNotasCompras/NotasComprasVisualizar.fxml", (NotasComprasVisualizarController controller) ->{
+			controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService());
+			controller.updateTableViewNotasCompras();
+		});
 	}
 
 	@FXML
@@ -222,11 +226,6 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	}
 
 	@FXML
-	public void onMenuItemSaidaProdutoVisualizarAction() {
-
-	}
-
-	@FXML
 	public void onMenuItemOrdemServicoClienteGerarAction() {
 
 	}
@@ -258,7 +257,10 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemOrcamentoVisualizarAction() {
-
+			loadOrcamentoClienteVisualizar("/guiOrcamentos/OrcamentoClienteVisualizar.fxml", (OrcamentoClienteVisualizarController controller) ->{
+				controller.SetServices(new OrcamentoClienteService(), new ClienteService(), new ProdutoService());
+				controller.updateTableViewOrcamentoCliente();
+			});
 	}
 
 	@FXML
@@ -519,6 +521,49 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 			T controller = loader.getController();
 			initializeTable.accept(controller);
 			
+		}
+		catch(IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public synchronized <T> void loadNotasComprasVisualizar(String absoluteName, Consumer<T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+			
+		}
+		catch(IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public synchronized <T> void loadOrcamentoClienteVisualizar(String absoluteName, Consumer <T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			T controller = loader.getController();
+			initializeTable.accept(controller);
 		}
 		catch(IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);

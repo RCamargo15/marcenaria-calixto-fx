@@ -19,11 +19,12 @@ public class Utils {
 	public static Stage currentStage(ActionEvent event) {
 		return (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
-
-	public static Integer tryParseToInt(String str) {
+	
+	public static Integer tryParseToInt(String nmr) {
 		try {
-			return Integer.parseInt(str);
-		} catch (NumberFormatException e) {
+			return Integer.parseInt(nmr);
+		}
+		catch(NumberFormatException e) {
 			return null;
 		}
 	}
@@ -31,7 +32,8 @@ public class Utils {
 	public static Double tryParseToDouble(String str) {
 		try {
 			return Double.parseDouble(str);
-		} catch (NumberFormatException e) {
+		}
+		catch(NumberFormatException e) {
 			return null;
 		}
 	}

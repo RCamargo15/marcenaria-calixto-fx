@@ -59,11 +59,6 @@
                         <MenuItem fx:id="menuItemEntradaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Visualizar todas as entradas" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Saída de produtos">
-                     <items>
-                        <MenuItem fx:id="menuItemSaidaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Registro de saídas" />
-                     </items>
-                  </Menu>
                   <Menu mnemonicParsing="false" text="Ordens de serviço de clientes">
                      <items>
                         <MenuItem fx:id="menuItemOrdemServicoClienteCadastrar" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoClienteGerarAction" text="Gerar ordem de serviço" />

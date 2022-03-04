@@ -372,7 +372,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setCodEntrada(rs.getInt("COD_ENTRADA"));
 		obj.setNumeroNF(notaCompra);
 		obj.setCodProduto(prod);
-		obj.setDataEntrada(rs.getDate("DATA_ENTRADA"));
+		obj.setDataEntrada(new java.util.Date(rs.getTimestamp("DATA_ENTRADA").getTime()));
 		obj.setQuantidade(notaCompra);
 		obj.setValorUnit(notaCompra);
 		obj.setValorTotal(notaCompra);
@@ -428,8 +428,8 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
 		obj.setValorTotalNota(rs.getDouble("VALOR_TOTAL_NOTA"));
 		obj.setChaveNF(rs.getString("CHAVE_NF"));
-		obj.setDataEmissao(rs.getDate("DATA_EMISSAO"));
-		obj.setDataEntrada(rs.getDate("DATA_ENTRADA"));
+		obj.setDataEmissao(new java.util.Date(rs.getTimestamp("DATA_EMISSAO").getTime()));
+		obj.setDataEntrada(new java.util.Date(rs.getTimestamp("DATA_ENTRADA").getTime()));
 		obj.setObs(rs.getString("OBS"));
 		return obj;
 	}

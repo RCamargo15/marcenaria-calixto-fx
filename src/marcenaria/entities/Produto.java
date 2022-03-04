@@ -46,7 +46,7 @@ public class Produto implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codProduto);
+		return Objects.hash(codProduto, descProduto, precoUnit);
 	}
 
 	@Override
@@ -58,7 +58,8 @@ public class Produto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Produto other = (Produto) obj;
-		return Objects.equals(codProduto, other.codProduto);
+		return Objects.equals(codProduto, other.codProduto) && Objects.equals(descProduto, other.descProduto)
+				&& Objects.equals(precoUnit, other.precoUnit);
 	}
 
 	@Override

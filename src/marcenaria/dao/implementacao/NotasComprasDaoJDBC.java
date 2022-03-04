@@ -1,7 +1,6 @@
 package marcenaria.dao.implementacao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -223,8 +222,10 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 
 		try {
 			st = conn.prepareStatement(
-					"SELECT * FROM NOTA_COMPRA_MATERIAL INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
-							+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = NOTA_COMPRA_MATERIAL.COD_PRODUTO");
+					"SELECT * FROM MARCENARIA.NOTA_COMPRA_MATERIAL"
+					+" INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR"
+					+" INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = NOTA_COMPRA_MATERIAL.COD_PRODUTO"
+					+" GROUP BY COD_NOTA");
 
 			rs = st.executeQuery();
 
@@ -270,8 +271,8 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
 		obj.setValorTotalNota(rs.getDouble("VALOR_TOTAL_NOTA"));
 		obj.setChaveNF(rs.getString("CHAVE_NF"));
-		obj.setDataEmissao(rs.getDate("DATA_EMISSAO"));
-		obj.setDataEntrada(rs.getDate("DATA_ENTRADA"));
+		obj.setDataEmissao(new java.util.Date(rs.getTimestamp("DATA_EMISSAO").getTime()));
+		obj.setDataEntrada(new java.util.Date(rs.getTimestamp("DATA_ENTRADA").getTime()));
 		obj.setObs(rs.getString("OBS"));
 		return obj;
 	}
@@ -288,14 +289,14 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		obj.setComplemento(rs.getString("COMPLEMENTO"));
 		obj.setBairro(rs.getString("BAIRRO"));
 		obj.setCep(rs.getString("CEP"));
-		obj.setCidade(rs.getString("CIDADE"));
-		obj.setEstado(rs.getString("ESTADO"));
-		obj.setUf(rs.getString("UF"));
 		obj.setDdd(rs.getInt("DDD"));
 		obj.setTelefone(rs.getString("TELEFONE"));
 		obj.setSite(rs.getString("SITE"));
 		obj.setEmail(rs.getString("EMAIL"));
 		obj.setObs(rs.getString("OBS"));
+		obj.setCidade(rs.getString("CIDADE"));
+		obj.setEstado(rs.getString("ESTADO"));
+		obj.setUf(rs.getString("UF"));
 		return obj;
 	}
 

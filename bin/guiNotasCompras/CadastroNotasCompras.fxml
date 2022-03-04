@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="459.0" prefWidth="1272.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/telaPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiNotasCompras.CadastroNotasComprasController">
+   <children>
+      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Label text="CADASTRO DE NOTAS FISCAIS">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Label text="DADOS DA NOTA FISCAL">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <GridPane fx:id="gpNotasCompras" styleClass="gridPane" stylesheets="@../gui.styles/cadastroCliente.css">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" prefWidth="224.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="834.0" minWidth="10.0" prefWidth="327.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="834.0" minWidth="10.0" prefWidth="289.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="834.0" minWidth="10.0" prefWidth="443.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" text="FORNECEDOR">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="VALOR UNITÁRIO" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="txtValorTotalNota" prefHeight="25.0" prefWidth="287.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </TextField>
+            <Label fx:id="errorNome" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorRg" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtCodEstoque" disable="true" prefHeight="25.0" prefWidth="287.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="errorComboBoxFornecedor" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="ERRO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorComboBoxProduto" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="comboBoxFornecedor" prefHeight="25.0" prefWidth="478.0" GridPane.columnIndex="1" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="CHAVE NF" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtChaveNF" prefHeight="25.0" prefWidth="287.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Label fx:id="errorNumeroNF" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" text="Nº NOTA FISCAL" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtNumeroNF" GridPane.columnIndex="3" />
+            <ComboBox fx:id="comboBoxProduto" prefHeight="25.0" prefWidth="478.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" text="PRODUTO" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtQuantidade" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" text="QUANTIDADE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="VALOR TOTAL" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="VALOR TOTAL DA NOTA" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtValorUnit" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtValorTotal" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label fx:id="errorQuantidade" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorValorTotal" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorValorUnit" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dpDataEmissao" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <DatePicker fx:id="dpDataEntrada" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="DATA EMISSÃO" GridPane.rowIndex="8">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="DATA ENTRADA" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="OBS" GridPane.rowIndex="10">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtObs" prefHeight="25.0" prefWidth="287.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="txtCodNotasCompras" prefHeight="25.0" prefWidth="287.0" GridPane.columnIndex="3" GridPane.rowIndex="10" />
+            <Label fx:id="errorValorTotalNota" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorChaveNF" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="3" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorDataEntrada" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="3" GridPane.rowIndex="9">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorDataEmissao" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="9">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <ToolBar fx:id="bbPessoas1" prefHeight="48.0" prefWidth="894.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <items>
+            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="SALVAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </items>
+      </ToolBar>
+   </children>
+</VBox>

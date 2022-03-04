@@ -196,6 +196,27 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		}
 	}
 	
+	public synchronized <T> void loadSaidaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+		}
+		catch(IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
 	public void createSaidaDeProdutosEstoqueForm(SaidaProduto obj, Stage parentStage, String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
@@ -277,27 +298,6 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 			} catch (DbException e) {
 				Alerts.showAlert("Erro ao excluir estoque", null, e.getMessage(), AlertType.ERROR);
 			}
-		}
-	}
-	
-	public synchronized <T> void loadSaidaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-			VBox newVBox = loader.load();
-			
-			Scene mainScene = Main.getMainScene();
-			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-			
-			Node mainMenu = mainVBox.getChildren().get(0);
-			mainVBox.getChildren().clear();
-			mainVBox.getChildren().add(mainMenu);
-			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
-			T controller = loader.getController();
-			initializeTable.accept(controller);
-		}
-		catch(IOException e) {
-			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 

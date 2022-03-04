@@ -300,10 +300,10 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 		obj.setNumeroPedido(rs.getInt("NUM_PEDIDO"));
 		obj.setCodCliente(cliente);
 		obj.setDescServico(rs.getString("DESC_SERVICO"));
-		obj.setDataOrdem(rs.getDate("DATA_ORDEM"));
-		obj.setDataInicio(rs.getDate("DATA_INICIO"));
-		obj.setPrazoEntrega(rs.getDate("PRAZO_ENTREGA"));
-		obj.setDataEntrega(rs.getDate("DATA_ENTREGA"));
+		obj.setDataOrdem(new java.util.Date(rs.getTimestamp("DATA_ORDEM").getTime()));
+		obj.setDataInicio(new java.util.Date(rs.getTimestamp("DATA_INICIO").getTime()));
+		obj.setPrazoEntrega(new java.util.Date(rs.getTimestamp("PRAZO_ENTREGA").getTime()));
+		obj.setDataEntrega(new java.util.Date(rs.getTimestamp("DATA_ENTREGA").getTime()));
 		obj.setStatusServico(rs.getString("STATUS_SERVICO"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
 		obj.setFuncResponsavel(funcionario);
