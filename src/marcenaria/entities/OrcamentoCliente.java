@@ -115,8 +115,8 @@ public class OrcamentoCliente implements Serializable {
 		this.codProduto = codProduto;
 	}
 
-	public Produto getValor() {
-		return valor;
+	public Double getValor() {
+		return valor.getPrecoUnit();
 	}
 
 	public void setValor(Produto valor) {

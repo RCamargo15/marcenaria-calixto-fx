@@ -4,7 +4,6 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -241,11 +240,17 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 
 	@FXML
 	public List<OrcamentoCliente> onBtInserirAction() {
-		btInserirProduto.setOnAction((ActionEvent t) -> {
-
+		
+		Map<String, String> errors = ValidateExceptions();
+		
+			if(errors.size() > 0) {
+				Alerts.showAlert("Erro ao inserir produto", null, "Preencha os dados do cliente antes de inserir produtos no orçamento", AlertType.INFORMATION);
+			}
+			else {
 			double valorTotal = 0;
 			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
 			OrcamentoCliente orcamento = getOrcamentoClienteData();
+			
 
 			Produto produto = produtoService.findByCodProduto(produtoTemp.getCodProduto());
 
@@ -260,9 +265,8 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 			}
 			
 			txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
-			
-		});
-		ValidateExceptions();
+			}
+		
 		return listaParaCadastro;
 	}
 
@@ -303,7 +307,6 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		setErrorMessages(exception.getErrors());
 
 		return exception.getErrors();
-
 	}
 
 	@FXML
@@ -437,7 +440,6 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 
 	private void initRemoverButtons() {
 
-		List<ProdutoOrcamento> list1 = new ArrayList<>();
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<ProdutoOrcamento, ProdutoOrcamento>() {
 			private final Button button = new Button("Remover");
@@ -458,6 +460,19 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 					double valorRem = obj.getPrecoProd() * obj.getQuantidade();
 					valorTotal = valorTotal - valorRem;
 					txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
+					
+					double verify = Double.parseDouble(txtValorTotalOrcamento.getText());
+					
+					//Safety verification
+					if(verify == 0.0 && !prodOrcamento.isEmpty()) {
+						double valorTotal2 = 0;
+						double valorTemp = 0;
+						for(ProdutoOrcamento prod : prodOrcamento) {
+							valorTemp = prod.getPrecoProd() * prod.getQuantidade();
+							valorTotal2 = valorTotal2 + valorTemp;
+						}
+						txtValorTotalOrcamento.setText(String.valueOf(valorTotal2));
+					}
 
 					ObservableList<ProdutoOrcamento> list = cbCodProduto.getItems();
 					Comparator<ProdutoOrcamento> compare = Comparator.comparing(ProdutoOrcamento::getDescProduto);

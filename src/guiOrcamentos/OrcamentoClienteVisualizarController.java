@@ -224,7 +224,6 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			editarController.setOrcamentoCliente(obj);
 			editarController.setServices(orcamentoClienteService, clienteService, produtoService);
 			editarController.loadClientes();
-			editarController.loadProdutos();
 			editarController.updateOrcamentoClienteData();
 			
 			Stage editarOrcamentoStage = new Stage();
@@ -236,6 +235,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			editarOrcamentoStage.showAndWait();
 		}
 		catch(IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}

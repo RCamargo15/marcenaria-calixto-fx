@@ -43,7 +43,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setDate(7, new java.sql.Date(obj.getDataOrcamento().getTime()));
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
-			st.setDouble(10, obj.getValor().getPrecoUnit());
+			st.setDouble(10, obj.getValor());
 			st.setDouble(11, obj.getValorTotal());
 			st.setString(12, obj.getObs());
 			
@@ -78,7 +78,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 					+" WHERE ORCAMENTO_CLIENTE.NUM_ORCAMENTO = ?"
 					);
 			
-			Double valorTotal = obj.getValor().getPrecoUnit() * obj.getQuantidade();
+			Double valorTotal = obj.getValor() * obj.getQuantidade();
 			
 			st.setInt(1, obj.getNumOrcamento());
 			st.setInt(2, obj.getCodCliente().getCodCliente());
@@ -89,7 +89,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setDate(7, new java.sql.Date(obj.getDataOrcamento().getTime()));
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
-			st.setDouble(10, obj.getValor().getPrecoUnit());
+			st.setDouble(10, obj.getValor());
 			st.setDouble(11, valorTotal);
 			st.setString(12, obj.getObs());
 			st.setInt(13, obj.getId());
@@ -122,6 +122,52 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 		}
 	}
 
+	@Override
+	public List<OrcamentoCliente> findByNumOrcamentoList(Integer numOrcamento) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+			try {
+				st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORCAMENTO_CLIENTE "
+						+ "INNER JOIN CLIENTE ON CLIENTE.COD_CLIENTE = ORCAMENTO_CLIENTE.COD_CLIENTE "
+						+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_CLIENTE.COD_PRODUTO WHERE NUM_ORCAMENTO = ?");
+				
+				st.setInt(1, numOrcamento);
+				
+				rs = st.executeQuery();
+				
+				Map<Integer, Cliente> clienteMap = new HashMap<>();
+				Map<Integer, Produto> produtoMap = new HashMap<>();
+				List<OrcamentoCliente> lista = new ArrayList<>();
+				
+				while(rs.next()) {
+					
+					Cliente cliente = clienteMap.get(rs.getInt("COD_CLIENTE"));
+					if(cliente == null) {
+						cliente = criarCliente(rs);
+						clienteMap.put(rs.getInt("COD_CLIENTE"), cliente);
+					}
+					
+					Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
+					if(produto == null) {
+						produto = criarProduto(rs);
+						produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
+					}
+					
+					OrcamentoCliente obj = criarOrcamentoCliente(rs, cliente, produto);
+					lista.add(obj);
+				}
+				return lista;
+			}
+			catch(SQLException e) {
+				throw new DbException(e.getMessage());
+			}
+			finally {
+				Db.closeResultSet(rs);
+				Db.closeStatement(st);
+			}
+		}
+	
+	
 	@Override
 	public OrcamentoCliente findByNumOrcamento(Integer numOrcamento) {
 		PreparedStatement st = null;

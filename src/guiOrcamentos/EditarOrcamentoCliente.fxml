@@ -117,11 +117,11 @@
       </ToolBar>
       <TableView fx:id="tableViewOrcamentoCliente" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnCodProduto" prefWidth="75.0" text="PRODUTO" />
-          <TableColumn fx:id="tableColumnValorUnit" prefWidth="147.0" text="VALOR UNITÁRIO" />
+          <TableColumn fx:id="tableColumnDescProduto" prefWidth="104.0" text="PRODUTO" />
+          <TableColumn fx:id="tableColumnValorUnit" prefWidth="118.0" text="VALOR UNITÁRIO" />
             <TableColumn fx:id="tableColumnQuantidade" prefWidth="147.0" text="QUANTIDADE" />
-            <TableColumn prefWidth="147.0" text="EDITAR" />
-            <TableColumn prefWidth="147.0" text="REMOVER" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="147.0" text="EDITAR" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="147.0" text="REMOVER" />
         </columns>
       </TableView>
       <ToolBar prefHeight="40.0" prefWidth="200.0" />

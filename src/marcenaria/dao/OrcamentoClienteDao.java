@@ -12,6 +12,8 @@ public interface OrcamentoClienteDao {
 
 	void deleteByNumOrcamento(Integer numOrcamento);
 
+	List <OrcamentoCliente> findByNumOrcamentoList(Integer numOrcamento);
+	
 	OrcamentoCliente findByNumOrcamento(Integer numOrcamento);
 
 	List<OrcamentoCliente> findAll();

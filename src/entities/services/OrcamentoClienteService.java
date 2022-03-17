@@ -18,6 +18,10 @@ public class OrcamentoClienteService {
 	public List<OrcamentoCliente> findAllParaTabela(){
 		return orcamentoClienteDao.findAllParaTabela();
 	}
+	
+	public List<OrcamentoCliente> findByNumOrcamentoList(Integer numOrcamento){
+		return orcamentoClienteDao.findByNumOrcamentoList(numOrcamento);
+	}
 
 	public void saveOrUpdate(OrcamentoCliente obj) {
 			if (obj.getId() == null) {
@@ -31,16 +35,6 @@ public class OrcamentoClienteService {
 		orcamentoClienteDao.deleteByNumOrcamento(obj.getNumOrcamento());
 	}
 
-	public OrcamentoCliente findByNumOrcamento(Integer numOrcamento) {
-		List<OrcamentoCliente> list = orcamentoClienteDao.findAll();
-
-		for (OrcamentoCliente orc : list) {
-			if (orc.getNumOrcamento() == numOrcamento) {
-				return orc;
-			}
-		}
-		return null;
-	}
 
 	public List<OrcamentoCliente> findByCodCliente(Integer codCliente) {
 		List<OrcamentoCliente> list = orcamentoClienteDao.findAll();
@@ -54,5 +48,15 @@ public class OrcamentoClienteService {
 
 		return listCodProd;
 	}
+	
+	public OrcamentoCliente findByNumOrcamento(Integer numOrcamento) {
+		List<OrcamentoCliente> list = orcamentoClienteDao.findAll();
 
+		for (OrcamentoCliente orc : list) {
+			if (orc.getNumOrcamento() == numOrcamento) {
+				return orc;
+			}
+		}
+		return null;
+	}
 }

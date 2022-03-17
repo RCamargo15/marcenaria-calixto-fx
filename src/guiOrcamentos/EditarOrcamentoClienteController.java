@@ -1,5 +1,6 @@
 package guiOrcamentos;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -7,37 +8,46 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import Db.DbException;
 import application.Main;
 import entities.services.ClienteService;
 import entities.services.OrcamentoClienteService;
 import entities.services.ProdutoService;
 import gui.listeners.DataChangeListener;
+import gui.util.Alerts;
 import gui.util.Utils;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import marcenaria.entities.Cliente;
 import marcenaria.entities.OrcamentoCliente;
-import marcenaria.entities.Produto;
-import marcenaria.entities.auxiliar.ProdutoOrcamento;
 import model.exceptions.ValidationException;
 
 public class EditarOrcamentoClienteController implements Initializable {
@@ -48,9 +58,6 @@ public class EditarOrcamentoClienteController implements Initializable {
 	private ProdutoService produtoService;
 	
 	private List<DataChangeListener> dataChangeListener = new ArrayList<>();
-	
-	@FXML
-	private TextField txtId;
 	
 	@FXML
 	private TextField txtNumOrcamento;
@@ -92,32 +99,27 @@ public class EditarOrcamentoClienteController implements Initializable {
 	private TextField txtObs;
 	
 	@FXML
-	private GridPane gpProduto;
-	
-	@FXML
-	private ComboBox<Produto> cbCodProduto;
-	@FXML
-	private Label erroProduto;
-	
-	@FXML
 	private TextField txtQuantidade;
 	@FXML
 	private Label erroQuantidade;
 	
 	@FXML
-	private Button btInserirProduto;
-	
-	@FXML
 	private TableView<OrcamentoCliente> tableViewOrcamentoCliente;
 	
 	@FXML
-	private TableColumn<ProdutoOrcamento, Integer> tableColumnDescProduto;
+	private TableColumn<OrcamentoCliente, Integer> tableColumnDescProduto;
 	
 	@FXML
-	private TableColumn<ProdutoOrcamento, Double> tableColumnValorUnit;
+	private TableColumn<OrcamentoCliente, Double> tableColumnValorUnit;
 	
 	@FXML
-	private TableColumn<ProdutoOrcamento, Integer> tableColumnQuantidade;
+	private TableColumn<OrcamentoCliente, Integer> tableColumnQuantidade;
+	
+	@FXML
+	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnEditar;
+	
+	@FXML
+	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnRemover;
 	
 	@FXML
 	private TextField txtValorTotalOrcamento;
@@ -130,11 +132,7 @@ public class EditarOrcamentoClienteController implements Initializable {
 	
 	private ObservableList<Cliente> obsListCliente;
 	
-	private ObservableList<Produto> obsListProduto;
-	
 	private ObservableList<OrcamentoCliente> obsListProdutoOrcamento;
-	
-	private List<OrcamentoCliente> listaProdutos = new ArrayList<>();
 	
 	public void setOrcamentoCliente(OrcamentoCliente orcamentoCliente) {
 		this.orcamentoCliente = orcamentoCliente;
@@ -175,9 +173,7 @@ public class EditarOrcamentoClienteController implements Initializable {
 			obj.setDataOrcamento(Date.from(instant));
 		}
 		
-		obj.setCodProduto(cbCodProduto.getValue());
 		obj.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-		obj.setValor(cbCodProduto.getValue());
 		obj.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
 		obj.setObs(txtObs.getText());
 		
@@ -196,8 +192,8 @@ public class EditarOrcamentoClienteController implements Initializable {
 		return obj;
 	}
 	
-	//PARA TERMINAR
 	public void updateOrcamentoClienteData() {
+		double valorTotal = 0;
 		if(orcamentoCliente == null) {
 			throw new IllegalStateException("Orcamento Cliente Service null");
 		}
@@ -215,30 +211,24 @@ public class EditarOrcamentoClienteController implements Initializable {
 		txtCelularCliente.setText(orcamentoCliente.getCelular());
 		txtEmailCliente.setText(orcamentoCliente.getEmail());
 		txtDescricaoServico.setText(orcamentoCliente.getDescServico());
-		txtValorTotalOrcamento.setText(String.valueOf(orcamentoCliente.getValorTotal()));
+
+		List<OrcamentoCliente> listOrcamentos = orcamentoClienteService.findByNumOrcamentoList(orcamentoCliente.getNumOrcamento());
 		
-		
-		List<OrcamentoCliente> listOrcamentos = orcamentoClienteService.findAll();
-		List<OrcamentoCliente> listIguais = new ArrayList<>();
-		
-		for(OrcamentoCliente oc : listOrcamentos) {
-			if(oc.getNumOrcamento().equals(orcamentoCliente.getNumOrcamento())) {
-				listIguais.add(oc);
-			}
+		for(OrcamentoCliente orc : listOrcamentos) {
+			double valorMoment = orc.getValor() * orc.getQuantidade();
+			valorTotal = valorTotal + valorMoment;
 		}
 		
-		cbCodProduto.getSelectionModel().selectFirst();
-		
-		obsListProdutoOrcamento = FXCollections.observableArrayList(listIguais);
+		txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
+
+		obsListProdutoOrcamento = FXCollections.observableArrayList(listOrcamentos);
 		tableViewOrcamentoCliente.setItems(obsListProdutoOrcamento);
 		
+		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
+		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
+		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valor"));
+		
 		txtObs.setText(orcamentoCliente.getObs());
-		
-	}
-	
-	@FXML
-	public void onBtInserirAction() {
-		
 	}
 	
 	private void setErrorMessages(Map<String, String> errors) {
@@ -255,16 +245,15 @@ public class EditarOrcamentoClienteController implements Initializable {
 		obsListCliente = FXCollections.observableArrayList(list);
 		cbCodCliente.setItems(obsListCliente);
 	}
-	
-	public void loadProdutos() {
-		if(produtoService == null) {
-			throw new IllegalStateException("Produto service null");
-		}
-		
-		List<Produto> list = produtoService.findAll();
-		obsListProduto = FXCollections.observableArrayList(list);
-		cbCodProduto.setItems(obsListProduto);
-	}
+//	
+//	public void loadProdutos() {
+//		if(produtoService == null) {
+//			throw new IllegalStateException("Produto service null");
+//		}
+//		
+//		List<Produto> list = produtoService.findAll();
+//		obsListProduto = FXCollections.observableArrayList(list);
+//	}
 	
 	private void initializeComboBoxCliente() {
 		Callback<ListView<Cliente>, ListCell<Cliente>> factory = lv -> new ListCell<Cliente>() {
@@ -277,18 +266,18 @@ public class EditarOrcamentoClienteController implements Initializable {
 		cbCodCliente.setCellFactory(factory);
 		cbCodCliente.setButtonCell(factory.call(null));
 	}
-	
-	private void initializeComboBoxProduto() {
-		Callback<ListView<Produto>, ListCell<Produto>> factory = lv -> new ListCell<Produto>() {
-			@Override
-			protected void updateItem(Produto item, boolean empty) {
-				super.updateItem(item, empty);
-				setText(empty ? "" : String.valueOf(item.getCodProduto()));
-			}
-		};
-		cbCodProduto.setCellFactory(factory);
-		cbCodProduto.setButtonCell(null);
-	}
+//	
+//	private void initializeComboBoxProduto() {
+//		Callback<ListView<Produto>, ListCell<Produto>> factory = lv -> new ListCell<Produto>() {
+//			@Override
+//			protected void updateItem(Produto item, boolean empty) {
+//				super.updateItem(item, empty);
+//				setText(empty ? "" : String.valueOf(item.getCodProduto()));
+//			}
+//		};
+//		cbCodProduto.setCellFactory(factory);
+//		cbCodProduto.setButtonCell(null);
+//	}
 	
 	
 	@FXML
@@ -312,9 +301,89 @@ public class EditarOrcamentoClienteController implements Initializable {
 	}
 	
 	public void initializeTables() {
-		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("descProduto"));
-		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("precoProd"));
+		initEditButtons();
+		initializeComboBoxCliente();
+		initRemoveButtons();
+	}
+	
+	private void createEditarProdutoOrcamentoForm(OrcamentoCliente obj, Stage parentStage, String absoluteName) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			EditarProdQuantidadeController editProdController = loader.getController();
+			editProdController.setOrcamentoCliente(obj);
+			editProdController.setServices(orcamentoClienteService, produtoService);
+			editProdController.loadProdutos();
+			editProdController.updateEditarProdQuantidadeData();
+
+			Stage editarProdQtdStage = new Stage();
+			editarProdQtdStage.setTitle("Editar produto e quantidade");
+			editarProdQtdStage.setScene(new Scene(newVBox));
+			editarProdQtdStage.setResizable(false);
+			editarProdQtdStage.initOwner(parentStage);
+			editarProdQtdStage.initModality(Modality.WINDOW_MODAL);
+			editarProdQtdStage.showAndWait();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+		
+		
+	}
+	
+	private void initEditButtons() {
+		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
+			private final Button button = new Button("Editar");
+
+			@Override
+			protected void updateItem(OrcamentoCliente obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> createEditarProdutoOrcamentoForm(obj, Utils.currentStage(event),
+						"/guiOrcamentos/EditarProdQuantidade.fxml"));
+			}
+		});
+	}
+
+	private void initRemoveButtons() {
+		tableColumnRemover.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnRemover.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
+			private final Button button = new Button("Deletar");
+
+			@Override
+			protected void updateItem(OrcamentoCliente obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> excluirOrcamentoCliente(obj));
+			}
+		});
+	}
+	
+	private void excluirOrcamentoCliente(OrcamentoCliente obj) {
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO", "Tem certeza que deseja remover esse orçamento?");
+			if(result.get() == ButtonType.OK) {
+				if(orcamentoClienteService == null) {
+					throw new IllegalStateException("Orcamento vazio");
+				}
+				try {
+					orcamentoClienteService.removerOrcamento(obj);
+//					updateTableViewOrcamentoCliente();
+				}
+				catch(DbException e) {
+					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+				}
+			}
 	}
 
 }
