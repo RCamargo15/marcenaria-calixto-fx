@@ -37,6 +37,7 @@ import javafx.util.Callback;
 import marcenaria.entities.Cliente;
 import marcenaria.entities.OrcamentoCliente;
 import marcenaria.entities.Produto;
+import marcenaria.entities.auxiliar.ProdutoOrcamento;
 import model.exceptions.ValidationException;
 
 public class EditarOrcamentoClienteController implements Initializable {
@@ -110,13 +111,13 @@ public class EditarOrcamentoClienteController implements Initializable {
 	private TableView<OrcamentoCliente> tableViewOrcamentoCliente;
 	
 	@FXML
-	private TableColumn<OrcamentoCliente, Integer> tableColumnCodProduto;
+	private TableColumn<ProdutoOrcamento, Integer> tableColumnDescProduto;
 	
 	@FXML
-	private TableColumn<OrcamentoCliente, Double> tableColumnValorUnit;
+	private TableColumn<ProdutoOrcamento, Double> tableColumnValorUnit;
 	
 	@FXML
-	private TableColumn<OrcamentoCliente, Integer> tableColumnQuantidade;
+	private TableColumn<ProdutoOrcamento, Integer> tableColumnQuantidade;
 	
 	@FXML
 	private TextField txtValorTotalOrcamento;
@@ -160,7 +161,6 @@ public class EditarOrcamentoClienteController implements Initializable {
 		
 		OrcamentoCliente obj = new OrcamentoCliente();
 		
-		obj.setId(Integer.parseInt(txtId.getText()));
 		obj.setNumOrcamento(Integer.parseInt(txtNumOrcamento.getText()));
 		obj.setCodCliente(cbCodCliente.getValue());
 		obj.setTelefone(txtTelefoneCliente.getText());
@@ -202,7 +202,6 @@ public class EditarOrcamentoClienteController implements Initializable {
 			throw new IllegalStateException("Orcamento Cliente Service null");
 		}
 		
-		txtId.setText(String.valueOf(orcamentoCliente.getId()));
 		txtNumOrcamento.setText(String.valueOf(orcamentoCliente.getNumOrcamento()));
 		
 		if(orcamentoCliente.getCodCliente() == null) {
@@ -216,9 +215,9 @@ public class EditarOrcamentoClienteController implements Initializable {
 		txtCelularCliente.setText(orcamentoCliente.getCelular());
 		txtEmailCliente.setText(orcamentoCliente.getEmail());
 		txtDescricaoServico.setText(orcamentoCliente.getDescServico());
+		txtValorTotalOrcamento.setText(String.valueOf(orcamentoCliente.getValorTotal()));
 		
 		
-		//trazendo o valor de tudo, corrigir amanha
 		List<OrcamentoCliente> listOrcamentos = orcamentoClienteService.findAll();
 		List<OrcamentoCliente> listIguais = new ArrayList<>();
 		
@@ -233,12 +232,6 @@ public class EditarOrcamentoClienteController implements Initializable {
 		obsListProdutoOrcamento = FXCollections.observableArrayList(listIguais);
 		tableViewOrcamentoCliente.setItems(obsListProdutoOrcamento);
 		
-		Double valorTotal = 0.0;
-		for(OrcamentoCliente oc : listIguais) {
-			valorTotal = oc.getValor().getPrecoUnit() * oc.getQuantidade();
-		}
-		
-		txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
 		txtObs.setText(orcamentoCliente.getObs());
 		
 	}
@@ -319,9 +312,9 @@ public class EditarOrcamentoClienteController implements Initializable {
 	}
 	
 	public void initializeTables() {
-		tableColumnCodProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
+		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("descProduto"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valor"));
+		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("precoProd"));
 	}
 
 }

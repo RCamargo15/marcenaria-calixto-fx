@@ -14,13 +14,17 @@ public class OrcamentoClienteService {
 	public List<OrcamentoCliente> findAll() {
 		return orcamentoClienteDao.findAll();
 	}
+	
+	public List<OrcamentoCliente> findAllParaTabela(){
+		return orcamentoClienteDao.findAllParaTabela();
+	}
 
 	public void saveOrUpdate(OrcamentoCliente obj) {
-		if (obj.getNumOrcamento() == null) {
-			orcamentoClienteDao.insert(obj);
-		} else {
-			orcamentoClienteDao.update(obj);
-		}
+			if (obj.getId() == null) {
+				orcamentoClienteDao.insert(obj);
+			} else {
+				orcamentoClienteDao.update(obj);
+			}
 	}
 
 	public void removerOrcamento(OrcamentoCliente obj) {

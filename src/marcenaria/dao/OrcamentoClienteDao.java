@@ -3,7 +3,6 @@ package marcenaria.dao;
 import java.util.List;
 
 import marcenaria.entities.OrcamentoCliente;
-import marcenaria.entities.Produto;
 
 public interface OrcamentoClienteDao {
 
@@ -16,4 +15,6 @@ public interface OrcamentoClienteDao {
 	OrcamentoCliente findByNumOrcamento(Integer numOrcamento);
 
 	List<OrcamentoCliente> findAll();
+	
+	List<OrcamentoCliente> findAllParaTabela();
 }

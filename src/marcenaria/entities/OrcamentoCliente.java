@@ -25,11 +25,10 @@ public class OrcamentoCliente implements Serializable {
 
 	}
 
-	public OrcamentoCliente(Integer id, Integer numOrcamento, Cliente codCliente, String telefone, String celular,
+	public OrcamentoCliente(Integer numOrcamento, Cliente codCliente, String telefone, String celular,
 			String email, String descServico, Date dataOrcamento, Produto codProduto, Integer quantidade, Produto valor,
 			Double valorTotal, String obs) {
 		super();
-		this.id = id;
 		this.numOrcamento = numOrcamento;
 		this.codCliente = codCliente;
 		this.telefone = telefone;

@@ -150,7 +150,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			throw new IllegalStateException("Orcamento null");
 		}
 
-		List<OrcamentoCliente> list = orcamentoClienteService.findAll();
+		List<OrcamentoCliente> list = orcamentoClienteService.findAllParaTabela();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewOrcamentoCliente.setItems(obsList);
 		initEditButtons();

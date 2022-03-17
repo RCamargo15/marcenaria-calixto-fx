@@ -34,8 +34,6 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 					"INSERT INTO MARCENARIA.ORCAMENTO_CLIENTE(NUM_ORCAMENTO, COD_CLIENTE, TELEFONE, CELULAR, EMAIL, DESC_SERVICO, DATA_ORCAMENTO, "
 					+"COD_PRODUTO, QUANTIDADE, VALOR, VALOR_TOTAL, OBS) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			
-			Double valorTotal = obj.getValor().getPrecoUnit() * obj.getQuantidade();
-			
 			st.setInt(1, obj.getNumOrcamento());
 			st.setInt(2, obj.getCodCliente().getCodCliente());
 			st.setString(3, obj.getTelefone());
@@ -46,7 +44,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
 			st.setDouble(10, obj.getValor().getPrecoUnit());
-			st.setDouble(11, valorTotal);
+			st.setDouble(11, obj.getValorTotal());
 			st.setString(12, obj.getObs());
 			
 			int rowsAffected = st.executeUpdate();
@@ -168,6 +166,52 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			}
 		}
 
+	@Override
+	public List<OrcamentoCliente> findAllParaTabela() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT * FROM MARCENARIA.ORCAMENTO_CLIENTE "
+					+"INNER JOIN CLIENTE ON CLIENTE.COD_CLIENTE = ORCAMENTO_CLIENTE.COD_CLIENTE "
+					+"INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_CLIENTE.COD_PRODUTO GROUP BY NUM_ORCAMENTO"
+					);
+			
+				rs = st.executeQuery();
+				
+				Map<Integer, Cliente> clienteMap = new HashMap<>();
+				Map<Integer, Produto> produtoMap = new HashMap<>();
+				List<OrcamentoCliente> listOrcamento = new ArrayList<>();
+				
+				while(rs.next()) {
+					
+					Cliente cliente = clienteMap.get(rs.getInt("COD_CLIENTE"));
+					if(cliente == null) {
+						cliente = criarCliente(rs);
+						clienteMap.put(rs.getInt("COD_CLIENTE"), cliente);
+					}
+					
+					Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
+					if(produto == null) {
+						produto = criarProduto(rs);
+						produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
+					}
+					
+					OrcamentoCliente obj = criarOrcamentoCliente(rs, cliente, produto);
+					listOrcamento.add(obj);	
+				}
+			
+				return listOrcamento;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			Db.closeResultSet(rs);
+			Db.closeStatement(st);
+		}
+	}
+	
 	@Override
 	public List<OrcamentoCliente> findAll() {
 		PreparedStatement st = null;
