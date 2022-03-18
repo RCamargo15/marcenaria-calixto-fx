@@ -133,8 +133,8 @@ public class OrcamentoEmpresa implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public Produto getValor() {
-		return valor;
+	public Double getValor() {
+		return valor.getPrecoUnit();
 	}
 
 	public void setValor(Produto valor) {

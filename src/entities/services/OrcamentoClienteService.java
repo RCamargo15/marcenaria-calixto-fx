@@ -30,9 +30,17 @@ public class OrcamentoClienteService {
 				orcamentoClienteDao.update(obj);
 			}
 	}
+	
+	public void saveOrcamento(OrcamentoCliente obj) {
+		orcamentoClienteDao.updateOrcamento(obj);
+	}
 
 	public void removerOrcamento(OrcamentoCliente obj) {
 		orcamentoClienteDao.deleteByNumOrcamento(obj.getNumOrcamento());
+	}
+	
+	public void removerProduto(OrcamentoCliente obj) {
+		orcamentoClienteDao.deleteById(obj.getId());
 	}
 
 
@@ -47,6 +55,16 @@ public class OrcamentoClienteService {
 		}
 
 		return listCodProd;
+	}
+	
+	public OrcamentoCliente findById(Integer id) {
+		List<OrcamentoCliente> list = orcamentoClienteDao.findAll();
+		for (OrcamentoCliente saida : list) {
+			if (saida.getId().equals(id)) {
+			  return saida;
+			}
+		}
+		return null;
 	}
 	
 	public OrcamentoCliente findByNumOrcamento(Integer numOrcamento) {

@@ -75,10 +75,8 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st = conn.prepareStatement(
 					"UPDATE MARCENARIA.ORCAMENTO_CLIENTE SET NUM_ORCAMENTO = ?, COD_CLIENTE = ?, TELEFONE = ?, CELULAR = ?, EMAIL = ?, "
 					+"DESC_SERVICO = ?, DATA_ORCAMENTO = ?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR = ?, VALOR_TOTAL = ?, OBS = ? "
-					+" WHERE ORCAMENTO_CLIENTE.NUM_ORCAMENTO = ?"
+					+" WHERE ORCAMENTO_CLIENTE.ID = ?"
 					);
-			
-			Double valorTotal = obj.getValor() * obj.getQuantidade();
 			
 			st.setInt(1, obj.getNumOrcamento());
 			st.setInt(2, obj.getCodCliente().getCodCliente());
@@ -90,9 +88,41 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
 			st.setDouble(10, obj.getValor());
-			st.setDouble(11, valorTotal);
+			st.setDouble(11, obj.getValorTotal());
 			st.setString(12, obj.getObs());
 			st.setInt(13, obj.getId());
+			
+			st.executeUpdate();
+					
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			Db.closeStatement(st);
+		}
+	}
+	
+	@Override
+	public void updateOrcamento(OrcamentoCliente obj) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE MARCENARIA.ORCAMENTO_CLIENTE SET NUM_ORCAMENTO = ?, COD_CLIENTE = ?, TELEFONE = ?, CELULAR = ?, EMAIL = ?, "
+					+"DESC_SERVICO = ?, DATA_ORCAMENTO = ?, VALOR_TOTAL = ?, OBS = ? "
+					+" WHERE ORCAMENTO_CLIENTE.NUM_ORCAMENTO = ?"
+					);
+			
+			st.setInt(1, obj.getNumOrcamento());
+			st.setInt(2, obj.getCodCliente().getCodCliente());
+			st.setString(3, obj.getTelefone());
+			st.setString(4, obj.getCelular());
+			st.setString(5, obj.getEmail());
+			st.setString(6, obj.getDescServico());
+			st.setDate(7, new java.sql.Date(obj.getDataOrcamento().getTime()));
+			st.setDouble(8, obj.getValorTotal());
+			st.setString(9, obj.getObs());
+			st.setInt(10, obj.getNumOrcamento());
 			
 			st.executeUpdate();
 					
@@ -112,6 +142,23 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st = conn.prepareStatement("DELETE FROM MARCENARIA.ORCAMENTO_CLIENTE WHERE ORCAMENTO_CLIENTE.NUM_ORCAMENTO = ?");
 			
 			st.setInt(1, numOrcamento);
+			st.executeUpdate();
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			Db.closeStatement(st);
+		}
+	}
+	
+	@Override
+	public void deleteById(Integer id) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM MARCENARIA.ORCAMENTO_CLIENTE WHERE ORCAMENTO_CLIENTE.ID = ?");
+			
+			st.setInt(1, id);
 			st.executeUpdate();
 		}
 		catch(SQLException e) {
@@ -178,6 +225,50 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 						+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_CLIENTE.COD_PRODUTO WHERE NUM_ORCAMENTO = ?");
 				
 				st.setInt(1, numOrcamento);
+				
+				rs = st.executeQuery();
+				
+				Map<Integer, Cliente> clienteMap = new HashMap<>();
+				Map<Integer, Produto> produtoMap = new HashMap<>();
+				
+				if(rs.next()) {
+					
+					Cliente cliente = clienteMap.get(rs.getInt("COD_CLIENTE"));
+					if(cliente == null) {
+						cliente = criarCliente(rs);
+						clienteMap.put(rs.getInt("COD_CLIENTE"), cliente);
+					}
+					
+					Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
+					if(produto == null) {
+						produto = criarProduto(rs);
+						produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
+					}
+					
+					OrcamentoCliente obj = criarOrcamentoCliente(rs, cliente, produto);
+					return obj;
+				}
+				return null;
+			}
+			catch(SQLException e) {
+				throw new DbException(e.getMessage());
+			}
+			finally {
+				Db.closeResultSet(rs);
+				Db.closeStatement(st);
+			}
+		}
+	
+	@Override
+	public OrcamentoCliente findById(Integer id) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+			try {
+				st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORCAMENTO_CLIENTE "
+						+ "INNER JOIN CLIENTE ON CLIENTE.COD_CLIENTE = ORCAMENTO_CLIENTE.COD_CLIENTE "
+						+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_CLIENTE.COD_PRODUTO WHERE ID = ?");
+				
+				st.setInt(1, id);
 				
 				rs = st.executeQuery();
 				

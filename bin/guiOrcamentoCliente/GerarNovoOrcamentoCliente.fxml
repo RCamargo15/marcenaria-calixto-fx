@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="735.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrcamentoCliente.GerarNovoOrcamentoClienteController">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="973.0">
+         <items>
+            <Label text="GERAR NOVO ORÇAMENTO">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Label text="INFORMAÇÕES DO CLIENTE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <GridPane fx:id="gpInfoCliente" prefHeight="240.0" prefWidth="973.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.0" minWidth="0.0" prefWidth="164.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="320.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="136.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="355.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="CLIENTE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="TELEFONE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="CELULAR" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label text="E-MAIL" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbCodCliente" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtTelefoneCliente" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="txtCelularCliente" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtEmailCliente" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="SERVIÇO SOLICITADO" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtDescricaoServico" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="DATA ORÇAMENTO" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="dpDataOrcamento" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Label text="Nº ORÇAMENTO">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtNumOrcamento" GridPane.columnIndex="1" />
+            <Label text="OBS" GridPane.rowIndex="8">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtObs" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label fx:id="errorNumOrcamento" textFill="#ee0b0b" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorTelefone" textFill="#f20909" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorCelular" textFill="#f20909" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorEmail" textFill="#f20909" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorDescServico" textFill="#f20909" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="erroDataOrcamento" textFill="#f20909" GridPane.columnIndex="3" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorCodCliente" textFill="#f20909" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+         </children>
+      </GridPane>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Label text="MATERIAL A SER UTILIZADO">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
+      <GridPane fx:id="gpProduto" maxHeight="72.0" minHeight="33.0" prefHeight="60.0" prefWidth="973.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="0.0" prefWidth="177.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="487.0" minWidth="10.0" prefWidth="294.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="516.0" minWidth="10.0" prefWidth="216.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="333.0" minWidth="10.0" prefWidth="210.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="99.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="4.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="PRODUTO">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbCodProduto" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="1" />
+            <Label text="QUANTIDADE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtQuantidade" GridPane.columnIndex="3" />
+            <Button fx:id="btInserirProduto" mnemonicParsing="false" onAction="#onBtInserirAction" prefHeight="25.0" prefWidth="76.0" text="INSERIR" GridPane.columnIndex="4" />
+            <Label fx:id="erroQuantidade" textFill="#ee0c0c" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="erroProduto" textFill="#ee0c0c" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+         </children>
+      </GridPane>
+      <TableView fx:id="tableViewOrcamentoCliente" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tableColumnDescProduto" prefWidth="75.0" text="PRODUTO" />
+          <TableColumn fx:id="tableColumnValorUnit" prefWidth="147.0" text="VALOR UNITÁRIO" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="147.0" text="QUANTIDADE" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="147.0" />
+        </columns>
+      </TableView>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" />
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Label text="VALOR TOTAL DO ORÇAMENTO">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtValorTotalOrcamento" />
+         </items>
+      </ToolBar>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+         <items>
+            <Button fx:id="btGerarOrcamento" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="GERAR ORÇAMENTO" />
+            <Label>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+         </items>
+      </ToolBar>
+   </children>
+</VBox>

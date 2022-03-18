@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
+import javax.swing.JOptionPane;
+
 import application.Main;
 import entities.services.ClienteService;
 import entities.services.EmpresaService;
@@ -15,6 +17,7 @@ import entities.services.FornecedorService;
 import entities.services.FuncionarioService;
 import entities.services.NotasComprasService;
 import entities.services.OrcamentoClienteService;
+import entities.services.OrcamentoEmpresaService;
 import entities.services.ProdutoService;
 import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
@@ -30,7 +33,8 @@ import guiFornecedor.FornecedorVisualizarController;
 import guiFuncionarios.CadastroFuncionarioTelaPrincipalController;
 import guiFuncionarios.FuncionarioVisualizarController;
 import guiNotasCompras.NotasComprasVisualizarController;
-import guiOrcamentos.OrcamentoClienteVisualizarController;
+import guiOrcamentoCliente.OrcamentoClienteVisualizarController;
+import guiOrcamentoEmpresa.OrcamentoEmpresaVisualizarController;
 import guiProduto.ProdutoVisualizarController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -171,7 +175,8 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemFuncionarioVisualizarAction() {
-		loadFuncionarioVisualizar("/guiFuncionarios/FuncionarioVisualizar.fxml", (FuncionarioVisualizarController controller) -> {
+		loadFuncionarioVisualizar("/guiFuncionarios/FuncionarioVisualizar.fxml",
+				(FuncionarioVisualizarController controller) -> {
 					controller.setFuncionarioService(new FuncionarioService());
 					controller.updateTableViewFuncionario();
 				});
@@ -184,10 +189,11 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemNotaCompraVisualizarrAction() {
-		loadNotasComprasVisualizar("/guiNotasCompras/NotasComprasVisualizar.fxml", (NotasComprasVisualizarController controller) ->{
-			controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService());
-			controller.updateTableViewNotasCompras();
-		});
+		loadNotasComprasVisualizar("/guiNotasCompras/NotasComprasVisualizar.fxml",
+				(NotasComprasVisualizarController controller) -> {
+					controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService());
+					controller.updateTableViewNotasCompras();
+				});
 	}
 
 	@FXML
@@ -202,7 +208,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemEstoqueVisualizarAction() {
-		loadEstoqueVisualizar("/guiEstoque/EstoqueVisualizar.fxml", (EstoqueVisualizarController controller) ->{
+		loadEstoqueVisualizar("/guiEstoque/EstoqueVisualizar.fxml", (EstoqueVisualizarController controller) -> {
 			controller.setServices(new EstoqueService(), new ProdutoService());
 			controller.updateTableViewEstoque();
 		});
@@ -210,19 +216,21 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemEstoqueSaidaProdutoAction() {
-		loadSaidaProdutoVisualizar("/guiEstoque/SaidaProdutoVisualizar.fxml", (SaidaProdutoVisualizarController controller) ->{
-			controller.setServices(new SaidaProdutoService(), new ProdutoService(), new FuncionarioService(), new EstoqueService());
-			controller.updateTableViewSaidaProduto();
-		});
+		loadSaidaProdutoVisualizar("/guiEstoque/SaidaProdutoVisualizar.fxml",
+				(SaidaProdutoVisualizarController controller) -> {
+					controller.setServices(new SaidaProdutoService(), new ProdutoService(), new FuncionarioService(),
+							new EstoqueService());
+					controller.updateTableViewSaidaProduto();
+				});
 	}
 
 	@FXML
 	public void onMenuItemProdutoVisualizarAction() {
-		loadProdutoVisualizar("/guiProduto/ProdutoVisualizar.fxml", (ProdutoVisualizarController controller) ->{
+		loadProdutoVisualizar("/guiProduto/ProdutoVisualizar.fxml", (ProdutoVisualizarController controller) -> {
 			controller.setProdutoService(new ProdutoService());
 			controller.updateTableViewProduto();
 		});
-		
+
 	}
 
 	@FXML
@@ -257,10 +265,21 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemOrcamentoVisualizarAction() {
-			loadOrcamentoClienteVisualizar("/guiOrcamentos/OrcamentoClienteVisualizar.fxml", (OrcamentoClienteVisualizarController controller) ->{
-				controller.SetServices(new OrcamentoClienteService(), new ClienteService(), new ProdutoService());
-				controller.updateTableViewOrcamentoCliente();
-			});
+		String[] options = {"Cliente", "Empresa"};
+        int x = JOptionPane.showOptionDialog(null, "Escolha o tipo de orçamento", "Orçamentos",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+        
+        if( x == 0) {
+        	loadOrcamentoClienteVisualizar("/guiOrcamentoCliente/OrcamentoClienteVisualizar.fxml", (OrcamentoClienteVisualizarController controller) ->{
+        		controller.SetServices(new OrcamentoClienteService(), new ClienteService(), new ProdutoService());
+        		controller.updateTableViewOrcamentoCliente();
+        	});
+        }
+        if(x == 1){
+        	loadOrcamentoEmpresaVisualizar("/guiOrcamentoEmpresa/OrcamentoEmpresaVisualizar.fxml", (OrcamentoEmpresaVisualizarController controller) ->{
+        		controller.SetServices(new OrcamentoEmpresaService(), new EmpresaService(), new ProdutoService());
+        	});
+        }
 	}
 
 	@FXML
@@ -473,102 +492,118 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
+
 			T controller = loader.getController();
 			initializeTable.accept(controller);
-			
-		}
-		catch(IOException e) {
+
+		} catch (IOException e) {
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
-	public synchronized <T> void loadEstoqueVisualizar(String absoluteName, Consumer <T> initializeTable) {
+
+	public synchronized <T> void loadEstoqueVisualizar(String absoluteName, Consumer<T> initializeTable) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
+
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-			
+
 			Node mainMenu = mainVBox.getChildren().get(0);
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
+
 			T controller = loader.getController();
 			initializeTable.accept(controller);
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
+
 	public synchronized <T> void loadSaidaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
+
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-			
+
 			Node mainMenu = mainVBox.getChildren().get(0);
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
+
 			T controller = loader.getController();
 			initializeTable.accept(controller);
-			
-		}
-		catch(IOException e) {
+
+		} catch (IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
+
 	public synchronized <T> void loadNotasComprasVisualizar(String absoluteName, Consumer<T> initializeTable) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
+
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-			
+
 			Node mainMenu = mainVBox.getChildren().get(0);
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
+
 			T controller = loader.getController();
 			initializeTable.accept(controller);
-			
+
+		} catch (IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
-		catch(IOException e) {
+	}
+
+	public synchronized <T> void loadOrcamentoClienteVisualizar(String absoluteName, Consumer<T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+		} catch (IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
-	public synchronized <T> void loadOrcamentoClienteVisualizar(String absoluteName, Consumer <T> initializeTable) {
+	public synchronized <T> void loadOrcamentoEmpresaVisualizar(String absoluteName, Consumer<T> initializeTable) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
+
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-			
+
 			Node mainMenu = mainVBox.getChildren().get(0);
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
+
 			T controller = loader.getController();
 			initializeTable.accept(controller);
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
+
 	@Override
 	public void onDataChanged() {
 		for (DataChangeListener listener : dataChangeListener) {

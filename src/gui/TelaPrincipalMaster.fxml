@@ -73,8 +73,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Orçamentos">
                      <items>
-                        <MenuItem fx:id="menuItemOrcamentoCadastrar" mnemonicParsing="false" onAction="#onMenuItemOrcamentoGerarAction" text="Gerar novo orçamento" />
-                        <MenuItem fx:id="menuItemOrcamentoVisualizar" mnemonicParsing="false" onAction="#onMenuItemOrcamentoVisualizarAction" text="Visualizar orçamentos" />
+                        <MenuItem fx:id="menuItemOrcamentoVisualizar" mnemonicParsing="false" onAction="#onMenuItemOrcamentoVisualizarAction" text="Orçamentos" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Usuários">
