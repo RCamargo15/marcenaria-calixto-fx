@@ -278,6 +278,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
         if(x == 1){
         	loadOrcamentoEmpresaVisualizar("/guiOrcamentoEmpresa/OrcamentoEmpresaVisualizar.fxml", (OrcamentoEmpresaVisualizarController controller) ->{
         		controller.SetServices(new OrcamentoEmpresaService(), new EmpresaService(), new ProdutoService());
+        		controller.updateTableViewOrcamentoEmpresa();
         	});
         }
 	}

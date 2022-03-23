@@ -10,11 +10,14 @@ import java.util.ResourceBundle;
 import Db.DbException;
 import application.Main;
 import entities.services.ClienteService;
+import entities.services.FuncionarioService;
 import entities.services.OrcamentoClienteService;
+import entities.services.OrdemServicoClienteService;
 import entities.services.ProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
+import guiOrdemDeServicoCliente.GerarOrdemDeServicoClienteController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +39,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Cliente;
 import marcenaria.entities.OrcamentoCliente;
+import marcenaria.entities.OrdemServicoCliente;
 import marcenaria.entities.Produto;
 
 public class OrcamentoClienteVisualizarController implements Initializable, DataChangeListener {
@@ -88,6 +92,9 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 
 	@FXML
 	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnEditar;
+	
+	@FXML
+	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnGerarOS;
 
 	@FXML
 	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnRemover;
@@ -142,6 +149,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			tableViewOrcamentoCliente.setItems(obsList);
 			initEditButtons();
 			initRemoveButtons();
+			initGerarOrcamentoButtons();
 		}
 	}
 
@@ -155,6 +163,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		tableViewOrcamentoCliente.setItems(obsList);
 		initEditButtons();
 		initRemoveButtons();
+		initGerarOrcamentoButtons();
 	}
 
 	@Override
@@ -240,7 +249,55 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
+	
+	private void createGerarOrdemServicoClienteForm(OrcamentoCliente obj, Stage parentStage, String absoluteName) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox vBox = loader.load();
+			
+			GerarOrdemDeServicoClienteController controller = loader.getController();
+			controller.setOrcamentoCliente(obj);
+			controller.setOrdemServicoCliente(new OrdemServicoCliente());
+			controller.setServicos(new OrdemServicoClienteService(), clienteService, new FuncionarioService());
+			controller.loadCliente();
+			controller.loadFuncionarios();
+			controller.loadStatusServico();
+			controller.receberDadosParaCriarOS();
+			
+			Stage stage = new Stage();
+			stage.setTitle("Gerar ordem de serviço");
+			stage.setScene(new Scene(vBox));
+			stage.setResizable(false);
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(parentStage);
+			stage.showAndWait();
+			
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
 
+	private void initGerarOrcamentoButtons() {
+		tableColumnGerarOS.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnGerarOS.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
+			private final Button button = new Button("Gerar Ordem de Serviço");
+
+			@Override
+			protected void updateItem(OrcamentoCliente obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(event -> createGerarOrdemServicoClienteForm(obj, Utils.currentStage(event),
+						"/guiOrdemDeServicoCliente/GerarOrdemDeServicoCliente.fxml"));
+			}
+		});
+	}
+	
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {

@@ -13,7 +13,7 @@
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="ORÇAMENTOS PESSOA FÍSICA">
+            <Label text="ORÇAMENTOS PESSOA JURÍDICA">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -31,7 +31,8 @@
       <TableView fx:id="tableViewOrcamentoEmpresa" prefHeight="356.0" prefWidth="982.0">
         <columns>
           <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="75.0" text="Nº ORÇAMENTO" />
-          <TableColumn fx:id="tableColumnCodEmpresa" prefWidth="75.0" text="CLIENTE" />
+          <TableColumn fx:id="tableColumnCodEmpresa" prefWidth="75.0" text="EMPRESA" />
+            <TableColumn fx:id="tableColumnNomeResponsavel" prefWidth="75.0" text="RESPONSAVEL" />
             <TableColumn fx:id="tableColumnTelefone" prefWidth="75.0" text="TELEFONE" />
             <TableColumn fx:id="tableColumnCelular" prefWidth="75.0" text="CELULAR" />
             <TableColumn fx:id="tableColumnEmail" prefWidth="75.0" text="E-MAIL" />

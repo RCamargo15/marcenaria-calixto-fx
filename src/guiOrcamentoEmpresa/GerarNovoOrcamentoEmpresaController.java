@@ -75,6 +75,11 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 	private TextField txtTelefoneEmpresa;
 	@FXML
 	private Label errorTelefone;
+	
+	@FXML
+	private TextField txtNomeResponsavel;
+	@FXML
+	private Label errorNomeResponsavel;
 
 	@FXML
 	private TextField txtCelularEmpresa;
@@ -181,6 +186,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 
 		obj.setNumOrcamento(Integer.parseInt(txtNumOrcamento.getText()));
 		obj.setCodEmpresa(cbCodEmpresa.getValue());
+		obj.setNomeResponsavel(txtNomeResponsavel.getText());
 		obj.setTelefone(txtTelefoneEmpresa.getText());
 		obj.setCelular(txtCelularEmpresa.getText());
 		obj.setEmail(txtEmailEmpresa.getText());

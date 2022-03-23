@@ -70,6 +70,11 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 	private Label errorCodEmpresa;
 	
 	@FXML
+	private TextField txtNomeResponsavel;
+	@FXML
+	private Label errorNomeResponsavel;
+	
+	@FXML
 	private TextField txtTelefoneEmpresa;
 	@FXML
 	private Label errorTelefone;
@@ -113,6 +118,9 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 
 	@FXML
 	private TableColumn<Empresa, Integer> tableColumnCodEmpresa;
+	
+	@FXML
+	private TableColumn<OrcamentoEmpresa, String> tableColumnNomeResponsavel;
 
 	@FXML
 	private TableColumn<Empresa, String> tableColumnTelefone;
@@ -195,6 +203,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 		
 		obj.setNumOrcamento(Integer.parseInt(txtNumOrcamento.getText()));
 		obj.setCodEmpresa(cbCodEmpresa.getValue());
+		obj.setNomeResponsavel(txtNomeResponsavel.getText());
 		obj.setTelefone(txtTelefoneEmpresa.getText());
 		obj.setCelular(txtCelularEmpresa.getText());
 		obj.setEmail(txtEmailEmpresa.getText());
@@ -246,7 +255,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 	
 	
 	public void updateOrcamentoEmpresaData() {
-//		
+		
 		if(orcamentoEmpresaService == null) {
 			throw new IllegalStateException("Orcamentoservice null");
 		}
@@ -268,6 +277,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 			cbCodEmpresa.setValue(orcamentoEmpresa.getCodEmpresa());
 		}
 		
+		txtNomeResponsavel.setText(orcamentoEmpresa.getNomeResponsavel());
 		txtTelefoneEmpresa.setText(orcamentoEmpresa.getTelefone());
 		txtCelularEmpresa.setText(orcamentoEmpresa.getCelular());
 		txtEmailEmpresa.setText(orcamentoEmpresa.getEmail());
@@ -334,6 +344,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableColumnNumOrcamento.setCellValueFactory(new PropertyValueFactory<>("numOrcamento"));
 		tableColumnCodEmpresa.setCellValueFactory(new PropertyValueFactory<>("codEmpresa"));
+		tableColumnNomeResponsavel.setCellValueFactory(new PropertyValueFactory<>("nomeResponsavel"));
 		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
 		tableColumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
 		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -388,7 +399,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 				}
 				setGraphic(button);
 				button.setOnAction(event -> createEditarProdutoOrcamentoForm(obj, Utils.currentStage(event),
-						"/guiOrcamentoEmpresa/EditarProdQuantidade.fxml"));
+						"/guiOrcamentoEmpresa/EditarProdQuantidadeEmpresa.fxml"));
 				
 			}
 		});

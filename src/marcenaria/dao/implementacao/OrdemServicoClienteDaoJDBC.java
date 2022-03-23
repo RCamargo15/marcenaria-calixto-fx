@@ -30,22 +30,23 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO MARCENARIA.ORDEM_SERVICO_CLIENTE(COD_CLIENTE, DESC_SERVICO, DATA_ORDEM, DATA_INICIO, PRAZO_ENTREGA, DATA_ENTREGA, STATUS_SERVICO, VALOR_TOTAL, FUNC_RESPONSAVEL, OBS) "
-							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					"INSERT INTO MARCENARIA.ORDEM_SERVICO_CLIENTE(NUM_PEDIDO, COD_CLIENTE, DESC_SERVICO, DATA_ORDEM, DATA_INICIO, PRAZO_ENTREGA, DATA_ENTREGA, STATUS_SERVICO, VALOR_TOTAL, FUNC_RESPONSAVEL, OBS) "
+							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
-			st.setInt(1, obj.getCodCliente().getCodCliente());
-			st.setString(2, obj.getDescServico().toUpperCase());
-			st.setDate(3, new java.sql.Date(obj.getDataOrdem().getTime()));
-			st.setDate(4, new java.sql.Date(obj.getDataInicio().getTime()));
-			st.setDate(5, new java.sql.Date(obj.getPrazoEntrega().getTime()));
-			st.setDate(6, new java.sql.Date(obj.getDataEntrega().getTime()));
-			st.setString(7, obj.getStatusServico().toUpperCase());
-			st.setDouble(8, obj.getValorTotal());
-			st.setInt(9, obj.getFuncResponsavel().getRegistroFunc());
-			st.setString(10, obj.getObs());
+			st.setInt(1, obj.getNumeroPedido());
+			st.setInt(2, obj.getCodCliente().getCodCliente());
+			st.setString(3, obj.getDescServico().toUpperCase());
+			st.setDate(4, new java.sql.Date(obj.getDataOrdem().getTime()));
+			st.setDate(5, new java.sql.Date(obj.getDataInicio().getTime()));
+			st.setDate(6, new java.sql.Date(obj.getPrazoEntrega().getTime()));
+			st.setDate(7, new java.sql.Date(obj.getDataEntrega().getTime()));
+			st.setString(8, obj.getStatusServico().toUpperCase());
+			st.setDouble(9, obj.getValorTotal());
+			st.setInt(10, obj.getFuncResponsavel().getRegistroFunc());
+			st.setString(11, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(10, obj.getObs().toUpperCase());
+				st.setString(11, obj.getObs().toUpperCase());
 			}
 
 			int rowsAffected = st.executeUpdate();
@@ -54,7 +55,7 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
 					int numPedidoGerado = rs.getInt(1);
-					obj.setNumeroPedido(numPedidoGerado);
+					obj.setId(numPedidoGerado);
 				}
 			} else {
 				throw new DbException("Nenhuma ordem de serviço foi cadastrada no sistema!");
@@ -72,23 +73,24 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.ORDEM_SERVICO_CLIENTE "
-					+ "SET COD_CLIENTE = ?, DESC_SERVICO = ?, DATA_ORDEM = ?, DATA_INICIO = ?, PRAZO_ENTREGA = ?, DATA_ENTREGA = ?, STATUS_SERVICO = ?, VALOR_TOTAL = ?, FUNC_RESPONSAVEL = ?, OBS = ? "
-					+ "WHERE NUM_PEDIDO = ?");
+					+ "SET NUM_PEDIDO = ?, COD_CLIENTE = ?, DESC_SERVICO = ?, DATA_ORDEM = ?, DATA_INICIO = ?, PRAZO_ENTREGA = ?, DATA_ENTREGA = ?, STATUS_SERVICO = ?, VALOR_TOTAL = ?, FUNC_RESPONSAVEL = ?, OBS = ? "
+					+ "WHERE ID = ?");
 
-			st.setInt(1, obj.getCodCliente().getCodCliente());
-			st.setString(2, obj.getDescServico().toUpperCase());
-			st.setDate(3, new java.sql.Date(obj.getDataOrdem().getTime()));
-			st.setDate(4, new java.sql.Date(obj.getDataInicio().getTime()));
-			st.setDate(5, new java.sql.Date(obj.getPrazoEntrega().getTime()));
-			st.setDate(6, new java.sql.Date(obj.getDataEntrega().getTime()));
-			st.setString(7, obj.getStatusServico().toUpperCase());
-			st.setDouble(8, obj.getValorTotal());
-			st.setInt(9, obj.getFuncResponsavel().getRegistroFunc());
-			st.setString(10, obj.getObs());
+			st.setInt(1, obj.getNumeroPedido());
+			st.setInt(2, obj.getCodCliente().getCodCliente());
+			st.setString(3, obj.getDescServico().toUpperCase());
+			st.setDate(4, new java.sql.Date(obj.getDataOrdem().getTime()));
+			st.setDate(5, new java.sql.Date(obj.getDataInicio().getTime()));
+			st.setDate(6, new java.sql.Date(obj.getPrazoEntrega().getTime()));
+			st.setDate(7, new java.sql.Date(obj.getDataEntrega().getTime()));
+			st.setString(8, obj.getStatusServico().toUpperCase());
+			st.setDouble(9, obj.getValorTotal());
+			st.setInt(10, obj.getFuncResponsavel().getRegistroFunc());
+			st.setString(11, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(10, obj.getObs().toUpperCase());
+				st.setString(11, obj.getObs().toUpperCase());
 			}
-			st.setInt(11, obj.getNumeroPedido());
+			st.setInt(12, obj.getId());
 
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -297,6 +299,7 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 	private OrdemServicoCliente criarOrdemServicoCliente(ResultSet rs, Cliente cliente, Funcionario funcionario)
 			throws SQLException {
 		OrdemServicoCliente obj = new OrdemServicoCliente();
+		obj.setId(rs.getInt("ID"));
 		obj.setNumeroPedido(rs.getInt("NUM_PEDIDO"));
 		obj.setCodCliente(cliente);
 		obj.setDescServico(rs.getString("DESC_SERVICO"));

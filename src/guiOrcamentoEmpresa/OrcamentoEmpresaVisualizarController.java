@@ -55,6 +55,9 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 
 	@FXML
 	private TableColumn<Empresa, Integer> tableColumnCodEmpresa;
+	
+	@FXML
+	private TableColumn<OrcamentoEmpresa, Integer> tableColumnNomeResponsavel;
 
 	@FXML
 	private TableColumn<Empresa, String> tableColumnTelefone;
@@ -170,6 +173,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 	private void initializeNodes() {
 		tableColumnNumOrcamento.setCellValueFactory(new PropertyValueFactory<>("numOrcamento"));
 		tableColumnCodEmpresa.setCellValueFactory(new PropertyValueFactory<>("codEmpresa"));
+		tableColumnNomeResponsavel.setCellValueFactory(new PropertyValueFactory<>("nomeResponsavel"));
 		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
 		tableColumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
 		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));

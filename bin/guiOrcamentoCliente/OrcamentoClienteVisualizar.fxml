@@ -44,6 +44,7 @@
             <TableColumn fx:id="tableColumnObs" prefWidth="75.0" text="OBS" />
             <TableColumn fx:id="tableColumnEditar" prefWidth="75.0" text="EDITAR" />
             <TableColumn fx:id="tableColumnRemover" prefWidth="75.0" text="EXCLUIR" />
+            <TableColumn fx:id="tableColumnGerarOS" prefWidth="75.0" text="OSC" />
         </columns>
       </TableView>
    </children>

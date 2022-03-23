@@ -7,6 +7,7 @@ import java.util.Objects;
 public class OrdemServicoCliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private Integer id;
 	private Integer numeroPedido;
 	private Cliente codCliente;
 	private String descServico;
@@ -26,7 +27,6 @@ public class OrdemServicoCliente implements Serializable {
 	public OrdemServicoCliente(Integer numeroPedido, Cliente codCliente, String descServico, Date dataOrdem,
 			Date dataInicio, Date prazoEntrega, Date dataEntrega, String statusServico, Double valorTotal,
 			Funcionario funcResponsavel, String obs) {
-		super();
 		this.numeroPedido = numeroPedido;
 		this.codCliente = codCliente;
 		this.descServico = descServico;
@@ -38,6 +38,14 @@ public class OrdemServicoCliente implements Serializable {
 		this.valorTotal = valorTotal;
 		this.funcResponsavel = funcResponsavel;
 		this.obs = obs;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getNumeroPedido() {
@@ -130,7 +138,7 @@ public class OrdemServicoCliente implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codCliente, numeroPedido, statusServico);
+		return Objects.hash(codCliente, id, numeroPedido);
 	}
 
 	@Override
@@ -142,16 +150,16 @@ public class OrdemServicoCliente implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		OrdemServicoCliente other = (OrdemServicoCliente) obj;
-		return Objects.equals(codCliente, other.codCliente) && Objects.equals(numeroPedido, other.numeroPedido)
-				&& Objects.equals(statusServico, other.statusServico);
+		return Objects.equals(codCliente, other.codCliente) && Objects.equals(id, other.id)
+				&& Objects.equals(numeroPedido, other.numeroPedido);
 	}
 
 	@Override
 	public String toString() {
-		return "OrdemServicoCliente [numeroPedido=" + numeroPedido + ", codCliente=" + codCliente + ", descServico="
-				+ descServico + ", dataOrdem=" + dataOrdem + ", dataInicio=" + dataInicio + ", prazoEntrega="
-				+ prazoEntrega + ", dataEntrega=" + dataEntrega + ", statusServico=" + statusServico + ", valorTotal="
-				+ valorTotal + ", funcResponsavel=" + funcResponsavel + ", obs=" + obs + "]";
+		return "OrdemServicoCliente [id=" + id + ", numeroPedido=" + numeroPedido + ", codCliente=" + codCliente
+				+ ", descServico=" + descServico + ", dataOrdem=" + dataOrdem + ", dataInicio=" + dataInicio
+				+ ", prazoEntrega=" + prazoEntrega + ", dataEntrega=" + dataEntrega + ", statusServico=" + statusServico
+				+ ", valorTotal=" + valorTotal + ", funcResponsavel=" + funcResponsavel + ", obs=" + obs + "]";
 	}
 
 }
