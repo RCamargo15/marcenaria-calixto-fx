@@ -235,7 +235,11 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemOrdemServicoClienteGerarAction() {
-
+		loadOdemServicoClienteVisualizar("/guiOrdemDeServicoCliente/OrdemServicoClienteVisualizar.fxml", (OrdemDeServicoVisualizarController controller) ->{
+			controller.setOrdemServicoClienteService(new OrdemServicoClienteService());
+			controller.updateTableViewOrdemServicoCliente();
+			
+		});
 	}
 
 	@FXML
@@ -601,6 +605,27 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 			T controller = loader.getController();
 			initializeTable.accept(controller);
 		} catch (IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public synchronized <T> void loadOrdemServicoClienteVisualizar(String absoluteName, Consumer<T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainMenu = (VBox)((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+		}
+		catch(IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
