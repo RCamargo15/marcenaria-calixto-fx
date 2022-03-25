@@ -259,8 +259,8 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			controller.setOrcamentoCliente(obj);
 			controller.setOrdemServicoCliente(new OrdemServicoCliente());
 			controller.setServicos(new OrdemServicoClienteService(), clienteService, new FuncionarioService());
-			controller.loadCliente();
-			controller.loadFuncionarios();
+			controller.loadClienteOrcamento();
+			controller.loadFuncionariosOrcamento();
 			controller.loadStatusServico();
 			controller.receberDadosParaCriarOS();
 			

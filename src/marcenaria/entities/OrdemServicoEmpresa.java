@@ -7,8 +7,10 @@ import java.util.Objects;
 public class OrdemServicoEmpresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private Integer id;
 	private Integer numeroPedido;
 	private Empresa codEmpresa;
+	private String nomeResponsavel;
 	private String descServico;
 	private Date dataOrdem;
 	private Date dataInicio;
@@ -23,12 +25,13 @@ public class OrdemServicoEmpresa implements Serializable {
 
 	}
 
-	public OrdemServicoEmpresa(Integer numeroPedido, Empresa codEmpresa, String descServico, Date dataOrdem,
-			Date dataInicio, Date prazoEntrega, Date dataEntrega, String statusServico, Double valorTotal,
-			Funcionario funcResponsavel, String obs) {
-		super();
+	public OrdemServicoEmpresa(Integer id, Integer numeroPedido, Empresa codEmpresa, String nomeResponsavel,
+			String descServico, Date dataOrdem, Date dataInicio, Date prazoEntrega, Date dataEntrega,
+			String statusServico, Double valorTotal, Funcionario funcResponsavel, String obs) {
+		;
 		this.numeroPedido = numeroPedido;
 		this.codEmpresa = codEmpresa;
+		this.nomeResponsavel = nomeResponsavel;
 		this.descServico = descServico;
 		this.dataOrdem = dataOrdem;
 		this.dataInicio = dataInicio;
@@ -38,6 +41,14 @@ public class OrdemServicoEmpresa implements Serializable {
 		this.valorTotal = valorTotal;
 		this.funcResponsavel = funcResponsavel;
 		this.obs = obs;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public Integer getNumeroPedido() {
@@ -54,6 +65,14 @@ public class OrdemServicoEmpresa implements Serializable {
 
 	public void setCodEmpresa(Empresa codEmpresa) {
 		this.codEmpresa = codEmpresa;
+	}
+
+	public String getNomeResponsavel() {
+		return nomeResponsavel;
+	}
+
+	public void setNomeResponsavel(String nomeResponsavel) {
+		this.nomeResponsavel = nomeResponsavel;
 	}
 
 	public String getDescServico() {
@@ -130,7 +149,7 @@ public class OrdemServicoEmpresa implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codEmpresa, numeroPedido, statusServico);
+		return Objects.hash(codEmpresa, funcResponsavel, id, nomeResponsavel, numeroPedido);
 	}
 
 	@Override
@@ -142,16 +161,18 @@ public class OrdemServicoEmpresa implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		OrdemServicoEmpresa other = (OrdemServicoEmpresa) obj;
-		return Objects.equals(codEmpresa, other.codEmpresa) && Objects.equals(numeroPedido, other.numeroPedido)
-				&& Objects.equals(statusServico, other.statusServico);
+		return Objects.equals(codEmpresa, other.codEmpresa) && Objects.equals(funcResponsavel, other.funcResponsavel)
+				&& Objects.equals(id, other.id) && Objects.equals(nomeResponsavel, other.nomeResponsavel)
+				&& Objects.equals(numeroPedido, other.numeroPedido);
 	}
 
 	@Override
 	public String toString() {
-		return "OrdemServicoEmpresa [numeroPedido=" + numeroPedido + ", codEmpresa=" + codEmpresa + ", descServico="
-				+ descServico + ", dataOrdem=" + dataOrdem + ", dataInicio=" + dataInicio + ", prazoEntrega="
-				+ prazoEntrega + ", dataEntrega=" + dataEntrega + ", statusServico=" + statusServico + ", valorTotal="
-				+ valorTotal + ", funcResponsavel=" + funcResponsavel + ", obs=" + obs + "]";
+		return "OrdemServicoEmpresa [id=" + id + ", numeroPedido=" + numeroPedido + ", codEmpresa=" + codEmpresa
+				+ ", nomeResponsavel=" + nomeResponsavel + ", descServico=" + descServico + ", dataOrdem=" + dataOrdem
+				+ ", dataInicio=" + dataInicio + ", prazoEntrega=" + prazoEntrega + ", dataEntrega=" + dataEntrega
+				+ ", statusServico=" + statusServico + ", valorTotal=" + valorTotal + ", funcResponsavel="
+				+ funcResponsavel + ", obs=" + obs + "]";
 	}
 
 }

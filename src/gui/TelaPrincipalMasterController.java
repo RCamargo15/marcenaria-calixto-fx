@@ -18,6 +18,7 @@ import entities.services.FuncionarioService;
 import entities.services.NotasComprasService;
 import entities.services.OrcamentoClienteService;
 import entities.services.OrcamentoEmpresaService;
+import entities.services.OrdemServicoClienteService;
 import entities.services.ProdutoService;
 import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
@@ -35,6 +36,7 @@ import guiFuncionarios.FuncionarioVisualizarController;
 import guiNotasCompras.NotasComprasVisualizarController;
 import guiOrcamentoCliente.OrcamentoClienteVisualizarController;
 import guiOrcamentoEmpresa.OrcamentoEmpresaVisualizarController;
+import guiOrdemDeServicoCliente.OrdemServicoClienteVisualizarController;
 import guiProduto.ProdutoVisualizarController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -101,16 +103,10 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	private MenuItem menuItemProdutoVisualizar;
 
 	@FXML
-	private MenuItem menuItemOrdemServicoClienteCadastrar;
+	private MenuItem menuItemOrdemServicoEmpresas;
 
 	@FXML
-	private MenuItem menuItemOrdemServicoClienteVisualizar;
-
-	@FXML
-	private MenuItem menuItemOrdemServicoEmpresaCadastrar;
-
-	@FXML
-	private MenuItem menuItemOrdemServicoEmpresaVisualizar;
+	private MenuItem menuItemOrdemServicoCliente;
 
 	@FXML
 	private MenuItem menuItemOrcamentoCadastrar;
@@ -234,32 +230,17 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	}
 
 	@FXML
-	public void onMenuItemOrdemServicoClienteGerarAction() {
-		loadOdemServicoClienteVisualizar("/guiOrdemDeServicoCliente/OrdemServicoClienteVisualizar.fxml", (OrdemDeServicoVisualizarController controller) ->{
-			controller.setOrdemServicoClienteService(new OrdemServicoClienteService());
-			controller.updateTableViewOrdemServicoCliente();
+	public void onMenuItemOrdemServicoCliente() {
+		loadOrdemServicoClienteVisualizar("/guiOrdemDeServicoCliente/OrdemServicoClienteVisualizar.fxml", (OrdemServicoClienteVisualizarController controller) ->{
+			controller.setServices(new OrdemServicoClienteService(), new FuncionarioService(), new ClienteService());
+			controller.updateTableViewOrdemClienteVisualizar();
 			
 		});
 	}
-
+	
 	@FXML
-	public void onMenuItemOrdemServicoClienteExcluirAction() {
-
-	}
-
-	@FXML
-	public void onMenuItemOrdemServicoClienteVisualizarAction() {
-
-	}
-
-	@FXML
-	public void onMenuItemOrdemServicoEmpresaGerarAction() {
-
-	}
-
-	@FXML
-	public void onMenuItemOrdemServicoEmpresaVisualizarAction() {
-
+	public void onMenuItemOrdemServicoEmpresas() {
+		
 	}
 
 	@FXML
@@ -615,7 +596,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 			VBox newVBox = loader.load();
 			
 			Scene mainScene = Main.getMainScene();
-			VBox mainMenu = (VBox)((ScrollPane) mainScene.getRoot()).getContent();
+			VBox mainVBox = (VBox)((ScrollPane) mainScene.getRoot()).getContent();
 			
 			Node mainMenu = mainVBox.getChildren().get(0);
 			mainVBox.getChildren().clear();

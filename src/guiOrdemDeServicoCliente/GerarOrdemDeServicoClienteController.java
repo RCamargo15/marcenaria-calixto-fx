@@ -32,7 +32,6 @@ import marcenaria.entities.Cliente;
 import marcenaria.entities.Funcionario;
 import marcenaria.entities.OrcamentoCliente;
 import marcenaria.entities.OrdemServicoCliente;
-import model.exceptions.ValidationException;
 
 public class GerarOrdemDeServicoClienteController implements Initializable {
 
@@ -129,8 +128,35 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		
 	}
 	
+	public void receberDadosParaEditarOS() {
+		if(ordemServicoCliente == null) {
+			throw new IllegalStateException("Orcamento inexistente");
+		}
+		
+		txtNumOrcamento.setText(String.valueOf(ordemServicoCliente.getNumeroPedido()));
+		cbCliente.setValue(ordemServicoCliente.getCodCliente());
+		txtDescServico.setText(ordemServicoCliente.getDescServico());
+		if(ordemServicoCliente.getDataOrdem() != null) {
+			dpDataOrcamento.setValue(LocalDate.ofInstant(ordemServicoCliente.getDataOrdem().toInstant(), ZoneId.systemDefault()));
+		}
+		if(ordemServicoCliente.getDataInicio() != null) {
+			dpDataInicio.setValue(LocalDate.ofInstant(ordemServicoCliente.getDataInicio().toInstant(), ZoneId.systemDefault()));
+		}
+		if(ordemServicoCliente.getPrazoEntrega() != null) {
+			dpPrazoEntrega.setValue(LocalDate.ofInstant(ordemServicoCliente.getPrazoEntrega().toInstant(), ZoneId.systemDefault()));
+		}
+		if(ordemServicoCliente.getDataEntrega() != null) {
+			dpDataEntrega.setValue(LocalDate.ofInstant(ordemServicoCliente.getDataEntrega().toInstant(), ZoneId.systemDefault()));
+		}
+		
+		statusServico.setValue(ordemServicoCliente.getStatusServico());
+		txtValorTotalOrcamento.setText(String.valueOf(ordemServicoCliente.getValorTotal()));
+		cbFuncionarioResp.setValue(ordemServicoCliente.getFuncResponsavel());
+		txtObs.setText(ordemServicoCliente.getObs());
+	}
+	
 	public OrdemServicoCliente getOrdemServicoClienteData() {
-		ValidationException error = new ValidationException("Erro de validação");
+//		ValidationException error = new ValidationException("Erro de validação");
 		OrdemServicoCliente obj = new OrdemServicoCliente();
 		
 		obj.setNumeroPedido(Integer.parseInt(txtNumOrcamento.getText()));
@@ -184,7 +210,8 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 	}
 
 	
-	public void loadCliente() {
+	//ORCAMENTO
+	public void loadClienteOrcamento() {
 		if(clienteService == null) {
 			throw new IllegalStateException("Cliente service null");
 		}
@@ -194,8 +221,30 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		cbListCliente = FXCollections.observableArrayList(list);
 		cbCliente.setItems(cbListCliente);
 	}
+
+	public void loadFuncionariosOrcamento() {
+		if(funcionarioService == null) {
+			throw new IllegalStateException("Funcionario Service null");
+		}
+		
+		List<Funcionario> list = funcionarioService.findAll();
+		cbListFuncionario = FXCollections.observableArrayList(list);
+		cbFuncionarioResp.setItems(cbListFuncionario);
+	}
 	
-	public void loadFuncionarios() {
+	//ORDEM DE SERVICO
+	
+	public void loadClienteOS() {
+		if(clienteService == null) {
+			throw new IllegalStateException("Cliente service null");
+		}
+		
+		List<Cliente> list = clienteService.findAll();
+		cbListCliente = FXCollections.observableArrayList(list);
+		cbCliente.setItems(cbListCliente);
+	}
+	
+	public void loadFuncionariosOS() {
 		if(funcionarioService == null) {
 			throw new IllegalStateException("Funcionario Service null");
 		}

@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<VBox prefHeight="463.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrdemDeServicoCliente.OrdemServicoClienteVisualizarController">
+   <children>
+      <ToolBar prefHeight="33.0" prefWidth="823.0">
+         <items>
+            <Label text="ORDENS DE SERVIÇO PARA PESSOAS FÍSICAS" />
+         </items>
+      </ToolBar>
+      <TableView fx:id="tableViewOrdemServicoCliente" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="75.0" text="Nº ORÇAMENTO" />
+          <TableColumn fx:id="tableColumnCodCliente" prefWidth="75.0" text="CLIENTE" />
+            <TableColumn fx:id="tableColumnDescServico" prefWidth="75.0" text="SERVIÇO SOLICITADO" />
+            <TableColumn fx:id="tableColumnDataOrdem" prefWidth="75.0" text="DATA DO ORÇAMENTO" />
+            <TableColumn fx:id="tableColumnDataInicio" prefWidth="75.0" text="DATA DE INÍCIO" />
+            <TableColumn fx:id="tableColumnPrazoEntrega" prefWidth="75.0" text="PRAZO DE ENTREGA" />
+            <TableColumn fx:id="tableColumnDataEntrega" prefWidth="75.0" text="DATA DA ENTREGA" />
+            <TableColumn fx:id="tableColumnStatusServico" prefWidth="75.0" text="STATUS DO SERVIÇO" />
+            <TableColumn fx:id="tableColumnValorTotal" prefWidth="75.0" text="VALOR TOTAL" />
+            <TableColumn fx:id="tableColumnFuncResponsavel" prefWidth="75.0" text="RESPONSÁVEL" />
+            <TableColumn fx:id="tableColumnObs" prefWidth="75.0" text="OBS" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="75.0" text="EDITAR" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="75.0" text="REMOVER" />
+        </columns>
+      </TableView>
+   </children>
 </VBox>
-
