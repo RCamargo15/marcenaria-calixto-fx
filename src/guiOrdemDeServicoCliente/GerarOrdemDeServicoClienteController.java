@@ -40,54 +40,54 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 	private OrdemServicoClienteService ordemServicoClienteService;
 	private ClienteService clienteService;
 	private FuncionarioService funcionarioService;
-	
+
 	private List<DataChangeListener> dataChangeListener = new ArrayList<>();
-	
+
 	@FXML
 	private TextField txtNumOrcamento;
-	
+
 	@FXML
 	private ComboBox<Cliente> cbCliente;
-	
+
 	@FXML
 	private TextField txtDescServico;
-	
+
 	@FXML
 	private DatePicker dpDataOrcamento;
-	
+
 	@FXML
 	private DatePicker dpDataInicio;
-	
+
 	@FXML
 	private DatePicker dpPrazoEntrega;
-	
+
 	@FXML
 	private DatePicker dpDataEntrega;
-	
+
 	@FXML
 	private ComboBox<String> statusServico;
-	
+
 	@FXML
 	private TextField txtValorTotalOrcamento;
-	
+
 	@FXML
 	private ComboBox<Funcionario> cbFuncionarioResp;
-	
+
 	@FXML
 	private TextField txtObs;
-	
+
 	@FXML
 	private Button btCadastrar;
-	
+
 	@FXML
 	private Button btCancelar;
-	
+
 	private ObservableList<Cliente> cbListCliente;
-	
+
 	private ObservableList<Funcionario> cbListFuncionario;
-	
+
 	private ObservableList<String> statusList;
-	
+
 	public void setOrcamentoCliente(OrcamentoCliente orcamentoCliente) {
 		this.orcamentoCliente = orcamentoCliente;
 	}
@@ -95,109 +95,95 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 	public void setOrdemServicoCliente(OrdemServicoCliente ordemServicoCliente) {
 		this.ordemServicoCliente = ordemServicoCliente;
 	}
-	
-	public void setServicos(OrdemServicoClienteService ordemServicoClienteService, ClienteService clienteService, FuncionarioService funcionarioService) {
+
+	public void setServicos(OrdemServicoClienteService ordemServicoClienteService, ClienteService clienteService,
+			FuncionarioService funcionarioService) {
 		this.ordemServicoClienteService = ordemServicoClienteService;
 		this.clienteService = clienteService;
 		this.funcionarioService = funcionarioService;
 	}
-	
+
 	public void subscribeDataChangeListener(DataChangeListener listener) {
 		dataChangeListener.add(listener);
 	}
-	
+
 	public void notificarDataChangeListener() {
-		for(DataChangeListener listener : dataChangeListener) {
+		for (DataChangeListener listener : dataChangeListener) {
 			listener.onDataChanged();
 		}
 	}
-	
+
 	public void receberDadosParaCriarOS() {
-		if(orcamentoCliente == null) {
+		if (orcamentoCliente == null) {
 			throw new IllegalStateException("Orcamento inexistente");
 		}
-		
+
 		txtNumOrcamento.setText(String.valueOf(orcamentoCliente.getNumOrcamento()));
 		cbCliente.setValue(orcamentoCliente.getCodCliente());
-		if(orcamentoCliente.getDataOrcamento() != null) {
-			dpDataOrcamento.setValue(LocalDate.ofInstant(orcamentoCliente.getDataOrcamento().toInstant(), ZoneId.systemDefault()));
+		if (orcamentoCliente.getDataOrcamento() != null) {
+			dpDataOrcamento.setValue(
+					LocalDate.ofInstant(orcamentoCliente.getDataOrcamento().toInstant(), ZoneId.systemDefault()));
 		}
 		txtDescServico.setText(orcamentoCliente.getDescServico());
 		txtObs.setText(orcamentoCliente.getObs());
 		txtValorTotalOrcamento.setText(String.valueOf(orcamentoCliente.getValorTotal()));
-		
+
 	}
-	
-	public void receberDadosParaEditarOS() {
-		if(ordemServicoCliente == null) {
-			throw new IllegalStateException("Orcamento inexistente");
-		}
-		
-		txtNumOrcamento.setText(String.valueOf(ordemServicoCliente.getNumeroPedido()));
-		cbCliente.setValue(ordemServicoCliente.getCodCliente());
-		txtDescServico.setText(ordemServicoCliente.getDescServico());
-		if(ordemServicoCliente.getDataOrdem() != null) {
-			dpDataOrcamento.setValue(LocalDate.ofInstant(ordemServicoCliente.getDataOrdem().toInstant(), ZoneId.systemDefault()));
-		}
-		if(ordemServicoCliente.getDataInicio() != null) {
-			dpDataInicio.setValue(LocalDate.ofInstant(ordemServicoCliente.getDataInicio().toInstant(), ZoneId.systemDefault()));
-		}
-		if(ordemServicoCliente.getPrazoEntrega() != null) {
-			dpPrazoEntrega.setValue(LocalDate.ofInstant(ordemServicoCliente.getPrazoEntrega().toInstant(), ZoneId.systemDefault()));
-		}
-		if(ordemServicoCliente.getDataEntrega() != null) {
-			dpDataEntrega.setValue(LocalDate.ofInstant(ordemServicoCliente.getDataEntrega().toInstant(), ZoneId.systemDefault()));
-		}
-		
-		statusServico.setValue(ordemServicoCliente.getStatusServico());
-		txtValorTotalOrcamento.setText(String.valueOf(ordemServicoCliente.getValorTotal()));
-		cbFuncionarioResp.setValue(ordemServicoCliente.getFuncResponsavel());
-		txtObs.setText(ordemServicoCliente.getObs());
-	}
-	
+
 	public OrdemServicoCliente getOrdemServicoClienteData() {
 //		ValidationException error = new ValidationException("Erro de validação");
 		OrdemServicoCliente obj = new OrdemServicoCliente();
-		
+
 		obj.setNumeroPedido(Integer.parseInt(txtNumOrcamento.getText()));
 		obj.setCodCliente(cbCliente.getValue());
 		obj.setDescServico(txtDescServico.getText());
-		
-		Instant instant1 =  Instant.from(dpDataOrcamento.getValue().atStartOfDay(ZoneId.systemDefault()));
+
+		Instant instant1 = Instant.from(dpDataOrcamento.getValue().atStartOfDay(ZoneId.systemDefault()));
 		obj.setDataOrdem(Date.from(instant1));
-		
-		Instant instant2 = Instant.from(dpDataInicio.getValue().atStartOfDay(ZoneId.systemDefault()));
-		obj.setDataInicio(Date.from(instant2));
-		
-		Instant instant3 = Instant.from(dpPrazoEntrega.getValue().atStartOfDay(ZoneId.systemDefault()));
-		obj.setPrazoEntrega(Date.from(instant3));
-		
-		Instant instant4 = Instant.from(dpDataEntrega.getValue().atStartOfDay(ZoneId.systemDefault()));
-		obj.setDataEntrega(Date.from(instant4));
-		
+
+		if (dpDataInicio.getValue() != null) {
+			Instant instant2 = Instant.from(dpDataInicio.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setDataInicio(Date.from(instant2));
+		} else {
+			obj.setDataInicio(null);
+		}
+
+		if (dpPrazoEntrega.getValue() != null) {
+			Instant instant3 = Instant.from(dpPrazoEntrega.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setPrazoEntrega(Date.from(instant3));
+		} else {
+			obj.setPrazoEntrega(null);
+		}
+
+		if (dpDataEntrega.getValue() != null) {
+			Instant instant4 = Instant.from(dpDataEntrega.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setDataEntrega(Date.from(instant4));
+		}
+		obj.setDataEntrega(null);
+
 		obj.setStatusServico(statusServico.getValue());
 		obj.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
 		obj.setFuncResponsavel(cbFuncionarioResp.getValue());
 		obj.setObs(txtObs.getText());
-		
+
 		return obj;
 	}
-	
+
 	@FXML
 	public void onBtCancelarAction(ActionEvent event) {
 		Utils.currentStage(event).close();
 	}
-	
+
 	@FXML
 	public void onBtCadastrarAction(ActionEvent event) {
 		try {
-		ordemServicoCliente = getOrdemServicoClienteData();
-		ordemServicoClienteService.saveOrUpdate(ordemServicoCliente);
-		System.out.println("Cadastrado");
-		notificarDataChangeListener();
-		Utils.currentStage(event).close();
-		
-		}catch(DbException e) {
+			ordemServicoCliente = getOrdemServicoClienteData();
+			ordemServicoClienteService.saveOrUpdate(ordemServicoCliente);
+			System.out.println("Cadastrado");
+			notificarDataChangeListener();
+			Utils.currentStage(event).close();
+
+		} catch (DbException e) {
 			e.getMessage();
 		}
 	}
@@ -209,13 +195,12 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		initializeComboBoxStatus();
 	}
 
-	
-	//ORCAMENTO
+	// ORCAMENTO
 	public void loadClienteOrcamento() {
-		if(clienteService == null) {
+		if (clienteService == null) {
 			throw new IllegalStateException("Cliente service null");
 		}
-		
+
 		List<Cliente> list = new ArrayList<>();
 		list.add(orcamentoCliente.getCodCliente());
 		cbListCliente = FXCollections.observableArrayList(list);
@@ -223,43 +208,43 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 	}
 
 	public void loadFuncionariosOrcamento() {
-		if(funcionarioService == null) {
+		if (funcionarioService == null) {
 			throw new IllegalStateException("Funcionario Service null");
 		}
-		
+
 		List<Funcionario> list = funcionarioService.findAll();
 		cbListFuncionario = FXCollections.observableArrayList(list);
 		cbFuncionarioResp.setItems(cbListFuncionario);
 	}
-	
-	//ORDEM DE SERVICO
-	
+
+	// ORDEM DE SERVICO
+
 	public void loadClienteOS() {
-		if(clienteService == null) {
+		if (clienteService == null) {
 			throw new IllegalStateException("Cliente service null");
 		}
-		
+
 		List<Cliente> list = clienteService.findAll();
 		cbListCliente = FXCollections.observableArrayList(list);
 		cbCliente.setItems(cbListCliente);
 	}
-	
+
 	public void loadFuncionariosOS() {
-		if(funcionarioService == null) {
+		if (funcionarioService == null) {
 			throw new IllegalStateException("Funcionario Service null");
 		}
-		
+
 		List<Funcionario> list = funcionarioService.findAll();
 		cbListFuncionario = FXCollections.observableArrayList(list);
 		cbFuncionarioResp.setItems(cbListFuncionario);
 	}
-	
+
 	public void loadStatusServico() {
 		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "PRODUÇÃO");
 		statusList = FXCollections.observableArrayList(list);
 		statusServico.setItems(statusList);
 	}
-	
+
 	private void initializeComboBoxFuncionario() {
 		Callback<ListView<Funcionario>, ListCell<Funcionario>> factory = lv -> new ListCell<Funcionario>() {
 			@Override
@@ -271,7 +256,7 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		cbFuncionarioResp.setCellFactory(factory);
 		cbFuncionarioResp.setButtonCell(factory.call(null));
 	}
-	
+
 	private void initializeComboBoxCliente() {
 		Callback<ListView<Cliente>, ListCell<Cliente>> factory = lv -> new ListCell<Cliente>() {
 			@Override
@@ -283,7 +268,7 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		cbCliente.setCellFactory(factory);
 		cbCliente.setButtonCell(factory.call(null));
 	}
-	
+
 	private void initializeComboBoxStatus() {
 		Callback<ListView<String>, ListCell<String>> factory = lv -> new ListCell<String>() {
 			@Override

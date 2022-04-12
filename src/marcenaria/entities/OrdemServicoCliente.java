@@ -24,16 +24,12 @@ public class OrdemServicoCliente implements Serializable {
 
 	}
 
-	public OrdemServicoCliente(Integer numeroPedido, Cliente codCliente, String descServico, Date dataOrdem,
-			Date dataInicio, Date prazoEntrega, Date dataEntrega, String statusServico, Double valorTotal,
+	public OrdemServicoCliente(Integer numeroPedido, Cliente codCliente, String descServico, Date dataOrdem, String statusServico, Double valorTotal,
 			Funcionario funcResponsavel, String obs) {
 		this.numeroPedido = numeroPedido;
 		this.codCliente = codCliente;
 		this.descServico = descServico;
 		this.dataOrdem = dataOrdem;
-		this.dataInicio = dataInicio;
-		this.prazoEntrega = prazoEntrega;
-		this.dataEntrega = dataEntrega;
 		this.statusServico = statusServico;
 		this.valorTotal = valorTotal;
 		this.funcResponsavel = funcResponsavel;

@@ -39,9 +39,23 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 			st.setString(3, obj.getNomeResponsavel());
 			st.setString(4, obj.getDescServico().toUpperCase());
 			st.setDate(5, new java.sql.Date(obj.getDataOrdem().getTime()));
-			st.setDate(6, new java.sql.Date(obj.getDataInicio().getTime()));
-			st.setDate(7, new java.sql.Date(obj.getPrazoEntrega().getTime()));
-			st.setDate(8, new java.sql.Date(obj.getDataEntrega().getTime()));
+			
+			if (obj.getDataInicio() != null) {
+				st.setDate(6, new java.sql.Date(obj.getDataInicio().getTime()));
+			} else {
+				st.setDate(6, null);
+			}
+
+			if (obj.getPrazoEntrega() != null) {
+				st.setDate(7, new java.sql.Date(obj.getPrazoEntrega().getTime()));
+			} else {
+				st.setDate(7, null);
+			}
+			if (obj.getDataEntrega() != null) {
+				st.setDate(8, new java.sql.Date(obj.getDataEntrega().getTime()));
+			} else {
+				st.setDate(8, null);
+			}
 			st.setString(9, obj.getStatusServico().toUpperCase());
 			st.setDouble(10, obj.getValorTotal());
 			st.setInt(11, obj.getFuncResponsavel().getRegistroFunc());
@@ -82,9 +96,23 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 			st.setString(3, obj.getNomeResponsavel());
 			st.setString(4, obj.getDescServico().toUpperCase());
 			st.setDate(5, new java.sql.Date(obj.getDataOrdem().getTime()));
-			st.setDate(6, new java.sql.Date(obj.getDataInicio().getTime()));
-			st.setDate(7, new java.sql.Date(obj.getPrazoEntrega().getTime()));
-			st.setDate(8, new java.sql.Date(obj.getDataEntrega().getTime()));
+			
+			if (obj.getDataInicio() != null) {
+				st.setDate(6, new java.sql.Date(obj.getDataInicio().getTime()));
+			} else {
+				st.setDate(6, null);
+			}
+
+			if (obj.getPrazoEntrega() != null) {
+				st.setDate(7, new java.sql.Date(obj.getPrazoEntrega().getTime()));
+			} else {
+				st.setDate(7, null);
+			}
+			if (obj.getDataEntrega() != null) {
+				st.setDate(8, new java.sql.Date(obj.getDataEntrega().getTime()));
+			} else {
+				st.setDate(8, null);
+			}
 			st.setString(9, obj.getStatusServico().toUpperCase());
 			st.setDouble(10, obj.getValorTotal());
 			st.setInt(11, obj.getFuncResponsavel().getRegistroFunc());
@@ -262,7 +290,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORDEM_SERVICO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORDEM_SERVICO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_CLIENTE.FUNC_RESPONSAVEL GROUP BY ORDEM_SERVICO_EMPRESA.NUM_PEDIDO ORDER BY NUM_PEDIDO");
+					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_EMPRESA.FUNC_RESPONSAVEL GROUP BY ORDEM_SERVICO_EMPRESA.NUM_PEDIDO ORDER BY NUM_PEDIDO");
 
 			rs = st.executeQuery();
 
@@ -307,9 +335,15 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		obj.setNomeResponsavel(rs.getString("NOME_RESPONSAVEL"));
 		obj.setDescServico(rs.getString("DESC_SERVICO"));
 		obj.setDataOrdem(new java.util.Date(rs.getTimestamp("DATA_ORDEM").getTime()));
-		obj.setDataInicio(new java.util.Date(rs.getTimestamp("DATA_INICIO").getTime()));
-		obj.setPrazoEntrega(new java.util.Date(rs.getTimestamp("PRAZO_ENTREGA").getTime()));
-		obj.setDataEntrega(new java.util.Date(rs.getTimestamp("DATA_ENTREGA").getTime()));
+		if(rs.getTimestamp("DATA_INICIO") != null) {
+			obj.setDataInicio(new java.util.Date(rs.getTimestamp("DATA_INICIO").getTime()));
+		}
+		if(rs.getTimestamp("PRAZO_ENTREGA") != null ) {
+			obj.setPrazoEntrega(new java.util.Date(rs.getTimestamp("PRAZO_ENTREGA").getTime()));
+		}
+		if(rs.getTimestamp("DATA_ENTREGA") != null) {
+			obj.setDataEntrega(new java.util.Date(rs.getTimestamp("DATA_ENTREGA").getTime()));
+		}
 		obj.setStatusServico(rs.getString("STATUS_SERVICO"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
 		obj.setFuncResponsavel(funcionario);

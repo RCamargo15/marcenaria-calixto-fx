@@ -28,6 +28,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -82,8 +83,35 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 
 	@FXML
 	private TableColumn<OrdemServicoCliente, OrdemServicoCliente> tableColumnRemover;
-
+	
+	@FXML
+	private Button btBuscar;
+	
+	@FXML
+	private Button btMostrarTodos;
+	
+	@FXML
+	private TextField txtBuscarCodOrdem;
+	
 	ObservableList<OrdemServicoCliente> obsListOrdemServico;
+	ObservableList<OrdemServicoCliente> obsListBuscar;
+	
+	@FXML
+	public void onBtBuscarAction() {
+		
+		if(txtBuscarCodOrdem == null || txtBuscarCodOrdem.getText().equals("")) {
+			Alerts.showAlert("Erro ao buscar", null, "Campo de busca não pode estar vazio. Insira o número de orçamento", AlertType.INFORMATION);
+		}
+		OrdemServicoCliente osc = ordemServicoClienteService.findByCodOrdemServicoCliente(Integer.parseInt(txtBuscarCodOrdem.getText()));
+		obsListBuscar.add(osc);
+		tableViewOrdemServicoCliente.setItems(obsListBuscar);
+	}
+
+	@FXML
+	public void onBtMostrarTodosAction() {
+		updateTableViewOrdemClienteVisualizar();
+	}
+	
 
 	public void setServices(OrdemServicoClienteService ordemClienteServicoService,
 			FuncionarioService funcionarioService, ClienteService clienteService) {
@@ -108,7 +136,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 		initializeNodes();
 		initEditButtons();
 		initRemoveButtons();
-
+		txtBuscarCodOrdem.setPromptText("Insira Nº de orçamento");
 	}
 
 	public void initializeNodes() {
@@ -129,18 +157,19 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 		tableViewOrdemServicoCliente.prefHeightProperty().bind(stage.heightProperty());
 	}
 
-	private void createGerarOrdemServicoClienteForm(OrdemServicoCliente obj, Stage parentStage, String absoluteName) {
+	private void createEditarOrdemServicoClienteForm(OrdemServicoCliente obj, Stage parentStage, String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox vBox = loader.load();
 
-			GerarOrdemDeServicoClienteController controller = loader.getController();
+			EditarOrdemDeServicoClienteController controller = loader.getController();
 			controller.setOrdemServicoCliente(obj);
 			controller.setServicos(ordemServicoClienteService, clienteService, funcionarioService);
 			controller.loadClienteOS();
 			controller.loadFuncionariosOS();
 			controller.loadStatusServico();
 			controller.receberDadosParaEditarOS();
+			controller.subscribeDataChangeListener(this);
 
 			Stage stage = new Stage();
 			stage.setTitle("Gerar ordem de serviço");
@@ -169,8 +198,8 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(event -> createGerarOrdemServicoClienteForm(obj, Utils.currentStage(event),
-						"/guiOrdemDeServicoCliente/GerarOrdemDeServicoCliente.fxml"));
+				button.setOnAction(event -> createEditarOrdemServicoClienteForm(obj, Utils.currentStage(event),
+						"/guiOrdemDeServicoCliente/EditarOrdemDeServicoCliente.fxml"));
 
 			}
 		});

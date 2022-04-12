@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import application.Main;
 import entities.services.ClienteService;
 import entities.services.EmpresaService;
+import entities.services.EntradaProdutoService;
 import entities.services.EstoqueService;
 import entities.services.FornecedorService;
 import entities.services.FuncionarioService;
@@ -19,6 +20,7 @@ import entities.services.NotasComprasService;
 import entities.services.OrcamentoClienteService;
 import entities.services.OrcamentoEmpresaService;
 import entities.services.OrdemServicoClienteService;
+import entities.services.OrdemServicoEmpresaService;
 import entities.services.ProdutoService;
 import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
@@ -33,10 +35,11 @@ import guiFornecedor.CadastroFornecedorTelaPrincipalController;
 import guiFornecedor.FornecedorVisualizarController;
 import guiFuncionarios.CadastroFuncionarioTelaPrincipalController;
 import guiFuncionarios.FuncionarioVisualizarController;
-import guiNotasCompras.NotasComprasVisualizarController;
+import guiNotasCompras.NotaCompraVisualizarController;
 import guiOrcamentoCliente.OrcamentoClienteVisualizarController;
 import guiOrcamentoEmpresa.OrcamentoEmpresaVisualizarController;
 import guiOrdemDeServicoCliente.OrdemServicoClienteVisualizarController;
+import guiOrdemDeServicoEmpresa.OrdemServicoEmpresaVisualizarController;
 import guiProduto.ProdutoVisualizarController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -185,9 +188,9 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	public void onMenuItemNotaCompraVisualizarrAction() {
-		loadNotasComprasVisualizar("/guiNotasCompras/NotasComprasVisualizar.fxml",
-				(NotasComprasVisualizarController controller) -> {
-					controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService());
+		loadNotasComprasVisualizar("/guiNotasCompras/NotaCompraVisualizar.fxml",
+				(NotaCompraVisualizarController controller) -> {
+					controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService(), new EntradaProdutoService());
 					controller.updateTableViewNotasCompras();
 				});
 	}
@@ -240,7 +243,10 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	
 	@FXML
 	public void onMenuItemOrdemServicoEmpresas() {
-		
+		loadOrdemServicoEmpresaVisualizar("/guiOrdemDeServicoEmpresa/OrdemServicoEmpresaVisualizar.fxml", (OrdemServicoEmpresaVisualizarController controller) ->{
+			controller.setServices(new OrdemServicoEmpresaService(), new FuncionarioService(), new EmpresaService());
+			controller.updateTableViewOrdemEmpresaVisualizar();
+		});
 	}
 
 	@FXML
@@ -547,6 +553,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 		} catch (IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 
@@ -603,6 +610,27 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+		}
+		catch(IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public synchronized <T> void loadOrdemServicoEmpresaVisualizar(String absoluteName, Consumer <T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
 			T controller = loader.getController();
 			initializeTable.accept(controller);
 		}

@@ -15,7 +15,6 @@ public class EntradaProduto implements Serializable {
 	private NotasCompras valorUnit;
 	private NotasCompras valorTotal;
 	private NotasCompras valorTotalNota;
-	private Funcionario respRecebimento;
 
 	public EntradaProduto() {
 
@@ -24,7 +23,6 @@ public class EntradaProduto implements Serializable {
 	public EntradaProduto(Integer codEntrada, NotasCompras numeroNF, Produto codProduto, Date dataEntrada,
 			NotasCompras quantidade, NotasCompras valorUnit, NotasCompras valorTotal, NotasCompras valorTotalNota,
 			Funcionario respRecebimento) {
-		this.codEntrada = codEntrada;
 		this.numeroNF = numeroNF;
 		this.codProduto = codProduto;
 		this.dataEntrada = dataEntrada;
@@ -32,7 +30,6 @@ public class EntradaProduto implements Serializable {
 		this.valorUnit = valorUnit;
 		this.valorTotal = valorTotal;
 		this.valorTotalNota = valorTotalNota;
-		this.respRecebimento = respRecebimento;
 	}
 
 	public Integer getCodEntrada() {
@@ -99,14 +96,6 @@ public class EntradaProduto implements Serializable {
 		this.valorTotalNota = valorTotalNota;
 	}
 
-	public Funcionario getRespRecebimento() {
-		return respRecebimento;
-	}
-
-	public void setRespRecebimento(Funcionario respRecebimento) {
-		this.respRecebimento = respRecebimento;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(codEntrada, codProduto, numeroNF, quantidade, valorTotal, valorTotalNota, valorUnit);
@@ -131,8 +120,8 @@ public class EntradaProduto implements Serializable {
 	public String toString() {
 		return "EntradaProduto [codEntrada=" + codEntrada + ", numeroNF=" + numeroNF + ", codProduto=" + codProduto
 				+ ", dataEntrada=" + dataEntrada + ", quantidade=" + quantidade + ", valorUnit=" + valorUnit
-				+ ", valorTotal=" + valorTotal + ", valorTotalNota=" + valorTotalNota + ", respRecebimento="
-				+ respRecebimento + "]";
+				+ ", valorTotal=" + valorTotal + ", valorTotalNota=" + valorTotalNota 
+				+ "]";
 	}
 
 }

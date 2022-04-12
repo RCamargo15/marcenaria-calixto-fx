@@ -76,9 +76,6 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 
 	@FXML
 	private Button mostrarTodos;
-
-	@FXML
-	private Button btNovoEstoque;
 	
 	@FXML 
 	private Button btSaidaDeProdutos;
@@ -91,13 +88,6 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 	public void setServices(EstoqueService estoqueService, ProdutoService produtoService) {
 		this.estoqueService = estoqueService;
 		this.produtoService = produtoService;
-	}
-
-	@FXML
-	public void onBtNovoEstoque(ActionEvent event) {
-		Stage parentStage = Utils.currentStage(event);
-		Estoque obj = new Estoque();
-		createCadastroEstoqueForm(obj, parentStage, "/guiEstoque/CadastroEstoque.fxml");
 	}
 	
 	@FXML

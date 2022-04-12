@@ -9,6 +9,8 @@ public interface NotasComprasDao {
 	void insert(NotasCompras obj);
 
 	void update(NotasCompras obj);
+	
+	void updateNotaCompra(NotasCompras obj);
 
 	void deleteByCodNotasCompras(Integer codNota);
 	
@@ -19,4 +21,8 @@ public interface NotasComprasDao {
 	List<NotasCompras> findByNumeroNF(String numeroNF);
 
 	List<NotasCompras> findAll();
+	
+	List<NotasCompras> findAllParaTabela();
+	
+	
 }

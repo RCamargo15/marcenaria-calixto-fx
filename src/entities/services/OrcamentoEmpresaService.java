@@ -9,43 +9,43 @@ import marcenaria.entities.OrcamentoEmpresa;
 
 public class OrcamentoEmpresaService {
 
-	private OrcamentoEmpresaDao orcamentoClienteDao = DaoFactory.createOrcamentoEmpresaDao();
+	private OrcamentoEmpresaDao orcamentoEmpresaDao = DaoFactory.createOrcamentoEmpresaDao();
 
 	public List<OrcamentoEmpresa> findAll() {
-		return orcamentoClienteDao.findAll();
+		return orcamentoEmpresaDao.findAll();
 	}
 	
 	public List<OrcamentoEmpresa> findAllParaTabela(){
-		return orcamentoClienteDao.findAllParaTabela();
+		return orcamentoEmpresaDao.findAllParaTabela();
 	}
 	
 	public List<OrcamentoEmpresa> findByNumOrcamentoList(Integer numOrcamento){
-		return orcamentoClienteDao.findByNumOrcamentoList(numOrcamento);
+		return orcamentoEmpresaDao.findByNumOrcamentoList(numOrcamento);
 	}
 
 	public void saveOrUpdate(OrcamentoEmpresa obj) {
 			if (obj.getId() == null) {
-				orcamentoClienteDao.insert(obj);
+				orcamentoEmpresaDao.insert(obj);
 			} else {
-				orcamentoClienteDao.update(obj);
+				orcamentoEmpresaDao.update(obj);
 			}
 	}
 	
 	public void saveOrcamento(OrcamentoEmpresa obj) {
-		orcamentoClienteDao.updateOrcamento(obj);
+		orcamentoEmpresaDao.updateOrcamento(obj);
 	}
 
 	public void removerOrcamento(OrcamentoEmpresa obj) {
-		orcamentoClienteDao.deleteByNumOrcamento(obj.getNumOrcamento());
+		orcamentoEmpresaDao.deleteByNumOrcamento(obj.getNumOrcamento());
 	}
 	
 	public void removerProduto(OrcamentoEmpresa obj) {
-		orcamentoClienteDao.deleteById(obj.getId());
+		orcamentoEmpresaDao.deleteById(obj.getId());
 	}
 
 
 	public List<OrcamentoEmpresa> findByCodEmpresa(Integer codCliente) {
-		List<OrcamentoEmpresa> list = orcamentoClienteDao.findAll();
+		List<OrcamentoEmpresa> list = orcamentoEmpresaDao.findAll();
 		List<OrcamentoEmpresa> listCodProd = new ArrayList<>();
 
 		for (OrcamentoEmpresa saida : list) {
@@ -58,7 +58,7 @@ public class OrcamentoEmpresaService {
 	}
 	
 	public OrcamentoEmpresa findById(Integer id) {
-		List<OrcamentoEmpresa> list = orcamentoClienteDao.findAll();
+		List<OrcamentoEmpresa> list = orcamentoEmpresaDao.findAll();
 		for (OrcamentoEmpresa saida : list) {
 			if (saida.getId().equals(id)) {
 			  return saida;
@@ -68,7 +68,7 @@ public class OrcamentoEmpresaService {
 	}
 	
 	public OrcamentoEmpresa findByNumOrcamento(Integer numOrcamento) {
-		List<OrcamentoEmpresa> list = orcamentoClienteDao.findAll();
+		List<OrcamentoEmpresa> list = orcamentoEmpresaDao.findAll();
 
 		for (OrcamentoEmpresa orc : list) {
 			if (orc.getNumOrcamento() == numOrcamento) {

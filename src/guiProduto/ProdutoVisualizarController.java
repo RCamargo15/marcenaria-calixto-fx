@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import Db.DbException;
 import application.Main;
+import entities.services.EstoqueService;
 import entities.services.ProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -143,7 +144,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 
 			CadastroProdutoController cadastroController = loader.getController();
 			cadastroController.setProduto(obj);
-			cadastroController.setProdutoService(new ProdutoService());
+			cadastroController.setProdutoServices(new ProdutoService(), new EstoqueService());
 			cadastroController.subscribeDataChangeListener(this);
 			cadastroController.updateProdutoData();
 
@@ -178,7 +179,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 				}
 				setGraphic(button);
 				button.setOnAction(event -> createCadastroProdutoForm(obj, Utils.currentStage(event),
-						"/guiProduto/CadastroProduto.fxml"));
+						"/guiProduto/EditarProduto.fxml"));
 			}
 		});
 	}

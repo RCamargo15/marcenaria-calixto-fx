@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import Db.DbException;
+import entities.services.EstoqueService;
 import entities.services.ProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -21,13 +22,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import marcenaria.entities.Estoque;
 import marcenaria.entities.Produto;
 import model.exceptions.ValidationException;
 
 public class CadastroProdutoController implements Initializable {
 
 	private Produto produto;
-
+	private EstoqueService estoqueService;
 	private ProdutoService produtoService;
 
 	private List<DataChangeListener> dataChangeListener = new ArrayList<>();
@@ -39,6 +41,11 @@ public class CadastroProdutoController implements Initializable {
 	private TextField txtDescProduto;
 	@FXML
 	private Label errorDescProduto;
+	
+	@FXML
+	private TextField txtEstoqueMinimo;
+	@FXML
+	private Label errorEstoqueMinimo;
 
 	@FXML
 	private TextField txtPrecoUnit;
@@ -58,8 +65,9 @@ public class CadastroProdutoController implements Initializable {
 		this.produto = produto;
 	}
 
-	public void setProdutoService(ProdutoService produtoService) {
+	public void setProdutoServices(ProdutoService produtoService, EstoqueService estoqueService) {
 		this.produtoService = produtoService;
+		this.estoqueService = estoqueService;
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {
@@ -75,8 +83,13 @@ public class CadastroProdutoController implements Initializable {
 			throw new IllegalStateException("ProdutoService vazio");
 		}
 		try {
+			Estoque estoque = new Estoque();
 			produto = getProdutoData();
+			estoque.setCodProduto(produto);
+			estoque.setEstoqueAtual(0);
+			estoque.setEstoqueMinimo(Integer.parseInt(txtEstoqueMinimo.getText()));
 			produtoService.saveOrUpdate(produto);
+			estoqueService.saveOrUpdate(estoque);
 			notificarDataChangeListeners();
 			Utils.currentStage(event).close();
 		} catch (ValidationException e) {

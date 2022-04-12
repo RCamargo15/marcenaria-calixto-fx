@@ -24,10 +24,9 @@ public class NotasCompras implements Serializable {
 
 	}
 
-	public NotasCompras(Integer codNota, Fornecedor codFornecedor, String numeroNF, Produto codProduto,
+	public NotasCompras(Fornecedor codFornecedor, String numeroNF, Produto codProduto,
 			Integer quantidade, Double valorUnit, Double valorTotal, Double valorTotalNota, String chaveNF,
 			Date dataEmissao, Date dataEntrada, String obs) {
-		this.codNota = codNota;
 		this.codFornecedor = codFornecedor;
 		this.numeroNF = numeroNF;
 		this.codProduto = codProduto;

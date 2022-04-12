@@ -38,9 +38,23 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 			st.setInt(2, obj.getCodCliente().getCodCliente());
 			st.setString(3, obj.getDescServico().toUpperCase());
 			st.setDate(4, new java.sql.Date(obj.getDataOrdem().getTime()));
-			st.setDate(5, new java.sql.Date(obj.getDataInicio().getTime()));
-			st.setDate(6, new java.sql.Date(obj.getPrazoEntrega().getTime()));
-			st.setDate(7, new java.sql.Date(obj.getDataEntrega().getTime()));
+			
+			if (obj.getDataInicio() != null) {
+				st.setDate(5, new java.sql.Date(obj.getDataInicio().getTime()));
+			} else {
+				st.setDate(5, null);
+			}
+
+			if (obj.getPrazoEntrega() != null) {
+				st.setDate(6, new java.sql.Date(obj.getPrazoEntrega().getTime()));
+			} else {
+				st.setDate(6, null);
+			}
+			if (obj.getDataEntrega() != null) {
+				st.setDate(7, new java.sql.Date(obj.getDataEntrega().getTime()));
+			} else {
+				st.setDate(7, null);
+			}
 			st.setString(8, obj.getStatusServico().toUpperCase());
 			st.setDouble(9, obj.getValorTotal());
 			st.setInt(10, obj.getFuncResponsavel().getRegistroFunc());
@@ -80,9 +94,23 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 			st.setInt(2, obj.getCodCliente().getCodCliente());
 			st.setString(3, obj.getDescServico().toUpperCase());
 			st.setDate(4, new java.sql.Date(obj.getDataOrdem().getTime()));
-			st.setDate(5, new java.sql.Date(obj.getDataInicio().getTime()));
-			st.setDate(6, new java.sql.Date(obj.getPrazoEntrega().getTime()));
-			st.setDate(7, new java.sql.Date(obj.getDataEntrega().getTime()));
+			
+			if (obj.getDataInicio() != null) {
+				st.setDate(5, new java.sql.Date(obj.getDataInicio().getTime()));
+			} else {
+				st.setDate(5, null);
+			}
+
+			if (obj.getPrazoEntrega() != null) {
+				st.setDate(6, new java.sql.Date(obj.getPrazoEntrega().getTime()));
+			} else {
+				st.setDate(6, null);
+			}
+			if (obj.getDataEntrega() != null) {
+				st.setDate(7, new java.sql.Date(obj.getDataEntrega().getTime()));
+			} else {
+				st.setDate(7, null);
+			}
 			st.setString(8, obj.getStatusServico().toUpperCase());
 			st.setDouble(9, obj.getValorTotal());
 			st.setInt(10, obj.getFuncResponsavel().getRegistroFunc());
@@ -304,9 +332,15 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 		obj.setCodCliente(cliente);
 		obj.setDescServico(rs.getString("DESC_SERVICO"));
 		obj.setDataOrdem(new java.util.Date(rs.getTimestamp("DATA_ORDEM").getTime()));
-		obj.setDataInicio(new java.util.Date(rs.getTimestamp("DATA_INICIO").getTime()));
-		obj.setPrazoEntrega(new java.util.Date(rs.getTimestamp("PRAZO_ENTREGA").getTime()));
-		obj.setDataEntrega(new java.util.Date(rs.getTimestamp("DATA_ENTREGA").getTime()));
+		if(rs.getTimestamp("DATA_INICIO") != null) {
+			obj.setDataInicio(new java.util.Date(rs.getTimestamp("DATA_INICIO").getTime()));
+		}
+		if(rs.getTimestamp("PRAZO_ENTREGA") != null ) {
+			obj.setPrazoEntrega(new java.util.Date(rs.getTimestamp("PRAZO_ENTREGA").getTime()));
+		}
+		if(rs.getTimestamp("DATA_ENTREGA") != null) {
+			obj.setDataEntrega(new java.util.Date(rs.getTimestamp("DATA_ENTREGA").getTime()));
+		}
 		obj.setStatusServico(rs.getString("STATUS_SERVICO"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
 		obj.setFuncResponsavel(funcionario);

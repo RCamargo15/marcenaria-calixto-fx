@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import Db.DbException;
 import application.Main;
+import entities.services.EntradaProdutoService;
 import entities.services.FornecedorService;
 import entities.services.NotasComprasService;
 import entities.services.ProdutoService;
@@ -38,17 +39,16 @@ import marcenaria.entities.Fornecedor;
 import marcenaria.entities.NotasCompras;
 import marcenaria.entities.Produto;
 
-public class NotasComprasVisualizarController implements Initializable, DataChangeListener {
+public class NotaCompraVisualizarController implements Initializable, DataChangeListener {
 
 	private NotasComprasService notasComprasService;
-	
 	private FornecedorService fornecedorService;
-	
 	private ProdutoService produtoService;
-
+	private EntradaProdutoService entradaProdutoService;
+	
 	@FXML
 	private TableView<NotasCompras> tableViewNotasCompras;
-
+	
 	@FXML
 	private TableColumn<NotasCompras, Integer> tableColumnCodNota;
 
@@ -60,7 +60,7 @@ public class NotasComprasVisualizarController implements Initializable, DataChan
 	
 	@FXML
 	private TableColumn<Produto, Integer> tableColumnCodProduto;
-	
+
 	@FXML
 	private TableColumn<NotasCompras, Integer> tableColumnQuantidade;
 	
@@ -69,10 +69,10 @@ public class NotasComprasVisualizarController implements Initializable, DataChan
 	
 	@FXML
 	private TableColumn<NotasCompras, Double> tableColumnValorTotal;
-	
+
 	@FXML
 	private TableColumn<NotasCompras, Double> tableColumnValorTotalNota;
-	
+
 	@FXML
 	private TableColumn<NotasCompras, String> tableColumnChaveNF;
 	
@@ -81,58 +81,48 @@ public class NotasComprasVisualizarController implements Initializable, DataChan
 	
 	@FXML
 	private TableColumn<NotasCompras, Date> tableColumnDataEntrada;
-	
+
 	@FXML
 	private TableColumn<NotasCompras, String> tableColumnObs;
-	
+
 	@FXML
 	private TableColumn<NotasCompras, NotasCompras> tableColumnEditar;
 
 	@FXML
 	private TableColumn<NotasCompras, NotasCompras> tableColumnRemover;
+	
 
 	@FXML
-	private TextField searchByCod;
+	private TextField txtSearchByCod;
 
 	@FXML
 	private Button btBuscar;
+	
+	@FXML
+	private Button btEntradaProdutos;
 
 	@FXML
-	private Button mostrarTodos;
+	private Button btMostrarTodos;
 
 	@FXML
 	private Button btNovoNotasCompras;
-	
 
 	private ObservableList<NotasCompras> obsList;
-	
-	public void setServices(NotasComprasService notasComprasService, FornecedorService fornecedorService, ProdutoService produtoService) {
+
+	public void setServices(NotasComprasService notasComprasService, FornecedorService fornecedorService, ProdutoService produtoService, EntradaProdutoService entradaProdutoService) {
 		this.notasComprasService = notasComprasService;
 		this.fornecedorService = fornecedorService;
 		this.produtoService = produtoService;
+		this.entradaProdutoService = entradaProdutoService;
 	}
 
 	@FXML
-	public void onBtNovaNotaCompra(ActionEvent event) {
+	public void onBtNovoNotasCompras(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
 		NotasCompras obj = new NotasCompras();
-		createCadastroNotasComprasForm(obj, parentStage, "/guiNotasCompras/CadastroNotasCompras.fxml");
+		createCadastroNotasComprasForm(obj, parentStage, "/guiNotasCompras/GerarNovaNotaCompra.fxml");
+		
 	}
-	
-//	@FXML
-//	public void onBtSaidaDeProduto(ActionEvent event) {
-//		Stage parentStage = Utils.currentStage(event);
-//		SaidaProduto obj = new SaidaProduto();
-//		createSaidaDeProdutosEstoqueForm(obj, parentStage, "/guiEstoque/SaidaDeProdutoEstoque.fxml");
-//	}
-//	
-//	@FXML
-//	public void onBtVisualizarSaidasAction() {
-//		loadSaidaProdutoVisualizar("/guiEstoque/SaidaProdutoVisualizar.fxml", (SaidaProdutoVisualizarController controller) ->{
-//			controller.setServices(new SaidaProdutoService(), produtoService, new FuncionarioService(), estoqueService);
-//			controller.updateTableViewSaidaProduto();
-//		});
-//	}
 
 	@FXML
 	public void onBtMostrarTodos() {
@@ -141,27 +131,41 @@ public class NotasComprasVisualizarController implements Initializable, DataChan
 
 	@FXML
 	public void onBtBuscar() {
-
 		if (notasComprasService == null) {
-			throw new IllegalStateException("Service null");
+			throw new IllegalStateException("Orcamento Fornecedor null");
 		}
 
-		NotasCompras buscaNotasCompras = notasComprasService.findByCodNotasCompras(Utils.tryParseToInt(searchByCod.getText()));
+		NotasCompras buscaNotasCompras = notasComprasService.findByNumeroNFSingle(txtSearchByCod.getText());
 
 		if (buscaNotasCompras == null) {
-			Alerts.showAlert("Busca de estoque", null, "Nenhum estoque com esse código foi encontrado no sistema!",
-					AlertType.INFORMATION);
+			Alerts.showAlert("Busca de orçamentos", null, "Nenhum orçamento encontrado no sistema", AlertType.ERROR);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaNotasCompras);
 			tableViewNotasCompras.setItems(obsList);
 			initEditButtons();
 			initRemoveButtons();
 		}
+	}
 
+	public void updateTableViewNotasCompras() {
+		if (notasComprasService == null) {
+			throw new IllegalStateException("Orcamento null");
+		}
+
+		List<NotasCompras> list = notasComprasService.findAllParaTabela();
+		obsList = FXCollections.observableArrayList(list);
+		tableViewNotasCompras.setItems(obsList);
+		initEditButtons();
+		initRemoveButtons();
 	}
 
 	@Override
-	public void initialize(URL uri, ResourceBundle rb) {
+	public void onDataChanged() {
+		updateTableViewNotasCompras();
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
 		initializeNodes();
 	}
 
@@ -179,104 +183,66 @@ public class NotasComprasVisualizarController implements Initializable, DataChan
 		tableColumnDataEntrada.setCellValueFactory(new PropertyValueFactory<>("dataEntrada"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 		
-		searchByCod.setPromptText("Insira o código da nota fiscal");
-
+		txtSearchByCod.setPromptText("Insira código busca");
+		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewNotasCompras.prefHeightProperty().bind(stage.heightProperty());
 		tableViewNotasCompras.prefWidthProperty().bind(stage.widthProperty());
-
 	}
 
-	public void updateTableViewNotasCompras() {
-		if (notasComprasService == null) {
-			throw new IllegalStateException("Service null");
+	private void createCadastroNotasComprasForm(NotasCompras obj, Stage parentStage, String string) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(string));
+			VBox vBox = loader.load();
+			
+			GerarNovaNotaCompraController novaNotaController = loader.getController();
+			novaNotaController.setNotasCompras(obj);
+			novaNotaController.setServices(notasComprasService, fornecedorService, produtoService, entradaProdutoService);
+			novaNotaController.loadFornecedores();
+			novaNotaController.loadProdutos();
+			novaNotaController.subscribeDataChangeListener(this);
+			
+			Stage orcamentoFornecedorStage = new Stage();
+			orcamentoFornecedorStage.setTitle("Inserir nota fiscal");
+			orcamentoFornecedorStage.setScene(new Scene(vBox));
+			orcamentoFornecedorStage.setResizable(false);
+			orcamentoFornecedorStage.initOwner(parentStage);
+			orcamentoFornecedorStage.initModality(Modality.WINDOW_MODAL);
+			orcamentoFornecedorStage.showAndWait();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 
-		List<NotasCompras> list = notasComprasService.findAll();
-		obsList = FXCollections.observableArrayList(list);
-		tableViewNotasCompras.setItems(obsList);
-		initEditButtons();
-		initRemoveButtons();
 	}
-
-	private void createCadastroNotasComprasForm(NotasCompras obj, Stage parentStage, String absoluteName) {
+	
+	private void createEditarNotasComprasForm(NotasCompras obj, Stage parentStage, String string) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(string));
 			VBox vBox = loader.load();
-
-			CadastroNotasComprasController cadastroController = loader.getController();
-			cadastroController.setNotasCompras(obj);
-			cadastroController.setServices(new FornecedorService(), new ProdutoService());
-			cadastroController.loadProdutos();
-			cadastroController.loadFornecedor();
-			cadastroController.subscribeDataChangeListener(this);
-			cadastroController.updateNotasComprasData();
-
-			Stage cadastroNotasComprasStage = new Stage();
-			cadastroNotasComprasStage.setTitle("Cadastro de notas fiscais");
-			cadastroNotasComprasStage.setScene(new Scene(vBox));
-			cadastroNotasComprasStage.setResizable(false);
-			cadastroNotasComprasStage.initOwner(parentStage);
-			cadastroNotasComprasStage.initModality(Modality.WINDOW_MODAL);
-			cadastroNotasComprasStage.showAndWait();
-		} catch (IOException e) {
+			
+			EditarNotaCompraController editarController = loader.getController();
+//			editarController.setNotasCompras(obj);
+//			editarController.setServices(notasComprasService, fornecedorService, produtoService);
+//			editarController.loadFornecedors();
+//			editarController.updateNotasComprasData();
+			editarController.subscribeDataChangeListener(this);
+			
+			Stage editarOrcamentoStage = new Stage();
+			editarOrcamentoStage.setTitle("Editar orçamento");
+			editarOrcamentoStage.setScene(new Scene(vBox));
+			editarOrcamentoStage.setResizable(false);
+			editarOrcamentoStage.initOwner(parentStage);
+			editarOrcamentoStage.initModality(Modality.WINDOW_MODAL);
+			editarOrcamentoStage.showAndWait();
+		}
+		catch(IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
-//	public synchronized <T> void loadSaidaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			VBox newVBox = loader.load();
-//			
-//			Scene mainScene = Main.getMainScene();
-//			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-//			
-//			Node mainMenu = mainVBox.getChildren().get(0);
-//			mainVBox.getChildren().clear();
-//			mainVBox.getChildren().add(mainMenu);
-//			mainVBox.getChildren().addAll(newVBox.getChildren());
-//			
-//			T controller = loader.getController();
-//			initializeTable.accept(controller);
-//		}
-//		catch(IOException e) {
-//			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
-//		}
-//	}
-//	
-//	public void createSaidaDeProdutosEstoqueForm(SaidaProduto obj, Stage parentStage, String absoluteName) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//			VBox vBox = loader.load();
-//			
-//			SaidaDeProdutoEstoqueController saidaProdutoController = loader.getController();
-//			saidaProdutoController.setSaidaProduto(obj);
-//			saidaProdutoController.setServices(new SaidaProdutoService(), estoqueService, new FuncionarioService());
-//			saidaProdutoController.subscribeDataListenerChange(this);
-//			saidaProdutoController.loadEstoque();
-//			saidaProdutoController.loadFuncionario();
-//			saidaProdutoController.updateSaidaProdutoData();
-//			
-//			Stage saidaProdutoEstoqueStage = new Stage();
-//			saidaProdutoEstoqueStage.setTitle("Registro de saída de produtos do estoque");
-//			saidaProdutoEstoqueStage.setScene(new Scene(vBox));
-//			saidaProdutoEstoqueStage.setResizable(false);
-//			saidaProdutoEstoqueStage.initOwner(parentStage);
-//			saidaProdutoEstoqueStage.initModality(Modality.WINDOW_MODAL);
-//			saidaProdutoEstoqueStage.showAndWait();
-//		}
-//		catch(IOException e) {
-//			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
-//		}
-//	}
-
-	@Override
-	public void onDataChanged() {
-		updateTableViewNotasCompras();
-	}
-
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<NotasCompras, NotasCompras>() {
@@ -290,8 +256,8 @@ public class NotasComprasVisualizarController implements Initializable, DataChan
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(event -> createCadastroNotasComprasForm(obj, Utils.currentStage(event),
-						"/guiNotasCompras/CadastroNotasCompras.fxml"));
+				button.setOnAction(event -> createEditarNotasComprasForm(obj, Utils.currentStage(event),
+						"/guiNotasCompras/EditarNotaCompra.fxml"));
 			}
 		});
 	}
@@ -313,21 +279,20 @@ public class NotasComprasVisualizarController implements Initializable, DataChan
 			}
 		});
 	}
-
+	
 	private void excluirNotasCompras(NotasCompras obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR PRODUTO",
-				"Tem certeza que deseja remover esse estoque?");
-		if (result.get() == ButtonType.OK) {
-			if (notasComprasService == null) {
-				throw new IllegalStateException("Estoque está vazio");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO", "Tem certeza que deseja remover esse orçamento?");
+			if(result.get() == ButtonType.OK) {
+				if(notasComprasService == null) {
+					throw new IllegalStateException("Orcamento vazio");
+				}
+				try {
+					notasComprasService.removerNotaCompra(obj);
+					updateTableViewNotasCompras();
+				}
+				catch(DbException e) {
+					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+				}
 			}
-			try {
-				notasComprasService.removerNotasCompras(obj);
-				updateTableViewNotasCompras();
-			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir estoque", null, e.getMessage(), AlertType.ERROR);
-			}
-		}
 	}
-
 }

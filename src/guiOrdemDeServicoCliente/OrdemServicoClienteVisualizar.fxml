@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.VBox?>
 
@@ -11,6 +13,14 @@
       <ToolBar prefHeight="33.0" prefWidth="823.0">
          <items>
             <Label text="ORDENS DE SERVIÇO PARA PESSOAS FÍSICAS" />
+         </items>
+      </ToolBar>
+      <ToolBar prefHeight="33.0" prefWidth="823.0">
+         <items>
+            <Button fx:id="btMostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodosAction" text="Mostrar todos " />
+            <Label />
+            <TextField fx:id="txtBuscarCodOrdem" />
+            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscarAction" text="Buscar" />
          </items>
       </ToolBar>
       <TableView fx:id="tableViewOrdemServicoCliente" prefHeight="200.0" prefWidth="200.0">

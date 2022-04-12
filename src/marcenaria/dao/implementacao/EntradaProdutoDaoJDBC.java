@@ -18,7 +18,6 @@ import marcenaria.dao.EstoqueDao;
 import marcenaria.entities.EntradaProduto;
 import marcenaria.entities.Estoque;
 import marcenaria.entities.Fornecedor;
-import marcenaria.entities.Funcionario;
 import marcenaria.entities.NotasCompras;
 import marcenaria.entities.Produto;
 
@@ -40,8 +39,8 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO MARCENARIA.ENTRADA_PRODUTO(NUMERO_NF, COD_PRODUTO, DATA_ENTRADA, QUANTIDADE, VALOR_UNIT, VALOR_TOTAL, VALOR_TOTAL_NOTA, "
-							+ "RESP_RECEB) " + "VALUES(?, ? ,?, ?, ?, ?, ?, ?)",
+					"INSERT INTO MARCENARIA.ENTRADA_PRODUTO(NUMERO_NF, COD_PRODUTO, DATA_ENTRADA, QUANTIDADE, VALOR_UNIT, VALOR_TOTAL, VALOR_TOTAL_NOTA)"
+							+ "VALUES(?, ? ,?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
@@ -51,7 +50,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setDouble(5, obj.getValorUnit().getValorUnit());
 			st.setDouble(6, obj.getValorTotal().getValorTotal());
 			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
-			st.setInt(8, obj.getRespRecebimento().getRegistroFunc());
+			
 
 			int rowsAffected = st.executeUpdate();
 
@@ -93,7 +92,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.ENTRADA_PRODUTO"
-					+ " SET NUMERO_NF=?, COD_PRODUTO = ?, DATA_ENTRADA = ?, QUANTIDADE = ?, VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_TOTAL_NOTA = ?, RESP_RECEB = ? "
+					+ " SET NUMERO_NF=?, COD_PRODUTO = ?, DATA_ENTRADA = ?, QUANTIDADE = ?, VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_TOTAL_NOTA = ?"
 					+ "WHERE COD_ENTRADA = ?");
 
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
@@ -103,8 +102,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setDouble(5, obj.getValorUnit().getValorUnit());
 			st.setDouble(6, obj.getValorTotal().getValorTotal());
 			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
-			st.setInt(8, obj.getRespRecebimento().getRegistroFunc());
-			st.setInt(9, obj.getCodEntrada());
+			st.setInt(8, obj.getCodEntrada());
 
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -138,7 +136,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
 							+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = entrada_produto.NUMERO_NF "
 							+ "INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
-							+ "INNER JOIN FUNCIONARIO ON funcionario.REGISTRO_FUNC = entrada_produto.RESP_RECEB WHERE COD_ENTRADA = ?  GROUP BY entrada_produto.COD_ENTRADA");
+							+ " WHERE COD_ENTRADA = ?  GROUP BY entrada_produto.COD_ENTRADA");
 
 			st.setInt(1, codEntradaProduto);
 
@@ -146,7 +144,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
-			Map<Integer, Funcionario> funcionarioMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
 
 			while (rs.next()) {
@@ -169,13 +166,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt(("REGISTRO_FUNC")));
-				if (funcionario == null) {
-					funcionario = criarFuncionario(rs);
-					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);
-				}
-
-				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra, funcionario);
+				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				return obj;
 			}
 			return null;
@@ -197,7 +188,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
 							+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = entrada_produto.NUMERO_NF "
 							+ "INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
-							+ "INNER JOIN FUNCIONARIO ON funcionario.REGISTRO_FUNC = entrada_produto.RESP_RECEB WHERE ENTRADA_PRODUTO.NUMERO_NF = ?  GROUP BY entrada_produto.COD_ENTRADA");
+							+ " WHERE ENTRADA_PRODUTO.NUMERO_NF = ?  GROUP BY entrada_produto.COD_ENTRADA");
 
 			st.setString(1, numeroNF);
 
@@ -206,7 +197,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			List<EntradaProduto> listaEntrada = new ArrayList<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
-			Map<Integer, Funcionario> funcionarioMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
 
 			while (rs.next()) {
@@ -229,13 +219,8 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt(("REGISTRO_FUNC")));
-				if (funcionario == null) {
-					funcionario = criarFuncionario(rs);
-					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);
-				}
 
-				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra, funcionario);
+				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				listaEntrada.add(obj);
 			}
 			return listaEntrada;
@@ -257,7 +242,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
 							+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = entrada_produto.NUMERO_NF "
 							+ "INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
-							+ "INNER JOIN FUNCIONARIO ON funcionario.REGISTRO_FUNC = entrada_produto.RESP_RECEB WHERE ENTRADA_PRODUTO.COD_PRODUTO = ?  GROUP BY entrada_produto.COD_ENTRADA");
+							+ "WHERE ENTRADA_PRODUTO.COD_PRODUTO = ?  GROUP BY entrada_produto.COD_ENTRADA");
 
 			st.setInt(1, codProduto);
 			rs = st.executeQuery();
@@ -265,7 +250,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			List<EntradaProduto> listaEntrada = new ArrayList<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
-			Map<Integer, Funcionario> funcionarioMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
 
 			while (rs.next()) {
@@ -288,13 +272,9 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt(("REGISTRO_FUNC")));
-				if (funcionario == null) {
-					funcionario = criarFuncionario(rs);
-					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);
-				}
+				
 
-				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra, funcionario);
+				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				listaEntrada.add(obj);
 			}
 			return listaEntrada;
@@ -316,14 +296,13 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = ENTRADA_PRODUTO.NUMERO_NF "
 					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
 					+ "INNER JOIN FORNECEDOR ON nota_compra_material.COD_FORNECEDOR = FORNECEDOR.COD_FORNECEDOR "
-					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ENTRADA_PRODUTO.RESP_RECEB GROUP BY COD_ENTRADA");
+					+ "GROUP BY COD_ENTRADA");
 
 			rs = st.executeQuery();
 
 			List<EntradaProduto> listaEntrada = new ArrayList<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
-			Map<Integer, Funcionario> funcionarioMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
 
 			while (rs.next()) {
@@ -346,13 +325,9 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt(("REGISTRO_FUNC")));
-				if (funcionario == null) {
-					funcionario = criarFuncionario(rs);
-					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);
-				}
+				
 
-				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra, funcionario);
+				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				listaEntrada.add(obj);
 			}
 
@@ -366,7 +341,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 
 	}
 
-	private EntradaProduto criarEntradaProduto(ResultSet rs, Produto prod, NotasCompras notaCompra, Funcionario func)
+	private EntradaProduto criarEntradaProduto(ResultSet rs, Produto prod, NotasCompras notaCompra)
 			throws SQLException {
 		EntradaProduto obj = new EntradaProduto();
 		obj.setCodEntrada(rs.getInt("COD_ENTRADA"));
@@ -377,7 +352,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setValorUnit(notaCompra);
 		obj.setValorTotal(notaCompra);
 		obj.setValorTotalNota(notaCompra);
-		obj.setRespRecebimento(func);
+	
 		return obj;
 	}
 
@@ -386,34 +361,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setCodProduto(rs.getInt("COD_PRODUTO"));
 		obj.setDescProduto(rs.getString("DESC_PRODUTO"));
 		obj.setPrecoUnit(rs.getDouble("PRECO_UNIT"));
-		return obj;
-	}
-
-	private Funcionario criarFuncionario(ResultSet rs) throws SQLException {
-		Funcionario obj = new Funcionario();
-		obj.setRegistroFunc(rs.getInt("REGISTRO_FUNC"));
-		obj.setNome(rs.getString("NOME"));
-		obj.setRg(rs.getString("RG"));
-		obj.setCpf(rs.getString("CPF"));
-		obj.setCtps(rs.getString("CTPS"));
-		obj.setRua(rs.getString("RUA"));
-		obj.setNumero(rs.getInt("NUMERO"));
-		obj.setComplemento(rs.getString("COMPLEMENTO"));
-		obj.setBairro(rs.getString("BAIRRO"));
-		obj.setCep(rs.getString("CEP"));
-		obj.setCidade(rs.getString("CIDADE"));
-		obj.setEstado(rs.getString("ESTADO"));
-		obj.setUf(rs.getString("UF"));
-		obj.setDdd(rs.getInt("DDD"));
-		obj.setTelefone(rs.getString("TELEFONE"));
-		obj.setCelular(rs.getString("CELULAR"));
-		obj.setDataNasc(new java.util.Date(rs.getTimestamp("DATA_NASC").getTime()));
-		obj.setDataAdmissao(new java.util.Date(rs.getTimestamp("DATA_ADMISSAO").getTime()));
-		obj.setTipoSang(rs.getString("TIPO_SANG"));
-		obj.setFuncao(rs.getString("FUNCAO"));
-		obj.setSetor(rs.getString("SETOR"));
-		obj.setSalario(rs.getDouble("SALARIO"));
-		obj.setObs(rs.getString("OBS"));
 		return obj;
 	}
 
