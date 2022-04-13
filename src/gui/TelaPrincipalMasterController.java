@@ -35,6 +35,7 @@ import guiFornecedor.CadastroFornecedorTelaPrincipalController;
 import guiFornecedor.FornecedorVisualizarController;
 import guiFuncionarios.CadastroFuncionarioTelaPrincipalController;
 import guiFuncionarios.FuncionarioVisualizarController;
+import guiNotasCompras.EntradaProdutoVisualizarController;
 import guiNotasCompras.NotaCompraVisualizarController;
 import guiOrcamentoCliente.OrcamentoClienteVisualizarController;
 import guiOrcamentoEmpresa.OrcamentoEmpresaVisualizarController;
@@ -85,13 +86,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	private MenuItem menuItemFuncionarioVisualizar;
 
 	@FXML
-	private MenuItem menuItemNotaCompraCadastro;
-
-	@FXML
 	private MenuItem menuItemNotaCompraVisualizar;
-
-	@FXML
-	private MenuItem menuItemEntradaProdutoCadastrar;
 
 	@FXML
 	private MenuItem menuItemEntradaProdutoVisualizar;
@@ -116,12 +111,6 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	private MenuItem menuItemOrcamentoVisualizar;
-
-	@FXML
-	private MenuItem menuItemUsuarioCadastrar;
-
-	@FXML
-	private MenuItem menuItemUsuarioVisualizar;
 
 	@FXML
 	public void onMenuItemClienteCadastroAction() {
@@ -182,27 +171,20 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	}
 
 	@FXML
-	public void onMenuItemNotaCompraCadastrarAction() {
-
-	}
-
-	@FXML
 	public void onMenuItemNotaCompraVisualizarrAction() {
 		loadNotasComprasVisualizar("/guiNotasCompras/NotaCompraVisualizar.fxml",
 				(NotaCompraVisualizarController controller) -> {
-					controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService(), new EntradaProdutoService());
+					controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService(), new EntradaProdutoService(), new EstoqueService());
 					controller.updateTableViewNotasCompras();
 				});
 	}
 
 	@FXML
-	public void onMenuItemEntradaProdutoCadastroAction() {
-
-	}
-
-	@FXML
 	public void onMenuItemEntradaProdutoVisualizarAction() {
-
+		loadEntradaProdutoVisualizar("/guiNotasCompras/EntradaProdutoVisualizar.fxml",(EntradaProdutoVisualizarController controller) ->{
+			controller.setServices(new EntradaProdutoService());
+			controller.updateTableViewEntradaProduto();
+		});
 	}
 
 	@FXML
@@ -250,11 +232,6 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	}
 
 	@FXML
-	public void onMenuItemOrcamentoGerarAction() {
-
-	}
-
-	@FXML
 	public void onMenuItemOrcamentoVisualizarAction() {
 		String[] options = {"Cliente", "Empresa"};
         int x = JOptionPane.showOptionDialog(null, "Escolha o tipo de orçamento", "Orçamentos",
@@ -274,20 +251,10 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
         }
 	}
 
-	@FXML
-	public void onMenuItemUsuarioCadastrarAction() {
-
-	}
-
-	@FXML
-	public void onMenuItemUsuarioVisualizarAction() {
-
-	}
-
 	@Override
 	public void initialize(URL uri, ResourceBundle rb) {
-
-	}
+   // TODO Tela inicial sem metodos para inicio
+ }
 
 	private synchronized void loadCadastroCliente(String absoluteName, Cliente obj) {
 		try {
@@ -619,6 +586,27 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	}
 	
 	public synchronized <T> void loadOrdemServicoEmpresaVisualizar(String absoluteName, Consumer <T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+		}
+		catch(IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public synchronized <T> void loadEntradaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();

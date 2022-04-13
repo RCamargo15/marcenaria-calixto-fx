@@ -71,25 +71,20 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 	public void update(NotasCompras obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL"
-					+ " SET COD_FORNECEDOR = ?, NUMERO_NF=?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_TOTAL_NOTA = ?, CHAVE_NF = ?, "
-					+ "DATA_EMISSAO = ?, DATA_ENTRADA = ?, OBS = ? WHERE COD_NOTA = ?");
+			st = conn.prepareStatement(
+					"UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL" + " SET COD_FORNECEDOR = ?, NUMERO_NF=?, CHAVE_NF = ?, "
+							+ "DATA_EMISSAO = ?, DATA_ENTRADA = ?, OBS = ? WHERE COD_NOTA = ?");
 
 			st.setInt(1, obj.getCodFornecedor().getCodFornecedor());
 			st.setString(2, obj.getNumeroNF());
-			st.setInt(3, obj.getCodProduto().getCodProduto());
-			st.setInt(4, obj.getQuantidade());
-			st.setDouble(5, obj.getValorUnit());
-			st.setDouble(6, obj.getValorTotal());
-			st.setDouble(7, obj.getValorTotalNota());
-			st.setString(8, obj.getChaveNF());
-			st.setDate(9, new java.sql.Date(obj.getDataEmissao().getTime()));
-			st.setDate(10, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setString(11, obj.getObs());
+			st.setString(3, obj.getChaveNF());
+			st.setDate(4, new java.sql.Date(obj.getDataEmissao().getTime()));
+			st.setDate(5, new java.sql.Date(obj.getDataEntrada().getTime()));
+			st.setString(6, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(11, obj.getObs().toUpperCase());
+				st.setString(6, obj.getObs().toUpperCase());
 			}
-			st.setInt(11, obj.getCodNota());
+			st.setInt(7, obj.getCodNota());
 
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -101,28 +96,47 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 	}
 	
 	@Override
+	public void updateProduto(NotasCompras obj) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL" + " SET  COD_PRODUTO = ?, QUANTIDADE = ?, "
+							+ " VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_TOTAL_NOTA = ? WHERE COD_NOTA = ?");
+
+			st.setInt(1, obj.getCodProduto().getCodProduto());
+			st.setInt(2, obj.getQuantidade());
+			st.setDouble(3, obj.getValorUnit());
+			st.setDouble(4, obj.getQuantidade() * obj.getValorUnit());
+			st.setDouble(5, obj.getValorTotalNota());
+			st.setInt(6, obj.getCodNota());
+
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			Db.closeStatement(st);
+		}
+
+	}
+
+	@Override
 	public void updateNotaCompra(NotasCompras obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL"
-					+ " SET COD_FORNECEDOR = ?, NUMERO_NF=?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_TOTAL_NOTA = ?, CHAVE_NF = ?, "
-					+ "DATA_EMISSAO = ?, DATA_ENTRADA = ?, OBS = ? WHERE NUMERO_NF = ?");
+			st = conn.prepareStatement(
+					"UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL SET COD_FORNECEDOR = ?, NUMERO_NF=?, CHAVE_NF = ?, "
+							+ "DATA_EMISSAO = ?, DATA_ENTRADA = ?, OBS = ? WHERE NUMERO_NF = ?");
 
 			st.setInt(1, obj.getCodFornecedor().getCodFornecedor());
 			st.setString(2, obj.getNumeroNF());
-			st.setInt(3, obj.getCodProduto().getCodProduto());
-			st.setInt(4, obj.getQuantidade());
-			st.setDouble(5, obj.getValorUnit());
-			st.setDouble(6, obj.getValorTotal());
-			st.setDouble(7, obj.getValorTotalNota());
-			st.setString(8, obj.getChaveNF());
-			st.setDate(9, new java.sql.Date(obj.getDataEmissao().getTime()));
-			st.setDate(10, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setString(11, obj.getObs());
+			st.setString(3, obj.getChaveNF());
+			st.setDate(4, new java.sql.Date(obj.getDataEmissao().getTime()));
+			st.setDate(5, new java.sql.Date(obj.getDataEntrada().getTime()));
+			st.setString(6, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(11, obj.getObs().toUpperCase());
+				st.setString(6, obj.getObs().toUpperCase());
 			}
-			st.setString(11, obj.getNumeroNF());
+			st.setString(7, obj.getNumeroNF());
 
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -254,11 +268,9 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		ResultSet rs = null;
 
 		try {
-			st = conn.prepareStatement(
-					"SELECT * FROM MARCENARIA.NOTA_COMPRA_MATERIAL"
-					+" INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR"
-					+" INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = NOTA_COMPRA_MATERIAL.COD_PRODUTO"
-					);
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.NOTA_COMPRA_MATERIAL"
+					+ " INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR"
+					+ " INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = NOTA_COMPRA_MATERIAL.COD_PRODUTO");
 
 			rs = st.executeQuery();
 
@@ -292,18 +304,17 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		}
 
 	}
-	
+
 	@Override
 	public List<NotasCompras> findAllParaTabela() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 
 		try {
-			st = conn.prepareStatement(
-					"SELECT * FROM MARCENARIA.NOTA_COMPRA_MATERIAL"
-					+" INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR"
-					+" INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = NOTA_COMPRA_MATERIAL.COD_PRODUTO"
-					+" GROUP BY COD_NOTA");
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.NOTA_COMPRA_MATERIAL"
+					+ " INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR"
+					+ " INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = NOTA_COMPRA_MATERIAL.COD_PRODUTO"
+					+ " GROUP BY NUMERO_NF");
 
 			rs = st.executeQuery();
 
@@ -385,7 +396,4 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		return obj;
 	}
 
-	
-
-	
 }

@@ -12,11 +12,8 @@ import java.util.Map;
 
 import Db.Db;
 import Db.DbException;
-import marcenaria.dao.DaoFactory;
 import marcenaria.dao.EntradaProdutoDao;
-import marcenaria.dao.EstoqueDao;
 import marcenaria.entities.EntradaProduto;
-import marcenaria.entities.Estoque;
 import marcenaria.entities.Fornecedor;
 import marcenaria.entities.NotasCompras;
 import marcenaria.entities.Produto;
@@ -31,12 +28,12 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 
 	@Override
 	public void insert(EntradaProduto obj) {
-		int codProdutoEstoque = 0;
-		int qtdRecebida = 0;
-		int qtdAtual = 0;
+//		int codProdutoEstoque = 0;
+//		int qtdRecebida = 0;
+//		int qtdAtual = 0;
 		PreparedStatement st = null;
-		PreparedStatement atualizaEstoque = null;
-		EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
+//		PreparedStatement atualizaEstoque = null;
+//		EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO MARCENARIA.ENTRADA_PRODUTO(NUMERO_NF, COD_PRODUTO, DATA_ENTRADA, QUANTIDADE, VALOR_UNIT, VALOR_TOTAL, VALOR_TOTAL_NOTA)"
@@ -63,23 +60,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					throw new DbException("Nenhuma entrada de nota foi cadastrada no sistema!");
 				}
 			}
-
-			// ATUALIZAÇÃO AUTOMÁTICA DO ESTOQUE ATRAVÉS DO PRODUTO E QUANTIDADE RECEBIDA
-			qtdRecebida = obj.getQuantidade().getQuantidade();
-			codProdutoEstoque = obj.getCodProduto().getCodProduto();
-
-			Estoque estoque = estoqueDao.findByCodProduto(codProdutoEstoque);
-			qtdAtual = estoque.getEstoqueAtual();
-
-			atualizaEstoque = conn.prepareStatement(
-					"UPDATE MARCENARIA.ESTOQUE SET ESTOQUE.ESTOQUE_ATUAL = ? WHERE ESTOQUE.COD_PRODUTO = ?");
-
-			atualizaEstoque.setInt(1, qtdAtual + qtdRecebida);
-			atualizaEstoque.setInt(2, codProdutoEstoque);
-
-			atualizaEstoque.executeUpdate();
-			System.out.println("Estoque atualizado automaticamente!");
-
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		} finally {

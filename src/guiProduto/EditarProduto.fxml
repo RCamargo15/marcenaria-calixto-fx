@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="221.0" prefWidth="894.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/telaPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiProduto.CadastroProdutoController">
+<VBox prefHeight="221.0" prefWidth="894.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/telaPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiProduto.EditarProdutoController">
    <children>
       <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0">
          <items>

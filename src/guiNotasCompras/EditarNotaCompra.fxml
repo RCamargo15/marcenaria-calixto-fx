@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="674.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrcamentoEmpresa.EditarOrcamentoEmpresaController">
+<VBox prefHeight="718.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiNotasCompras.EditarNotaCompraController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="973.0">
          <items>
-            <Label text="VISUALIZAR ORÇAMENTO">
+            <Label text="EDITAR CADASTRO DE NOTA FISCAL">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -27,19 +27,19 @@
       </ToolBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="INFORMAÇÕES DO CLIENTE">
+            <Label text="INFORMAÇÕES DA NOTA FISCAL">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpInfoEmpresa" prefHeight="240.0" prefWidth="973.0">
+      <GridPane fx:id="gpInfoNotaFiscal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="189.0" prefWidth="973.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.0" minWidth="0.0" prefWidth="164.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="320.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="134.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="357.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="136.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="719.0" minWidth="10.0" prefWidth="355.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -48,103 +48,93 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="EMPRESA" GridPane.rowIndex="2">
+            <Label text="FORNECEDOR" GridPane.columnIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label text="TELEFONE" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <ComboBox fx:id="cbCodFornecedor" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="3" />
+            <Label text="DATA DE EMISSÃO" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label text="CELULAR" GridPane.rowIndex="4">
+            <DatePicker fx:id="dpDataEmissao" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Nº DA NOTA FISCAL">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label text="E-MAIL" GridPane.columnIndex="2" GridPane.rowIndex="6">
+            <TextField fx:id="txtNumeroNF" GridPane.columnIndex="1" />
+            <Label fx:id="errorNumeroNF" textFill="#ee0b0b" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="erroDataEntrada" textFill="#f20909" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorChaveNF" textFill="#f20909" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="errorEmail" textFill="#f20909" GridPane.columnIndex="3" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label fx:id="erroDataEmissao" textFill="#f20909" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label text="DATA DE ENTRADA" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbCodEmpresa" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtTelefoneEmpresa" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-            <TextField fx:id="txtCelularEmpresa" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txtEmailEmpresa" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <Label text="SERVIÇO SOLICITADO" GridPane.rowIndex="6">
+            <DatePicker fx:id="dpDataEntrada" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="OBSERVAÇÕES" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtDescricaoServico" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="DATA ORÇAMENTO" GridPane.columnIndex="2" GridPane.rowIndex="8">
+            <TextField fx:id="txtObs" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <Label text="CHAVE DA NF" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <DatePicker fx:id="dpDataOrcamento" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-            <TextField fx:id="txtId" GridPane.columnIndex="3" />
-            <Label text="Nº ORÇAMENTO">
+            <TextField fx:id="txtChaveNF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="errorCodFornecedor" textFill="#ee0c0c" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtNumOrcamento" GridPane.columnIndex="1" />
-            <Label text="OBS" GridPane.rowIndex="8">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtObs" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <ComboBox fx:id="cbCodProduto" disable="true" prefHeight="25.0" prefWidth="198.0" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-            <TextField fx:id="txtQuantidade" disable="true" editable="false" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-            <Label text="CONTATO" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtNomeResponsavel" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <ToolBar prefHeight="33.0" prefWidth="973.0">
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="MATERIAL A SER UTILIZADO">
+            <Label text="PRODUTOS">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <TableView fx:id="tableViewOrcamentoEmpresa" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewNotasCompras" prefHeight="328.0" prefWidth="973.0">
         <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="41.0" text="id" />
-          <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="47.0" text="n orc" />
-            <TableColumn fx:id="tableColumnCodEmpresa" prefWidth="68.0" text="EMP" />
-            <TableColumn fx:id="tableColumnNomeResponsavel" prefWidth="68.0" text="RESP" />
-            <TableColumn fx:id="tableColumnTelefone" prefWidth="72.0" text="tel" />
-            <TableColumn fx:id="tableColumnCelular" prefWidth="78.0" text="cel" />
-            <TableColumn fx:id="tableColumnEmail" prefWidth="58.0" text="emai" />
-            <TableColumn fx:id="tableColumnDescServico" prefWidth="68.0" text="descserv" />
-            <TableColumn fx:id="tableColumnDataOrcamento" prefWidth="63.0" text="data" />
-            <TableColumn fx:id="tableColumnDescProduto" prefWidth="59.0" text="prod" />
-            <TableColumn fx:id="tableColumnQuantidade" prefWidth="77.0" text="qtd" />
-            <TableColumn fx:id="tableColumnValorUnit" prefWidth="77.0" text="valor" />
-            <TableColumn fx:id="tableColumnValorTotal" prefWidth="63.0" text="valor total" />
-            <TableColumn fx:id="tableColumnObs" prefWidth="71.0" text="obs" />
-            <TableColumn fx:id="tableColumnEditar" prefWidth="54.0" text="edi" />
-            <TableColumn fx:id="tableColumnRemover" prefWidth="74.0" text="remover" />
+          <TableColumn fx:id="tableColumnDescProduto" prefWidth="85.0" text="PRODUTO" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="137.0" text="QUANTIDADE" />
+          <TableColumn fx:id="tableColumnValorUnit" prefWidth="147.0" text="VALOR UNITÁRIO" />
+            <TableColumn fx:id="tableColumnValorTotal" prefWidth="147.0" text="VALOR TOTAL" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="147.0" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="147.0" />
         </columns>
       </TableView>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" />
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="VALOR TOTAL DO ORÇAMENTO">
+            <Label text="VALOR TOTAL DA NOTA FISCAL">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -152,9 +142,9 @@
             <TextField fx:id="txtValorTotalOrcamento" />
          </items>
       </ToolBar>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <ToolBar prefHeight="42.0" prefWidth="973.0">
          <items>
-            <Button fx:id="btGerarOrcamento" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR" />
+            <Button fx:id="btInserirNota" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR NOTA FISCAL" />
             <Label>
                <font>
                   <Font name="System Bold" size="16.0" />

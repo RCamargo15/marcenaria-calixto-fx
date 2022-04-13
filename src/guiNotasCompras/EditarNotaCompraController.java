@@ -13,8 +13,10 @@ import java.util.ResourceBundle;
 
 import Db.DbException;
 import application.Main;
-import entities.services.EmpresaService;
-import entities.services.OrcamentoEmpresaService;
+import entities.services.EntradaProdutoService;
+import entities.services.EstoqueService;
+import entities.services.FornecedorService;
+import entities.services.NotasComprasService;
 import entities.services.ProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -40,331 +42,258 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import marcenaria.entities.Empresa;
-import marcenaria.entities.OrcamentoEmpresa;
-import model.exceptions.ValidationException;
+import marcenaria.entities.EntradaProduto;
+import marcenaria.entities.Fornecedor;
+import marcenaria.entities.NotasCompras;
 
 public class EditarNotaCompraController implements Initializable, DataChangeListener {
 
-	private OrcamentoEmpresa orcamentoEmpresa;
-	private OrcamentoEmpresaService orcamentoEmpresaService;
-	private EmpresaService empresaService;
+	private NotasCompras notasCompras;
+	private NotasComprasService notasComprasService;
+	private FornecedorService fornecedorService;
 	private ProdutoService produtoService;
-	
+	private EstoqueService estoqueService;
+	private EntradaProdutoService entradaProdutoService;
+
 	private List<DataChangeListener> dataChangeListener = new ArrayList<>();
-	
+
 	@FXML
-	private TextField txtNumOrcamento;
-	
+	private TextField txtNumeroNF;
 	@FXML
-	private GridPane gpInfoEmpresa;
-	
+	private Label errorNumeroNF;
+
 	@FXML
-	private ComboBox<Empresa> cbCodEmpresa;
+	private TextField txtChaveNF;
 	@FXML
-	private Label errorCodEmpresa;
-	
+	private Label errorChaveNF;
+
 	@FXML
-	private TextField txtNomeResponsavel;
+	private ComboBox<Fornecedor> cbCodFornecedor;
 	@FXML
-	private Label errorNomeResponsavel;
-	
+	private Label errorCodFornecedor;
+
 	@FXML
-	private TextField txtTelefoneEmpresa;
+	private DatePicker dpDataEmissao;
 	@FXML
-	private Label errorTelefone;
-	
+	private Label erroDataEmissao;
+
 	@FXML
-	private TextField txtCelularEmpresa;
+	private DatePicker dpDataEntrada;
 	@FXML
-	private Label errorCelular;
-	
-	@FXML
-	private TextField txtEmailEmpresa;
-	@FXML
-	private Label errorEmail;
-	
-	@FXML
-	private TextField txtDescricaoServico;
-	@FXML
-	private Label errorDescServico;
-	
-	@FXML
-	private DatePicker dpDataOrcamento;
-	@FXML
-	private Label erroDataOrcamento;
-	
+	private Label erroDataEntrada;
+
 	@FXML
 	private TextField txtObs;
-	
-	@FXML
-	private TextField txtQuantidade;
-	@FXML
-	private Label erroQuantidade;
-	
-	@FXML
-	private TableView<OrcamentoEmpresa> tableViewOrcamentoEmpresa;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Integer> tableColumnId;
 
 	@FXML
-	private TableColumn<OrcamentoEmpresa, Integer> tableColumnNumOrcamento;
+	private TableColumn<NotasCompras, NotasCompras> tableColumnEditar;
 
 	@FXML
-	private TableColumn<Empresa, Integer> tableColumnCodEmpresa;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, String> tableColumnNomeResponsavel;
+	private TableColumn<NotasCompras, NotasCompras> tableColumnRemover;
 
 	@FXML
-	private TableColumn<Empresa, String> tableColumnTelefone;
+	private TableView<NotasCompras> tableViewNotasCompras;
 
 	@FXML
-	private TableColumn<Empresa, String> tableColumnCelular;
+	private TableColumn<NotasCompras, String> tableColumnDescProduto;
 
 	@FXML
-	private TableColumn<Empresa, String> tableColumnEmail;
+	private TableColumn<NotasCompras, Double> tableColumnValorUnit;
 
 	@FXML
-	private TableColumn<OrcamentoEmpresa, String> tableColumnDescServico;
+	private TableColumn<NotasCompras, Double> tableColumnValorTotal;
 
 	@FXML
-	private TableColumn<OrcamentoEmpresa, Date> tableColumnDataOrcamento;
+	private TableColumn<NotasCompras, Integer> tableColumnQuantidade;
 
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Integer> tableColumnDescProduto;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Double> tableColumnValorUnit;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Double> tableColumnValorTotal;
-
-	@FXML
-	private TableColumn<OrcamentoEmpresa, String> tableColumnObs;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Integer> tableColumnQuantidade;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, OrcamentoEmpresa> tableColumnEditar;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, OrcamentoEmpresa> tableColumnRemover;
-	
 	@FXML
 	private TextField txtValorTotalOrcamento;
-	
+
 	@FXML
-	private Button btGerarOrcamento;
-	
+	private Button btInserirNota;
+
 	@FXML
 	private Button btCancelar;
-	
-	private ObservableList<Empresa> obsListEmpresa;
-	
-	private ObservableList<OrcamentoEmpresa> obsListProdutoOrcamento;
-	
-	public void setOrcamentoEmpresa(OrcamentoEmpresa orcamentoEmpresa) {
-		this.orcamentoEmpresa = orcamentoEmpresa;
+
+	private ObservableList<Fornecedor> obsListFornecedor;
+
+	private ObservableList<NotasCompras> updateTableView;
+
+	public void setNotasCompras(NotasCompras notasCompras) {
+		this.notasCompras = notasCompras;
 	}
-	
-	public void setServices(OrcamentoEmpresaService orcamentoEmpresaService,EmpresaService empresaService, ProdutoService produtoService) {
-		this.orcamentoEmpresaService = orcamentoEmpresaService;
-		this.empresaService = empresaService;
+
+	public void setServices(NotasComprasService notasComprasService, FornecedorService fornecedorService,
+			ProdutoService produtoService, EstoqueService estoqueService, EntradaProdutoService entradaProdutoService) {
+		this.notasComprasService = notasComprasService;
+		this.fornecedorService = fornecedorService;
 		this.produtoService = produtoService;
+		this.estoqueService = estoqueService;
+		this.entradaProdutoService = entradaProdutoService;
 	}
-	
+
 	public void subscribeDataChangeListener(DataChangeListener listener) {
 		dataChangeListener.add(listener);
 	}
 
 	@Override
 	public void onDataChanged() {
-		updateOrcamentoEmpresaData();
+		updateNotasComprasData();
 	}
-	
+
 	private void notificarDataChangeListener() {
 		for (DataChangeListener listener : dataChangeListener) {
 			listener.onDataChanged();
 		}
 	}
-	
-	public OrcamentoEmpresa getOrcamentoEmpresaData() {
-		ValidationException exception = new ValidationException("Erro de validação");
-		
-		OrcamentoEmpresa obj = new OrcamentoEmpresa();
-		
-		obj.setNumOrcamento(Integer.parseInt(txtNumOrcamento.getText()));
-		obj.setCodEmpresa(cbCodEmpresa.getValue());
-		obj.setNomeResponsavel(txtNomeResponsavel.getText());
-		obj.setTelefone(txtTelefoneEmpresa.getText());
-		obj.setCelular(txtCelularEmpresa.getText());
-		obj.setEmail(txtEmailEmpresa.getText());
-		obj.setDescServico(txtDescricaoServico.getText());
-		
-		if(dpDataOrcamento == null) {
-			exception.addError("dataOrcamento", "Insira a data em que esse orçamento está sendo realizado");
-		}else {
-			Instant instant = Instant.from(dpDataOrcamento.getValue().atStartOfDay(ZoneId.systemDefault()));
-			obj.setDataOrcamento(Date.from(instant));
-		}
-		
-		obj.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+
+	public NotasCompras getNotasComprasData() {
+
+		NotasCompras obj = new NotasCompras();
+
+		obj.setCodNota(notasCompras.getCodNota());
+		obj.setNumeroNF(txtNumeroNF.getText());
+		obj.setCodFornecedor(cbCodFornecedor.getValue());
+		Instant instant = Instant.from(dpDataEmissao.getValue().atStartOfDay(ZoneId.systemDefault()));
+		obj.setDataEmissao(Date.from(instant));
+		Instant instant2 = Instant.from(dpDataEntrada.getValue().atStartOfDay(ZoneId.systemDefault()));
+		obj.setDataEntrada(Date.from(instant2));
+		obj.setChaveNF(txtChaveNF.getText());
 		obj.setObs(txtObs.getText());
-		
-		if (cbCodEmpresa.getValue() == null) {
-			exception.addError("codEmpresa", "Você deve selecionar um cliente para esse orçamento");
-		}
-		
-		if (txtDescricaoServico.getText() == null || txtDescricaoServico.getText().trim().equals("")) {
-			exception.addError("descServico", "Descreva o serviço solicitado pelo cliente");
-		}
-		
-		if(exception.getErrors().size() > 0) {
-			throw exception;
-		}
-		
+
 		return obj;
 	}
-	
+
 	@FXML
 	public void onBtAtualizarAction(ActionEvent event) {
-		if(orcamentoEmpresa == null) {
+		if (notasCompras == null) {
 			throw new IllegalStateException("Orcamento null");
 		}
-		if(orcamentoEmpresaService == null) {
+		if (notasComprasService == null) {
 			throw new IllegalStateException("Orcamento null");
 		}
-			try{
-				orcamentoEmpresa = getOrcamentoEmpresaData();
-				orcamentoEmpresaService.saveOrcamento(orcamentoEmpresa);
-				notificarDataChangeListener();
-				Utils.currentStage(event).close();
+
+		List<NotasCompras> listaNotas = notasComprasService.findAll();
+		try {
+			String nf2 = notasCompras.getNumeroNF();
+			notasCompras = getNotasComprasData();
+			notasComprasService.saveOrUpdate(notasCompras);
+			
+			for(NotasCompras nc : listaNotas) {
+				if(nc.getNumeroNF().equals(nf2)){
+					nc.setNumeroNF(notasCompras.getNumeroNF());
+					notasComprasService.saveOrUpdate(nc);
+				}
 			}
-			catch(DbException e) {
-				e.getMessage();
-			}
+			
+			notificarDataChangeListener();
+			Utils.currentStage(event).close();
+		} catch (DbException e) {
+			e.getMessage();
+			e.printStackTrace();
 		}
-	
-	
-	public void updateOrcamentoEmpresaData() {
-		
-		if(orcamentoEmpresaService == null) {
+	}
+
+	public void updateNotasComprasData() {
+
+		if (notasComprasService == null) {
 			throw new IllegalStateException("Orcamentoservice null");
 		}
-		
-		List<OrcamentoEmpresa> listOrcamentos = orcamentoEmpresaService.findByNumOrcamentoList(orcamentoEmpresa.getNumOrcamento());
-		obsListProdutoOrcamento = FXCollections.observableArrayList(listOrcamentos);
-		tableViewOrcamentoEmpresa.setItems(obsListProdutoOrcamento);
+
+		List<NotasCompras> listNotasFiscais = notasComprasService.findByNumeroNFList(notasCompras.getNumeroNF());
+		updateTableView = FXCollections.observableArrayList(listNotasFiscais);
+		tableViewNotasCompras.setItems(updateTableView);
 		initEditButtons();
 		initRemoveButtons();
 		double valorTotal = 0;
-		
-		
-		txtNumOrcamento.setText(String.valueOf(orcamentoEmpresa.getNumOrcamento()));
-		
-		if(orcamentoEmpresa.getCodEmpresa() == null) {
-			cbCodEmpresa.getSelectionModel().selectFirst();
+
+		txtNumeroNF.setText(String.valueOf(notasCompras.getNumeroNF()));
+		txtChaveNF.setText(String.valueOf(notasCompras.getChaveNF()));
+
+		if (notasCompras.getObs() != null) {
+			txtObs.setText(String.valueOf(notasCompras.getObs()));
 		}
-		else {
-			cbCodEmpresa.setValue(orcamentoEmpresa.getCodEmpresa());
+
+		if (notasCompras.getCodFornecedor() == null) {
+			cbCodFornecedor.getSelectionModel().selectFirst();
+		} else {
+			cbCodFornecedor.setValue(notasCompras.getCodFornecedor());
 		}
-		
-		txtNomeResponsavel.setText(orcamentoEmpresa.getNomeResponsavel());
-		txtTelefoneEmpresa.setText(orcamentoEmpresa.getTelefone());
-		txtCelularEmpresa.setText(orcamentoEmpresa.getCelular());
-		txtEmailEmpresa.setText(orcamentoEmpresa.getEmail());
-		txtDescricaoServico.setText(orcamentoEmpresa.getDescServico());
-		
-		if(orcamentoEmpresa.getDataOrcamento() != null) {
-			dpDataOrcamento.setValue(LocalDate.ofInstant(orcamentoEmpresa.getDataOrcamento().toInstant(), ZoneId.systemDefault()));
+
+		if (notasCompras.getDataEmissao() != null) {
+			dpDataEmissao
+					.setValue(LocalDate.ofInstant(notasCompras.getDataEmissao().toInstant(), ZoneId.systemDefault()));
 		}
-		
-		for(OrcamentoEmpresa orc : listOrcamentos) {
-			double valorMoment = orc.getValor() * orc.getQuantidade();
+
+		if (notasCompras.getDataEntrada() != null) {
+			dpDataEntrada
+					.setValue(LocalDate.ofInstant(notasCompras.getDataEntrada().toInstant(), ZoneId.systemDefault()));
+		}
+
+		for (NotasCompras orc : listNotasFiscais) {
+			double valorMoment = orc.getValorUnit() * orc.getQuantidade();
 			valorTotal = valorTotal + valorMoment;
 		}
 		txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
-		txtObs.setText(orcamentoEmpresa.getObs());
-		
-		
 	}
-	
+
 //	private void setErrorMessages(Map<String, String> errors) {
 //		Set<String> fields = errors.keySet();
 //	}
-	
-	
-	public void loadEmpresas() {
-		if(empresaService == null) {
-			throw new IllegalStateException("Empresa Service null");
+
+	public void loadFornecedores() {
+		if (fornecedorService == null) {
+			throw new IllegalStateException("Fornecedor Service null");
 		}
-		
-		List<Empresa> list = empresaService.findAll();
-		obsListEmpresa = FXCollections.observableArrayList(list);
-		cbCodEmpresa.setItems(obsListEmpresa);
+
+		List<Fornecedor> list = fornecedorService.findAll();
+		obsListFornecedor = FXCollections.observableArrayList(list);
+		cbCodFornecedor.setItems(obsListFornecedor);
 	}
-	
-	private void initializeComboBoxEmpresa() {
-		Callback<ListView<Empresa>, ListCell<Empresa>> factory = lv -> new ListCell<Empresa>() {
+
+	private void initializeComboBoxFornecedor() {
+		Callback<ListView<Fornecedor>, ListCell<Fornecedor>> factory = lv -> new ListCell<Fornecedor>() {
 			@Override
-			protected void updateItem(Empresa item, boolean empty) {
+			protected void updateItem(Fornecedor item, boolean empty) {
 				super.updateItem(item, empty);
 				setText(empty ? "" : item.getNomeFantasia());
 			}
 		};
-		cbCodEmpresa.setCellFactory(factory);
-		cbCodEmpresa.setButtonCell(factory.call(null));
+		cbCodFornecedor.setCellFactory(factory);
+		cbCodFornecedor.setButtonCell(factory.call(null));
 	}
-	
-	
+
 	@FXML
 	public void onBtCancelarAction(ActionEvent event) {
 		Utils.currentStage(event).close();
 	}
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		initializeComboBoxEmpresa();	
-	
+		initializeComboBoxFornecedor();
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewOrcamentoEmpresa.prefHeightProperty().bind(stage.heightProperty());
-		tableViewOrcamentoEmpresa.prefWidthProperty().bind(stage.widthProperty());
-		
-		gpInfoEmpresa.prefHeightProperty().bind(stage.heightProperty());
-		gpInfoEmpresa.prefWidthProperty().bind(stage.widthProperty());
-		
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		tableColumnNumOrcamento.setCellValueFactory(new PropertyValueFactory<>("numOrcamento"));
-		tableColumnCodEmpresa.setCellValueFactory(new PropertyValueFactory<>("codEmpresa"));
-		tableColumnNomeResponsavel.setCellValueFactory(new PropertyValueFactory<>("nomeResponsavel"));
-		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-		tableColumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
-		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		tableColumnDescServico.setCellValueFactory(new PropertyValueFactory<>("descServico"));
-		tableColumnDataOrcamento.setCellValueFactory(new PropertyValueFactory<>("dataOrcamento"));
+		tableViewNotasCompras.prefHeightProperty().bind(stage.heightProperty());
+		tableViewNotasCompras.prefWidthProperty().bind(stage.widthProperty());
+
 		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valor"));
+		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valorUnit"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 	}
-	
-	private void createEditarProdutoOrcamentoForm(OrcamentoEmpresa obj, Stage parentStage, String absoluteName) {
+
+	private void createEditarProdutoOrcamentoForm(NotasCompras obj, Stage parentStage, String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
+
 			EditarProdQuantidadeNotaCompraController editProdController = loader.getController();
-			editProdController.setOrcamentoEmpresa(obj);
-			editProdController.setServices(orcamentoEmpresaService, produtoService);
+			editProdController.setNotasCompras(obj);
+			editProdController.setServices(notasComprasService, produtoService, estoqueService, entradaProdutoService);
 			editProdController.loadProdutos();
 			editProdController.updateEditarProdQuantidadeData();
 			editProdController.subscribeDataChangeListener(this);
@@ -376,22 +305,20 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 			editarProdQtdStage.initOwner(parentStage);
 			editarProdQtdStage.initModality(Modality.WINDOW_MODAL);
 			editarProdQtdStage.showAndWait();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
-		
-		
 	}
-	
+
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoEmpresa, OrcamentoEmpresa>() {
+		tableColumnEditar.setCellFactory(param -> new TableCell<NotasCompras, NotasCompras>() {
 			private final Button button = new Button("Editar");
 
 			@Override
-			protected void updateItem(OrcamentoEmpresa obj, boolean empty) {
+			protected void updateItem(NotasCompras obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
@@ -399,46 +326,53 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 				}
 				setGraphic(button);
 				button.setOnAction(event -> createEditarProdutoOrcamentoForm(obj, Utils.currentStage(event),
-						"/guiOrcamentoEmpresa/EditarProdQuantidadeEmpresa.fxml"));
-				
+						"/guiNotasCompras/EditarProdQuantidadeNotaCompra.fxml"));
+
 			}
 		});
 	}
 
 	private void initRemoveButtons() {
 		tableColumnRemover.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
-		tableColumnRemover.setCellFactory(param -> new TableCell<OrcamentoEmpresa, OrcamentoEmpresa>() {
+		tableColumnRemover.setCellFactory(param -> new TableCell<NotasCompras, NotasCompras>() {
 			private final Button button = new Button("Deletar");
 
 			@Override
-			protected void updateItem(OrcamentoEmpresa obj, boolean empty) {
+			protected void updateItem(NotasCompras obj, boolean empty) {
 				super.updateItem(obj, empty);
 				if (obj == null) {
 					setGraphic(null);
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction( (event -> excluirOrcamentoEmpresa(obj)));
-				
+				button.setOnAction((event -> excluirNotasCompras(obj)));
+
 			}
 		});
 	}
-	
-	private void excluirOrcamentoEmpresa(OrcamentoEmpresa obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO", "Tem certeza que deseja remover esse orçamento?");
-			if(result.get() == ButtonType.OK) {
-				if(orcamentoEmpresaService == null) {
-					throw new IllegalStateException("Orcamento vazio");
-				}
-				try {
-					orcamentoEmpresaService.removerProduto(obj);
-					updateOrcamentoEmpresaData();
 
-				}
-				catch(DbException e) {
-					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
-				}
+	private void excluirNotasCompras(NotasCompras obj) {
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO",
+				"Tem certeza que deseja remover esse orçamento?");
+		if (result.get() == ButtonType.OK) {
+			if (notasComprasService == null) {
+				throw new IllegalStateException("Orcamento vazio");
 			}
+			
+			List<EntradaProduto> listaEntrada = entradaProdutoService.findAll();
+			try {
+				notasComprasService.removerProduto(obj);
+				updateNotasComprasData();
+				for(EntradaProduto ep : listaEntrada) {
+					if( (ep.getCodProduto().equals(obj.getCodProduto()) && (ep.getNumeroNF().getNumeroNF().equals(obj.getNumeroNF())))){
+						entradaProdutoService.removerEntrada(ep);
+					}
+				}
+
+			} catch (DbException e) {
+				Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+			}
+		}
 	}
 
 }

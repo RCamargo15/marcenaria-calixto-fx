@@ -29,11 +29,6 @@ public class NotasCompras implements Serializable {
 			Date dataEmissao, Date dataEntrada, String obs) {
 		this.codFornecedor = codFornecedor;
 		this.numeroNF = numeroNF;
-		this.codProduto = codProduto;
-		this.quantidade = quantidade;
-		this.valorUnit = valorUnit;
-		this.valorTotal = valorTotal;
-		this.valorTotalNota = valorTotalNota;
 		this.chaveNF = chaveNF;
 		this.dataEmissao = dataEmissao;
 		this.dataEntrada = dataEntrada;

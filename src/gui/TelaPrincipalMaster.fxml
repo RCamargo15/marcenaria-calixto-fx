@@ -47,16 +47,10 @@
                         <MenuItem fx:id="menuItemProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemProdutoVisualizarAction" text="Visualizar produtos" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Notas de compra">
+                  <Menu mnemonicParsing="false" text="Notas Fiscais">
                      <items>
-                        <MenuItem fx:id="menuItemNotaCompraCadastro" mnemonicParsing="false" onAction="#onMenuItemNotaCompraCadastrarAction" text="Cadastrar nota de compra" />
                         <MenuItem fx:id="menuItemNotaCompraVisualizar" mnemonicParsing="false" onAction="#onMenuItemNotaCompraVisualizarrAction" text="Visualizar notas de compra" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Entrada de produtos">
-                     <items>
-                        <MenuItem fx:id="menuItemEntradaProdutoCadastrar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoCadastroAction" text="Entrada de produtos via NF" />
-                        <MenuItem fx:id="menuItemEntradaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Visualizar todas as entradas" />
+                        <MenuItem fx:id="menuItemEntradaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Registros de entrada de produtos" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Ordens de serviço ">
@@ -68,12 +62,6 @@
                   <Menu mnemonicParsing="false" text="Orçamentos">
                      <items>
                         <MenuItem fx:id="menuItemOrcamentoVisualizar" mnemonicParsing="false" onAction="#onMenuItemOrcamentoVisualizarAction" text="Orçamentos" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Usuários">
-                     <items>
-                        <MenuItem fx:id="menuItemUsuarioCadastrar" mnemonicParsing="false" onAction="#onMenuItemUsuarioCadastrarAction" text="Cadastrar novo usuário no sistema" />
-                        <MenuItem fx:id="menuItemUsuarioVisualizar" mnemonicParsing="false" onAction="#onMenuItemUsuarioVisualizarAction" text="Visualizar usuários" />
                      </items>
                   </Menu>
               </menus>

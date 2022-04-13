@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import Db.DbException;
 import application.Main;
 import entities.services.EntradaProdutoService;
+import entities.services.EstoqueService;
 import entities.services.FornecedorService;
 import entities.services.NotasComprasService;
 import entities.services.ProdutoService;
@@ -23,10 +25,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,6 +48,7 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 	private NotasComprasService notasComprasService;
 	private FornecedorService fornecedorService;
 	private ProdutoService produtoService;
+	private EstoqueService estoqueService;
 	private EntradaProdutoService entradaProdutoService;
 	
 	@FXML
@@ -109,11 +114,12 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 
 	private ObservableList<NotasCompras> obsList;
 
-	public void setServices(NotasComprasService notasComprasService, FornecedorService fornecedorService, ProdutoService produtoService, EntradaProdutoService entradaProdutoService) {
+	public void setServices(NotasComprasService notasComprasService, FornecedorService fornecedorService, ProdutoService produtoService, EntradaProdutoService entradaProdutoService, EstoqueService estoqueService) {
 		this.notasComprasService = notasComprasService;
 		this.fornecedorService = fornecedorService;
 		this.produtoService = produtoService;
 		this.entradaProdutoService = entradaProdutoService;
+		this.estoqueService = estoqueService;
 	}
 
 	@FXML
@@ -121,6 +127,15 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 		Stage parentStage = Utils.currentStage(event);
 		NotasCompras obj = new NotasCompras();
 		createCadastroNotasComprasForm(obj, parentStage, "/guiNotasCompras/GerarNovaNotaCompra.fxml");
+		
+	}
+	
+	@FXML
+	public void onBtEntradaProduto(ActionEvent event) {
+		loadEntradaProdutoVisualizar("/guiNotasCompras/EntradaProdutoVisualizar.fxml", (EntradaProdutoVisualizarController controller) ->{
+			controller.setServices(entradaProdutoService);
+			controller.updateTableViewEntradaProduto();
+		});
 		
 	}
 
@@ -197,7 +212,7 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 			
 			GerarNovaNotaCompraController novaNotaController = loader.getController();
 			novaNotaController.setNotasCompras(obj);
-			novaNotaController.setServices(notasComprasService, fornecedorService, produtoService, entradaProdutoService);
+			novaNotaController.setServices(notasComprasService, fornecedorService, produtoService, entradaProdutoService, estoqueService);
 			novaNotaController.loadFornecedores();
 			novaNotaController.loadProdutos();
 			novaNotaController.subscribeDataChangeListener(this);
@@ -223,10 +238,10 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 			VBox vBox = loader.load();
 			
 			EditarNotaCompraController editarController = loader.getController();
-//			editarController.setNotasCompras(obj);
-//			editarController.setServices(notasComprasService, fornecedorService, produtoService);
-//			editarController.loadFornecedors();
-//			editarController.updateNotasComprasData();
+			editarController.setNotasCompras(obj);
+			editarController.setServices(notasComprasService, fornecedorService, produtoService, estoqueService, entradaProdutoService);
+			editarController.loadFornecedores();
+			editarController.updateNotasComprasData();
 			editarController.subscribeDataChangeListener(this);
 			
 			Stage editarOrcamentoStage = new Stage();
@@ -239,6 +254,27 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 		}
 		catch(IOException e) {
 			e.printStackTrace();
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	public synchronized <T> void loadEntradaProdutoVisualizar(String absoluteName, Consumer<T> initializeTable) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox newVBox = loader.load();
+			
+			Scene mainScene = Main.getMainScene();
+			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+			
+			Node mainMenu = mainVBox.getChildren().get(0);
+			mainVBox.getChildren().clear();
+			mainVBox.getChildren().add(mainMenu);
+			mainVBox.getChildren().addAll(newVBox.getChildren());
+			
+			T controller = loader.getController();
+			initializeTable.accept(controller);
+		}
+		catch(IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}

@@ -23,7 +23,7 @@
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btNovoNotasCompras" mnemonicParsing="false" onAction="#onBtNovoNotasCompras" text="Nova nota fiscal" />
-            <Button fx:id="btEntradaProdutos" mnemonicParsing="false" text="Entrada de produtos" />
+            <Button fx:id="btEntradaProdutos" mnemonicParsing="false" onAction="#onBtEntradaProduto" text="Entrada de produtos" />
             <Button fx:id="btMostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos" />
             <TextField fx:id="txtSearchByCod" />
             <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" text="Buscar" />

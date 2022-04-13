@@ -13,6 +13,7 @@ import java.util.Set;
 
 import Db.DbException;
 import entities.services.EntradaProdutoService;
+import entities.services.EstoqueService;
 import entities.services.FornecedorService;
 import entities.services.NotasComprasService;
 import entities.services.ProdutoService;
@@ -39,6 +40,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import marcenaria.entities.EntradaProduto;
+import marcenaria.entities.Estoque;
 import marcenaria.entities.Fornecedor;
 import marcenaria.entities.NotasCompras;
 import marcenaria.entities.Produto;
@@ -52,6 +54,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 	private FornecedorService fornecedorService;
 	private ProdutoService produtoService;
 	private EntradaProdutoService entradaProdutoService;
+	private EstoqueService estoqueService;
 
 	private List<DataChangeListener> dataChangeListener = new ArrayList<>();
 
@@ -145,11 +148,12 @@ public class GerarNovaNotaCompraController implements Initializable {
 	}
 
 	public void setServices(NotasComprasService notasComprasService, FornecedorService fornecedorService,
-			ProdutoService produtoService, EntradaProdutoService entradaProdutoService) {
+			ProdutoService produtoService, EntradaProdutoService entradaProdutoService, EstoqueService estoqueService) {
 		this.notasComprasService = notasComprasService;
 		this.fornecedorService = fornecedorService;
 		this.produtoService = produtoService;
 		this.entradaProdutoService = entradaProdutoService;
+		this.estoqueService = estoqueService;
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {
@@ -238,6 +242,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 				Alerts.showAlert("Erro ao inserir produto", null, "Preencha as informações da nota fiscal antes de cadastrar os produtos", AlertType.INFORMATION);
 			}
 			else {
+			double valorTotalNota = 0;
 			double valorTotal = 0;
 			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
 			NotasCompras notaCompra = getNotasComprasData();
@@ -247,13 +252,14 @@ public class GerarNovaNotaCompraController implements Initializable {
 			notaCompra.setCodProduto(produto);
 			notaCompra.setValorUnit(Double.parseDouble(txtValorUnit.getText()));
 			
+			valorTotal = (Double.parseDouble(txtValorUnit.getText())) * (Integer.parseInt(txtQuantidade.getText()));
 			
 			for (ProdutoOrcamento prod : prodOrcamento) {
 				double valorMoment = prod.getPrecoProd() * prod.getQuantidade();
-				valorTotal = valorTotal + valorMoment;
+				valorTotalNota = valorTotalNota + valorMoment;
 			}
 			notaCompra.setValorTotal(valorTotal);
-			txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
+			txtValorTotalOrcamento.setText(String.valueOf(valorTotalNota));
 			listaParaCadastro.add(notaCompra);
 			}
 		
@@ -263,7 +269,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 	private Map<String, String> ValidateExceptions() {
 		ValidationException exception = new ValidationException("Erro de validação");
 
-		if (txtNumeroNF.getText().equals(null) || txtNumeroNF.getText().trim().equals("")) {
+		if (txtNumeroNF.getText() == null || txtNumeroNF.getText().trim().equals("")) {
 			exception.addError("NumeroNF", "Insira o número da nota fiscal");
 		}
 
@@ -301,11 +307,15 @@ public class GerarNovaNotaCompraController implements Initializable {
 		if (notasComprasService == null) {
 			throw new IllegalStateException("notasComprasService null");
 		}
+		List<Estoque> listaEstoque = estoqueService.findAll();
 		listaParaInserir.addAll(listaParaCadastro);
 		try {
 				for (NotasCompras nf : listaParaInserir) {
-					nf.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+					nf.setValorTotalNota(Double.parseDouble(txtValorTotalOrcamento.getText()));
 					EntradaProduto entradaProduto = new EntradaProduto();
+					Estoque estoque = new Estoque();
+					
+					int qtdEstoque = 0;
 					entradaProduto.setNumeroNF(nf);
 					entradaProduto.setCodProduto(nf.getCodProduto());
 					entradaProduto.setDataEntrada(nf.getDataEntrada());
@@ -313,6 +323,19 @@ public class GerarNovaNotaCompraController implements Initializable {
 					entradaProduto.setValorUnit(nf);
 					entradaProduto.setValorTotal(nf);
 					entradaProduto.setValorTotalNota(nf);
+					
+					
+					estoque.setCodProduto(entradaProduto.getCodProduto());
+					qtdEstoque = entradaProduto.getQuantidade().getQuantidade();
+				
+					
+					for(Estoque stock : listaEstoque) {
+						if(stock.getCodProduto().equals(estoque.getCodProduto())) {
+							stock.setEstoqueAtual(stock.getEstoqueAtual() + qtdEstoque);
+							estoqueService.saveOrUpdate(stock);
+						}
+					}
+					
 					notasComprasService.saveOrUpdate(nf);
 					entradaProdutoService.saveOrUpdate(entradaProduto);
 				}

@@ -1,6 +1,5 @@
 package entities.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import marcenaria.dao.DaoFactory;
@@ -19,7 +18,7 @@ public class NotasComprasService {
 		return notasComprasDao.findAllParaTabela();
 	}
 	
-	public List<NotasCompras> findByNumOrcamentoList(String numeroNF){
+	public List<NotasCompras> findByNumeroNFList(String numeroNF){
 		return notasComprasDao.findByNumeroNF(numeroNF);
 	}
 	
@@ -34,6 +33,10 @@ public class NotasComprasService {
 	public void saveNotaCompra(NotasCompras obj) {
 		notasComprasDao.updateNotaCompra(obj);
 	}
+	
+	public void updateProdutos(NotasCompras obj) {
+		notasComprasDao.updateProduto(obj);
+	}
 
 	public void removerNotaCompra(NotasCompras obj) {
 		notasComprasDao.deleteByNumeroNF(obj.getNumeroNF());
@@ -41,20 +44,6 @@ public class NotasComprasService {
 	
 	public void removerProduto(NotasCompras obj) {
 		notasComprasDao.deleteByCodNotasCompras(obj.getCodNota());
-	}
-
-
-	public List<NotasCompras> findByNumeroNFList(String numeroNF) {
-		List<NotasCompras> list = notasComprasDao.findAll();
-		List<NotasCompras> listCodProd = new ArrayList<>();
-
-		for (NotasCompras saida : list) {
-			if (saida.getNumeroNF().equals(numeroNF)) {
-				listCodProd.add(saida);
-			}
-		}
-
-		return listCodProd;
 	}
 	
 	public NotasCompras findByCodNota(Integer codNota) {

@@ -159,6 +159,29 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
+	
+	private void createEditarProdutoForm(Produto obj, Stage parentStage, String absoluteName) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox vBox = loader.load();
+
+			EditarProdutoController cadastroController = loader.getController();
+			cadastroController.setProduto(obj);
+			cadastroController.setProdutoService(new ProdutoService());
+			cadastroController.subscribeDataChangeListener(this);
+			cadastroController.updateProdutoData();
+
+			Stage cadastroProdutoStage = new Stage();
+			cadastroProdutoStage.setTitle("Cadastro de produto");
+			cadastroProdutoStage.setScene(new Scene(vBox));
+			cadastroProdutoStage.setResizable(false);
+			cadastroProdutoStage.initOwner(parentStage);
+			cadastroProdutoStage.initModality(Modality.WINDOW_MODAL);
+			cadastroProdutoStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
 
 	@Override
 	public void onDataChanged() {
@@ -178,7 +201,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(event -> createCadastroProdutoForm(obj, Utils.currentStage(event),
+				button.setOnAction(event -> createEditarProdutoForm(obj, Utils.currentStage(event),
 						"/guiProduto/EditarProduto.fxml"));
 			}
 		});

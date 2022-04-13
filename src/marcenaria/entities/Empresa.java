@@ -64,6 +64,7 @@ public class Empresa implements Serializable {
 	public String getRazaoSocial() {
 		return razaoSocial;
 	}
+	
 
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;

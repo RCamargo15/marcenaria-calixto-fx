@@ -24,7 +24,7 @@ public class EntradaProdutoService {
 		}
 	}
 	
-	public void removerSaida(EntradaProduto obj) {
+	public void removerEntrada(EntradaProduto obj) {
 		entradaProdutoDao.deleteByCodEntradaProduto(obj.getCodEntrada());
 	}
 	

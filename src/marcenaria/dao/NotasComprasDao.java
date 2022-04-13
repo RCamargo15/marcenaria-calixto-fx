@@ -10,6 +10,8 @@ public interface NotasComprasDao {
 
 	void update(NotasCompras obj);
 	
+	void updateProduto(NotasCompras obj);
+	
 	void updateNotaCompra(NotasCompras obj);
 
 	void deleteByCodNotasCompras(Integer codNota);
