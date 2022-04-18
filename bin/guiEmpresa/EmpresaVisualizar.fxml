@@ -7,32 +7,53 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1452.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiEmpresa.EmpresaVisualizarController">
    <children>
-      <ToolBar prefHeight="23.0" prefWidth="602.0">
+      <ToolBar prefHeight="90.0" prefWidth="1452.0" styleClass="toolBarCliente" stylesheets="@../gui.styles/empresa/empresaVisualizarDarkTheme.css">
          <items>
-            <Label text="LISTA DE EMPRESAS" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Bold" size="20.0" />
-               </font>
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </Label>
+            <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="70.0" prefWidth="401.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/clientes/clienteVisualizarDarkTheme.css">
+               <items>
+                  <ImageView fitHeight="56.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../Calixto_mini_logo_3%20(2).png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="23.0" prefWidth="229.0" text="LISTA DE EMPRESAS" textFill="#ffed00">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+               </items>
+            </ToolBar>
+            <ToolBar prefHeight="27.0" prefWidth="602.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/empresa/empresaVisualizarDarkTheme.css">
+              <items>
+                <Button fx:id="btNovoEmpresa" mnemonicParsing="false" onAction="#onBtNovoEmpresa" styleClass="buttons" text="Nova empresa" textFill="#ffed00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" styleClass="buttons" text="Mostrar todas as empresas" textFill="#ffed00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" styleClass="buttons" text="Buscar" textFill="#ffed00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+              </items>
+            </ToolBar>
          </items>
       </ToolBar>
-      <ToolBar prefHeight="27.0" prefWidth="602.0">
-        <items>
-          <Button fx:id="btNovoEmpresa" mnemonicParsing="false" onAction="#onBtNovoEmpresa" text="Nova empresa" />
-            <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todas as empresas" />
-            <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
-            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" text="Buscar" />
-        </items>
-      </ToolBar>
-      <TableView fx:id="tableViewEmpresa" prefHeight="357.0" prefWidth="1366.0">
+      <TableView fx:id="tableViewEmpresa" prefHeight="357.0" prefWidth="1366.0" stylesheets="@../gui.styles/empresa/empresaVisualizarDarkTheme.css">
         <columns>
             <TableColumn prefWidth="75.0" text="DADOS DA EMPRESA">
                <columns>

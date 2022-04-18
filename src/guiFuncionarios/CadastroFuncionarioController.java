@@ -136,6 +136,8 @@ public class CadastroFuncionarioController implements Initializable {
 
 	@FXML
 	private TextField txtTipoSang;
+	@FXML
+	private Label errorTipoSang;
 
 	@FXML
 	private TextField txtFuncao;
@@ -304,6 +306,13 @@ public class CadastroFuncionarioController implements Initializable {
 			Instant instant = Instant.from(dpDataAdmissao.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataAdmissao(Date.from(instant));
 		}
+		
+		if(txtTipoSang.getText() == null || txtTipoSang.getText().trim().equals("")) {
+			exception.addError("tipo", "Informar a tipagem sanguínea do funcionário");
+		}
+		if(txtSalario.getText() == null || txtSalario.getText().trim().equals("")){
+			exception.addError("salario", "Digite uma remuneração para esse funcionário");
+		}
 
 		if (exception.getErrors().size() > 0) {
 			throw exception;
@@ -368,6 +377,8 @@ public class CadastroFuncionarioController implements Initializable {
 		errorEstado.setText(fields.contains("Estado") ? errors.get("Estado") : "");
 		errorUF.setText(fields.contains("UF") ? errors.get("UF") : "");
 		errorCtps.setText(fields.contains("CTPS") ? errors.get("CTPS") : "");
+		errorTipoSang.setText(fields.contains("tipo") ? errors.get("tipo") : "");
+		errorSalario.setText(fields.contains("salario") ? errors.get("salario") : "");
 
 	}
 

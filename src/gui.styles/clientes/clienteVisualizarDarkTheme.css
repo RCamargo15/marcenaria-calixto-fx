@@ -1,0 +1,64 @@
+.toolBarCliente{
+	-fx-font-color:#ffed00;
+	-fx-background-color:#1f2124;
+	-fx-border-top-color:#35393e;
+	-fx-spacing:880px;
+}
+
+.toolBarTopo{
+	-fx-font-color:#ffed00;
+	-fx-background-color:#1f2124;
+	-fx-spacing:10px;
+}
+
+.table-view{
+   -fx-background-color: #35393e;
+}
+
+.table-view:focused{
+    -fx-background-color: #35393e;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #1f2124;
+    -fx-box-sizing: border-box;
+}
+
+.table-view .column-header-background .label{
+    -fx-text-fill: #ffed00;
+    -fx-box-sizing: border-box;
+}
+
+.table-view .column-header {
+    -fx-background-color: #1f2124;
+    -fx-border-color:#292c30;
+    -fx-text-fill:#ffed00;
+    -fx-box-sizing: border-box;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+}
+
+.table-row-cell{
+    -fx-background-color: #616161;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; 
+}
+
+.table-row-cell:odd{
+    -fx-background-color: #424242;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #005797;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+.buttons{
+	-fx-background-color:#1f2124;
+	-fx-border-color:#35393e;
+	-fx-border-radius:5px;
+	}

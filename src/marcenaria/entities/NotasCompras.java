@@ -153,10 +153,7 @@ public class NotasCompras implements Serializable {
 
 	@Override
 	public String toString() {
-		return "NotasCompras [codNota=" + codNota + ", codFornecedor=" + codFornecedor + ", numeroNF=" + numeroNF
-				+ ", codProduto=" + codProduto + ", quantidade=" + quantidade + ", valorUnit=" + valorUnit
-				+ ", valorTotal=" + valorTotal + ", valorTotalNota=" + valorTotalNota + ", chaveNF=" + chaveNF
-				+ ", dataEmissao=" + dataEmissao + ", dataEntrada=" + dataEntrada + ", obs=" + obs + "]";
+		return numeroNF;
 	}
 
 }

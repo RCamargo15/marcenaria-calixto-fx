@@ -10,7 +10,7 @@
    <content>
       <VBox styleClass="telaPrincipalBg" stylesheets="@../gui.styles/telaPrincipal.css">
          <children>
-            <MenuBar>
+            <MenuBar styleClass="menu-item" stylesheets="@../gui.styles/menuPrincipal.css">
               <menus>
                 <Menu mnemonicParsing="false" text="Clientes">
                   <items>

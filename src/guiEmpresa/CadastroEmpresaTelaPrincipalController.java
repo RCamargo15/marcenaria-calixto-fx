@@ -235,7 +235,7 @@ public class CadastroEmpresaTelaPrincipalController implements Initializable {
 		}
 
 		if (txtUF.getText() == null || txtUF.getText().trim().equals("")) {
-			exception.addError("UFf", "Necessário adicionar a sigla do estado");
+			exception.addError("UF", "Necessário adicionar a sigla do estado");
 		}
 
 		if (txtDdd.getText() == null || txtDdd.getText().trim().equals("")) {
@@ -267,6 +267,7 @@ public class CadastroEmpresaTelaPrincipalController implements Initializable {
 		Constraints.setTextFieldInteger(txtNumero);
 		Constraints.setTextFieldInteger(txtDdd);
 		Constraints.setTextFieldInteger(txtTelefone);
+		
 		Constraints.setTextFieldMaxLength(txtDdd, 2);
 		Constraints.setTextFieldMaxLength(txtCep, 9);
 		Constraints.setTextFieldMaxLength(txtTelefone, 9);

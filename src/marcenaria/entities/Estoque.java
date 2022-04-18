@@ -73,7 +73,6 @@ public class Estoque implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Estoque [id=" + id + ", codProduto=" + codProduto + ", estoqueAtual=" + estoqueAtual + ", estoqueMinimo="
-				+ estoqueMinimo + "]";
+		return codProduto.getDescProduto();
 	}
 }

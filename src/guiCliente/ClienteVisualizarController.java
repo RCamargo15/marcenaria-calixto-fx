@@ -28,7 +28,10 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -100,6 +103,16 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 
 	@FXML
 	private TableColumn<Cliente, Cliente> tableColumnRemover;
+	
+	@FXML
+	private ToolBar toolBarCliente;
+	
+	Image logoMarcenaria = new Image(getClass().getResourceAsStream("/gui.styles/logoMarcenaria.png"));
+	@FXML
+	private ImageView imageViewCliente = new ImageView(logoMarcenaria);
+	
+
+	
 
 	@FXML
 	private TextField searchByCod;
@@ -212,7 +225,6 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 			Stage cadastroClienteStage = new Stage();
 			cadastroClienteStage.setTitle("Cadastro de cliente");
 			cadastroClienteStage.setScene(new Scene(vBox));
-			cadastroClienteStage.setResizable(false);
 			cadastroClienteStage.initOwner(parentStage);
 			cadastroClienteStage.initModality(Modality.WINDOW_MODAL);
 			cadastroClienteStage.showAndWait();

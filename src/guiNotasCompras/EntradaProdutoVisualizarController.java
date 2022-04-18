@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -33,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import marcenaria.entities.EntradaProduto;
+import marcenaria.entities.NotasCompras;
 
 public class EntradaProdutoVisualizarController implements Initializable, DataChangeListener {
 
@@ -43,19 +45,19 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 
 	@FXML
 	private TableColumn<EntradaProduto, Integer> tableColumnCodEntrada;
-	
+
 	@FXML
-	private TableColumn<EntradaProduto, String> tableColumnNumeroNF;
-	
+	private TableColumn<NotasCompras, NotasCompras> tableColumnNumeroNF;
+
 	@FXML
 	private TableColumn<EntradaProduto, Integer> tableColumnProduto;
 
 	@FXML
 	private TableColumn<EntradaProduto, Date> tableColumnDataEntrada;
-	
+
 	@FXML
-	private TableColumn<EntradaProduto, Integer> tableColumnQuantidade;
-	
+	private TableColumn<NotasCompras, NotasCompras> tableColumnQuantidade;
+
 	@FXML
 	private TextField searchByCod;
 
@@ -67,20 +69,21 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 
 	@FXML
 	private Button btRetornarAsNotasFiscais;
-	
 
 	private ObservableList<EntradaProduto> obsList;
-	
+
 	public void setServices(EntradaProdutoService entradaProdutoService) {
 		this.entradaProdutoService = entradaProdutoService;
 	}
 
 	@FXML
 	public void onBtRetornarAsNotasFiscaisAction() {
-		loadNotasFiscaisVisualizar("/guiNotasCompras/NotaCompraVisualizar.fxml", (NotaCompraVisualizarController controller) ->{
-			controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService(), new EntradaProdutoService(), new EstoqueService());
-			controller.updateTableViewNotasCompras();
-		});
+		loadNotasFiscaisVisualizar("/guiNotasCompras/NotaCompraVisualizar.fxml",
+				(NotaCompraVisualizarController controller) -> {
+					controller.setServices(new NotasComprasService(), new FornecedorService(), new ProdutoService(),
+							new EntradaProdutoService(), new EstoqueService());
+					controller.updateTableViewNotasCompras();
+				});
 	}
 
 	@FXML
@@ -95,11 +98,12 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 			throw new IllegalStateException("Service null");
 		}
 
-		EntradaProduto buscaEntradaProduto = entradaProdutoService.findByCodEntrada(Utils.tryParseToInt(searchByCod.getText()));
+		EntradaProduto buscaEntradaProduto = entradaProdutoService
+				.findByCodEntrada(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaEntradaProduto == null) {
-			Alerts.showAlert("Busca de saidaProduto", null, "Nenhum saidaProduto com esse código foi encontrado no sistema!",
-					AlertType.INFORMATION);
+			Alerts.showAlert("Busca de saidaProduto", null,
+					"Nenhum saidaProduto com esse código foi encontrado no sistema!", AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEntradaProduto);
 			tableViewEntradaProduto.setItems(obsList);
@@ -125,7 +129,7 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEntradaProduto.prefHeightProperty().bind(stage.heightProperty());
 		tableViewEntradaProduto.prefWidthProperty().bind(stage.widthProperty());
-		
+
 		Utils.formatTableColumnDate(tableColumnDataEntrada, "dd/MM/yyyy");
 
 	}
@@ -138,19 +142,21 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 		List<EntradaProduto> list = entradaProdutoService.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewEntradaProduto.setItems(obsList);
+
+		initColumnNumeroNF();
+		initColumnQuantidade();
 	}
 
-	
 	@Override
 	public void onDataChanged() {
 		updateTableViewEntradaProduto();
 	}
 
-	public synchronized <T> void loadNotasFiscaisVisualizar(String absoluteName, Consumer<T> initializeTable){
+	public synchronized <T> void loadNotasFiscaisVisualizar(String absoluteName, Consumer<T> initializeTable) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox newVBox = loader.load();
-			
+
 			Scene mainScene = Main.getMainScene();
 			VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 
@@ -158,14 +164,47 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 			mainVBox.getChildren().clear();
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
-			
+
 			T controller = loader.getController();
 			initializeTable.accept(controller);
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
-		
+
+	}
+
+	private void initColumnNumeroNF() {
+		tableColumnNumeroNF.setCellValueFactory(new PropertyValueFactory<>("numeroNF"));
+		tableColumnNumeroNF.setCellFactory(coluna -> {
+			return new TableCell<NotasCompras, NotasCompras>() {
+				@Override
+				protected void updateItem(NotasCompras item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item != null && !empty) {
+						setText(item.getNumeroNF());
+					} else {
+						setText("");
+					}
+				}
+			};
+		});
+	}
+
+	private void initColumnQuantidade() {
+		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("numeroNF"));
+		tableColumnQuantidade.setCellFactory(coluna -> {
+			return new TableCell<NotasCompras, NotasCompras>() {
+				@Override
+				protected void updateItem(NotasCompras item, boolean empty) {
+					super.updateItem(item, empty);
+					if (item != null && !empty) {
+						setText(String.valueOf(item.getQuantidade()));
+					} else {
+						setText("");
+					}
+				}
+			};
+		});
 	}
 
 }

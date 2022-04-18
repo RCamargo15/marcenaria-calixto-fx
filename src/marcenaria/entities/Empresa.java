@@ -218,11 +218,6 @@ public class Empresa implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Empresa [codEmpresa=" + codEmpresa + ", razaoSocial=" + razaoSocial + ", nomeFantasia=" + nomeFantasia
-				+ ", cnpj=" + cnpj + ", atividadeFim=" + atividadeFim + ", rua=" + rua + ", numero=" + numero
-				+ ", complemento=" + complemento + ", bairro=" + bairro + ", cep=" + cep + ", cidade=" + cidade
-				+ ", estado=" + estado + ", uf=" + uf + ", ddd=" + ddd + ", telefone=" + telefone + ", site=" + site
-				+ ", email=" + email + ", obs=" + obs + "]";
+		return nomeFantasia;
 	}
-
 }

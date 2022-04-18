@@ -14,25 +14,25 @@
 
 <VBox prefHeight="823.0" prefWidth="1141.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/telaPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFuncionarios.CadastroFuncionarioController">
    <children>
-      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0">
+      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label text="CADASTRO DE FUNCIONÁRIOS">
+            <Label text="CADASTRO DE FUNCIONÁRIOS" textFill="#ffed00">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0">
+      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label text="DADOS PESSOAIS">
+            <Label text="DADOS PESSOAIS" textFill="#ffed00">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpPessoal" styleClass="gridPane" stylesheets="@../gui.styles/cadastroCliente.css">
+      <GridPane fx:id="gpPessoal" styleClass="grid-pane" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" percentWidth="0.0" prefWidth="145.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="702.0" minWidth="10.0" prefWidth="442.0" />
@@ -80,19 +80,19 @@
                   <Insets right="250.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorNome" text="errr" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="errorNome" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorCpf" text="err" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="errorCpf" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorRg" text="eerrr" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label fx:id="errorRg" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="DDD" GridPane.rowIndex="4">
@@ -147,19 +147,19 @@
                   <Insets right="300.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorCelular" text="err" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <Label fx:id="errorCelular" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorDdd" text="err" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="errorDdd" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorTelefone" text="err" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="5">
+            <Label fx:id="errorTelefone" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="5">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="DATA DE NASCIMENTO" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -184,23 +184,28 @@
                   <Insets />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorDataNasc" text="err" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Label fx:id="errorDataNasc" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="errorTipoSang" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <ToolBar fx:id="bbEnd" prefHeight="40.0" prefWidth="200.0">
+      <ToolBar fx:id="bbEnd" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label stylesheets="@../gui.styles/login.css" text="ENDEREÇO">
+            <Label stylesheets="@../gui.styles/login.css" text="ENDEREÇO" textFill="#ffed00">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpEndereco" prefHeight="241.0" prefWidth="1082.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroCliente.css">
+      <GridPane fx:id="gpEndereco" prefHeight="241.0" prefWidth="1082.0" styleClass="grid-pane" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" percentWidth="0.0" prefWidth="145.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="702.0" minWidth="10.0" prefWidth="480.0" />
@@ -257,7 +262,7 @@
                   <Insets right="100.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorRua" text="err" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="errorRua" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -291,7 +296,7 @@
                   <Insets right="100.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorComplemento" text="err" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="errorComplemento" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -299,17 +304,17 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <Label fx:id="errorNumero" text="err" textFill="#e40b0b" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label fx:id="errorNumero" textFill="#e40b0b" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorBairro" text="err" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="errorBairro" textFill="#e40b0b" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorCep" text="err" textFill="#e40b0b" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Label fx:id="errorCep" textFill="#e40b0b" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -344,17 +349,17 @@
                   <Insets right="300.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorCidade" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="err" textAlignment="RIGHT" textFill="#dd0a0a" GridPane.columnIndex="3" GridPane.rowIndex="5">
+            <Label fx:id="errorCidade" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textAlignment="RIGHT" textFill="#dd0a0a" GridPane.columnIndex="3" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorEstado" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="err" textAlignment="RIGHT" textFill="#dd0a0a" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <Label fx:id="errorEstado" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textAlignment="RIGHT" textFill="#dd0a0a" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorUF" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="err" textAlignment="RIGHT" textFill="#dd0a0a" GridPane.columnIndex="3" GridPane.rowIndex="7">
+            <Label fx:id="errorUF" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textAlignment="RIGHT" textFill="#dd0a0a" GridPane.columnIndex="3" GridPane.rowIndex="7">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -364,16 +369,16 @@
             <Insets bottom="-20.0" />
          </padding>
       </GridPane>
-      <ToolBar fx:id="bbPessoas2" prefHeight="40.0" prefWidth="200.0">
+      <ToolBar fx:id="bbPessoas2" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label text="DADOS FUNCIONAIS">
+            <Label text="DADOS FUNCIONAIS" textFill="#ffed00">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpFuncional" prefHeight="140.0" prefWidth="1082.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/cadastroCliente.css">
+      <GridPane fx:id="gpFuncional" prefHeight="140.0" prefWidth="1082.0" styleClass="grid-pane" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="246.0" minWidth="10.0" percentWidth="0.0" prefWidth="145.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="654.0" minWidth="10.0" percentWidth="0.0" prefWidth="462.0" />
@@ -449,44 +454,44 @@
                   <Insets right="100.0" />
                </GridPane.margin>
             </DatePicker>
-            <Label fx:id="errorCtps" text="err" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="errorCtps" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorDataAdmissao" text="err" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label fx:id="errorDataAdmissao" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorFuncao" text="err" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="errorFuncao" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label text="err" textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Label textFill="#ee0606" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorSalario" text="err" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="errorSalario" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
-                  <Font name="Arial Bold" size="14.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <ToolBar fx:id="bbPessoas1" prefHeight="42.0" prefWidth="1082.0">
+      <ToolBar fx:id="bbPessoas1" prefHeight="42.0" prefWidth="1082.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <VBox.margin>
             <Insets />
          </VBox.margin>
          <items>
-            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="SALVAR">
+            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" styleClass="buttons" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css" text="SALVAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" styleClass="buttons" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css" text="CANCELAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

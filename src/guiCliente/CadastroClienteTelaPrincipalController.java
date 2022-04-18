@@ -273,7 +273,7 @@ private Cliente getClienteData() {
 		}
 		
 		if(txtUF.getText() == null || txtUF.getText().trim().equals("")) {
-			exception.addError("UFf", "Necessário adicionar a sigla do estado");
+			exception.addError("UF", "Necessário adicionar a sigla do estado");
 		}
 		
 		if (txtDdd.getText() == null || txtDdd.getText().trim().equals("")) {

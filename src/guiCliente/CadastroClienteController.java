@@ -233,7 +233,7 @@ public class CadastroClienteController implements Initializable {
 		}
 
 		if (txtUF.getText() == null || txtUF.getText().trim().equals("")) {
-			exception.addError("UFf", "Necessário adicionar a sigla do estado");
+			exception.addError("UF", "Necessário adicionar a sigla do estado");
 		}
 
 		if (txtDdd.getText() == null || txtDdd.getText().trim().equals("")) {
@@ -321,12 +321,13 @@ public class CadastroClienteController implements Initializable {
 		Constraints.setTextFieldInteger(txtCelular);
 		Constraints.setTextFieldInteger(txtTelefone);
 
-		
+		Constraints.setTextFieldMaxLength(txtDdd, 2);
 		Constraints.setTextFieldMaxLength(txtCelular, 9);
 		Constraints.setTextFieldMaxLength(txtCep, 9);
 		Constraints.setTextFieldMaxLength(txtTelefone, 9);
 		Constraints.setTextFieldMaxLength(txtCpf, 15);
 		Constraints.setTextFieldMaxLength(txtRg, 15);
+		Constraints.setTextFieldMaxLength(txtUF, 2);
 		
 
 		Utils.formatDatePicker(dpDataCadastro, "dd/MM/yyyy");

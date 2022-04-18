@@ -12,27 +12,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="881.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFuncionarios.CadastroFuncionarioTelaPrincipalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="960.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFuncionarios.CadastroFuncionarioTelaPrincipalController">
    <children>
-      <ToolBar prefHeight="47.0" prefWidth="1280.0">
+      <ToolBar prefHeight="47.0" prefWidth="1280.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label text="CADASTRO DE FUNCIONÁRIOS">
+            <Label text="CADASTRO DE FUNCIONÁRIOS" textFill="#ffed00">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <ToolBar prefHeight="42.0" prefWidth="1280.0">
+      <ToolBar prefHeight="42.0" prefWidth="1280.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label text="DADOS PESSOAIS">
+            <Label text="DADOS PESSOAIS" textFill="#ffed00">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpPessoal" prefHeight="252.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
+      <GridPane fx:id="gpPessoal" prefHeight="257.0" prefWidth="1280.0" styleClass="grid-pane" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
         <columnConstraints>
           <ColumnConstraints maxWidth="632.0" minWidth="10.0" percentWidth="0.0" prefWidth="181.0" />
             <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="1060.0" minWidth="10.0" prefWidth="590.0" />
@@ -163,16 +163,16 @@
             <Insets />
          </VBox.margin>
       </GridPane>
-      <ToolBar prefHeight="43.0" prefWidth="1280.0">
+      <ToolBar prefHeight="43.0" prefWidth="1280.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label text="ENDEREÇO">
+            <Label text="ENDEREÇO" textFill="#ffed00">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpEndereco" prefHeight="271.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
+      <GridPane fx:id="gpEndereco" prefHeight="271.0" prefWidth="1280.0" styleClass="grid-pane" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
         <columnConstraints>
           <ColumnConstraints fillWidth="false" maxWidth="198.0" minWidth="0.0" percentWidth="0.0" prefWidth="181.0" />
           <ColumnConstraints hgrow="ALWAYS" maxWidth="908.0" minWidth="10.0" prefWidth="590.0" />
@@ -308,16 +308,16 @@
             </Label>
          </children>
       </GridPane>
-      <ToolBar prefHeight="42.0" prefWidth="1280.0">
+      <ToolBar prefHeight="42.0" prefWidth="1280.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Label text="FUNCIONAL">
+            <Label text="FUNCIONAL" textFill="#ffed00">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpFuncional" prefHeight="151.0" prefWidth="1280.0" styleClass="gridPane" stylesheets="@../gui.styles/cadastroCliente.css">
+      <GridPane fx:id="gpFuncional" prefHeight="151.0" prefWidth="1280.0" styleClass="grid-pane" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.0" minWidth="10.0" percentWidth="0.0" prefWidth="181.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0" minWidth="10.0" percentWidth="0.0" prefWidth="590.0" />
@@ -391,22 +391,28 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorSetor" text="err" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Label fx:id="errorSetor" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorSalario" text="err" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Label fx:id="errorSalario" textFill="#ee0909" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <ToolBar prefHeight="12.0" prefWidth="1280.0" styleClass="buttonBar" stylesheets="@../gui.styles/cadastroClientePrincipal.css">
+      <ToolBar prefHeight="12.0" prefWidth="1280.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css">
          <items>
-            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="CADASTRAR" />
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" styleClass="buttons" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css" text="CADASTRAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" styleClass="buttons" stylesheets="@../gui.styles/funcionarios/funcionarioCadastroPrincipal.css" text="CANCELAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Label>
                <font>
                   <Font name="Arial Bold" size="18.0" />

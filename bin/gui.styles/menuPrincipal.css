@@ -1,0 +1,50 @@
+.menu-item .label{
+    -fx-text-fill: #ffed00 bold;
+}
+
+.menu-button:hover {
+     -fx-background-color:#616161;
+}
+.menu-button:hover{
+	-fx-focus-color:#616161;
+}
+.menu-bar {
+	-fx-background-color:#35393e;
+	-fx-border-color:#292c30;
+}
+
+.menu-bar .menu-bar:hover, .menu-button:focused, .menu-bar .menu-button:showing {
+   -fx-background-color:#1f2124;
+    -fx-text-fill:#ffed00 bold;
+}
+
+.menu-item {
+    -fx-background-color: #1f2124;
+    -fx-text-fill: #ffed00 bold;
+    -fx-border-color: #1f2124;
+}
+.menu-button{
+	-fx-background-color: #1f2124;
+}
+.context-menu{
+	  -fx-background-color:#1f2124;
+}
+
+.context-menu:focused {
+    -fx-background-color:#1f2124;
+    -fx-focus-color:#1f2124;
+}
+
+.menu-item:focused {
+    -fx-background-color:#616161;
+    -fx-focus-color:#616161;
+}
+
+.menu:focused {
+    -fx-background-color:#616161;
+    -fx-focus-color:#616161;
+}
+
+
+
+

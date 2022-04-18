@@ -341,7 +341,14 @@ public class CadastroFuncionarioTelaPrincipalController implements Initializable
 			Instant instant = Instant.from(dpDataAdmissao.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataAdmissao(Date.from(instant));
 		}
-
+		
+		if(txtTipoSang.getText() == null || txtTipoSang.getText().trim().equals("")) {
+			exception.addError("tipo", "Informar a tipagem sanguínea do funcionário");
+		}
+		if(Double.parseDouble(txtSalario.getText()) == 0 || txtSalario.getText().trim().equals("") || txtSalario.getText() == null){
+			exception.addError("salario", "Digite uma remuneração para esse funcionário");
+		}
+		
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
@@ -367,6 +374,8 @@ public class CadastroFuncionarioTelaPrincipalController implements Initializable
 		errorEstado.setText(fields.contains("Estado") ? errors.get("Estado") : "");
 		errorUF.setText(fields.contains("UF") ? errors.get("UF") : "");
 		errorCtps.setText(fields.contains("CTPS") ? errors.get("CTPS") : "");
+		errorTipoSang.setText(fields.contains("tipo") ? errors.get("tipo") : "");
+		errorSalario.setText(fields.contains("salario") ? errors.get("salario") : "");
 	}
 
 	private void notificarDataChangeListeners() {

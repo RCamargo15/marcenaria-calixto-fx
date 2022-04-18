@@ -20,8 +20,7 @@ public class Main extends Application {
 			
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
-			
-			
+		
 			mainScene = new Scene(scrollPane);
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Marcenaria Calixto");
