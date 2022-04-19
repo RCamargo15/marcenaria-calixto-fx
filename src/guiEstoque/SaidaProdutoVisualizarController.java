@@ -17,6 +17,7 @@ import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
+import guiCliente.CadastroClienteController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -175,7 +176,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox vBox = loader.load();
 			
-			SaidaDeProdutoEstoqueController saidaProdutoController = loader.getController();
+			EditarSaidaDeProdutoEstoqueController saidaProdutoController = loader.getController();
 			saidaProdutoController.setSaidaProduto(obj);
 			saidaProdutoController.setServices(new SaidaProdutoService(), estoqueService, funcionarioService);
 			saidaProdutoController.subscribeDataListenerChange(this);
@@ -184,7 +185,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 			saidaProdutoController.updateSaidaProdutoData();
 			
 			Stage saidaProdutoEstoqueStage = new Stage();
-			saidaProdutoEstoqueStage.setTitle("Registro de saída de produtos do estoque");
+			saidaProdutoEstoqueStage.setTitle("Editar saída de produtos do estoque");
 			saidaProdutoEstoqueStage.setScene(new Scene(vBox));
 			saidaProdutoEstoqueStage.setResizable(false);
 			saidaProdutoEstoqueStage.initOwner(parentStage);
@@ -215,7 +216,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 				}
 				setGraphic(button);
 				button.setOnAction(event -> createSaidaDeProdutosEstoqueForm(obj, Utils.currentStage(event),
-						"/guiEstoque/SaidaDeProdutoEstoque.fxml"));
+						"/guiEstoque/EditarSaidaDeProdutoEstoque.fxml"));
 			}
 		});
 	}
@@ -239,8 +240,8 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 	}
 
 	private void excluirSaidaProduto(SaidaProduto obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR PRODUTO",
-				"Tem certeza que deseja remover esse saidaProduto?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR REGISTRO",
+				"Tem certeza que deseja remover esse registro de retirada de produto?");
 		if (result.get() == ButtonType.OK) {
 			if (saidaProdutoService == null) {
 				throw new IllegalStateException("SaidaProduto está vazio");
@@ -249,7 +250,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 				saidaProdutoService.removerSaida(obj);
 				updateTableViewSaidaProduto();
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir saidaProduto", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir registro", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}
@@ -273,7 +274,5 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 		catch(IOException e) {
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
-		
 	}
-
 }

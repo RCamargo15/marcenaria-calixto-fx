@@ -29,11 +29,11 @@ public class Empresa implements Serializable {
 
 	}
 
-	public Empresa(Integer codEmpresa, String razaoSocial, String nomeFantasia, String cnpj, String atividadeFim,
+	public Empresa(String razaoSocial, String nomeFantasia, String cnpj, String atividadeFim,
 			String rua, Integer numero, String complemento, String bairro, String cep, String cidade, String estado,
 			String uf, Integer ddd, String telefone, String site, String email, String obs) {
 		super();
-		this.codEmpresa = codEmpresa;
+	
 		this.razaoSocial = razaoSocial;
 		this.nomeFantasia = nomeFantasia;
 		this.cnpj = cnpj;

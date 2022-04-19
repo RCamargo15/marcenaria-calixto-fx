@@ -146,6 +146,8 @@ public class CadastroFuncionarioController implements Initializable {
 
 	@FXML
 	private TextField txtSetor;
+	@FXML
+	private Label errorSetor;
 
 	@FXML
 	private TextField txtSalario;
@@ -235,7 +237,6 @@ public class CadastroFuncionarioController implements Initializable {
 		obj.setTipoSang(txtTipoSang.getText());
 		obj.setFuncao(txtFuncao.getText());
 		obj.setSetor(txtSetor.getText());
-		obj.setSalario(Double.parseDouble(txtSalario.getText()));
 		obj.setObs(txtObs.getText());
 
 		ValidationException exception = new ValidationException("Erro de validação");
@@ -310,8 +311,18 @@ public class CadastroFuncionarioController implements Initializable {
 		if(txtTipoSang.getText() == null || txtTipoSang.getText().trim().equals("")) {
 			exception.addError("tipo", "Informar a tipagem sanguínea do funcionário");
 		}
-		if(txtSalario.getText() == null || txtSalario.getText().trim().equals("")){
-			exception.addError("salario", "Digite uma remuneração para esse funcionário");
+		
+		if(txtSalario.getText() == null || txtSalario.getText().trim().equals("")) {
+			exception.addError("salario", "Informar a remuneração do funcionário");
+		}
+		else {
+			obj.setSalario(Double.parseDouble(txtSalario.getText()));
+		}
+		if(txtSetor.getText() == null || txtSetor.getText().trim().equals("")) {
+			exception.addError("setor", "Informe o setor de atuação");
+		}
+		if(txtFuncao.getText() == null || txtFuncao.getText().trim().equals("")) {
+			exception.addError("funcao", "Informe a função");
 		}
 
 		if (exception.getErrors().size() > 0) {
@@ -349,6 +360,7 @@ public class CadastroFuncionarioController implements Initializable {
 		txtFuncao.setText(funcionario.getFuncao());
 		txtSetor.setText(funcionario.getSetor());
 		txtSalario.setText(String.valueOf(funcionario.getSalario()));
+		
 		if (funcionario.getDataNasc() != null) {
 			dpDataNasc.setValue(LocalDate.ofInstant(funcionario.getDataNasc().toInstant(), ZoneId.systemDefault()));
 		}
@@ -379,6 +391,8 @@ public class CadastroFuncionarioController implements Initializable {
 		errorCtps.setText(fields.contains("CTPS") ? errors.get("CTPS") : "");
 		errorTipoSang.setText(fields.contains("tipo") ? errors.get("tipo") : "");
 		errorSalario.setText(fields.contains("salario") ? errors.get("salario") : "");
+		errorFuncao.setText(fields.contains("funcao") ? errors.get("funcao") : "");
+		errorSetor.setText(fields.contains("setor") ? errors.get("setor") : "");
 
 	}
 
@@ -412,6 +426,7 @@ public class CadastroFuncionarioController implements Initializable {
 		gpEndereco.prefWidthProperty().bind(stage.widthProperty());
 		gpFuncional.prefWidthProperty().bind(stage.widthProperty());
 		gpFuncional.prefHeightProperty().bind(stage.heightProperty());
+		
 	}
 
 	private synchronized <T> void loadFuncionarioVisualizar(String absoluteName, Consumer<T> initializaTable) {

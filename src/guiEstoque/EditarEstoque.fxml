@@ -12,27 +12,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="295.0" prefWidth="894.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/telaPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiEstoque.CadastroEstoqueController">
+<VBox prefHeight="295.0" prefWidth="894.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/telaPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiEstoque.EditarEstoqueController">
    <children>
-      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0">
+      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
          <items>
-            <Label text="CADASTRO DE PRODUTOS NO ESTOQUE">
+            <Label stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="EDITAR PRODUTOS NO ESTOQUE" textFill="#ffed00">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0">
+      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
          <items>
-            <Label text="DADOS DO PRODUTO">
+            <Label text="DADOS DO PRODUTO" textFill="#ffed00">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpEstoque" styleClass="gridPane" stylesheets="@../gui.styles/cadastroCliente.css">
+      <GridPane fx:id="gpEstoque" styleClass="grid-pane" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" prefWidth="202.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="834.0" minWidth="10.0" prefWidth="692.0" />
@@ -46,7 +46,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" text="PRODUTO">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="PRODUTO">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -67,23 +67,13 @@
                   <Insets right="300.0" />
                </GridPane.margin>
             </TextField>
-            <Label fx:id="errorNome" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="errorEstoqueAtual" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorRg" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="txtCodEstoque" disable="true" prefHeight="25.0" prefWidth="287.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="errorComboBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="errorEstoqueAtual" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="txtCodEstoque" disable="true" prefHeight="25.0" prefWidth="287.0" visible="false" GridPane.rowIndex="1" />
+            <Label fx:id="errorComboBox" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -95,24 +85,24 @@
                </font>
             </Label>
             <TextField fx:id="txtEstoqueMinimo" prefHeight="25.0" prefWidth="287.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="errorEstoqueMinimo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="errorEstoqueMinimo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <ToolBar fx:id="bbPessoas1" prefHeight="48.0" prefWidth="894.0">
+      <ToolBar fx:id="bbPessoas1" prefHeight="48.0" prefWidth="894.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
          <VBox.margin>
             <Insets />
          </VBox.margin>
          <items>
-            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="SALVAR">
+            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="SALVAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="CANCELAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

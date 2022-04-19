@@ -67,19 +67,13 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 			Estoque estoque = estoqueDao.findByCodProduto(codProdutoEstoque);
 			qtdAtual = estoque.getEstoqueAtual();
 
-			atualizaEstoque = conn
-					.prepareStatement("UPDATE MARCENARIA.ESTOQUE SET ESTOQUE.ESTOQUE_ATUAL = ? WHERE COD_PRODUTO = ?");
+			atualizaEstoque = conn.prepareStatement("UPDATE MARCENARIA.ESTOQUE SET ESTOQUE.ESTOQUE_ATUAL = ? WHERE COD_PRODUTO = ?");
 
 			atualizaEstoque.setInt(1, qtdAtual - qtdRemovida);
 			atualizaEstoque.setInt(2, codProdutoEstoque);
 
 			atualizaEstoque.executeUpdate();
 			System.out.println("Estoque atualizado automaticamente!");
-
-			Estoque estoquePosAtt = estoqueDao.findByCodProduto(codProdutoEstoque);
-			if (estoquePosAtt.getEstoqueAtual() <= estoquePosAtt.getEstoqueMinimo()) {
-				System.out.println("ATENÇÃO! O ESTOQUE ATUAL ATINGIU O ESTOQUE MÍNIMO OU ESTÁ ABAIXO!");
-			}
 
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());

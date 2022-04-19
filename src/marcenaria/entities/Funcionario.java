@@ -35,12 +35,11 @@ public class Funcionario implements Serializable {
 
 	}
 
-	public Funcionario(Integer registroFunc, String nome, String rg, String cpf, String ctps, String rua,
+	public Funcionario(String nome, String rg, String cpf, String ctps, String rua,
 			Integer numero, String complemento, String bairro, String cep, String cidade, String estado, String uf,
 			Integer ddd, String telefone, String celular, Date dataNasc, Date dataAdmissao, String tipoSang,
 			String funcao, String setor, Double salario, String obs) {
-		super();
-		this.registroFunc = registroFunc;
+		
 		this.nome = nome;
 		this.rg = rg;
 		this.cpf = cpf;

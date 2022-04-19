@@ -32,7 +32,7 @@ import marcenaria.entities.Estoque;
 import marcenaria.entities.Produto;
 import model.exceptions.ValidationException;
 
-public class CadastroEstoqueController implements Initializable {
+public class EditarEstoqueController implements Initializable {
 
 	private Estoque estoque;
 
@@ -117,15 +117,17 @@ public class CadastroEstoqueController implements Initializable {
 
 		obj.setId(Utils.tryParseToInt(txtCodEstoque.getText()));
 		obj.setCodProduto(comboBoxProduto.getValue());
-		obj.setEstoqueAtual(Integer.parseInt(txtEstoqueAtual.getText()));
-		obj.setEstoqueMinimo(Integer.parseInt(txtEstoqueMinimo.getText()));
 
 		if (txtEstoqueAtual.getText() == null || txtEstoqueAtual.getText().trim().equals("")) {
-			exception.addError("EstoqueAtual", "Insira a quantidade atual de produtos antes de inserir no estoque");
+			exception.addError("EstoqueAtual", "Insira a quantidade atual de produtos antes de atualizar o estoque");
+		} else {
+			obj.setEstoqueAtual(Integer.parseInt(txtEstoqueAtual.getText()));
 		}
 
 		if (txtEstoqueMinimo.getText() == null || txtEstoqueMinimo.getText().trim().equals("")) {
-			exception.addError("EstoqueMinimo", "Estabeleça um valor mínimo de produtos em seu estoque");
+			exception.addError("EstoqueMinimo", "Estabeleça uma quantidade mínima desse produto em seu estoque");
+		} else {
+			obj.setEstoqueMinimo(Integer.parseInt(txtEstoqueMinimo.getText()));
 		}
 
 		if (exception.getErrors().size() > 0) {

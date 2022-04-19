@@ -7,36 +7,59 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiEstoque.EstoqueVisualizarController">
    <children>
-      <ToolBar prefHeight="23.0" prefWidth="602.0">
+      <ToolBar prefHeight="90.0" prefWidth="1280.0" styleClass="toolBarCliente" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css">
          <items>
-            <Label text="LISTA DE PRODUTOS EM ESTOQUE" textAlignment="CENTER">
-               <font>
-                  <Font name="Arial Bold" size="20.0" />
-               </font>
-               <padding>
-                  <Insets left="5.0" />
-               </padding>
-            </Label>
+            <ToolBar prefHeight="70.0" prefWidth="482.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css">
+               <items>
+                  <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../Calixto_mini_logo_3%20(2).png" />
+                     </image>
+                  </ImageView>
+                  <Label text="LISTA DE PRODUTOS EM ESTOQUE" textAlignment="CENTER" textFill="#ffed00">
+                     <font>
+                        <Font name="Arial Bold" size="20.0" />
+                     </font>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+               </items>
+            </ToolBar>
+            <ToolBar prefHeight="70.0" prefWidth="850.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css">
+              <items>
+                  <Button fx:id="btSaidaDeProdutos" mnemonicParsing="false" onAction="#onBtSaidaDeProduto" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Registrar saída do estoque" textFill="#ffed00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="btVisualizarSaidas" mnemonicParsing="false" onAction="#onBtVisualizarSaidasAction" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Visualizar todas as retiradas" textFill="#ffed00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Mostrar todos os produtos" textFill="#ffed00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Buscar" textFill="#ffed00">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+              </items>
+            </ToolBar>
          </items>
       </ToolBar>
-      <ToolBar prefHeight="27.0" prefWidth="602.0">
-        <items>
-            <Button fx:id="btSaidaDeProdutos" mnemonicParsing="false" onAction="#onBtSaidaDeProduto" text="Registrar saída do estoque" />
-            <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos os produtos" />
-            <Button fx:id="btVisualizarSaidas" mnemonicParsing="false" onAction="#onBtVisualizarSaidasAction" text="Visualizar todas as retiradas" />
-            <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
-            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" text="Buscar" />
-        </items>
-      </ToolBar>
-      <TableView fx:id="tableViewEstoque" prefHeight="357.0" prefWidth="602.0">
+      <TableView fx:id="tableViewEstoque" prefHeight="357.0" prefWidth="602.0" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css">
         <columns>
-            <TableColumn fx:id="tableColumnCodEstoque" prefWidth="120.0" text="COD ESTOQUE" />
-            <TableColumn fx:id="tableColumnProduto" prefWidth="800.0" text="PRODUTO" />
+            <TableColumn fx:id="tableColumnCodEstoque" prefWidth="87.0" text="COD " />
+            <TableColumn fx:id="tableColumnProduto" prefWidth="833.0" text="PRODUTO" />
             <TableColumn fx:id="tableColumnEstoqueAtual" prefWidth="150.0" text="ESTOQUE ATUAL" />
             <TableColumn fx:id="tableColumnEstoqueMinimo" prefWidth="150.0" text="ESTOQUE MÍNIMO" />
             <TableColumn fx:id="tableColumnEditar" />

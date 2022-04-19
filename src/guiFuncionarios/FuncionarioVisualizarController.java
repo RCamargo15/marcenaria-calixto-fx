@@ -146,7 +146,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 	public void onBtBuscar() {
 
 		if (FuncionarioService == null) {
-			throw new IllegalStateException("Service null");
+			throw new IllegalStateException("FuncionarioService null");
 		}
 
 		Funcionario buscaFuncionario = FuncionarioService.findByCodFuncionario(Utils.tryParseToInt(searchByCod.getText()));
@@ -229,10 +229,32 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 			cadastroController.setFuncionario(obj);
 			cadastroController.setFuncionarioService(new FuncionarioService());
 			cadastroController.subscribeDataChangeListener(this);
+
+			Stage cadastroFuncionarioStage = new Stage();
+			cadastroFuncionarioStage.setTitle("Cadastro de funcionário");
+			cadastroFuncionarioStage.setScene(new Scene(vBox));
+			cadastroFuncionarioStage.setResizable(false);
+			cadastroFuncionarioStage.initOwner(parentStage);
+			cadastroFuncionarioStage.initModality(Modality.WINDOW_MODAL);
+			cadastroFuncionarioStage.showAndWait();
+		} catch (IOException e) {
+			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
+	private void createEditarFuncionarioForm(Funcionario obj, Stage parentStage, String absoluteName) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			VBox vBox = loader.load();
+
+			CadastroFuncionarioController cadastroController = loader.getController();
+			cadastroController.setFuncionario(obj);
+			cadastroController.setFuncionarioService(new FuncionarioService());
+			cadastroController.subscribeDataChangeListener(this);
 			cadastroController.updateFuncionarioData();
 
 			Stage cadastroFuncionarioStage = new Stage();
-			cadastroFuncionarioStage.setTitle("Cadastro de Funcionario");
+			cadastroFuncionarioStage.setTitle("Cadastro de funcionário");
 			cadastroFuncionarioStage.setScene(new Scene(vBox));
 			cadastroFuncionarioStage.setResizable(false);
 			cadastroFuncionarioStage.initOwner(parentStage);
@@ -261,7 +283,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(event -> createCadastroFuncionarioForm(obj, Utils.currentStage(event),
+				button.setOnAction(event -> createEditarFuncionarioForm(obj, Utils.currentStage(event),
 						"/guiFuncionarios/CadastroFuncionario.fxml"));
 			}
 		});
@@ -287,7 +309,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 
 	private void excluirFuncionario(Funcionario obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR FUNCIONÁRIO",
-				"Tem certeza que deseja remover esse funcionário?");
+				"Tem certeza que deseja remover esse funcionário do seu banco de dados?");
 		if (result.get() == ButtonType.OK) {
 			if (FuncionarioService == null) {
 				throw new IllegalStateException("Funcionario está vazio");

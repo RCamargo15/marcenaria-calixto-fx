@@ -225,8 +225,7 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 		}
 
 		if (notasCompras.getDataEmissao() != null) {
-			dpDataEmissao
-					.setValue(LocalDate.ofInstant(notasCompras.getDataEmissao().toInstant(), ZoneId.systemDefault()));
+			dpDataEmissao.setValue(LocalDate.ofInstant(notasCompras.getDataEmissao().toInstant(), ZoneId.systemDefault()));
 		}
 
 		if (notasCompras.getDataEntrada() != null) {

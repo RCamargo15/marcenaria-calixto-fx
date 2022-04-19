@@ -30,11 +30,10 @@ public class Cliente implements Serializable {
 
 	}
 
-	public Cliente(Integer codCliente, String nome, String rg, String cpf, String rua, Integer numero,
+	public Cliente(String nome, String rg, String cpf, String rua, Integer numero,
 			String complemento, String bairro, String cep, String cidade, String estado, String uf, Integer ddd,
 			String telefone, String celular, String email, Date dataCadastro, String obs) {
-		super();
-		this.codCliente = codCliente;
+
 		this.nome = nome;
 		this.rg = rg;
 		this.cpf = cpf;

@@ -18,9 +18,9 @@ public class SaidaProduto implements Serializable {
 
 	}
 
-	public SaidaProduto(Integer codSaida, Estoque idEstoque, Estoque codProduto, Date dataSaida, Integer quantidade,
+	public SaidaProduto(Estoque idEstoque, Estoque codProduto, Date dataSaida, Integer quantidade,
 			Funcionario respSaida) {
-		this.codSaida = codSaida;
+	
 		this.codProduto = codProduto;
 		this.idEstoque = idEstoque;
 		this.dataSaida = dataSaida;

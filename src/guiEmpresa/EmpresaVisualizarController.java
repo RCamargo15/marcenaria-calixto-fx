@@ -130,7 +130,7 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 	public void onBtBuscar() {
 
 		if (empresaService == null) {
-			throw new IllegalStateException("Service null");
+			throw new IllegalStateException("EmpresaService null");
 		}
 
 		Empresa buscaEmpresa = empresaService.findByCodEmpresa(Utils.tryParseToInt(searchByCod.getText()));
@@ -272,7 +272,7 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 				empresaService.removerEmpresa(obj);
 				updateTableViewEmpresa();
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir cliente", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir empresa", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

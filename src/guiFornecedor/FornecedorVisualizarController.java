@@ -263,7 +263,7 @@ public class FornecedorVisualizarController implements Initializable, DataChange
 
 	private void excluirFornecedor(Fornecedor obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR FORNECEDOR",
-				"Tem certeza que deseja remover esse fornecedor?");
+				"Tem certeza que deseja remover esse fornecedor do seu banco de dados?");
 		if (result.get() == ButtonType.OK) {
 			if (fornecedorService == null) {
 				throw new IllegalStateException("Fornecedor está vazio");
@@ -272,7 +272,7 @@ public class FornecedorVisualizarController implements Initializable, DataChange
 				fornecedorService.removerFornecedor(obj);
 				updateTableViewFornecedor();
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir cliente", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir fornecedor", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

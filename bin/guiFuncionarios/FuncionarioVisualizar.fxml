@@ -89,8 +89,8 @@
                <columns>
                   <TableColumn fx:id="tableColumnCtps" text="CTPS" />
                   <TableColumn fx:id="tableColumnDataAdmissao" prefWidth="150.0" text="DATA DE ADMISSÃO" />
-                  <TableColumn fx:id="tableColumnFuncao" prefWidth="95.0" text="FUNÇÃO" />
-                  <TableColumn fx:id="tableColumnSetor" prefWidth="95.0" text="SETOR" />
+                  <TableColumn fx:id="tableColumnFuncao" prefWidth="100.0" text="FUNÇÃO" />
+                  <TableColumn fx:id="tableColumnSetor" prefWidth="100.0" text="SETOR" />
                   <TableColumn fx:id="tableColumnSalario" prefWidth="120.0" text="REMUNERAÇÃO" />
                </columns>
             </TableColumn>

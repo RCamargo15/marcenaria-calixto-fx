@@ -144,7 +144,7 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 	public void onBtBuscar() {
 
 		if (clienteService == null) {
-			throw new IllegalStateException("Service null");
+			throw new IllegalStateException("Cliente Service null");
 		}
 
 		Cliente buscaCliente = clienteService.findByCodCliente(Utils.tryParseToInt(searchByCod.getText()));
@@ -280,7 +280,7 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 				"Tem certeza que deseja remover esse cliente?");
 		if (result.get() == ButtonType.OK) {
 			if (clienteService == null) {
-				throw new IllegalStateException("Cliente está vazio");
+				throw new IllegalStateException("Não existe esse cliente");
 			}
 			try {
 				clienteService.removerCliente(obj);

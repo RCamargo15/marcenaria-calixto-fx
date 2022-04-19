@@ -15,8 +15,7 @@ public class Estoque implements Serializable {
 
 	}
 
-	public Estoque(Integer id, Produto codProduto, Integer estoqueAtual, Integer estoqueMinimo) {
-		this.id = id;
+	public Estoque(Produto codProduto, Integer estoqueAtual, Integer estoqueMinimo) {
 		this.codProduto = codProduto;
 		this.estoqueAtual = estoqueAtual;
 		this.estoqueMinimo = estoqueMinimo;

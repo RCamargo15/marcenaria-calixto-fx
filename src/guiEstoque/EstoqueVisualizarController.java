@@ -162,12 +162,12 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		initRemoveButtons();
 	}
 
-	private void createCadastroEstoqueForm(Estoque obj, Stage parentStage, String absoluteName) {
+	private void createEditarEstoqueForm(Estoque obj, Stage parentStage, String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox vBox = loader.load();
 
-			CadastroEstoqueController cadastroController = loader.getController();
+			EditarEstoqueController cadastroController = loader.getController();
 			cadastroController.setEstoque(obj);
 			cadastroController.setServices(new EstoqueService(), new ProdutoService());
 			cadastroController.loadProdutos();
@@ -218,7 +218,6 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 			saidaProdutoController.subscribeDataListenerChange(this);
 			saidaProdutoController.loadEstoque();
 			saidaProdutoController.loadFuncionario();
-			saidaProdutoController.updateSaidaProdutoData();
 			
 			Stage saidaProdutoEstoqueStage = new Stage();
 			saidaProdutoEstoqueStage.setTitle("Registro de saída de produtos do estoque");
@@ -251,8 +250,8 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction(event -> createCadastroEstoqueForm(obj, Utils.currentStage(event),
-						"/guiEstoque/CadastroEstoque.fxml"));
+				button.setOnAction(event -> createEditarEstoqueForm(obj, Utils.currentStage(event),
+						"/guiEstoque/EditarEstoque.fxml"));
 			}
 		});
 	}
@@ -277,7 +276,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 
 	private void excluirEstoque(Estoque obj) {
 		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR PRODUTO",
-				"Tem certeza que deseja remover esse estoque?");
+				"Tem certeza que deseja remover esse produto do seu estoque?");
 		if (result.get() == ButtonType.OK) {
 			if (estoqueService == null) {
 				throw new IllegalStateException("Estoque está vazio");

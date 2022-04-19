@@ -14,8 +14,8 @@ public class Produto implements Serializable {
 
 	}
 
-	public Produto(Integer codProduto, String descProduto, Double precoUnit) {
-		this.codProduto = codProduto;
+	public Produto(String descProduto, Double precoUnit) {
+	
 		this.descProduto = descProduto;
 		this.precoUnit = precoUnit;
 	}

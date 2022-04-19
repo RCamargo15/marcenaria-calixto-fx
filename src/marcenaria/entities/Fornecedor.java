@@ -29,11 +29,10 @@ public class Fornecedor implements Serializable {
 
 	}
 
-	public Fornecedor(Integer codFornecedor, String razaoSocial, String nomeFantasia, String cnpj, String atividadeFim,
+	public Fornecedor(String razaoSocial, String nomeFantasia, String cnpj, String atividadeFim,
 			String rua, Integer numero, String complemento, String bairro, String cep, String cidade, String estado,
 			String uf, Integer ddd, String telefone, String site, String email, String obs) {
 		super();
-		this.codFornecedor = codFornecedor;
 		this.razaoSocial = razaoSocial;
 		this.nomeFantasia = nomeFantasia;
 		this.cnpj = cnpj;
