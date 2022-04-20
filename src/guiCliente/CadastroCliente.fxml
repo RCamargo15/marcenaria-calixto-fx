@@ -14,18 +14,18 @@
 
 <VBox prefHeight="701.0" prefWidth="1082.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiCliente.CadastroClienteController">
    <children>
-      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/clientes/clienteCadastroPrincipal.css">
+      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo">
          <items>
-            <Label text="CADASTRO DE CLIENTES" textFill="#ffed00">
+            <Label text="CADASTRO DE CLIENTES" textFill="#111111">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/clientes/clienteCadastroPrincipal.css">
+      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo">
          <items>
-            <Label text="DADOS PESSOAIS" textFill="#ffed00">
+            <Label text="DADOS PESSOAIS" textFill="#111111">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -210,9 +210,9 @@
             </TextField>
          </children>
       </GridPane>
-      <ToolBar fx:id="bbEnd" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/clientes/clienteCadastroPrincipal.css">
+      <ToolBar fx:id="bbEnd" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopoCadastroClientePrinciapl">
          <items>
-            <Label text="ENDEREÇO" textFill="#ffed00">
+            <Label text="ENDEREÇO" textFill="#111111">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -383,7 +383,7 @@
             <Insets bottom="-20.0" />
          </padding>
       </GridPane>
-      <ToolBar fx:id="bbPessoas1" prefHeight="42.0" prefWidth="1082.0" styleClass="toolBarTopoCadastroClientePrinciapl" stylesheets="@../gui.styles/clientes/clienteCadastroPrincipal.css">
+      <ToolBar fx:id="bbPessoas1" prefHeight="42.0" prefWidth="1082.0" styleClass="toolBarTopoCadastroClientePrinciapl">
          <VBox.margin>
             <Insets />
          </VBox.margin>

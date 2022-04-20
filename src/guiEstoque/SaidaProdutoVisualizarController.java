@@ -17,7 +17,6 @@ import entities.services.SaidaProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
-import guiCliente.CadastroClienteController;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -124,7 +123,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 		SaidaProduto buscaSaidaProduto = saidaProdutoService.findByCodSaida(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaSaidaProduto == null) {
-			Alerts.showAlert("Busca de saidaProduto", null, "Nenhum saidaProduto com esse código foi encontrado no sistema!",
+			Alerts.showAlert("Busca de saidaProduto", null, "Nenhum registro de saída com esse código foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaSaidaProduto);
@@ -185,7 +184,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 			saidaProdutoController.updateSaidaProdutoData();
 			
 			Stage saidaProdutoEstoqueStage = new Stage();
-			saidaProdutoEstoqueStage.setTitle("Editar saída de produtos do estoque");
+			saidaProdutoEstoqueStage.setTitle("Editar reigstro de saída de produtos do estoque");
 			saidaProdutoEstoqueStage.setScene(new Scene(vBox));
 			saidaProdutoEstoqueStage.setResizable(false);
 			saidaProdutoEstoqueStage.initOwner(parentStage);

@@ -100,7 +100,7 @@ public class EditarEstoqueController implements Initializable {
 		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());
 		} catch (DbException e) {
-			Alerts.showAlert("Erro ao cadastrar estoque", null, e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Erro ao atualizar estoque", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 

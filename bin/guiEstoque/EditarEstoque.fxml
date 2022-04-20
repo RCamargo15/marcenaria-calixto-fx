@@ -14,25 +14,25 @@
 
 <VBox prefHeight="295.0" prefWidth="894.0" styleClass="cadastroClientebg" stylesheets="@../gui.styles/telaPrincipal.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiEstoque.EditarEstoqueController">
    <children>
-      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
+      <ToolBar fx:id="bbTitulo" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo">
          <items>
-            <Label stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="EDITAR PRODUTOS NO ESTOQUE" textFill="#ffed00">
+            <Label text="EDITAR PRODUTOS NO ESTOQUE" textFill="#11100b">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
+      <ToolBar fx:id="bbPessoas" prefHeight="40.0" prefWidth="200.0" styleClass="toolBarTopo">
          <items>
-            <Label text="DADOS DO PRODUTO" textFill="#ffed00">
+            <Label text="DADOS DO PRODUTO" textFill="#11100b">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </items>
       </ToolBar>
-      <GridPane fx:id="gpEstoque" styleClass="grid-pane" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
+      <GridPane fx:id="gpEstoque" styleClass="grid-pane">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="409.0" minWidth="10.0" prefWidth="202.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="834.0" minWidth="10.0" prefWidth="692.0" />
@@ -46,7 +46,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="PRODUTO">
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="300.0" text="PRODUTO">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -92,17 +92,17 @@
             </Label>
          </children>
       </GridPane>
-      <ToolBar fx:id="bbPessoas1" prefHeight="48.0" prefWidth="894.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css">
+      <ToolBar fx:id="bbPessoas1" prefHeight="48.0" prefWidth="894.0" styleClass="toolBarTopo">
          <VBox.margin>
             <Insets />
          </VBox.margin>
          <items>
-            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="SALVAR">
+            <Button fx:id="btCadastrar" mnemonicParsing="false" onAction="#onBtCadastrarAction" styleClass="buttons" text="SALVAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueCadastroPrincipal.css" text="CANCELAR">
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" styleClass="buttons" text="CANCELAR">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

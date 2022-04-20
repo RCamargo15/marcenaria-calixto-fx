@@ -20,10 +20,10 @@
                <items>
                   <ImageView fitHeight="56.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../Calixto_mini_logo_3%20(2).png" />
+                        <Image url="@../gui.styles/Calixto_mini_logo_3_BLACK.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="23.0" prefWidth="207.0" text="LISTA DE CLIENTES" textFill="#ffed00">
+                  <Label prefHeight="23.0" prefWidth="207.0" text="LISTA DE CLIENTES" textFill="#141413">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -35,16 +35,16 @@
             </ToolBar>
             <ToolBar centerShape="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="76.0" prefWidth="619.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/clientes/clienteVisualizarDarkTheme.css">
                <items>
-                  <Button fx:id="btBuscar" alignment="CENTER" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="27.0" prefWidth="79.0" styleClass="buttons" text="Buscar" textFill="#ffed00">
+                  <Button fx:id="btBuscar" alignment="CENTER" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="27.0" prefWidth="79.0" text="Buscar" textFill="#141413">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
                   <TextField fx:id="searchByCod" alignment="CENTER" prefHeight="25.0" prefWidth="190.0" />
-                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" styleClass="buttons" text="Mostrar todos os clientes" textFill="#ffed00">
+                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos os clientes" textFill="#141413">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                <Button fx:id="btNovoCliente" mnemonicParsing="false" onAction="#onBtNovoCliente" prefHeight="25.0" prefWidth="125.0" styleClass="buttons" text="Novo cliente" textFill="#ffed00">
+                <Button fx:id="btNovoCliente" mnemonicParsing="false" onAction="#onBtNovoCliente" prefHeight="25.0" prefWidth="125.0" text="Novo cliente" textFill="#141413">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
@@ -52,7 +52,7 @@
             </ToolBar>
         </items>
       </ToolBar>
-      <TableView fx:id="tableViewCliente" prefHeight="357.0" prefWidth="602.0" stylesheets="@../gui.styles/clientes/clienteVisualizarDarkTheme.css">
+      <TableView fx:id="tableViewCliente" prefHeight="357.0" prefWidth="602.0">
         <columns>
             <TableColumn prefWidth="75.0" text="DADOS PESSOAIS">
                <columns>

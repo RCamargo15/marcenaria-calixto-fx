@@ -79,12 +79,12 @@
                </font>
             </Label>
             <TextField fx:id="txtCodProduto" disable="true" prefHeight="25.0" prefWidth="287.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="errorDescProduto" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="errorDescProduto" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="errorPrecoUnit" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="PREÇO UNITÁRIO" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="errorPrecoUnit" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textFill="#e80c0c" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

@@ -298,6 +298,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 		} catch (IOException e) {
 			Alerts.showAlert("IOException", "Error loading view", e.getMessage(), AlertType.ERROR);
+			e.printStackTrace();
 		}
 	}
 

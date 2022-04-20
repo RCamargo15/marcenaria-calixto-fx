@@ -12,7 +12,7 @@ public interface NotasComprasDao {
 	
 	void updateProduto(NotasCompras obj);
 	
-	void updateNotaCompra(NotasCompras obj);
+	void updateNumeroNF(NotasCompras obj, String novoNumeroNF, String velhoNumero);
 
 	void deleteByCodNotasCompras(Integer codNota);
 	

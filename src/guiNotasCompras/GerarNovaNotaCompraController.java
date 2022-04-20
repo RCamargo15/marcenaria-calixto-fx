@@ -19,6 +19,7 @@ import entities.services.NotasComprasService;
 import entities.services.ProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
+import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -123,7 +124,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 	private TableColumn<ProdutoOrcamento, Integer> tableColumnQuantidade;
 
 	@FXML
-	private TextField txtValorTotalOrcamento;
+	private TextField txtValorTotalNotaFiscal;
 
 	@FXML
 	private Button btInserirNota;
@@ -236,7 +237,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 	@FXML
 	public List<NotasCompras> onBtInserirAction() {
 		
-		Map<String, String> errors = ValidateExceptions();
+		Map<String, String> errors = validateExceptions();
 		
 			if(errors.size() > 0) {
 				Alerts.showAlert("Erro ao inserir produto", null, "Preencha as informações da nota fiscal antes de cadastrar os produtos", AlertType.INFORMATION);
@@ -259,14 +260,14 @@ public class GerarNovaNotaCompraController implements Initializable {
 				valorTotalNota = valorTotalNota + valorMoment;
 			}
 			notaCompra.setValorTotal(valorTotal);
-			txtValorTotalOrcamento.setText(String.valueOf(valorTotalNota));
+			txtValorTotalNotaFiscal.setText(String.valueOf(valorTotalNota));
 			listaParaCadastro.add(notaCompra);
 			}
 		
 		return listaParaCadastro;
 	}
 
-	private Map<String, String> ValidateExceptions() {
+	private Map<String, String> validateExceptions() {
 		ValidationException exception = new ValidationException("Erro de validação");
 
 		if (txtNumeroNF.getText() == null || txtNumeroNF.getText().trim().equals("")) {
@@ -311,7 +312,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		listaParaInserir.addAll(listaParaCadastro);
 		try {
 				for (NotasCompras nf : listaParaInserir) {
-					nf.setValorTotalNota(Double.parseDouble(txtValorTotalOrcamento.getText()));
+					nf.setValorTotalNota(Double.parseDouble(txtValorTotalNotaFiscal.getText()));
 					EntradaProduto entradaProduto = new EntradaProduto();
 					Estoque estoque = new Estoque();
 					
@@ -430,7 +431,6 @@ public class GerarNovaNotaCompraController implements Initializable {
 		initializeComboBoxProduto();
 		initRemoverButtons();
 		initializeTables();
-		
 	}
 
 	public void initializeTables() {
@@ -438,6 +438,17 @@ public class GerarNovaNotaCompraController implements Initializable {
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("precoProd"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+		
+		Constraints.setTextFieldInteger(txtNumeroNF);
+		Constraints.setTextFieldInteger(txtChaveNF);
+		Constraints.setTextFieldInteger(txtQuantidade);
+		Constraints.setTextFieldDouble(txtValorUnit);
+		Constraints.setTextFieldDouble(txtValorTotalNotaFiscal);
+		
+		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
+		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+		Utils.formatDatePicker(dpDataEmissao, "dd/MM/yyyy");
+		Utils.formatDatePicker(dpDataEntrada, "dd/MM/yyyy");
 	}
 
 	private void initRemoverButtons() {
@@ -458,12 +469,12 @@ public class GerarNovaNotaCompraController implements Initializable {
 					prodOrcamento.remove(obj);
 					updateTableViewNotasCompras();
 
-					double valorTotal = Double.parseDouble(txtValorTotalOrcamento.getText());
+					double valorTotal = Double.parseDouble(txtValorTotalNotaFiscal.getText());
 					double valorRem = obj.getPrecoProd() * obj.getQuantidade();
 					valorTotal = valorTotal - valorRem;
-					txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
+					txtValorTotalNotaFiscal.setText(String.valueOf(valorTotal));
 					
-					double verify = Double.parseDouble(txtValorTotalOrcamento.getText());
+					double verify = Double.parseDouble(txtValorTotalNotaFiscal.getText());
 					
 					//Safety verification
 					if(verify == 0.0 && !prodOrcamento.isEmpty()) {
@@ -473,7 +484,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 							valorTemp = prod.getPrecoProd() * prod.getQuantidade();
 							valorTotal2 = valorTotal2 + valorTemp;
 						}
-						txtValorTotalOrcamento.setText(String.valueOf(valorTotal2));
+						txtValorTotalNotaFiscal.setText(String.valueOf(valorTotal2));
 					}
 
 					ObservableList<ProdutoOrcamento> list = cbCodProduto.getItems();

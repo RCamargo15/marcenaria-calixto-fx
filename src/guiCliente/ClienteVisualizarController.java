@@ -106,13 +106,6 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 	
 	@FXML
 	private ToolBar toolBarCliente;
-	
-	Image logoMarcenaria = new Image(getClass().getResourceAsStream("/gui.styles/logoMarcenaria.png"));
-	@FXML
-	private ImageView imageViewCliente = new ImageView(logoMarcenaria);
-	
-
-	
 
 	@FXML
 	private TextField searchByCod;

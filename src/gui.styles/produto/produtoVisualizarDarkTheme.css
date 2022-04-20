@@ -1,0 +1,11 @@
+.toolBarCliente{
+	-fx-background-color:#DCDCDC;
+	-fx-border-top-color:#DCDCDC;
+	-fx-spacing:860px;
+}
+
+.toolBarTopo{
+	-fx-background-color:#DCDCDC;
+	-fx-border-color:#DCDCDC;
+	-fx-spacing:10px;
+}

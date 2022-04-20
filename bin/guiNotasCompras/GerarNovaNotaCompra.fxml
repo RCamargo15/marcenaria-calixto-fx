@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="718.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiNotasCompras.GerarNovaNotaCompraController">
+<VBox prefHeight="678.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiNotasCompras.GerarNovaNotaCompraController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="973.0">
          <items>
@@ -115,7 +115,7 @@
       </GridPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="PRODUTOS">
+            <Label text="PRODUTOS NA NOTA FISCAL">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -170,14 +170,13 @@
             </Label>
          </children>
       </GridPane>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" />
       <TableView fx:id="tableViewNotasCompras" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnDescProduto" prefWidth="75.0" text="PRODUTO" />
-            <TableColumn fx:id="tableColumnQuantidade" prefWidth="147.0" text="QUANTIDADE" />
-          <TableColumn fx:id="tableColumnValorUnit" prefWidth="147.0" text="VALOR UNITÁRIO" />
-            <TableColumn fx:id="tableColumnValorTotal" prefWidth="147.0" text="VALOR TOTAL" />
-            <TableColumn fx:id="tableColumnEditar" prefWidth="147.0" />
+          <TableColumn fx:id="tableColumnDescProduto" prefWidth="309.0" text="PRODUTO" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="115.0" text="QUANTIDADE" />
+          <TableColumn fx:id="tableColumnValorUnit" prefWidth="116.0" text="VALOR UNITÁRIO" />
+            <TableColumn fx:id="tableColumnValorTotal" prefWidth="172.0" text="VALOR TOTAL" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="101.0" />
         </columns>
       </TableView>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
@@ -187,7 +186,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="txtValorTotalOrcamento" />
+            <TextField fx:id="txtValorTotalNotaFiscal" />
          </items>
       </ToolBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">

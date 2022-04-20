@@ -55,7 +55,6 @@ public class ProdutoOrcamento implements Serializable {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	
 
 	public Double getValorTotal() {
 		return valorTotal;
@@ -85,8 +84,6 @@ public class ProdutoOrcamento implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ProdutoOrcamento [codProduto=" + codProduto + ", descProduto=" + descProduto + ", precoProd="
-				+ precoProd + ", quantidade=" + quantidade + "]";
+		return descProduto;
 	}
-
 }

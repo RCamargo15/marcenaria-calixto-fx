@@ -68,6 +68,8 @@
                </font>
             </Label>
             <TextField fx:id="txtNumeroNF" GridPane.columnIndex="1" />
+            <TextField fx:id="txtChaveNF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtObs" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Label fx:id="errorNumeroNF" textFill="#ee0b0b" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -77,10 +79,6 @@
                   <Font name="System Bold" size="14.0" />
                </font></Label>
             <Label fx:id="errorChaveNF" textFill="#f20909" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <Label fx:id="errorEmail" textFill="#f20909" GridPane.columnIndex="3" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
@@ -99,13 +97,11 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtObs" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <Label text="CHAVE DA NF" GridPane.rowIndex="4">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtChaveNF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label fx:id="errorCodFornecedor" textFill="#ee0c0c" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -115,7 +111,7 @@
       </GridPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="PRODUTOS">
+            <Label text="PRODUTOS DA NOTA FISCAL">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -124,12 +120,12 @@
       </ToolBar>
       <TableView fx:id="tableViewNotasCompras" prefHeight="328.0" prefWidth="973.0">
         <columns>
-          <TableColumn fx:id="tableColumnDescProduto" prefWidth="85.0" text="PRODUTO" />
-            <TableColumn fx:id="tableColumnQuantidade" prefWidth="137.0" text="QUANTIDADE" />
-          <TableColumn fx:id="tableColumnValorUnit" prefWidth="147.0" text="VALOR UNITÁRIO" />
-            <TableColumn fx:id="tableColumnValorTotal" prefWidth="147.0" text="VALOR TOTAL" />
-            <TableColumn fx:id="tableColumnEditar" prefWidth="147.0" />
-            <TableColumn fx:id="tableColumnRemover" prefWidth="147.0" />
+          <TableColumn fx:id="tableColumnDescProduto" prefWidth="375.0" text="PRODUTO" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="116.0" text="QUANTIDADE" />
+          <TableColumn fx:id="tableColumnValorUnit" prefWidth="130.0" text="VALOR UNITÁRIO" />
+            <TableColumn fx:id="tableColumnValorTotal" prefWidth="142.0" text="VALOR TOTAL" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="100.0" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="100.0" />
         </columns>
       </TableView>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
@@ -139,7 +135,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="txtValorTotalOrcamento" />
+            <TextField fx:id="txtValorTotalNotaFiscal" />
          </items>
       </ToolBar>
       <ToolBar prefHeight="42.0" prefWidth="973.0">

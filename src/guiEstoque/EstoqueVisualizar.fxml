@@ -20,10 +20,10 @@
                <items>
                   <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../Calixto_mini_logo_3%20(2).png" />
+                        <Image url="@../gui.styles/Calixto_mini_logo_3_BLACK.png" />
                      </image>
                   </ImageView>
-                  <Label text="LISTA DE PRODUTOS EM ESTOQUE" textAlignment="CENTER" textFill="#ffed00">
+                  <Label text="LISTA DE PRODUTOS EM ESTOQUE" textAlignment="CENTER" textFill="#1b1a16">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -35,20 +35,20 @@
             </ToolBar>
             <ToolBar prefHeight="70.0" prefWidth="850.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css">
               <items>
-                  <Button fx:id="btSaidaDeProdutos" mnemonicParsing="false" onAction="#onBtSaidaDeProduto" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Registrar saída do estoque" textFill="#ffed00">
+                  <Button fx:id="btSaidaDeProdutos" mnemonicParsing="false" onAction="#onBtSaidaDeProduto" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Registrar saída do estoque" textFill="#1b1a16">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                  <Button fx:id="btVisualizarSaidas" mnemonicParsing="false" onAction="#onBtVisualizarSaidasAction" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Visualizar todas as retiradas" textFill="#ffed00">
+                  <Button fx:id="btVisualizarSaidas" mnemonicParsing="false" onAction="#onBtVisualizarSaidasAction" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Visualizar todas as retiradas" textFill="#1b1a16">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Mostrar todos os produtos" textFill="#ffed00">
+                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Mostrar todos os produtos" textFill="#1b1a16">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
                   <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
-                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Buscar" textFill="#ffed00">
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" styleClass="buttons" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css" text="Buscar" textFill="#1b1a16">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
@@ -56,7 +56,7 @@
             </ToolBar>
          </items>
       </ToolBar>
-      <TableView fx:id="tableViewEstoque" prefHeight="357.0" prefWidth="602.0" stylesheets="@../gui.styles/estoque/estoqueVisualizarDarkTheme.css">
+      <TableView fx:id="tableViewEstoque" prefHeight="357.0" prefWidth="602.0">
         <columns>
             <TableColumn fx:id="tableColumnCodEstoque" prefWidth="87.0" text="COD " />
             <TableColumn fx:id="tableColumnProduto" prefWidth="833.0" text="PRODUTO" />

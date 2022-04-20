@@ -41,7 +41,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Fornecedor;
 import marcenaria.entities.NotasCompras;
-import marcenaria.entities.Produto;
 
 public class NotaCompraVisualizarController implements Initializable, DataChangeListener {
 
@@ -62,18 +61,6 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 
 	@FXML
 	private TableColumn<NotasCompras, String> tableColumnNumeroNF;
-	
-	@FXML
-	private TableColumn<Produto, Integer> tableColumnCodProduto;
-
-	@FXML
-	private TableColumn<NotasCompras, Integer> tableColumnQuantidade;
-	
-	@FXML
-	private TableColumn<NotasCompras, Double> tableColumnValorUnit;
-	
-	@FXML
-	private TableColumn<NotasCompras, Double> tableColumnValorTotal;
 
 	@FXML
 	private TableColumn<NotasCompras, Double> tableColumnValorTotalNota;
@@ -153,7 +140,7 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 		NotasCompras buscaNotasCompras = notasComprasService.findByNumeroNFSingle(txtSearchByCod.getText());
 
 		if (buscaNotasCompras == null) {
-			Alerts.showAlert("Busca de orçamentos", null, "Nenhum orçamento encontrado no sistema", AlertType.ERROR);
+			Alerts.showAlert("Busca de orçamentos", null, "Nenhum nota fiscal encontrada no sistema", AlertType.ERROR);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaNotasCompras);
 			tableViewNotasCompras.setItems(obsList);
@@ -164,7 +151,7 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 
 	public void updateTableViewNotasCompras() {
 		if (notasComprasService == null) {
-			throw new IllegalStateException("Orcamento null");
+			throw new IllegalStateException("NotasCompras null");
 		}
 
 		List<NotasCompras> list = notasComprasService.findAllParaTabela();
@@ -188,10 +175,6 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 		tableColumnCodNota.setCellValueFactory(new PropertyValueFactory<>("codNota"));
 		tableColumnCodFornecedor.setCellValueFactory(new PropertyValueFactory<>("codFornecedor"));
 		tableColumnNumeroNF.setCellValueFactory(new PropertyValueFactory<>("numeroNF"));
-		tableColumnCodProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
-		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valorUnit"));
-		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnValorTotalNota.setCellValueFactory(new PropertyValueFactory<>("valorTotalNota"));
 		tableColumnChaveNF.setCellValueFactory(new PropertyValueFactory<>("chaveNF"));
 		tableColumnDataEmissao.setCellValueFactory(new PropertyValueFactory<>("dataEmissao"));
@@ -203,6 +186,10 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewNotasCompras.prefHeightProperty().bind(stage.heightProperty());
 		tableViewNotasCompras.prefWidthProperty().bind(stage.widthProperty());
+		
+		Utils.formatTableColumnDate(tableColumnDataEmissao, "dd/MM/yyyy");
+		Utils.formatTableColumnDate(tableColumnDataEntrada, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorTotalNota, 2);
 	}
 
 	private void createCadastroNotasComprasForm(NotasCompras obj, Stage parentStage, String string) {

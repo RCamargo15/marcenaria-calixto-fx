@@ -20,10 +20,10 @@
                <items>
                   <ImageView fitHeight="56.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../Calixto_mini_logo_3%20(2).png" />
+                        <Image url="@../gui.styles/Calixto_mini_logo_3_BLACK.png" />
                      </image>
                   </ImageView>
-                  <Label text="LISTA DE FORNECEDORES" textAlignment="CENTER" textFill="#ffed00">
+                  <Label text="LISTA DE FORNECEDORES" textAlignment="CENTER" textFill="#222119">
                      <font>
                         <Font name="Arial Bold" size="20.0" />
                      </font>
@@ -35,16 +35,16 @@
             </ToolBar>
             <ToolBar prefHeight="62.0" prefWidth="596.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/fornecedores/fornecedorVisualizarDarkTheme.css">
                <items>
-                <Button fx:id="btNovoFornecedor" mnemonicParsing="false" onAction="#onBtNovoFornecedor" styleClass="buttons" stylesheets="@../gui.styles/fornecedores/fornecedorVisualizarDarkTheme.css" text="Novo fornecedor" textFill="#ffed00">
+                <Button fx:id="btNovoFornecedor" mnemonicParsing="false" onAction="#onBtNovoFornecedor" styleClass="buttons" text="Novo fornecedor">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
-                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" styleClass="buttons" stylesheets="@../gui.styles/fornecedores/fornecedorVisualizarDarkTheme.css" text="Mostrar todos fornecedores" textFill="#ffed00">
+                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" styleClass="buttons" text="Mostrar todos fornecedores">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
                   <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
-                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" styleClass="buttons" stylesheets="@../gui.styles/fornecedores/fornecedorVisualizarDarkTheme.css" text="Buscar" textFill="#ffed00">
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" styleClass="buttons" text="Buscar">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
@@ -52,7 +52,7 @@
             </ToolBar>
          </items>
       </ToolBar>
-      <TableView fx:id="tableViewFornecedor" prefHeight="357.0" prefWidth="1366.0" stylesheets="@../gui.styles/fornecedores/fornecedorVisualizarDarkTheme.css">
+      <TableView fx:id="tableViewFornecedor" prefHeight="357.0" prefWidth="1366.0">
         <columns>
             <TableColumn prefWidth="75.0" text="DADOS DA EMPRESA">
                <columns>

@@ -94,7 +94,7 @@ public class Utils {
 						setText(null);
 					} else {
 						Locale.setDefault(Locale.US);
-						setText(String.format("%." + decimalPlaces + "f", item));
+						setText("R$" + String.format("%." + decimalPlaces + "f", item));
 					}
 				}
 			};

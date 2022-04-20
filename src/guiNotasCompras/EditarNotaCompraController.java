@@ -8,8 +8,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import Db.DbException;
 import application.Main;
@@ -20,6 +22,7 @@ import entities.services.NotasComprasService;
 import entities.services.ProdutoService;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
+import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -49,6 +52,7 @@ import javafx.util.Callback;
 import marcenaria.entities.EntradaProduto;
 import marcenaria.entities.Fornecedor;
 import marcenaria.entities.NotasCompras;
+import model.exceptions.ValidationException;
 
 public class EditarNotaCompraController implements Initializable, DataChangeListener {
 
@@ -111,7 +115,7 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 	private TableColumn<NotasCompras, Integer> tableColumnQuantidade;
 
 	@FXML
-	private TextField txtValorTotalOrcamento;
+	private TextField txtValorTotalNotaFiscal;
 
 	@FXML
 	private Button btInserirNota;
@@ -154,8 +158,6 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 	public NotasCompras getNotasComprasData() {
 
 		NotasCompras obj = new NotasCompras();
-
-		obj.setCodNota(notasCompras.getCodNota());
 		obj.setNumeroNF(txtNumeroNF.getText());
 		obj.setCodFornecedor(cbCodFornecedor.getValue());
 		Instant instant = Instant.from(dpDataEmissao.getValue().atStartOfDay(ZoneId.systemDefault()));
@@ -176,32 +178,63 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 		if (notasComprasService == null) {
 			throw new IllegalStateException("Orcamento null");
 		}
+		String nf2 = notasCompras.getNumeroNF();
+		List<NotasCompras> listaAtualizacao = notasComprasService.findByNumeroNFList(nf2);
+		Map<String, String> errors = validateExceptions();
 
-		List<NotasCompras> listaNotas = notasComprasService.findAll();
-		try {
-			String nf2 = notasCompras.getNumeroNF();
-			notasCompras = getNotasComprasData();
-			notasComprasService.saveOrUpdate(notasCompras);
-			
-			for(NotasCompras nc : listaNotas) {
-				if(nc.getNumeroNF().equals(nf2)){
-					nc.setNumeroNF(notasCompras.getNumeroNF());
-					notasComprasService.saveOrUpdate(nc);
+		if (errors.size() > 0) {
+			setErrorMessages(errors);
+		} else {
+			try {
+				for (NotasCompras notas : listaAtualizacao) {
+					notas = getNotasComprasData();
+					notas.setValorTotalNota(Double.parseDouble(txtValorTotalNotaFiscal.getText()));
+					notasComprasService.atualizarDados(notas, txtNumeroNF.getText(), nf2);
 				}
+
+				notificarDataChangeListener();
+				Utils.currentStage(event).close();
+			} catch (DbException e) {
+				e.getMessage();
+				e.printStackTrace();
+			} catch (ValidationException e) {
+				setErrorMessages(e.getErrors());
 			}
-			
-			notificarDataChangeListener();
-			Utils.currentStage(event).close();
-		} catch (DbException e) {
-			e.getMessage();
-			e.printStackTrace();
 		}
+	}
+
+	private Map<String, String> validateExceptions() {
+		ValidationException exception = new ValidationException("Erro de validação");
+
+		if (txtNumeroNF.getText() == null || txtNumeroNF.getText().trim().equals("")) {
+			exception.addError("NumeroNF", "Insira o número da nota fiscal");
+		}
+
+		if (dpDataEmissao.getValue() == null) {
+			exception.addError("DataEmissao", "É necessário inserir a data de emissão da nota fiscal");
+		}
+
+		if (dpDataEntrada.getValue() == null) {
+			exception.addError("DataEntrada",
+					"É necessário inserir a data em que está sendo cadastrada essa nota fiscal");
+		}
+
+		if (cbCodFornecedor.getValue() == null) {
+			exception.addError("Fornecedor", "Selecione o fornecedor");
+		}
+		
+		if(txtChaveNF.getText() == null || txtChaveNF.getText().trim().equals("")) {
+			exception.addError("chave", "Informe a chave da Nota Fiscal");
+		}
+		setErrorMessages(exception.getErrors());
+
+		return exception.getErrors();
 	}
 
 	public void updateNotasComprasData() {
 
 		if (notasComprasService == null) {
-			throw new IllegalStateException("Orcamentoservice null");
+			throw new IllegalStateException("notasComprasService null");
 		}
 
 		List<NotasCompras> listNotasFiscais = notasComprasService.findByNumeroNFList(notasCompras.getNumeroNF());
@@ -225,7 +258,8 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 		}
 
 		if (notasCompras.getDataEmissao() != null) {
-			dpDataEmissao.setValue(LocalDate.ofInstant(notasCompras.getDataEmissao().toInstant(), ZoneId.systemDefault()));
+			dpDataEmissao
+					.setValue(LocalDate.ofInstant(notasCompras.getDataEmissao().toInstant(), ZoneId.systemDefault()));
 		}
 
 		if (notasCompras.getDataEntrada() != null) {
@@ -237,12 +271,20 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 			double valorMoment = orc.getValorUnit() * orc.getQuantidade();
 			valorTotal = valorTotal + valorMoment;
 		}
-		txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
+
+		txtValorTotalNotaFiscal.setText(String.valueOf(valorTotal));
 	}
 
-//	private void setErrorMessages(Map<String, String> errors) {
-//		Set<String> fields = errors.keySet();
-//	}
+	private void setErrorMessages(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+
+		errorNumeroNF.setText(fields.contains("NumeroNF") ? errors.get("NumeroNF") : "");
+		erroDataEmissao.setText(fields.contains("DataEmissao") ? errors.get("DataEmissao") : "");
+		erroDataEntrada.setText(fields.contains("DataEntrada") ? errors.get("DataEntrada") : "");
+		errorCodFornecedor.setText(fields.contains("Fornecedor") ? errors.get("Fornecedor") : "");
+		errorChaveNF.setText(fields.contains("chave") ? errors.get("chave") : "");
+
+	}
 
 	public void loadFornecedores() {
 		if (fornecedorService == null) {
@@ -283,6 +325,14 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valorUnit"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+
+		Constraints.setTextFieldInteger(txtNumeroNF);
+		Constraints.setTextFieldInteger(txtChaveNF);
+
+		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
+		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+		Utils.formatDatePicker(dpDataEmissao, "dd/MM/yyyy");
+		Utils.formatDatePicker(dpDataEntrada, "dd/MM/yyyy");
 	}
 
 	private void createEditarProdutoOrcamentoForm(NotasCompras obj, Stage parentStage, String absoluteName) {
@@ -357,13 +407,14 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 			if (notasComprasService == null) {
 				throw new IllegalStateException("Orcamento vazio");
 			}
-			
+
 			List<EntradaProduto> listaEntrada = entradaProdutoService.findAll();
 			try {
 				notasComprasService.removerProduto(obj);
 				updateNotasComprasData();
-				for(EntradaProduto ep : listaEntrada) {
-					if( (ep.getCodProduto().equals(obj.getCodProduto()) && (ep.getNumeroNF().getNumeroNF().equals(obj.getNumeroNF())))){
+				for (EntradaProduto ep : listaEntrada) {
+					if ((ep.getCodProduto().equals(obj.getCodProduto())
+							&& (ep.getNumeroNF().getNumeroNF().equals(obj.getNumeroNF())))) {
 						entradaProdutoService.removerEntrada(ep);
 					}
 				}

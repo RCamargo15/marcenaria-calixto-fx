@@ -29,13 +29,12 @@ public class NotasComprasService {
 				notasComprasDao.update(obj);
 			}
 	}
-	
-	public void saveNotaCompra(NotasCompras obj) {
-		notasComprasDao.updateNotaCompra(obj);
-	}
-	
 	public void updateProdutos(NotasCompras obj) {
 		notasComprasDao.updateProduto(obj);
+	}
+	
+	public void atualizarDados(NotasCompras obj, String nf, String velhoNumero) {
+		notasComprasDao.updateNumeroNF(obj, nf, velhoNumero);
 	}
 
 	public void removerNotaCompra(NotasCompras obj) {

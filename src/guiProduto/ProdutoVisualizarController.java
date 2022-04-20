@@ -122,6 +122,8 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewProduto.prefHeightProperty().bind(stage.heightProperty());
 		tableViewProduto.prefWidthProperty().bind(stage.widthProperty());
+		
+		Utils.formatTableColumnDouble(tableColumnPrecoUnit, 2);
 
 	}
 

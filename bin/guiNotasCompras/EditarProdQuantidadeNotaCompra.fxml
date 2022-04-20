@@ -43,7 +43,7 @@
                </GridPane.margin>
             </TextField>
             <TextField fx:id="txtValorUnit" prefHeight="25.0" prefWidth="269.0" GridPane.rowIndex="3" />
-            <Label text="valor unitario" GridPane.rowIndex="2" />
+            <Label text="VALOR UNITÁRIO" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">

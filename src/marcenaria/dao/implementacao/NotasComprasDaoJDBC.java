@@ -94,7 +94,7 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		}
 
 	}
-	
+
 	@Override
 	public void updateProduto(NotasCompras obj) {
 		PreparedStatement st = null;
@@ -118,25 +118,26 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		}
 
 	}
-
+	
 	@Override
-	public void updateNotaCompra(NotasCompras obj) {
+	public void updateNumeroNF(NotasCompras obj, String novoNumeroNF, String numeroVelho) {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
 					"UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL SET COD_FORNECEDOR = ?, NUMERO_NF=?, CHAVE_NF = ?, "
-							+ "DATA_EMISSAO = ?, DATA_ENTRADA = ?, OBS = ? WHERE NUMERO_NF = ?");
+							+ "DATA_EMISSAO = ?, DATA_ENTRADA = ?, VALOR_TOTAL_NOTA = ?, OBS = ? WHERE NUMERO_NF = ?");
 
 			st.setInt(1, obj.getCodFornecedor().getCodFornecedor());
-			st.setString(2, obj.getNumeroNF());
+			st.setString(2, novoNumeroNF);
 			st.setString(3, obj.getChaveNF());
 			st.setDate(4, new java.sql.Date(obj.getDataEmissao().getTime()));
 			st.setDate(5, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setString(6, obj.getObs());
+			st.setDouble(6, obj.getValorTotalNota());
+			st.setString(7, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(6, obj.getObs().toUpperCase());
+				st.setString(7, obj.getObs().toUpperCase());
 			}
-			st.setString(7, obj.getNumeroNF());
+			st.setString(8, numeroVelho);
 
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -144,7 +145,6 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		} finally {
 			Db.closeStatement(st);
 		}
-
 	}
 
 	@Override

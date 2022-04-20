@@ -120,7 +120,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		Estoque buscaEstoque = estoqueService.findByCodEstoque(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaEstoque == null) {
-			Alerts.showAlert("Busca de estoque", null, "Nenhum estoque com esse código foi encontrado no sistema!",
+			Alerts.showAlert("Busca de estoque", null, "Nenhum produto com esse código foi encontrado no estoque!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEstoque);
@@ -156,6 +156,12 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		}
 
 		List<Estoque> list = estoqueService.findAll();
+		for(Estoque estoque : list) {
+			if(estoque.getEstoqueAtual() < 0) {
+				estoque.setEstoqueAtual(0);
+				estoqueService.saveOrUpdate(estoque);
+			}
+		}
 		obsList = FXCollections.observableArrayList(list);
 		tableViewEstoque.setItems(obsList);
 		initEditButtons();
@@ -285,7 +291,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 				estoqueService.removerEstoque(obj);
 				updateTableViewEstoque();
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir estoque", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir produto do estoque", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

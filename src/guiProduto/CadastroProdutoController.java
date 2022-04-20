@@ -41,7 +41,12 @@ public class CadastroProdutoController implements Initializable {
 	private TextField txtDescProduto;
 	@FXML
 	private Label errorDescProduto;
-	
+
+	@FXML
+	private TextField txtEstoqueAtual;
+	@FXML
+	private Label errorEstoqueAtual;
+
 	@FXML
 	private TextField txtEstoqueMinimo;
 	@FXML
@@ -86,7 +91,7 @@ public class CadastroProdutoController implements Initializable {
 			Estoque estoque = new Estoque();
 			produto = getProdutoData();
 			estoque.setCodProduto(produto);
-			estoque.setEstoqueAtual(0);
+			estoque.setEstoqueAtual(Integer.parseInt(txtEstoqueAtual.getText()));
 			estoque.setEstoqueMinimo(Integer.parseInt(txtEstoqueMinimo.getText()));
 			produtoService.saveOrUpdate(produto);
 			estoqueService.saveOrUpdate(estoque);
@@ -109,10 +114,7 @@ public class CadastroProdutoController implements Initializable {
 
 		ValidationException exception = new ValidationException("Erro de validação");
 		Produto obj = new Produto();
-
-		obj.setCodProduto(Utils.tryParseToInt(txtCodProduto.getText()));
 		obj.setDescProduto(txtDescProduto.getText());
-		obj.setPrecoUnit(Double.parseDouble(txtPrecoUnit.getText()));
 
 		if (txtDescProduto.getText() == null || txtDescProduto.getText().trim().equals("")) {
 			exception.addError("Desc", "Insira uma descrição para esse produto");
@@ -120,6 +122,15 @@ public class CadastroProdutoController implements Initializable {
 
 		if (txtPrecoUnit.getText() == null || txtPrecoUnit.getText().trim().equals("")) {
 			exception.addError("Preco", "Insira um valor a ser cobrado por esse produto");
+		} else {
+			obj.setPrecoUnit(Double.parseDouble(txtPrecoUnit.getText()));
+		}
+		
+		if(txtEstoqueAtual.getText() == null || txtEstoqueAtual.getText().trim().equals("")) {
+			exception.addError("estoqueAtual", "Caso possua esse produto em estoque, informe a quantidade. Caso contrário, quantidade deve ser 0");
+		}
+		if(txtEstoqueMinimo.getText() == null || txtEstoqueMinimo.getText().trim().equals("")) {
+			exception.addError("estoqueMin", "Estabeleça uma quantidade mínima desse produto no estoque para controle");
 		}
 
 		if (exception.getErrors().size() > 0) {
@@ -149,11 +160,14 @@ public class CadastroProdutoController implements Initializable {
 
 		errorDescProduto.setText(fields.contains("Desc") ? errors.get("Desc") : "");
 		errorPrecoUnit.setText(fields.contains("Preco") ? errors.get("Preco") : "");
-
+		errorEstoqueAtual.setText(fields.contains("estoqueAtual") ? errors.get("estoqueAtual") : "");
+		errorEstoqueMinimo.setText(fields.contains("estoqueMin") ? errors.get("estoqueMin") : "");
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		Constraints.setTextFieldDouble(txtPrecoUnit);
+		Constraints.setTextFieldInteger(txtEstoqueAtual);
+		Constraints.setTextFieldInteger(txtEstoqueMinimo);
 	}
 }

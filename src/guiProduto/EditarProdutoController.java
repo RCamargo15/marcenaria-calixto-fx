@@ -38,7 +38,7 @@ public class EditarProdutoController implements Initializable {
 	private TextField txtDescProduto;
 	@FXML
 	private Label errorDescProduto;
-	
+
 	@FXML
 	private TextField txtEstoqueMinimo;
 	@FXML
@@ -100,10 +100,8 @@ public class EditarProdutoController implements Initializable {
 
 		ValidationException exception = new ValidationException("Erro de validação");
 		Produto obj = new Produto();
-
 		obj.setCodProduto(Utils.tryParseToInt(txtCodProduto.getText()));
 		obj.setDescProduto(txtDescProduto.getText());
-		obj.setPrecoUnit(Double.parseDouble(txtPrecoUnit.getText()));
 
 		if (txtDescProduto.getText() == null || txtDescProduto.getText().trim().equals("")) {
 			exception.addError("Desc", "Insira uma descrição para esse produto");
@@ -111,12 +109,13 @@ public class EditarProdutoController implements Initializable {
 
 		if (txtPrecoUnit.getText() == null || txtPrecoUnit.getText().trim().equals("")) {
 			exception.addError("Preco", "Insira um valor a ser cobrado por esse produto");
+		} else {
+			obj.setPrecoUnit(Double.parseDouble(txtPrecoUnit.getText()));
 		}
 
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
-
 		return obj;
 	}
 
