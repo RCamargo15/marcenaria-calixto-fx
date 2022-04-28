@@ -105,7 +105,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 		if(txtBuscarCodOrdem == null || txtBuscarCodOrdem.getText().equals("")) {
 			Alerts.showAlert("Erro ao buscar", null, "Campo de busca não pode estar vazio. Insira o número de orçamento", AlertType.INFORMATION);
 		}
-		OrdemServicoEmpresa osc = ordemServicoEmpresaService.findByCodOrdemServicoEmpresa(Integer.parseInt(txtBuscarCodOrdem.getText()));
+		OrdemServicoEmpresa osc = ordemServicoEmpresaService.findByNumPedido(Integer.parseInt(txtBuscarCodOrdem.getText()));
 		obsListBuscar.add(osc);
 		tableViewOrdemServicoEmpresa.setItems(obsListBuscar);
 	}

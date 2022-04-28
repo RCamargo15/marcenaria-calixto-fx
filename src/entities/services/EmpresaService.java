@@ -28,13 +28,6 @@ public class EmpresaService {
 	}
 	
 	public Empresa findByCodEmpresa(Integer codEmpresa) {
-		List<Empresa> list = empresaDao.findAll();
-		
-		for (Empresa empresa : list) {
-			if (empresa.getCodEmpresa() == codEmpresa) {
-				return empresa;
-			}
-		}
-		return null;
+		return empresaDao.findByCodEmpresa(codEmpresa);
 	}
 }

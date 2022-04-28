@@ -87,7 +87,7 @@ public class EditarProdQuantidadeNotaCompraController implements Initializable {
 	public void updateEditarProdQuantidadeData() {
 		cbProduto.setValue(notasCompras.getCodProduto());
 		txtQuantidade.setText(String.valueOf(notasCompras.getQuantidade()));
-		txtValorUnit.setText(String.valueOf(notasCompras.getValorUnit()));
+		txtValorUnit.setText(String.valueOf("R$ " + notasCompras.getValorUnit()));
 	}
 
 	@FXML
@@ -99,7 +99,7 @@ public class EditarProdQuantidadeNotaCompraController implements Initializable {
 		double valorTotalNota = 0;
 		List<EntradaProduto> listaEntrada = entradaProdutoService.findAll();
 		try {
-			Estoque estoque = estoqueService.findByCodProduto(cbProduto.getValue());
+			Estoque estoque = estoqueService.findByCodProduto(cbProduto.getValue().getCodProduto());
 			NotasCompras obj = notasCompras;
 			
 			List<NotasCompras> listaNotas = notasComprasService.findByNumeroNFList(obj.getNumeroNF());
@@ -109,7 +109,7 @@ public class EditarProdQuantidadeNotaCompraController implements Initializable {
 			obj.setCodNota(notasCompras.getCodNota());
 			obj.setCodProduto(cbProduto.getValue());
 			obj.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-			obj.setValorUnit(Double.parseDouble(txtValorUnit.getText()));
+			obj.setValorUnit(Double.parseDouble(Utils.getValorTotalNota(txtValorUnit.getText())));
 
 			int estoqueAtual = estoque.getEstoqueAtual();
 			int qtdAtualizada = Integer.parseInt(txtQuantidade.getText());

@@ -83,6 +83,10 @@ public class Utils {
 			}
 		});
 	}
+	
+	public static String getValorTotalNota(String txt) {
+		return txt.split(" ")[1];
+	}
 
 	public static <T> void formatTableColumnDouble(TableColumn<T, Double> tableColumn, int decimalPlaces) {
 		tableColumn.setCellFactory(column -> {
@@ -94,7 +98,7 @@ public class Utils {
 						setText(null);
 					} else {
 						Locale.setDefault(Locale.US);
-						setText("R$" + String.format("%." + decimalPlaces + "f", item));
+						setText("R$ " + String.format("%." + decimalPlaces + "f", item));
 					}
 				}
 			};

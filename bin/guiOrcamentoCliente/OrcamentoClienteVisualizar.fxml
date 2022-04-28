@@ -6,45 +6,60 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="652.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrcamentoCliente.OrcamentoClienteVisualizarController">
    <children>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <ToolBar prefHeight="90.0" prefWidth="982.0" styleClass="toolBarCliente" stylesheets="@../gui.styles/orcamentoCliente/orcamentoCliente.css">
          <items>
-            <Label text="ORÇAMENTOS PESSOA FÍSICA">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
+            <ToolBar prefHeight="70.0" prefWidth="392.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/orcamentoCliente/orcamentoCliente.css">
+               <items>
+                  <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label text="ORÇAMENTOS PESSOA FÍSICA">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </items>
+            </ToolBar>
+            <ToolBar prefHeight="70.0" prefWidth="516.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/orcamentoCliente/orcamentoCliente.css">
+              <items>
+                <Button fx:id="btNovoOrcamentoCliente" mnemonicParsing="false" onAction="#onBtNovoOrcamentoCliente" text="Gerar novo orçamento">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="searchByCod" />
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" text="Buscar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+              </items>
+            </ToolBar>
          </items>
-      </ToolBar>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
-        <items>
-          <Button fx:id="btNovoOrcamentoCliente" mnemonicParsing="false" onAction="#onBtNovoOrcamentoCliente" text="Gerar novo orçamento" />
-            <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos" />
-            <TextField fx:id="searchByCod" />
-            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" text="Buscar" />
-        </items>
       </ToolBar>
       <TableView fx:id="tableViewOrcamentoCliente" prefHeight="356.0" prefWidth="982.0">
         <columns>
-          <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="75.0" text="Nº ORÇAMENTO" />
-          <TableColumn fx:id="tableColumnCodCliente" prefWidth="75.0" text="CLIENTE" />
-            <TableColumn fx:id="tableColumnTelefone" prefWidth="75.0" text="TELEFONE" />
-            <TableColumn fx:id="tableColumnCelular" prefWidth="75.0" text="CELULAR" />
-            <TableColumn fx:id="tableColumnEmail" prefWidth="75.0" text="E-MAIL" />
-            <TableColumn fx:id="tableColumnDescServico" prefWidth="75.0" text="DESCRIÇÃO SERVIÇO" />
-            <TableColumn fx:id="tableColumnDataOrcamento" prefWidth="75.0" text="DATA ORÇAMENTO" />
-            <TableColumn fx:id="tableColumnCodProduto" prefWidth="75.0" text="PRODUTO" />
-            <TableColumn fx:id="tableColumnQuantidade" prefWidth="75.0" text="QTDE" />
-            <TableColumn fx:id="tableColumnValor" prefWidth="75.0" text="VALOR" />
-            <TableColumn fx:id="tableColumnValorTotal" prefWidth="75.0" text="VALOR TOTAL" />
-            <TableColumn fx:id="tableColumnObs" prefWidth="75.0" text="OBS" />
-            <TableColumn fx:id="tableColumnEditar" prefWidth="75.0" text="EDITAR" />
-            <TableColumn fx:id="tableColumnRemover" prefWidth="75.0" text="EXCLUIR" />
-            <TableColumn fx:id="tableColumnGerarOS" prefWidth="75.0" text="OSC" />
+          <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="109.0" text="Nº ORÇAMENTO" />
+          <TableColumn fx:id="tableColumnCodCliente" prefWidth="300.0" text="CLIENTE" />
+            <TableColumn fx:id="tableColumnTelefone" prefWidth="100.0" text="TELEFONE" />
+            <TableColumn fx:id="tableColumnCelular" prefWidth="100.0" text="CELULAR" />
+            <TableColumn fx:id="tableColumnEmail" prefWidth="150.0" text="E-MAIL" />
+            <TableColumn fx:id="tableColumnDescServico" prefWidth="250.0" text="DESCRIÇÃO DO SERVIÇO" />
+            <TableColumn fx:id="tableColumnDataOrcamento" text="DATA DO ORÇAMENTO" />
+            <TableColumn fx:id="tableColumnValorTotal" text="VALOR TOTAL" />
+            <TableColumn fx:id="tableColumnObs" prefWidth="200.0" text="OBS" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="120.0" />
+            <TableColumn fx:id="tableColumnRemover" />
+            <TableColumn fx:id="tableColumnGerarOS" prefWidth="180.0" />
         </columns>
       </TableView>
    </children>

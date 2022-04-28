@@ -28,13 +28,6 @@ public class ProdutoService {
 	}
 	
 	public Produto findByCodProduto(Integer codProduto) {
-		List<Produto> list = produtoDao.findAll();
-		
-		for (Produto produto: list) {
-			if (produto.getCodProduto() == codProduto) {
-				return produto;
-			}
-		}
-		return null;
+		return produtoDao.findByCodProduto(codProduto);
 	}
 }

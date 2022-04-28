@@ -40,7 +40,6 @@ import javafx.stage.Stage;
 import marcenaria.entities.Cliente;
 import marcenaria.entities.OrcamentoCliente;
 import marcenaria.entities.OrdemServicoCliente;
-import marcenaria.entities.Produto;
 
 public class OrcamentoClienteVisualizarController implements Initializable, DataChangeListener {
 
@@ -76,15 +75,6 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	private TableColumn<OrcamentoCliente, Date> tableColumnDataOrcamento;
 
 	@FXML
-	private TableColumn<Produto, Integer> tableColumnCodProduto;
-	
-	@FXML
-	private TableColumn<OrcamentoCliente, Integer> tableColumnQuantidade;
-
-	@FXML
-	private TableColumn<OrcamentoCliente, Double> tableColumnValor;
-
-	@FXML
 	private TableColumn<OrcamentoCliente, Double> tableColumnValorTotal;
 
 	@FXML
@@ -113,7 +103,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 
 	private ObservableList<OrcamentoCliente> obsList;
 
-	public void SetServices(OrcamentoClienteService orcamentoClienteService, ClienteService clienteService,
+	public void setServices(OrcamentoClienteService orcamentoClienteService, ClienteService clienteService,
 			ProdutoService produtoService) {
 		this.orcamentoClienteService = orcamentoClienteService;
 		this.clienteService = clienteService;
@@ -184,9 +174,6 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 		tableColumnDescServico.setCellValueFactory(new PropertyValueFactory<>("descServico"));
 		tableColumnDataOrcamento.setCellValueFactory(new PropertyValueFactory<>("dataOrcamento"));
-		tableColumnCodProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
-		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-		tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 		
@@ -195,6 +182,9 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrcamentoCliente.prefHeightProperty().bind(stage.heightProperty());
 		tableViewOrcamentoCliente.prefWidthProperty().bind(stage.widthProperty());
+		
+		Utils.formatTableColumnDate(tableColumnDataOrcamento, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
 	}
 
 	private void createCadastroOrcamentoClienteForm(OrcamentoCliente obj, Stage parentStage, String string) {
@@ -301,7 +291,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
-			private final Button button = new Button("Editar");
+			private final Button button = new Button("Editar/ Visualizar");
 
 			@Override
 			protected void updateItem(OrcamentoCliente obj, boolean empty) {

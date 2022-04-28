@@ -28,13 +28,6 @@ public class FuncionarioService {
 	}
 	
 	public Funcionario findByCodFuncionario(Integer codFuncionario) {
-		List<Funcionario> list = funcionarioDao.findAll();
-		
-		for (Funcionario funcionario: list) {
-			if (funcionario.getRegistroFunc() == codFuncionario) {
-				return funcionario;
-			}
-		}
-		return null;
+		return funcionarioDao.findByCodFuncionario(codFuncionario);
 	}
 }

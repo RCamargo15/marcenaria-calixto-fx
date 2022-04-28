@@ -53,15 +53,16 @@
                         <MenuItem fx:id="menuItemEntradaProdutoVisualizar" mnemonicParsing="false" onAction="#onMenuItemEntradaProdutoVisualizarAction" text="Registros de entrada de produtos" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Ordens de serviço ">
-                     <items>
-                        <MenuItem fx:id="menuItemOrdemServicoEmpresas" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoEmpresas" text="Empresas" />
-                        <MenuItem fx:id="menuItemOrdemServicoCliente" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoCliente" text="Pessoa física" />
-                     </items>
-                  </Menu>
                   <Menu mnemonicParsing="false" text="Orçamentos">
                      <items>
-                        <MenuItem fx:id="menuItemOrcamentoVisualizar" mnemonicParsing="false" onAction="#onMenuItemOrcamentoVisualizarAction" text="Orçamentos" />
+                        <MenuItem fx:id="menuItemOrcamentoPessoaFisica" mnemonicParsing="false" onAction="#onMenuItemOrcamentoPessoaFisica" text="Pessoa física" />
+                        <MenuItem fx:id="menuItemOrcamentoEmpresa" mnemonicParsing="false" onAction="#onMenuItemOrcamentoEmpresa" text="Empresas" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Ordens de serviço ">
+                     <items>
+                        <MenuItem fx:id="menuItemOrdemServicoCliente" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoCliente" text="Pessoa física" />
+                        <MenuItem fx:id="menuItemOrdemServicoEmpresas" mnemonicParsing="false" onAction="#onMenuItemOrdemServicoEmpresas" text="Empresas" />
                      </items>
                   </Menu>
               </menus>

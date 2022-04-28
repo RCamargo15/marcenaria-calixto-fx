@@ -14,9 +14,9 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiNotasCompras.EntradaProdutoVisualizarController">
    <children>
-      <ToolBar prefHeight="90.0" prefWidth="1280.0">
+      <ToolBar prefHeight="90.0" prefWidth="1280.0" styleClass="toolBarCliente" stylesheets="@../gui.styles/entradaProduto/entradaProduto.css">
          <items>
-            <ToolBar prefHeight="70.0" prefWidth="628.0">
+            <ToolBar prefHeight="70.0" prefWidth="628.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/entradaProduto/entradaProduto.css">
               <items>
                   <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -32,12 +32,21 @@
                   </Label>
               </items>
             </ToolBar>
-            <ToolBar prefHeight="70.0" prefWidth="602.0">
+            <ToolBar prefHeight="70.0" prefWidth="624.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/entradaProduto/entradaProduto.css">
               <items>
-                  <Button fx:id="btRetornarAsNotasFiscais" mnemonicParsing="false" onAction="#onBtRetornarAsNotasFiscaisAction" text="Retornar para notas fiscais" />
-                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos os registros" />
+                  <Button fx:id="btRetornarAsNotasFiscais" mnemonicParsing="false" onAction="#onBtRetornarAsNotasFiscaisAction" text="Retornar para notas fiscais">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="mostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodos" text="Mostrar todos os registros">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                   <TextField fx:id="searchByCod" prefHeight="25.0" prefWidth="190.0" />
-                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" text="Buscar" />
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscar" prefHeight="25.0" prefWidth="63.0" text="Buscar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
               </items>
             </ToolBar>
          </items>

@@ -28,13 +28,6 @@ public class FornecedorService {
 	}
 	
 	public Fornecedor findByCodFornecedor(Integer codFornecedor) {
-		List<Fornecedor> list = fornecedorDao.findAll();
-		
-		for (Fornecedor fornecedor: list) {
-			if (fornecedor.getCodFornecedor() == codFornecedor) {
-				return fornecedor;
-			}
-		}
-		return null;
+		return fornecedorDao.findByCodFornecedor(codFornecedor);
 	}
 }

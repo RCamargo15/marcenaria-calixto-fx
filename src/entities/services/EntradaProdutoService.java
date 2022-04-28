@@ -1,6 +1,5 @@
 package entities.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import marcenaria.dao.DaoFactory;
@@ -29,27 +28,16 @@ public class EntradaProdutoService {
 	}
 	
 	public EntradaProduto findByCodEntrada(Integer codEntrada) {
-		List<EntradaProduto> list = entradaProdutoDao.findAll();
-		
-		for(EntradaProduto saida : list) {
-			if (saida.getCodEntrada() == codEntrada) {
-				return saida;
-			}
-		}
-		return null;
+		return entradaProdutoDao.findByCodEntradaProduto(codEntrada);
 	}
 	
 	public List<EntradaProduto> findByCodProduto(Integer codProduto) {
-		List<EntradaProduto> list = entradaProdutoDao.findAll();
-		List<EntradaProduto> listCodProd = new ArrayList<>();
-		
-		for(EntradaProduto saida : list) {
-			if(saida.getCodProduto().equals(codProduto)) {
-				listCodProd.add(saida);
-			}
-		}
-		
-		return listCodProd;
+		return entradaProdutoDao.findByCodProd(codProduto);
+	
+	}
+	
+	public List<EntradaProduto> findByNumeroNF(String numeroNF){
+		return entradaProdutoDao.findByNumeroNF(numeroNF);
 	}
 	
 }

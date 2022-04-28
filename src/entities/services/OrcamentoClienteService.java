@@ -58,23 +58,10 @@ public class OrcamentoClienteService {
 	}
 	
 	public OrcamentoCliente findById(Integer id) {
-		List<OrcamentoCliente> list = orcamentoClienteDao.findAll();
-		for (OrcamentoCliente saida : list) {
-			if (saida.getId().equals(id)) {
-			  return saida;
-			}
-		}
-		return null;
+		return orcamentoClienteDao.findById(id);
 	}
 	
 	public OrcamentoCliente findByNumOrcamento(Integer numOrcamento) {
-		List<OrcamentoCliente> list = orcamentoClienteDao.findAll();
-
-		for (OrcamentoCliente orc : list) {
-			if (orc.getNumOrcamento() == numOrcamento) {
-				return orc;
-			}
-		}
-		return null;
+		return orcamentoClienteDao.findByNumOrcamento(numOrcamento);
 	}
 }

@@ -46,13 +46,7 @@ public class NotasComprasService {
 	}
 	
 	public NotasCompras findByCodNota(Integer codNota) {
-		List<NotasCompras> list = notasComprasDao.findAll();
-		for (NotasCompras saida : list) {
-			if (saida.getCodNota().equals(codNota)) {
-			  return saida;
-			}
-		}
-		return null;
+		return notasComprasDao.findByCodNotasCompras(codNota);
 	}
 	
 	public NotasCompras findByNumeroNFSingle(String numOrcamento) {

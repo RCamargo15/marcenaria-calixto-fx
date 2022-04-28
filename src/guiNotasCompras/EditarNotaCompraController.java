@@ -188,7 +188,7 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 			try {
 				for (NotasCompras notas : listaAtualizacao) {
 					notas = getNotasComprasData();
-					notas.setValorTotalNota(Double.parseDouble(txtValorTotalNotaFiscal.getText()));
+					notas.setValorTotalNota(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalNotaFiscal.getText())));
 					notasComprasService.atualizarDados(notas, txtNumeroNF.getText(), nf2);
 				}
 
@@ -272,7 +272,7 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 			valorTotal = valorTotal + valorMoment;
 		}
 
-		txtValorTotalNotaFiscal.setText(String.valueOf(valorTotal));
+		txtValorTotalNotaFiscal.setText("R$ " + String.valueOf(valorTotal));
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {

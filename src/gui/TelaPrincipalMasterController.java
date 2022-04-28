@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-import javax.swing.JOptionPane;
-
 import application.Main;
 import entities.services.ClienteService;
 import entities.services.EmpresaService;
@@ -105,12 +103,12 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@FXML
 	private MenuItem menuItemOrdemServicoCliente;
-
+	
 	@FXML
-	private MenuItem menuItemOrcamentoCadastrar;
-
+	private MenuItem menuItemOrcamentoPessoaFisica;
+	
 	@FXML
-	private MenuItem menuItemOrcamentoVisualizar;
+	private MenuItem menuItemOrcamentoEmpresa;
 
 	@FXML
 	public void onMenuItemClienteCadastroAction() {
@@ -230,25 +228,21 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 			controller.updateTableViewOrdemEmpresaVisualizar();
 		});
 	}
-
+	
 	@FXML
-	public void onMenuItemOrcamentoVisualizarAction() {
-		String[] options = {"Cliente", "Empresa"};
-        int x = JOptionPane.showOptionDialog(null, "Escolha o tipo de orçamento", "Orçamentos",
-                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
-        
-        if( x == 0) {
-        	loadOrcamentoClienteVisualizar("/guiOrcamentoCliente/OrcamentoClienteVisualizar.fxml", (OrcamentoClienteVisualizarController controller) ->{
-        		controller.SetServices(new OrcamentoClienteService(), new ClienteService(), new ProdutoService());
-        		controller.updateTableViewOrcamentoCliente();
-        	});
-        }
-        if(x == 1){
-        	loadOrcamentoEmpresaVisualizar("/guiOrcamentoEmpresa/OrcamentoEmpresaVisualizar.fxml", (OrcamentoEmpresaVisualizarController controller) ->{
-        		controller.SetServices(new OrcamentoEmpresaService(), new EmpresaService(), new ProdutoService());
-        		controller.updateTableViewOrcamentoEmpresa();
-        	});
-        }
+	public void onMenuItemOrcamentoPessoaFisica() {
+		loadOrcamentoClienteVisualizar("/guiOrcamentoCliente/OrcamentoClienteVisualizar.fxml", (OrcamentoClienteVisualizarController controller) ->{
+    		controller.setServices(new OrcamentoClienteService(), new ClienteService(), new ProdutoService());
+    		controller.updateTableViewOrcamentoCliente();
+    	});
+	}
+	
+	@FXML
+	public void onMenuItemOrcamentoEmpresa() {
+		loadOrcamentoEmpresaVisualizar("/guiOrcamentoEmpresa/OrcamentoEmpresaVisualizar.fxml", (OrcamentoEmpresaVisualizarController controller) ->{
+    		controller.SetServices(new OrcamentoEmpresaService(), new EmpresaService(), new ProdutoService());
+    		controller.updateTableViewOrcamentoEmpresa();
+    	});
 	}
 
 	@Override

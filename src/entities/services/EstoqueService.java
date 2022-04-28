@@ -5,7 +5,6 @@ import java.util.List;
 import marcenaria.dao.DaoFactory;
 import marcenaria.dao.EstoqueDao;
 import marcenaria.entities.Estoque;
-import marcenaria.entities.Produto;
 
 public class EstoqueService {
 
@@ -29,24 +28,10 @@ public class EstoqueService {
 	}
 	
 	public Estoque findByCodEstoque(Integer codEstoque) {
-		List<Estoque> list = estoqueDao.findAll();
-		
-		for (Estoque estoque: list) {
-			if (estoque.getId() == codEstoque) {
-				return estoque;
-			}
-		}
-		return null;
+		return estoqueDao.findByCodEstoque(codEstoque);
 	}
 	
-	public Estoque findByCodProduto(Produto produto) {
-		List<Estoque> list = estoqueDao.findAll();
-		
-		for(Estoque stock : list) {
-			if(stock.getCodProduto().equals(produto)) {
-				return stock;
-			}
-		}
-		return null;
+	public Estoque findByCodProduto(Integer produto) {
+		return estoqueDao.findByCodProduto(produto);
 	}
 }

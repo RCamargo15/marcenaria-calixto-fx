@@ -39,6 +39,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import marcenaria.entities.EntradaProduto;
 import marcenaria.entities.Fornecedor;
 import marcenaria.entities.NotasCompras;
 
@@ -311,6 +312,10 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 				}
 				try {
 					notasComprasService.removerNotaCompra(obj);
+					List<EntradaProduto> entradaProdutoList = entradaProdutoService.findByNumeroNF(obj.getNumeroNF());
+					for(EntradaProduto entry : entradaProdutoList) {
+						entradaProdutoService.removerEntrada(entry);
+					}
 					updateTableViewNotasCompras();
 				}
 				catch(DbException e) {

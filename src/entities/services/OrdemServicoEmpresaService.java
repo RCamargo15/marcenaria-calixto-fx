@@ -27,14 +27,7 @@ public class OrdemServicoEmpresaService {
 		ordemServicoEmpresaDao.deleteByNumPedido(obj.getNumeroPedido());
 	}
 	
-	public OrdemServicoEmpresa findByCodOrdemServicoEmpresa(Integer codOrdemServicoEmpresa) {
-		List<OrdemServicoEmpresa> list = ordemServicoEmpresaDao.findAll();
-		
-		for (OrdemServicoEmpresa produto: list) {
-			if (produto.getNumeroPedido() == codOrdemServicoEmpresa) {
-				return produto;
-			}
-		}
-		return null;
+	public OrdemServicoEmpresa findByNumPedido(Integer codOrdemServicoEmpresa) {
+		return ordemServicoEmpresaDao.findByNumPedido(codOrdemServicoEmpresa);
 	}
 }

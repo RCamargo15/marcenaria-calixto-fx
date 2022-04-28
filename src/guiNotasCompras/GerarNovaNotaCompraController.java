@@ -260,8 +260,11 @@ public class GerarNovaNotaCompraController implements Initializable {
 				valorTotalNota = valorTotalNota + valorMoment;
 			}
 			notaCompra.setValorTotal(valorTotal);
-			txtValorTotalNotaFiscal.setText(String.valueOf(valorTotalNota));
+			txtValorTotalNotaFiscal.setText("R$ " + String.valueOf(valorTotalNota));
 			listaParaCadastro.add(notaCompra);
+			
+			txtQuantidade.setText("");
+			txtValorUnit.setText("");
 			}
 		
 		return listaParaCadastro;
@@ -312,7 +315,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		listaParaInserir.addAll(listaParaCadastro);
 		try {
 				for (NotasCompras nf : listaParaInserir) {
-					nf.setValorTotalNota(Double.parseDouble(txtValorTotalNotaFiscal.getText()));
+					nf.setValorTotalNota(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalNotaFiscal.getText())));
 					EntradaProduto entradaProduto = new EntradaProduto();
 					Estoque estoque = new Estoque();
 					
@@ -443,8 +446,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		Constraints.setTextFieldInteger(txtChaveNF);
 		Constraints.setTextFieldInteger(txtQuantidade);
 		Constraints.setTextFieldDouble(txtValorUnit);
-		Constraints.setTextFieldDouble(txtValorTotalNotaFiscal);
-		
+	
 		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
 		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
 		Utils.formatDatePicker(dpDataEmissao, "dd/MM/yyyy");

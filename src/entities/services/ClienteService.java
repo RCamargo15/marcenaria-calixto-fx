@@ -28,13 +28,6 @@ public class ClienteService {
 	}
 	
 	public Cliente findByCodCliente(Integer codCliente) {
-		List<Cliente> list = clienteDao.findAll();
-		
-		for (Cliente cliente : list) {
-			if (cliente.getCodCliente() == codCliente) {
-				return cliente;
-			}
-		}
-		return null;
+		return clienteDao.findByCodCliente(codCliente);
 	}
 }
