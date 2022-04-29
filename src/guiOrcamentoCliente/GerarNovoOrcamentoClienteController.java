@@ -36,6 +36,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -100,7 +101,7 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 	private TextField txtObs;
 
 	@FXML
-	private GridPane gpProduto;
+	private GridPane gpCalculoOrcamento;
 
 	@FXML
 	private ComboBox<ProdutoOrcamento> cbCodProduto;
@@ -111,6 +112,18 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 	private TextField txtQuantidade;
 	@FXML
 	private Label erroQuantidade;
+
+	@FXML
+	private TextField txtMaoDeObra;
+
+	@FXML
+	private TextField txtMetroQuad;
+
+	@FXML
+	private Button btCalcular;
+
+	@FXML
+	private ToolBar produtoToolBar;
 
 	@FXML
 	private TableColumn<ProdutoOrcamento, ProdutoOrcamento> tableColumnEditar;
@@ -176,8 +189,10 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 
 		OrcamentoCliente obj = new OrcamentoCliente();
 		Produto prod = new Produto();
-		
+
 		double valorTotal = 1;
+		double maoDeObra = 0;
+		double metroQuad = 0;
 
 		obj.setNumOrcamento(Integer.parseInt(txtNumOrcamento.getText()));
 		obj.setCodCliente(cbCodCliente.getValue());
@@ -193,6 +208,8 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		obj.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
 		obj.setValor(prod);
 		obj.setValorTotal(valorTotal);
+		obj.setValorMetroQuad(metroQuad);
+		obj.setValorObra(maoDeObra);
 		obj.setObs(txtObs.getText());
 
 		return obj;
@@ -239,35 +256,57 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 	}
 
 	@FXML
-	public List<OrcamentoCliente> onBtInserirAction() {
-		
-		Map<String, String> errors = ValidateExceptions();
-		
-			if(errors.size() > 0) {
-				Alerts.showAlert("Erro ao inserir produto", null, "Preencha os dados do cliente antes de inserir produtos no orçamento", AlertType.INFORMATION);
-			}
-			else {
-			double valorTotal = 0;
+	public void onBtInserirAction() {
 			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
 			OrcamentoCliente orcamento = getOrcamentoClienteData();
-			
 
 			Produto produto = produtoService.findByCodProduto(produtoTemp.getCodProduto());
 
 			orcamento.setCodProduto(produto);
 			orcamento.setValor(produto);
-			orcamento.setValorTotal(valorTotal);
 			listaParaCadastro.add(orcamento);
 			
-			for (ProdutoOrcamento prod : prodOrcamento) {
-				double valorMoment = prod.getPrecoProd() * prod.getQuantidade();
-				valorTotal = valorTotal + valorMoment;
-			}
-			
-			txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
-			}
-		
-		return listaParaCadastro;
+			txtQuantidade.setText("");
+			cbCodProduto.setValue(null);
+		}
+	
+
+	@FXML
+	private void onBtCalcularAction() {
+
+		double valorTotal = 0;
+		double maoDeObra = 0;
+		double metroQuad = 0;
+		double valorFinal = 0;
+
+		for (ProdutoOrcamento prod : prodOrcamento) {
+			double valorMoment = prod.getPrecoProd() * prod.getQuantidade();
+			valorTotal = valorTotal + valorMoment;
+		}
+		valorFinal = valorTotal;
+
+		if (txtMaoDeObra.getText() == null || txtMaoDeObra.getText().trim().equals("")) {
+
+		} else {
+			maoDeObra = Double.parseDouble(txtMaoDeObra.getText());
+			valorFinal = valorTotal * maoDeObra;
+		}
+
+		if (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) {
+
+		} else {
+			metroQuad = Double.parseDouble(txtMetroQuad.getText());
+			valorFinal = valorTotal + metroQuad;
+		}
+
+		txtValorTotalOrcamento.setText("R$ " + String.valueOf(valorFinal));
+
+		for (OrcamentoCliente orcamento : listaParaCadastro) {
+			orcamento.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
+			orcamento.setValorMetroQuad(metroQuad);
+			orcamento.setValorObra(maoDeObra);
+		}
+
 	}
 
 	private Map<String, String> ValidateExceptions() {
@@ -297,11 +336,10 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		if (cbCodCliente.getValue() == null) {
 			exception.addError("Cliente", "Escolha um cliente do seu cadastro");
 		}
-		if (cbCodProduto.getValue() == null) {
-			exception.addError("Produto", "Escolha um produto");
-		}
-		if (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) {
-			exception.addError("Qtd", "Insira a quantidade");
+		
+		if(cbCodProduto.getValue() == null && (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) && 
+			(txtMaoDeObra.getText() == null || txtMaoDeObra.getText().trim().equals("")) && (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) ) {
+			exception.addError("valorOrcamento", "valorOrcamento" );
 		}
 
 		setErrorMessages(exception.getErrors());
@@ -326,7 +364,7 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 						"É necessário inserir todos os dados pendentes antes de cadastrar", AlertType.INFORMATION);
 			} else {
 				for (OrcamentoCliente cliente : listaParaInserir) {
-					cliente.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+					cliente.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 					orcamentoClienteService.saveOrUpdate(cliente);
 				}
 				notificarDataChangeListener();
@@ -344,13 +382,14 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 
 		errorNumOrcamento.setText(fields.contains("NumOrcamento") ? errors.get("NumOrcamento") : "");
 		errorCelular.setText(fields.contains("Contato") ? errors.get("Contato") : "");
-		erroQuantidade.setText(fields.contains("Qtd") ? errors.get("Qtd") : "");
 		errorEmail.setText(fields.contains("Email") ? errors.get("Email") : "");
 		errorDescServico.setText(fields.contains("DescServico") ? errors.get("DescServico") : "");
 		erroDataOrcamento.setText(fields.contains("DataOrcamento") ? errors.get("DataOrcamento") : "");
 		errorCodCliente.setText(fields.contains("Cliente") ? errors.get("Cliente") : "");
-		erroProduto.setText(fields.contains("Produto") ? errors.get("Produto") : "");
-
+		
+		if(fields.contains("valorOrcamento")) {
+			Alerts.showAlert("Erro ao gerar orçamento", null, "Não é possível gerar um orçamento sem antes calcular o valor", AlertType.ERROR);
+		}
 	}
 
 	public void loadClientes() {
@@ -424,12 +463,10 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		initializeTables();
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewOrcamentoCliente.prefHeightProperty().bind(stage.heightProperty());
+
 		tableViewOrcamentoCliente.prefWidthProperty().bind(stage.widthProperty());
-
-		gpInfoCliente.prefHeightProperty().bind(stage.heightProperty());
 		gpInfoCliente.prefWidthProperty().bind(stage.widthProperty());
-
+		gpCalculoOrcamento.prefWidthProperty().bind(stage.heightProperty());
 	}
 
 	public void initializeTables() {
@@ -460,14 +497,14 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 					double valorRem = obj.getPrecoProd() * obj.getQuantidade();
 					valorTotal = valorTotal - valorRem;
 					txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
-					
+
 					double verify = Double.parseDouble(txtValorTotalOrcamento.getText());
-					
-					//Safety verification
-					if(verify == 0.0 && !prodOrcamento.isEmpty()) {
+
+					// Safety verification
+					if (verify == 0.0 && !prodOrcamento.isEmpty()) {
 						double valorTotal2 = 0;
 						double valorTemp = 0;
-						for(ProdutoOrcamento prod : prodOrcamento) {
+						for (ProdutoOrcamento prod : prodOrcamento) {
 							valorTemp = prod.getPrecoProd() * prod.getQuantidade();
 							valorTotal2 = valorTotal2 + valorTemp;
 						}

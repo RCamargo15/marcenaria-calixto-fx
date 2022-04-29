@@ -20,7 +20,7 @@
                <items>
                   <ImageView fitHeight="56.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../gui.styles/Calixto_mini_logo_3_BLACK.png" />
+                        <Image url="@../gui.styles/Calixto_mini_logo_3_2_1.png" />
                      </image>
                   </ImageView>
                   <Label prefHeight="23.0" prefWidth="229.0" text="LISTA DE EMPRESAS" textFill="#141413">

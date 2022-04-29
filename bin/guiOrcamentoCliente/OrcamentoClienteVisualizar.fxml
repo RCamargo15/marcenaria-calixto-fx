@@ -6,6 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -16,7 +17,10 @@
          <items>
             <ToolBar prefHeight="70.0" prefWidth="392.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/orcamentoCliente/orcamentoCliente.css">
                <items>
-                  <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../gui.styles/Calixto_mini_logo_3_2_1.png" />
+                     </image></ImageView>
                   <Label text="ORÇAMENTOS PESSOA FÍSICA">
                      <font>
                         <Font name="System Bold" size="18.0" />

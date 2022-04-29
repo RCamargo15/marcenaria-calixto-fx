@@ -18,6 +18,8 @@ public class OrcamentoCliente implements Serializable {
 	private Produto codProduto;
 	private Integer quantidade;
 	private Produto valor;
+	private Double valorObra;
+	private Double valorMetroQuad;
 	private Double valorTotal;
 	private String obs;
 
@@ -25,9 +27,9 @@ public class OrcamentoCliente implements Serializable {
 
 	}
 
-	public OrcamentoCliente(Integer numOrcamento, Cliente codCliente, String telefone, String celular,
-			String email, String descServico, Date dataOrcamento, Produto codProduto, Integer quantidade, Produto valor,
-			Double valorTotal, String obs) {
+	public OrcamentoCliente(Integer numOrcamento, Cliente codCliente, String telefone, String celular, String email,
+			String descServico, Date dataOrcamento, Produto codProduto, Integer quantidade, Double valorTotal,
+			String obs) {
 		super();
 		this.numOrcamento = numOrcamento;
 		this.codCliente = codCliente;
@@ -38,7 +40,6 @@ public class OrcamentoCliente implements Serializable {
 		this.dataOrcamento = dataOrcamento;
 		this.codProduto = codProduto;
 		this.quantidade = quantidade;
-		this.valor = valor;
 		this.valorTotal = realValorTotal(valor, quantidade);
 		this.obs = obs;
 	}
@@ -149,6 +150,22 @@ public class OrcamentoCliente implements Serializable {
 
 	public Double realValorTotal(Produto prod, Integer quantidade) {
 		return prod.getPrecoUnit() * quantidade;
+	}
+
+	public Double getValorObra() {
+		return valorObra;
+	}
+
+	public void setValorObra(Double valorObra) {
+		this.valorObra = valorObra;
+	}
+
+	public Double getValorMetroQuad() {
+		return valorMetroQuad;
+	}
+
+	public void setValorMetroQuad(Double valorMetroQuad) {
+		this.valorMetroQuad = valorMetroQuad;
 	}
 
 	@Override

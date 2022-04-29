@@ -20,7 +20,7 @@
               <items>
                   <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../gui.styles/Calixto_mini_logo_3_BLACK.png" />
+                        <Image url="@../gui.styles/Calixto_mini_logo_3_2_1.png" />
                      </image>
                   </ImageView>
                   <Label text="SAÍDAS DE PRODUTOS DO ESTOQUE" textAlignment="CENTER">

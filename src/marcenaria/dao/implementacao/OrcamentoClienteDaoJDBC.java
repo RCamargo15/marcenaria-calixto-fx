@@ -32,7 +32,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO MARCENARIA.ORCAMENTO_CLIENTE(NUM_ORCAMENTO, COD_CLIENTE, TELEFONE, CELULAR, EMAIL, DESC_SERVICO, DATA_ORCAMENTO, "
-					+"COD_PRODUTO, QUANTIDADE, VALOR, VALOR_TOTAL, OBS) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+					+"COD_PRODUTO, QUANTIDADE, VALOR, VALOR_QUAD, VALOR_OBRA, VALOR_TOTAL, OBS) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			
 			st.setInt(1, obj.getNumOrcamento());
 			st.setInt(2, obj.getCodCliente().getCodCliente());
@@ -44,8 +44,10 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
 			st.setDouble(10, obj.getValor());
-			st.setDouble(11, obj.getValorTotal());
-			st.setString(12, obj.getObs());
+			st.setDouble(11, obj.getValorMetroQuad());
+			st.setDouble(12, obj.getValorObra());
+			st.setDouble(13, obj.getValorTotal());
+			st.setString(14, obj.getObs());
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -74,7 +76,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 		try {
 			st = conn.prepareStatement(
 					"UPDATE MARCENARIA.ORCAMENTO_CLIENTE SET NUM_ORCAMENTO = ?, COD_CLIENTE = ?, TELEFONE = ?, CELULAR = ?, EMAIL = ?, "
-					+"DESC_SERVICO = ?, DATA_ORCAMENTO = ?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR = ?, VALOR_TOTAL = ?, OBS = ? "
+					+"DESC_SERVICO = ?, DATA_ORCAMENTO = ?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR = ?, VALOR_QUAD = ?, VALOR_OBRA = ?, VALOR_TOTAL = ?, OBS = ? "
 					+" WHERE ORCAMENTO_CLIENTE.ID = ?"
 					);
 			
@@ -88,9 +90,11 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
 			st.setDouble(10, obj.getValor());
-			st.setDouble(11, obj.getValorTotal());
-			st.setString(12, obj.getObs());
-			st.setInt(13, obj.getId());
+			st.setDouble(11, obj.getValorMetroQuad());
+			st.setDouble(12, obj.getValorObra());
+			st.setDouble(13, obj.getValorTotal());
+			st.setString(14, obj.getObs());
+			st.setInt(15, obj.getId());
 			
 			st.executeUpdate();
 					
@@ -408,6 +412,8 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 		obj.setCodProduto(prod);
 		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setValor(prod);
+		obj.setValorObra(rs.getDouble("VALOR_OBRA"));
+		obj.setValorMetroQuad(rs.getDouble("VALOR_QUAD"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
 		obj.setObs(rs.getString("OBS"));
 		return obj;
