@@ -19,6 +19,8 @@ public class OrcamentoEmpresa implements Serializable {
 	private Produto codProduto;
 	private Integer quantidade;
 	private Produto valor;
+	private Double valorObra;
+	private Double valorMetroQuad;
 	private Double valorTotal;
 	private String obs;
 
@@ -26,8 +28,8 @@ public class OrcamentoEmpresa implements Serializable {
 
 	}
 
-	public OrcamentoEmpresa(Integer numOrcamento, Empresa codEmpresa, String nomeResponsavel,
-			String telefone, String celular, String email, String descServico, Date dataOrcamento, Produto codProduto,
+	public OrcamentoEmpresa(Integer numOrcamento, Empresa codEmpresa, String nomeResponsavel, String telefone,
+			String celular, String email, String descServico, Date dataOrcamento, Produto codProduto,
 			Integer quantidade, Produto valor, Double valorTotal, String obs) {
 		super();
 		this.numOrcamento = numOrcamento;
@@ -154,6 +156,22 @@ public class OrcamentoEmpresa implements Serializable {
 
 	public void setObs(String obs) {
 		this.obs = obs;
+	}
+
+	public Double getValorObra() {
+		return valorObra;
+	}
+
+	public void setValorObra(Double valorObra) {
+		this.valorObra = valorObra;
+	}
+
+	public Double getValorMetroQuad() {
+		return valorMetroQuad;
+	}
+
+	public void setValorMetroQuad(Double valorMetroQuad) {
+		this.valorMetroQuad = valorMetroQuad;
 	}
 
 	@Override

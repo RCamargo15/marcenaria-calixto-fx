@@ -235,7 +235,6 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		}
 
 		return produtoTemp;
-
 	}
 
 	public void updateTableViewOrcamentoEmpresa() {

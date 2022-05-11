@@ -104,7 +104,6 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 			initEditButtons();
 			initRemoveButtons();
 		}
-
 	}
 
 	@Override

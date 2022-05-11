@@ -106,40 +106,10 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 	private TableView<OrcamentoCliente> tableViewOrcamentoCliente;
 	
 	@FXML
-	private TableColumn<OrcamentoCliente, Integer> tableColumnId;
-
-	@FXML
-	private TableColumn<OrcamentoCliente, Integer> tableColumnNumOrcamento;
-
-	@FXML
-	private TableColumn<Cliente, Integer> tableColumnCodCliente;
-
-	@FXML
-	private TableColumn<Cliente, String> tableColumnTelefone;
-
-	@FXML
-	private TableColumn<Cliente, String> tableColumnCelular;
-
-	@FXML
-	private TableColumn<Cliente, String> tableColumnEmail;
-
-	@FXML
-	private TableColumn<OrcamentoCliente, String> tableColumnDescServico;
-
-	@FXML
-	private TableColumn<OrcamentoCliente, Date> tableColumnDataOrcamento;
-
-	@FXML
 	private TableColumn<OrcamentoCliente, Integer> tableColumnDescProduto;
 	
 	@FXML
 	private TableColumn<OrcamentoCliente, Double> tableColumnValorUnit;
-	
-	@FXML
-	private TableColumn<OrcamentoCliente, Double> tableColumnValorTotal;
-
-	@FXML
-	private TableColumn<OrcamentoCliente, String> tableColumnObs;
 	
 	@FXML
 	private TableColumn<OrcamentoCliente, Integer> tableColumnQuantidade;
@@ -281,7 +251,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 			double valorMoment = orc.getValor() * orc.getQuantidade();
 			valorTotal = valorTotal + valorMoment;
 		}
-		txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
+		txtValorTotalOrcamento.setText("R$ " + String.valueOf(valorTotal));
 		txtObs.setText(orcamentoCliente.getObs());
 		
 		
@@ -331,19 +301,13 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 		gpInfoCliente.prefHeightProperty().bind(stage.heightProperty());
 		gpInfoCliente.prefWidthProperty().bind(stage.widthProperty());
 		
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		tableColumnNumOrcamento.setCellValueFactory(new PropertyValueFactory<>("numOrcamento"));
-		tableColumnCodCliente.setCellValueFactory(new PropertyValueFactory<>("codCliente"));
-		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-		tableColumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
-		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		tableColumnDescServico.setCellValueFactory(new PropertyValueFactory<>("descServico"));
-		tableColumnDataOrcamento.setCellValueFactory(new PropertyValueFactory<>("dataOrcamento"));
 		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valor"));
-		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
+		
+		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
+		
 	}
 	
 	private void createEditarProdutoOrcamentoForm(OrcamentoCliente obj, Stage parentStage, String absoluteName) {

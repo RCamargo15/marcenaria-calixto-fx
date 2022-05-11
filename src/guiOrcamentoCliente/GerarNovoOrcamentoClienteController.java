@@ -118,6 +118,9 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 
 	@FXML
 	private TextField txtMetroQuad;
+	
+	@FXML
+	private Label erroSomaValores;
 
 	@FXML
 	private Button btCalcular;
@@ -270,7 +273,6 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 			cbCodProduto.setValue(null);
 		}
 	
-
 	@FXML
 	private void onBtCalcularAction() {
 
@@ -286,7 +288,7 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		valorFinal = valorTotal;
 
 		if (txtMaoDeObra.getText() == null || txtMaoDeObra.getText().trim().equals("")) {
-
+			
 		} else {
 			maoDeObra = Double.parseDouble(txtMaoDeObra.getText());
 			valorFinal = valorTotal * maoDeObra;
@@ -298,7 +300,7 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 			metroQuad = Double.parseDouble(txtMetroQuad.getText());
 			valorFinal = valorTotal + metroQuad;
 		}
-
+	
 		txtValorTotalOrcamento.setText("R$ " + String.valueOf(valorFinal));
 
 		for (OrcamentoCliente orcamento : listaParaCadastro) {
@@ -467,6 +469,10 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		tableViewOrcamentoCliente.prefWidthProperty().bind(stage.widthProperty());
 		gpInfoCliente.prefWidthProperty().bind(stage.widthProperty());
 		gpCalculoOrcamento.prefWidthProperty().bind(stage.heightProperty());
+		
+		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
+		erroSomaValores.setText("O orçamento deve ser calculado ou pelo valor do M² ou pela mão de obra, sendo este multiplicado pelo valor inserido. Ex: Mão de obra: 1.5");
+		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
 	}
 
 	public void initializeTables() {
