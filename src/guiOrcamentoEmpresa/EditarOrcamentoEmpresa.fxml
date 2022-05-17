@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="674.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrcamentoEmpresa.EditarOrcamentoEmpresaController">
+<VBox prefHeight="675.0" prefWidth="973.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrcamentoEmpresa.EditarOrcamentoEmpresaController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="973.0">
          <items>
@@ -27,7 +27,7 @@
       </ToolBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="INFORMAÇÕES DO CLIENTE">
+            <Label prefHeight="25.0" prefWidth="219.0" text="INFORMAÇÕES DO CLIENTE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -121,27 +121,15 @@
             </Label>
          </items>
       </ToolBar>
-      <TableView fx:id="tableViewOrcamentoEmpresa" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="tableViewOrcamentoEmpresa" prefHeight="241.0" prefWidth="973.0">
         <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="41.0" text="id" />
-          <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="47.0" text="n orc" />
-            <TableColumn fx:id="tableColumnCodEmpresa" prefWidth="68.0" text="EMP" />
-            <TableColumn fx:id="tableColumnNomeResponsavel" prefWidth="68.0" text="RESP" />
-            <TableColumn fx:id="tableColumnTelefone" prefWidth="72.0" text="tel" />
-            <TableColumn fx:id="tableColumnCelular" prefWidth="78.0" text="cel" />
-            <TableColumn fx:id="tableColumnEmail" prefWidth="58.0" text="emai" />
-            <TableColumn fx:id="tableColumnDescServico" prefWidth="68.0" text="descserv" />
-            <TableColumn fx:id="tableColumnDataOrcamento" prefWidth="63.0" text="data" />
-            <TableColumn fx:id="tableColumnDescProduto" prefWidth="59.0" text="prod" />
-            <TableColumn fx:id="tableColumnQuantidade" prefWidth="77.0" text="qtd" />
-            <TableColumn fx:id="tableColumnValorUnit" prefWidth="77.0" text="valor" />
-            <TableColumn fx:id="tableColumnValorTotal" prefWidth="63.0" text="valor total" />
-            <TableColumn fx:id="tableColumnObs" prefWidth="71.0" text="obs" />
-            <TableColumn fx:id="tableColumnEditar" prefWidth="54.0" text="edi" />
-            <TableColumn fx:id="tableColumnRemover" prefWidth="74.0" text="remover" />
+            <TableColumn fx:id="tableColumnDescProduto" prefWidth="300.0" text="PRODUTO" />
+            <TableColumn fx:id="tableColumnQuantidade" prefWidth="100.0" text="QUANTIDADE" />
+            <TableColumn fx:id="tableColumnValorUnit" prefWidth="120.0" text="VALOR UNITÁRIO" />
+            <TableColumn fx:id="tableColumnEditar" text="EDITAR" />
+            <TableColumn fx:id="tableColumnRemover" text="REMOVER" />
         </columns>
       </TableView>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" />
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
             <Label text="VALOR TOTAL DO ORÇAMENTO">

@@ -177,7 +177,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 			obj.setDataOrcamento(Date.from(instant));
 		}
 		
-		obj.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+		obj.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 		obj.setObs(txtObs.getText());
 		
 		if (cbCodCliente.getValue() == null) {
@@ -352,7 +352,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 				}
 				setGraphic(button);
 				button.setOnAction(event -> createEditarProdutoOrcamentoForm(obj, Utils.currentStage(event),
-						"/guiOrcamentoCliente/EditarProdQuantidade.fxml"));
+						"/guiOrcamentoCliente/EditarProdQuantidadeCliente.fxml"));
 				
 			}
 		});

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -40,13 +41,25 @@
             <Label text="DATA DE SAÍDA" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <DatePicker fx:id="dpDataSaida" prefHeight="25.0" prefWidth="185.0" GridPane.rowIndex="3" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <DatePicker fx:id="dpDataSaida" prefHeight="25.0" prefWidth="185.0" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></DatePicker>
             <Label text="RECEBEDOR DO MATERIAL">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <ComboBox fx:id="comboBoxFuncionario" prefHeight="25.0" prefWidth="347.0" GridPane.rowIndex="1" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <ComboBox fx:id="comboBoxFuncionario" prefHeight="25.0" prefWidth="347.0" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></ComboBox>
             <TextField fx:id="txtCodSaida" disable="true" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="errorFuncionario" textFill="#e80505" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
@@ -70,9 +83,9 @@
       </ToolBar>
       <GridPane prefHeight="113.0" prefWidth="933.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.0" minWidth="10.0" prefWidth="254.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="10.0" prefWidth="368.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="279.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.0" minWidth="10.0" prefWidth="349.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.0" minWidth="10.0" prefWidth="305.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
@@ -84,13 +97,22 @@
             <Label text="SELECIONE O PRODUTO DO ESTOQUE">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
             <Label prefHeight="27.0" prefWidth="104.0" text="QUANTIDADE" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
-               </font></Label>
-            <TextField fx:id="txtQuantidade" prefHeight="32.0" prefWidth="306.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="btInserirProduto" mnemonicParsing="false" onAction="#onBtInserirAction" text="INSERIR" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="txtQuantidade" prefHeight="20.0" prefWidth="349.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="btInserirProduto" mnemonicParsing="false" onAction="#onBtInserirAction" text="INSERIR" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Label fx:id="errorQuantidade" prefHeight="56.0" prefWidth="368.0" textFill="#ee0606" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -106,8 +128,14 @@
       </TableView>
       <ToolBar prefHeight="51.0" prefWidth="811.0">
         <items>
-          <Button fx:id="btRegistrarSaida" mnemonicParsing="false" onAction="#onBtRegistrarSaidaAction" text="REGISTRAR SAÍDA" />
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+          <Button fx:id="btRegistrarSaida" mnemonicParsing="false" onAction="#onBtRegistrarSaidaAction" text="REGISTRAR SAÍDA">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
         </items>
       </ToolBar>
    </children>

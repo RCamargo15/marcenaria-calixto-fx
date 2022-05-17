@@ -80,6 +80,7 @@
                   <Insets right="250.0" />
                </GridPane.margin>
             </TextField>
+            <DatePicker fx:id="dpDataNasc" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label fx:id="errorNome" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -170,7 +171,6 @@
                   <Insets />
                </GridPane.margin>
             </Label>
-            <DatePicker fx:id="dpDataNasc" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="CPF" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="18.0" />
@@ -429,6 +429,11 @@
                   <Insets right="200.0" />
                </GridPane.margin>
             </TextField>
+            <DatePicker fx:id="dpDataAdmissao" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets right="100.0" />
+               </GridPane.margin>
+            </DatePicker>
             <TextField fx:id="txtFuncao" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="200.0" />
@@ -449,11 +454,6 @@
                   <Insets right="100.0" />
                </GridPane.margin>
             </TextField>
-            <DatePicker fx:id="dpDataAdmissao" GridPane.columnIndex="3">
-               <GridPane.margin>
-                  <Insets right="100.0" />
-               </GridPane.margin>
-            </DatePicker>
             <Label fx:id="errorCtps" textFill="#ee0606" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />

@@ -100,10 +100,6 @@
                <GridPane.margin>
                   <Insets right="200.0" />
                </GridPane.margin></DatePicker>
-            <TextField fx:id="txtTipoSang" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-               <GridPane.margin>
-                  <Insets right="200.0" />
-               </GridPane.margin></TextField>
             <TextField fx:id="txtDdd" minWidth="68.0" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="200.0" />
@@ -114,6 +110,10 @@
                </GridPane.margin>
             </TextField>
             <TextField fx:id="txtCelular" minWidth="84.0" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="200.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtTipoSang" prefHeight="25.0" prefWidth="70.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets right="200.0" />
                </GridPane.margin></TextField>
@@ -227,11 +227,11 @@
                <GridPane.margin>
                   <Insets right="200.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtCep" maxWidth="-Infinity" minWidth="113.0" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextField fx:id="txtBairro" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="200.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtBairro" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="txtCep" maxWidth="-Infinity" minWidth="113.0" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets right="200.0" />
                </GridPane.margin></TextField>

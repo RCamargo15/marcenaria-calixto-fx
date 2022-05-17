@@ -10,12 +10,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="239.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrcamentoEmpresa.EditarProdQuantidadeEmpresaController">
+<VBox prefHeight="139.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrcamentoEmpresa.EditarProdQuantidadeEmpresaController">
    <children>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Label text="EDITAR PRODUTO E QUANTIDADE" />
+            <Label text="EDITAR PRODUTO E QUANTIDADE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
          </items>
       </ToolBar>
       <GridPane fx:id="gpAlterar">
@@ -26,29 +30,46 @@
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="PRODUTO" />
-            <Label text="QUANTIDADE" GridPane.columnIndex="1" />
-            <ComboBox fx:id="cbProduto" prefHeight="25.0" prefWidth="207.0" GridPane.rowIndex="1">
+            <Label text="PRODUTO">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label text="QUANTIDADE" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <ComboBox fx:id="cbProduto" prefHeight="25.0" prefWidth="283.0" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </ComboBox>
             <TextField fx:id="txtQuantidade" prefHeight="25.0" prefWidth="269.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" right="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txtId" prefHeight="25.0" prefWidth="269.0" GridPane.rowIndex="2" />
-            <TextField fx:id="txtNum" prefHeight="25.0" prefWidth="269.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtId" disable="true" editable="false" prefHeight="25.0" prefWidth="269.0" visible="false" />
+            <TextField fx:id="txtNum" disable="true" editable="false" prefHeight="25.0" prefWidth="269.0" visible="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR" />
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+          <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
         </items>
       </ToolBar>
    </children>

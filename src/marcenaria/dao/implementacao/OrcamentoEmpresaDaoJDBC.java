@@ -30,24 +30,29 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO MARCENARIA.ORCAMENTO_EMPRESA(NUM_ORCAMENTO, COD_EMPRESA, NOME_RESPONSAVEL, TELEFONE, CELULAR, EMAIL, "
-					+ "DESC_SERVICO, DATA_ORCAMENTO, COD_PRODUTO, QUANTIDADE, VALOR, VALOR_TOTAL, OBS)"
-					+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+					+ "DESC_SERVICO, DATA_ORCAMENTO, COD_PRODUTO, QUANTIDADE, VALOR, VALOR_QUAD, VALOR_OBRA, VALOR_TOTAL, OBS)"
+					+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			
 	
 			
 			st.setInt(1, obj.getNumOrcamento());
 			st.setInt(2, obj.getCodEmpresa().getCodEmpresa());
-			st.setString(3, obj.getNomeResponsavel());
+			st.setString(3, obj.getNomeResponsavel().toUpperCase());
 			st.setString(4, obj.getTelefone());
 			st.setString(5, obj.getCelular());
 			st.setString(6, obj.getEmail());
-			st.setString(7, obj.getDescServico());
+			st.setString(7, obj.getDescServico().toUpperCase());
 			st.setDate(8, new java.sql.Date(obj.getDataOrcamento().getTime()));
 			st.setInt(9, obj.getCodProduto().getCodProduto());
 			st.setInt(10, obj.getQuantidade());
 			st.setDouble(11, obj.getValor());
-			st.setDouble(12, obj.getValorTotal());
-			st.setString(13, obj.getObs());
+			st.setDouble(12, obj.getValorMetroQuad());
+			st.setDouble(13, obj.getValorObra());
+			st.setDouble(14, obj.getValorTotal());
+			st.setString(15, obj.getObs());
+			if (obj.getObs() != null) {
+				st.setString(15, obj.getObs().toUpperCase());
+			}
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -72,23 +77,28 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.ORCAMENTO_EMPRESA SET NUM_ORCAMENTO = ?, COD_EMPRESA = ?, NOME_RESPONSAVEL = ?, TELEFONE = ?, CELULAR = ?,"
-					+ " EMAIL = ?, DESC_SERVICO = ?, DATA_ORCAMENTO = ?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR = ?, VALOR_TOTAL = ?, OBS = ? "
+					+ " EMAIL = ?, DESC_SERVICO = ?, DATA_ORCAMENTO = ?, COD_PRODUTO = ?, QUANTIDADE = ?, VALOR = ?, VALOR_QUAD = ?, VALOR_OBRA = ?, VALOR_TOTAL = ?, OBS = ? "
 					+ " WHERE ID = ? ");
 			
 			st.setInt(1, obj.getNumOrcamento());
 			st.setInt(2, obj.getCodEmpresa().getCodEmpresa());
-			st.setString(3, obj.getNomeResponsavel());
+			st.setString(3, obj.getNomeResponsavel().toUpperCase());
 			st.setString(4, obj.getTelefone());
 			st.setString(5, obj.getCelular());
 			st.setString(6, obj.getEmail());
-			st.setString(7, obj.getDescServico());
+			st.setString(7, obj.getDescServico().toUpperCase());
 			st.setDate(8, new java.sql.Date(obj.getDataOrcamento().getTime()));
 			st.setInt(9, obj.getCodProduto().getCodProduto());
 			st.setInt(10, obj.getQuantidade());
 			st.setDouble(11, obj.getValor());
-			st.setDouble(12, obj.getValorTotal());
-			st.setString(13, obj.getObs());
-			st.setInt(14, obj.getId());
+			st.setDouble(12, obj.getValorMetroQuad());
+			st.setDouble(13, obj.getValorObra());
+			st.setDouble(14, obj.getValorTotal());
+			st.setString(15, obj.getObs());
+			if (obj.getObs() != null) {
+				st.setString(15, obj.getObs().toUpperCase());
+			}
+			st.setInt(16, obj.getId());
 			
 			st.executeUpdate();
 		}
@@ -403,6 +413,8 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		obj.setDataOrcamento(new java.util.Date(rs.getTimestamp("DATA_ORCAMENTO").getTime()));
 		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setValor(produto);
+		obj.setValorObra(rs.getDouble("VALOR_OBRA"));
+		obj.setValorMetroQuad(rs.getDouble("VALOR_QUAD"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
 		obj.setObs(rs.getString("OBS"));
 		return obj;

@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import Db.DbException;
 import entities.services.EmpresaService;
@@ -24,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -32,6 +35,7 @@ import marcenaria.entities.Empresa;
 import marcenaria.entities.Funcionario;
 import marcenaria.entities.OrcamentoEmpresa;
 import marcenaria.entities.OrdemServicoEmpresa;
+import model.exceptions.ValidationException;
 
 public class GerarOrdemDeServicoEmpresaController implements Initializable {
 
@@ -48,7 +52,7 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 
 	@FXML
 	private ComboBox<Empresa> cbEmpresa;
-	
+
 	@FXML
 	private TextField txtNomeResponsavel;
 
@@ -60,12 +64,13 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 
 	@FXML
 	private DatePicker dpDataInicio;
+	@FXML
+	private Label errorDataInicio;
 
 	@FXML
 	private DatePicker dpPrazoEntrega;
-
 	@FXML
-	private DatePicker dpDataEntrega;
+	private Label errorPrazoEntrega;
 
 	@FXML
 	private ComboBox<String> statusServico;
@@ -130,12 +135,11 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 		}
 		txtDescServico.setText(orcamentoEmpresa.getDescServico());
 		txtObs.setText(orcamentoEmpresa.getObs());
-		txtValorTotalOrcamento.setText(String.valueOf(orcamentoEmpresa.getValorTotal()));
+		txtValorTotalOrcamento.setText(String.valueOf("R$ " + orcamentoEmpresa.getValorTotal()));
 
 	}
 
 	public OrdemServicoEmpresa getOrdemServicoEmpresaData() {
-//		ValidationException error = new ValidationException("Erro de validação");
 		OrdemServicoEmpresa obj = new OrdemServicoEmpresa();
 
 		obj.setNumeroPedido(Integer.parseInt(txtNumOrcamento.getText()));
@@ -160,18 +164,37 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 			obj.setPrazoEntrega(null);
 		}
 
-		if (dpDataEntrega.getValue() != null) {
-			Instant instant4 = Instant.from(dpDataEntrega.getValue().atStartOfDay(ZoneId.systemDefault()));
-			obj.setDataEntrega(Date.from(instant4));
-		}
 		obj.setDataEntrega(null);
-
 		obj.setStatusServico(statusServico.getValue());
-		obj.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+		obj.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 		obj.setFuncResponsavel(cbFuncionarioResp.getValue());
 		obj.setObs(txtObs.getText());
 
 		return obj;
+	}
+
+	public Map<String, String> validateExceptions() {
+		ValidationException exception = new ValidationException("Erro de validação");
+
+		if (dpDataInicio.getValue() == null) {
+			exception.addError("dataInicio", "A data de início de produção deve ser inserida");
+		}
+
+		if (dpPrazoEntrega.getValue() == null) {
+			exception.addError("prazoEntrega", "Um prazo de entrega deve ser estabelelecido");
+		}
+
+		setErrorMessages(exception.getErrors());
+
+		return exception.getErrors();
+	}
+
+	private void setErrorMessages(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+
+		errorDataInicio.setText(fields.contains("dataInicio") ? errors.get("dataInicio") : "");
+		errorPrazoEntrega.setText(fields.contains("prazoEntrega") ? errors.get("prazoEntrega") : "");
+
 	}
 
 	@FXML
@@ -181,13 +204,18 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 
 	@FXML
 	public void onBtCadastrarAction(ActionEvent event) {
-		try {
-			ordemServicoEmpresa = getOrdemServicoEmpresaData();
-			ordemServicoEmpresaService.saveOrUpdate(ordemServicoEmpresa);
-			System.out.println("Cadastrado");
-			notificarDataChangeListener();
-			Utils.currentStage(event).close();
 
+		Map<String, String> errors = validateExceptions();
+		try {
+			if (errors.size() > 0) {
+				setErrorMessages(errors);
+			} else {
+				ordemServicoEmpresa = getOrdemServicoEmpresaData();
+				ordemServicoEmpresaService.saveOrUpdate(ordemServicoEmpresa);
+				System.out.println("Cadastrado");
+				notificarDataChangeListener();
+				Utils.currentStage(event).close();
+			}
 		} catch (DbException e) {
 			e.getMessage();
 		}
@@ -198,6 +226,10 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 		initializeComboBoxEmpresa();
 		initializeComboBoxFuncionario();
 		initializeComboBoxStatus();
+
+		Utils.formatDatePicker(dpDataInicio, "dd/MM/yyyy");
+		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
+		Utils.formatDatePicker(dpPrazoEntrega, "dd/MM/yyyy");
 	}
 
 	// ORCAMENTO

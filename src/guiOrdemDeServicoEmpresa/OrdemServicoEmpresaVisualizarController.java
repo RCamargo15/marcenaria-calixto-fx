@@ -34,6 +34,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Empresa;
+import marcenaria.entities.Funcionario;
 import marcenaria.entities.OrdemServicoEmpresa;
 
 public class OrdemServicoEmpresaVisualizarController implements DataChangeListener, Initializable {
@@ -76,7 +77,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 	private TableColumn<OrdemServicoEmpresa, Double> tableColumnValorTotal;
 
 	@FXML
-	private TableColumn<OrdemServicoEmpresa, String> tableColumnFuncResponsavel;
+	private TableColumn<Funcionario, String> tableColumnFuncResponsavel;
 
 	@FXML
 	private TableColumn<OrdemServicoEmpresa, String> tableColumnObs;
@@ -159,6 +160,12 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrdemServicoEmpresa.prefWidthProperty().bind(stage.widthProperty());
 		tableViewOrdemServicoEmpresa.prefHeightProperty().bind(stage.heightProperty());
+		
+	
+		Utils.formatTableColumnDate(tableColumnDataInicio, "dd/MM/yyyy");
+		Utils.formatTableColumnDate(tableColumnDataOrdem, "dd/MM/yyyy");
+		Utils.formatTableColumnDate(tableColumnPrazoEntrega, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
 	}
 
 	private void createEditarOrdemServicoEmpresaForm(OrdemServicoEmpresa obj, Stage parentStage, String absoluteName) {

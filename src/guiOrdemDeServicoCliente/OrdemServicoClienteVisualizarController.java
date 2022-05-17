@@ -34,6 +34,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Cliente;
+import marcenaria.entities.Funcionario;
 import marcenaria.entities.OrdemServicoCliente;
 
 public class OrdemServicoClienteVisualizarController implements DataChangeListener, Initializable {
@@ -73,7 +74,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 	private TableColumn<OrdemServicoCliente, Double> tableColumnValorTotal;
 
 	@FXML
-	private TableColumn<OrdemServicoCliente, String> tableColumnFuncResponsavel;
+	private TableColumn<Funcionario, Integer> tableColumnFuncResponsavel;
 
 	@FXML
 	private TableColumn<OrdemServicoCliente, String> tableColumnObs;
@@ -83,26 +84,28 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 
 	@FXML
 	private TableColumn<OrdemServicoCliente, OrdemServicoCliente> tableColumnRemover;
-	
+
 	@FXML
 	private Button btBuscar;
-	
+
 	@FXML
 	private Button btMostrarTodos;
-	
+
 	@FXML
 	private TextField txtBuscarCodOrdem;
-	
+
 	ObservableList<OrdemServicoCliente> obsListOrdemServico;
 	ObservableList<OrdemServicoCliente> obsListBuscar;
-	
+
 	@FXML
 	public void onBtBuscarAction() {
-		
-		if(txtBuscarCodOrdem == null || txtBuscarCodOrdem.getText().equals("")) {
-			Alerts.showAlert("Erro ao buscar", null, "Campo de busca não pode estar vazio. Insira o número de orçamento", AlertType.INFORMATION);
+
+		if (txtBuscarCodOrdem == null || txtBuscarCodOrdem.getText().equals("")) {
+			Alerts.showAlert("Erro ao buscar", null,
+					"Campo de busca não pode estar vazio. Insira o número de orçamento", AlertType.INFORMATION);
 		}
-		OrdemServicoCliente osc = ordemServicoClienteService.findByNumPedido(Integer.parseInt(txtBuscarCodOrdem.getText()));
+		OrdemServicoCliente osc = ordemServicoClienteService
+				.findByNumPedido(Integer.parseInt(txtBuscarCodOrdem.getText()));
 		obsListBuscar.add(osc);
 		tableViewOrdemServicoCliente.setItems(obsListBuscar);
 	}
@@ -111,7 +114,6 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 	public void onBtMostrarTodosAction() {
 		updateTableViewOrdemClienteVisualizar();
 	}
-	
 
 	public void setServices(OrdemServicoClienteService ordemClienteServicoService,
 			FuncionarioService funcionarioService, ClienteService clienteService) {
@@ -152,6 +154,11 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("funcResponsavel"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
+		Utils.formatTableColumnDate(tableColumnDataInicio, "dd/MM/yyyy");
+		Utils.formatTableColumnDate(tableColumnDataOrdem, "dd/MM/yyyy");
+		Utils.formatTableColumnDate(tableColumnPrazoEntrega, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrdemServicoCliente.prefWidthProperty().bind(stage.widthProperty());
 		tableViewOrdemServicoCliente.prefHeightProperty().bind(stage.heightProperty());
@@ -172,7 +179,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 			controller.subscribeDataChangeListener(this);
 
 			Stage stage = new Stage();
-			stage.setTitle("Gerar ordem de serviço");
+			stage.setTitle("Editar ordem de serviço");
 			stage.setScene(new Scene(vBox));
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -225,8 +232,8 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 	}
 
 	private void excluirOrdemServicoCliente(OrdemServicoCliente obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO",
-				"Tem certeza que deseja remover esse orçamento?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORDEM DE SERVIÇO",
+				"Tem certeza que deseja remover essa ordem de serviço?");
 		if (result.get() == ButtonType.OK) {
 			if (ordemServicoClienteService == null) {
 				throw new IllegalStateException("Orcamento vazio");
@@ -236,7 +243,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 				updateTableViewOrdemClienteVisualizar();
 
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir ordem de serviço", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

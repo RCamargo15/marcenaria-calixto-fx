@@ -30,7 +30,7 @@ public class OrcamentoEmpresa implements Serializable {
 
 	public OrcamentoEmpresa(Integer numOrcamento, Empresa codEmpresa, String nomeResponsavel, String telefone,
 			String celular, String email, String descServico, Date dataOrcamento, Produto codProduto,
-			Integer quantidade, Produto valor, Double valorTotal, String obs) {
+			Integer quantidade, Double valorTotal, String obs) {
 		super();
 		this.numOrcamento = numOrcamento;
 		this.codEmpresa = codEmpresa;
@@ -42,7 +42,6 @@ public class OrcamentoEmpresa implements Serializable {
 		this.dataOrcamento = dataOrcamento;
 		this.codProduto = codProduto;
 		this.quantidade = quantidade;
-		this.valor = valor;
 		this.valorTotal = valorTotal;
 	}
 

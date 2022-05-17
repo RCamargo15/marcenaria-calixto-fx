@@ -39,7 +39,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setString(3, obj.getTelefone());
 			st.setString(4, obj.getCelular());
 			st.setString(5, obj.getEmail());
-			st.setString(6, obj.getDescServico());
+			st.setString(6, obj.getDescServico().toUpperCase());
 			st.setDate(7, new java.sql.Date(obj.getDataOrcamento().getTime()));
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
@@ -48,6 +48,9 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setDouble(12, obj.getValorObra());
 			st.setDouble(13, obj.getValorTotal());
 			st.setString(14, obj.getObs());
+			if (obj.getObs() != null) {
+				st.setString(14, obj.getObs().toUpperCase());
+			}
 			
 			int rowsAffected = st.executeUpdate();
 			
@@ -85,7 +88,7 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setString(3, obj.getTelefone());
 			st.setString(4, obj.getCelular());
 			st.setString(5, obj.getEmail());
-			st.setString(6, obj.getDescServico());
+			st.setString(6, obj.getDescServico().toUpperCase());
 			st.setDate(7, new java.sql.Date(obj.getDataOrcamento().getTime()));
 			st.setInt(8, obj.getCodProduto().getCodProduto());
 			st.setInt(9, obj.getQuantidade());
@@ -126,6 +129,9 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 			st.setDate(7, new java.sql.Date(obj.getDataOrcamento().getTime()));
 			st.setDouble(8, obj.getValorTotal());
 			st.setString(9, obj.getObs());
+			if (obj.getObs() != null) {
+				st.setString(9, obj.getObs().toUpperCase());
+			}
 			st.setInt(10, obj.getNumOrcamento());
 			
 			st.executeUpdate();

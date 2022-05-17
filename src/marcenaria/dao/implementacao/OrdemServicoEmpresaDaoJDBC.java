@@ -36,7 +36,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 
 			st.setInt(1, obj.getNumeroPedido());
 			st.setInt(2, obj.getCodEmpresa().getCodEmpresa());
-			st.setString(3, obj.getNomeResponsavel());
+			st.setString(3, obj.getNomeResponsavel().toUpperCase());
 			st.setString(4, obj.getDescServico().toUpperCase());
 			st.setDate(5, new java.sql.Date(obj.getDataOrdem().getTime()));
 			
@@ -93,7 +93,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 
 			st.setInt(1, obj.getNumeroPedido());
 			st.setInt(2, obj.getCodEmpresa().getCodEmpresa());
-			st.setString(3, obj.getNomeResponsavel());
+			st.setString(3, obj.getNomeResponsavel().toUpperCase());
 			st.setString(4, obj.getDescServico().toUpperCase());
 			st.setDate(5, new java.sql.Date(obj.getDataOrdem().getTime()));
 			

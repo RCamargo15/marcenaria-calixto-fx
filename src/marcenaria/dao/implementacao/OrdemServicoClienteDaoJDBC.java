@@ -222,7 +222,7 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 
 				OrdemServicoCliente obj = criarOrdemServicoCliente(rs, cliente, funcionario);
 
-				if (obj.getCodCliente().getCodCliente() == codCliente) {
+				if (obj.getCodCliente().getCodCliente().equals(codCliente)) {
 					ordemServicoList.add(obj);
 				}
 			}

@@ -26,7 +26,7 @@ public class OrdemServicoEmpresa implements Serializable {
 	}
 
 	public OrdemServicoEmpresa(Integer id, Integer numeroPedido, Empresa codEmpresa, String nomeResponsavel,
-			String descServico, Date dataOrdem, Date dataInicio, Date prazoEntrega, Date dataEntrega,
+			String descServico, Date dataOrdem, Date dataInicio, Date prazoEntrega, 
 			String statusServico, Double valorTotal, Funcionario funcResponsavel, String obs) {
 		;
 		this.numeroPedido = numeroPedido;
@@ -36,7 +36,6 @@ public class OrdemServicoEmpresa implements Serializable {
 		this.dataOrdem = dataOrdem;
 		this.dataInicio = dataInicio;
 		this.prazoEntrega = prazoEntrega;
-		this.dataEntrega = dataEntrega;
 		this.statusServico = statusServico;
 		this.valorTotal = valorTotal;
 		this.funcResponsavel = funcResponsavel;

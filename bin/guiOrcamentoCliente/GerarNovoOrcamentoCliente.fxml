@@ -74,34 +74,52 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbCodCliente" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtTelefoneCliente" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <TextField fx:id="txtCelularCliente" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txtEmailCliente" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <ComboBox fx:id="cbCodCliente" prefHeight="25.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtNumOrcamento" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets right="150.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtTelefoneCliente" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="100.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtCelularCliente" prefHeight="25.0" prefWidth="299.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="100.0" />
+               </GridPane.margin></TextField>
+            <TextField fx:id="txtEmailCliente" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="20.0" />
+               </GridPane.margin></TextField>
             <Label text="SERVIÇO SOLICITADO" GridPane.rowIndex="6">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtDescricaoServico" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="txtDescricaoServico" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
             <Label text="DATA ORÇAMENTO" GridPane.columnIndex="2" GridPane.rowIndex="6">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <DatePicker fx:id="dpDataOrcamento" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <DatePicker fx:id="dpDataOrcamento" prefHeight="25.0" prefWidth="157.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
             <Label text="Nº ORÇAMENTO">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtNumOrcamento" GridPane.columnIndex="1" />
             <Label text="OBS" GridPane.rowIndex="8">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtObs" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="txtObs" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin></TextField>
             <Label fx:id="errorNumOrcamento" textFill="#ee0b0b" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -164,7 +182,7 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <ComboBox fx:id="cbCodProduto" prefHeight="25.0" prefWidth="287.0" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cbCodProduto" prefHeight="25.0" prefWidth="308.0" GridPane.columnIndex="1" />
             <Label text="QUANTIDADE" GridPane.columnIndex="2">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -173,8 +191,14 @@
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <TextField fx:id="txtQuantidade" GridPane.columnIndex="3" />
-            <Button fx:id="btInserirProduto" mnemonicParsing="false" onAction="#onBtInserirAction" prefHeight="25.0" prefWidth="76.0" text="INSERIR" GridPane.columnIndex="4" />
+            <TextField fx:id="txtQuantidade" GridPane.columnIndex="3">
+               <GridPane.margin>
+                  <Insets right="50.0" />
+               </GridPane.margin></TextField>
+            <Button fx:id="btInserirProduto" mnemonicParsing="false" onAction="#onBtInserirAction" prefHeight="25.0" prefWidth="76.0" text="INSERIR" GridPane.columnIndex="4">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Label fx:id="erroQuantidade" textFill="#ee0c0c" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -201,10 +225,16 @@
             </Label>
             <TextField fx:id="txtMaoDeObra" prefHeight="25.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets right="68.0" />
+                  <Insets right="150.0" />
                </GridPane.margin></TextField>
-            <TextField fx:id="txtMetroQuad" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Button fx:id="btCalcular" mnemonicParsing="false" onAction="#onBtCalcularAction" text="CALCULAR" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <TextField fx:id="txtMetroQuad" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="50.0" />
+               </GridPane.margin></TextField>
+            <Button fx:id="btCalcular" mnemonicParsing="false" onAction="#onBtCalcularAction" text="CALCULAR" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Label fx:id="erroSomaValores" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -241,13 +271,19 @@
       </ToolBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Button fx:id="btGerarOrcamento" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="GERAR ORÇAMENTO" />
+            <Button fx:id="btGerarOrcamento" mnemonicParsing="false" onAction="#onBtCadastrarAction" text="GERAR ORÇAMENTO">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Label>
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
          </items>
       </ToolBar>
    </children>

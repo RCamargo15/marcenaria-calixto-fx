@@ -151,6 +151,7 @@ public class EditarOrdemDeServicoEmpresaController implements Initializable {
 	public OrdemServicoEmpresa getOrdemServicoEmpresaData() {
 		OrdemServicoEmpresa obj = new OrdemServicoEmpresa();
 
+		obj.setId(ordemServicoEmpresa.getId());
 		obj.setNumeroPedido(Integer.parseInt(txtNumOrcamento.getText()));
 		obj.setCodEmpresa(cbEmpresa.getValue());
 		obj.setDescServico(txtDescServico.getText());
@@ -198,7 +199,6 @@ public class EditarOrdemDeServicoEmpresaController implements Initializable {
 		try {
 			ordemServicoEmpresa = getOrdemServicoEmpresaData();
 			ordemServicoEmpresaService.saveOrUpdate(ordemServicoEmpresa);
-			System.out.println("Cadastrado");
 			notificarDataChangeListener();
 			Utils.currentStage(event).close();
 

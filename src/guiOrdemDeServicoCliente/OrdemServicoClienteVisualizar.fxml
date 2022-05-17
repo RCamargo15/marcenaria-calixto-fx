@@ -6,38 +6,53 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox prefHeight="463.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrdemDeServicoCliente.OrdemServicoClienteVisualizarController">
    <children>
-      <ToolBar prefHeight="33.0" prefWidth="823.0">
+      <ToolBar prefHeight="90.0" prefWidth="823.0" styleClass="toolBarCliente" stylesheets="@../gui.styles/OrdemServicoCliente/ordemServicoCliente.css">
          <items>
-            <Label text="ORDENS DE SERVIÇO PARA PESSOAS FÍSICAS" />
-         </items>
-      </ToolBar>
-      <ToolBar prefHeight="33.0" prefWidth="823.0">
-         <items>
-            <Button fx:id="btMostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodosAction" text="Mostrar todos " />
-            <Label />
-            <TextField fx:id="txtBuscarCodOrdem" />
-            <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscarAction" text="Buscar" />
+            <ToolBar prefHeight="70.0" prefWidth="510.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/OrdemServicoCliente/ordemServicoCliente.css">
+               <items>
+                  <ImageView fitHeight="51.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../gui.styles/Calixto_mini_logo_3_2_1.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="ORDENS DE SERVIÇO PARA PESSOAS FÍSICAS">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </items>
+            </ToolBar>
+            <ToolBar prefHeight="40.0" prefWidth="400.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/OrdemServicoCliente/ordemServicoCliente.css">
+               <items>
+                  <Button fx:id="btMostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodosAction" text="Mostrar todos " />
+                  <TextField fx:id="txtBuscarCodOrdem" />
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscarAction" text="Buscar" />
+               </items>
+            </ToolBar>
          </items>
       </ToolBar>
       <TableView fx:id="tableViewOrdemServicoCliente" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="75.0" text="Nº ORÇAMENTO" />
-          <TableColumn fx:id="tableColumnCodCliente" prefWidth="75.0" text="CLIENTE" />
-            <TableColumn fx:id="tableColumnDescServico" prefWidth="75.0" text="SERVIÇO SOLICITADO" />
-            <TableColumn fx:id="tableColumnDataOrdem" prefWidth="75.0" text="DATA DO ORÇAMENTO" />
-            <TableColumn fx:id="tableColumnDataInicio" prefWidth="75.0" text="DATA DE INÍCIO" />
-            <TableColumn fx:id="tableColumnPrazoEntrega" prefWidth="75.0" text="PRAZO DE ENTREGA" />
-            <TableColumn fx:id="tableColumnDataEntrega" prefWidth="75.0" text="DATA DA ENTREGA" />
-            <TableColumn fx:id="tableColumnStatusServico" prefWidth="75.0" text="STATUS DO SERVIÇO" />
-            <TableColumn fx:id="tableColumnValorTotal" prefWidth="75.0" text="VALOR TOTAL" />
-            <TableColumn fx:id="tableColumnFuncResponsavel" prefWidth="75.0" text="RESPONSÁVEL" />
-            <TableColumn fx:id="tableColumnObs" prefWidth="75.0" text="OBS" />
-            <TableColumn fx:id="tableColumnEditar" prefWidth="75.0" text="EDITAR" />
-            <TableColumn fx:id="tableColumnRemover" prefWidth="75.0" text="REMOVER" />
+          <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="100.0" text="Nº ORÇAMENTO" />
+          <TableColumn fx:id="tableColumnCodCliente" prefWidth="300.0" text="CLIENTE" />
+            <TableColumn fx:id="tableColumnDescServico" prefWidth="200.0" text="SERVIÇO SOLICITADO" />
+            <TableColumn fx:id="tableColumnDataOrdem" prefWidth="150.0" text="DATA DO ORÇAMENTO" />
+            <TableColumn fx:id="tableColumnDataInicio" prefWidth="150.0" text="DATA DE INÍCIO" />
+            <TableColumn fx:id="tableColumnPrazoEntrega" prefWidth="150.0" text="PRAZO DE ENTREGA" />
+            <TableColumn fx:id="tableColumnDataEntrega" prefWidth="150.0" text="DATA DA ENTREGA" />
+            <TableColumn fx:id="tableColumnStatusServico" prefWidth="150.0" text="STATUS DO SERVIÇO" />
+            <TableColumn fx:id="tableColumnValorTotal" prefWidth="120.0" text="VALOR TOTAL" />
+            <TableColumn fx:id="tableColumnFuncResponsavel" prefWidth="180.0" text="FUNCIONÁRIO RESPONSÁVEL" />
+            <TableColumn fx:id="tableColumnObs" prefWidth="150.0" text="OBSERVAÇÕES" />
+            <TableColumn fx:id="tableColumnEditar" prefWidth="90.0" />
+            <TableColumn fx:id="tableColumnRemover" prefWidth="90.0" />
         </columns>
       </TableView>
    </children>

@@ -40,7 +40,6 @@ import javafx.stage.Stage;
 import marcenaria.entities.Empresa;
 import marcenaria.entities.OrcamentoEmpresa;
 import marcenaria.entities.OrdemServicoEmpresa;
-import marcenaria.entities.Produto;
 
 public class OrcamentoEmpresaVisualizarController implements Initializable, DataChangeListener {
 
@@ -77,15 +76,6 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 
 	@FXML
 	private TableColumn<OrcamentoEmpresa, Date> tableColumnDataOrcamento;
-
-	@FXML
-	private TableColumn<Produto, Integer> tableColumnCodProduto;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Integer> tableColumnQuantidade;
-
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Double> tableColumnValor;
 
 	@FXML
 	private TableColumn<OrcamentoEmpresa, Double> tableColumnValorTotal;
@@ -188,9 +178,6 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 		tableColumnDescServico.setCellValueFactory(new PropertyValueFactory<>("descServico"));
 		tableColumnDataOrcamento.setCellValueFactory(new PropertyValueFactory<>("dataOrcamento"));
-		tableColumnCodProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
-		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-		tableColumnValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 		
@@ -199,6 +186,10 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrcamentoEmpresa.prefHeightProperty().bind(stage.heightProperty());
 		tableViewOrcamentoEmpresa.prefWidthProperty().bind(stage.widthProperty());
+		
+		Utils.formatTableColumnDate(tableColumnDataOrcamento, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+		
 	}
 
 	private void createCadastroOrcamentoEmpresaForm(OrcamentoEmpresa obj, Stage parentStage, String string) {

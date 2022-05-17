@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import Db.DbException;
-import application.Main;
 import entities.services.EmpresaService;
 import entities.services.OrcamentoEmpresaService;
 import entities.services.ProdutoService;
@@ -38,7 +37,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import marcenaria.entities.Empresa;
 import marcenaria.entities.OrcamentoEmpresa;
@@ -116,6 +114,18 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 	private TextField txtQuantidade;
 	@FXML
 	private Label erroQuantidade;
+	
+	@FXML
+	private TextField txtMaoDeObra;
+
+	@FXML
+	private TextField txtMetroQuad;
+	
+	@FXML
+	private Label erroSomaValores;
+
+	@FXML
+	private Button btCalcular;
 
 	@FXML
 	private TableColumn<ProdutoOrcamento, ProdutoOrcamento> tableColumnEditar;
@@ -245,13 +255,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 
 	@FXML
 	public List<OrcamentoEmpresa> onBtInserirAction() {
-		
-		Map<String, String> errors = ValidateExceptions();
-		
-			if(errors.size() > 0) {
-				Alerts.showAlert("Erro ao inserir produto", null, "Preencha os dados do empresa antes de inserir produtos no orçamento", AlertType.INFORMATION);
-			}
-			else {
+
 			double valorTotal = 0;
 			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
 			OrcamentoEmpresa orcamento = getOrcamentoEmpresaData();
@@ -264,16 +268,50 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 			orcamento.setValorTotal(valorTotal);
 			listaParaCadastro.add(orcamento);
 			
-			for (ProdutoOrcamento prod : prodOrcamento) {
-				double valorMoment = prod.getPrecoProd() * prod.getQuantidade();
-				valorTotal = valorTotal + valorMoment;
-			}
+			cbCodProduto.setValue(null);
+			txtQuantidade.setText("");
 			
-			txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
-			}
-		
 		return listaParaCadastro;
 	}
+	
+	@FXML
+	private void onBtCalcularAction() {
+
+		double valorTotal = 0;
+		double maoDeObra = 0;
+		double metroQuad = 0;
+		double valorFinal = 0;
+
+		for (ProdutoOrcamento prod : prodOrcamento) {
+			double valorMoment = prod.getPrecoProd() * prod.getQuantidade();
+			valorTotal = valorTotal + valorMoment;
+		}
+		valorFinal = valorTotal;
+
+		if (txtMaoDeObra.getText() == null || txtMaoDeObra.getText().trim().equals("")) {
+			
+		} else {
+			maoDeObra = Double.parseDouble(txtMaoDeObra.getText());
+			valorFinal = valorTotal * maoDeObra;
+		}
+
+		if (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) {
+
+		} else {
+			metroQuad = Double.parseDouble(txtMetroQuad.getText());
+			valorFinal = valorTotal + metroQuad;
+		}
+	
+		txtValorTotalOrcamento.setText("R$ " + String.valueOf(valorFinal));
+
+		for (OrcamentoEmpresa orcamento : listaParaCadastro) {
+			orcamento.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
+			orcamento.setValorMetroQuad(metroQuad);
+			orcamento.setValorObra(maoDeObra);
+		}
+
+	}
+	
 
 	private Map<String, String> ValidateExceptions() {
 		ValidationException exception = new ValidationException("Erro de validação");
@@ -292,7 +330,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		}
 
 		if (txtEmailEmpresa.getText() == null || txtEmailEmpresa.getText().trim().equals("")) {
-			exception.addError("Email", "Insira o e-mail do empresa");
+			exception.addError("Email", "Insira o e-mail do cliente");
 		}
 
 		if (txtDescricaoServico.getText() == null || txtDescricaoServico.getText().trim().equals("")) {
@@ -300,13 +338,12 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		}
 
 		if (cbCodEmpresa.getValue() == null) {
-			exception.addError("Empresa", "Escolha um empresa do seu cadastro");
+			exception.addError("Cliente", "Escolha um cliente do seu cadastro");
 		}
-		if (cbCodProduto.getValue() == null) {
-			exception.addError("Produto", "Escolha um produto");
-		}
-		if (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) {
-			exception.addError("Qtd", "Insira a quantidade");
+		
+		if(cbCodProduto.getValue() == null && (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) && 
+			(txtMaoDeObra.getText() == null || txtMaoDeObra.getText().trim().equals("")) && (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) ) {
+			exception.addError("valorOrcamento", "valorOrcamento" );
 		}
 
 		setErrorMessages(exception.getErrors());
@@ -331,7 +368,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 						"É necessário inserir todos os dados pendentes antes de cadastrar", AlertType.INFORMATION);
 			} else {
 				for (OrcamentoEmpresa empresa : listaParaInserir) {
-					empresa.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+					empresa.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 					orcamentoEmpresaService.saveOrUpdate(empresa);
 				}
 				notificarDataChangeListener();
@@ -428,13 +465,10 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		initRemoverButtons();
 		initializeTables();
 
-		Stage stage = (Stage) Main.getMainScene().getWindow();
-		tableViewOrcamentoEmpresa.prefHeightProperty().bind(stage.heightProperty());
-		tableViewOrcamentoEmpresa.prefWidthProperty().bind(stage.widthProperty());
-
-		gpInfoEmpresa.prefHeightProperty().bind(stage.heightProperty());
-		gpInfoEmpresa.prefWidthProperty().bind(stage.widthProperty());
-
+		erroSomaValores.setText("O orçamento deve ser calculado ou pelo valor do M² ou pela mão de obra, sendo este multiplicado pelo valor inserido. Ex: Mão de obra: 1.5");
+		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
+		
 	}
 
 	public void initializeTables() {
