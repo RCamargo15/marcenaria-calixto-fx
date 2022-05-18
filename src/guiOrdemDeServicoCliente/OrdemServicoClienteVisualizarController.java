@@ -96,6 +96,8 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 
 	ObservableList<OrdemServicoCliente> obsListOrdemServico;
 	ObservableList<OrdemServicoCliente> obsListBuscar;
+	
+	String dataPattern = "dd/MM/yyyy";
 
 	@FXML
 	public void onBtBuscarAction() {
@@ -125,7 +127,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 	public void updateTableViewOrdemClienteVisualizar() {
 		List<OrdemServicoCliente> list = ordemServicoClienteService.findAll();
 		obsListOrdemServico = FXCollections.observableArrayList(list);
-		tableViewOrdemServicoCliente.setItems(obsListOrdemServico);
+		tableViewOrdemServicoCliente.setItems(obsListOrdemServico);	
 	}
 
 	@Override
@@ -151,13 +153,17 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 		tableColumnDataEntrega.setCellValueFactory(new PropertyValueFactory<>("dataEntrega"));
 		tableColumnStatusServico.setCellValueFactory(new PropertyValueFactory<>("statusServico"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("funcResponsavel"));
+		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("registroFunc"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		Utils.formatTableColumnDate(tableColumnDataInicio, "dd/MM/yyyy");
-		Utils.formatTableColumnDate(tableColumnDataOrdem, "dd/MM/yyyy");
-		Utils.formatTableColumnDate(tableColumnPrazoEntrega, "dd/MM/yyyy");
+		Utils.formatTableColumnDate(tableColumnDataInicio, dataPattern);
+		Utils.formatTableColumnDate(tableColumnDataOrdem, dataPattern);
+		Utils.formatTableColumnDate(tableColumnPrazoEntrega, dataPattern);
 		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+		
+		if(tableColumnDataEntrega.hasProperties()) {
+			Utils.formatTableColumnDate(tableColumnDataEntrega, dataPattern);
+		}
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrdemServicoCliente.prefWidthProperty().bind(stage.widthProperty());

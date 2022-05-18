@@ -142,13 +142,19 @@
       </ToolBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
          <items>
-            <Button fx:id="btGerarOrcamento" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR" />
+            <Button fx:id="btGerarOrcamento" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Label>
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
          </items>
       </ToolBar>
    </children>

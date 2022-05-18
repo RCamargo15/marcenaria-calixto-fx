@@ -15,7 +15,7 @@ import marcenaria.dao.implementacao.OrdemServicoEmpresaDaoJDBC;
 import marcenaria.dao.implementacao.ProdutoDaoJDBC;
 import marcenaria.dao.implementacao.SaidaProdutoDaoJDBC;
 
-public class DaoFactory {
+public abstract class DaoFactory {
 
 	public static ClienteDao createClienteDao() {
 		return new ClienteDaoJDBC(Db.getConnection());

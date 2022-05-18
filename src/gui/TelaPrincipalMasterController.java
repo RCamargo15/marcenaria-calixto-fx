@@ -217,7 +217,6 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 		loadOrdemServicoClienteVisualizar("/guiOrdemDeServicoCliente/OrdemServicoClienteVisualizar.fxml", (OrdemServicoClienteVisualizarController controller) ->{
 			controller.setServices(new OrdemServicoClienteService(), new FuncionarioService(), new ClienteService());
 			controller.updateTableViewOrdemClienteVisualizar();
-			
 		});
 	}
 	

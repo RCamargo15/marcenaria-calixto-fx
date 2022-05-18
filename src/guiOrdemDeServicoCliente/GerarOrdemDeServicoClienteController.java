@@ -39,8 +39,6 @@ import model.exceptions.ValidationException;
 
 public class GerarOrdemDeServicoClienteController implements Initializable {
 
-	private OrcamentoCliente orcamentoCliente;
-	private OrdemServicoCliente ordemServicoCliente;
 	private OrdemServicoClienteService ordemServicoClienteService;
 	private ClienteService clienteService;
 	private FuncionarioService funcionarioService;
@@ -93,14 +91,6 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 
 	private ObservableList<String> statusList;
 
-	public void setOrcamentoCliente(OrcamentoCliente orcamentoCliente) {
-		this.orcamentoCliente = orcamentoCliente;
-	}
-
-	public void setOrdemServicoCliente(OrdemServicoCliente ordemServicoCliente) {
-		this.ordemServicoCliente = ordemServicoCliente;
-	}
-
 	public void setServicos(OrdemServicoClienteService ordemServicoClienteService, ClienteService clienteService,
 			FuncionarioService funcionarioService) {
 		this.ordemServicoClienteService = ordemServicoClienteService;
@@ -118,7 +108,7 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		}
 	}
 
-	public void receberDadosParaCriarOS() {
+	public void receberDadosParaCriarOS(OrcamentoCliente orcamentoCliente) {
 		if (orcamentoCliente == null) {
 			throw new IllegalStateException("Orcamento inexistente");
 		}
@@ -132,6 +122,11 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		txtDescServico.setText(orcamentoCliente.getDescServico());
 		txtObs.setText(orcamentoCliente.getObs());
 		txtValorTotalOrcamento.setText("R$ " + String.valueOf(orcamentoCliente.getValorTotal()));
+		
+		List<Cliente> list = new ArrayList<>();
+		list.add(orcamentoCliente.getCodCliente());
+		cbListCliente = FXCollections.observableArrayList(list);
+		cbCliente.setItems(cbListCliente);
 
 	}
 
@@ -163,7 +158,8 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 
 		obj.setStatusServico(statusServico.getValue());
 		obj.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
-		obj.setFuncResponsavel(cbFuncionarioResp.getValue());
+		Funcionario func = funcionarioService.findByCodFuncionario(cbFuncionarioResp.getValue().getRegistroFunc());
+		obj.setRegistroFunc(func);
 		obj.setObs(txtObs.getText());
 
 		return obj;
@@ -207,7 +203,7 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 			if (errors.size() > 0) {
 				setErrorMessages(errors);
 			} else {
-				ordemServicoCliente = getOrdemServicoClienteData();
+				OrdemServicoCliente ordemServicoCliente = getOrdemServicoClienteData();
 				ordemServicoClienteService.saveOrUpdate(ordemServicoCliente);
 				notificarDataChangeListener();
 				Utils.currentStage(event).close();
@@ -227,18 +223,6 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
 		Utils.formatDatePicker(dpPrazoEntrega, "dd/MM/yyyy");
 
-	}
-
-	// ORCAMENTO
-	public void loadClienteOrcamento() {
-		if (clienteService == null) {
-			throw new IllegalStateException("Cliente service null");
-		}
-
-		List<Cliente> list = new ArrayList<>();
-		list.add(orcamentoCliente.getCodCliente());
-		cbListCliente = FXCollections.observableArrayList(list);
-		cbCliente.setItems(cbListCliente);
 	}
 
 	public void loadFuncionariosOrcamento() {

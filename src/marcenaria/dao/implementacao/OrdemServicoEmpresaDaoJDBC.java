@@ -306,7 +306,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 					empresaMap.put(rs.getInt("COD_EMPRESA"), empresa);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt("FUNC_RESPONSAVEL"));
+				Funcionario funcionario = funcionarioMap.get(rs.getInt("REGISTRO_FUNC"));
 				if (funcionario == null) {
 					funcionario = criarFuncionario(rs);
 					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);

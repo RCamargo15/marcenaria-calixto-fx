@@ -17,7 +17,7 @@ public class OrdemServicoCliente implements Serializable {
 	private Date dataEntrega;
 	private String statusServico;
 	private Double valorTotal;
-	private Funcionario funcResponsavel;
+	private Funcionario registroFunc;
 	private String obs;
 
 	public OrdemServicoCliente() {
@@ -25,7 +25,7 @@ public class OrdemServicoCliente implements Serializable {
 	}
 
 	public OrdemServicoCliente(Integer numeroPedido, Cliente codCliente, String descServico, Date dataOrdem,  Date dataInicio, Date prazoEntrega, String statusServico, Double valorTotal,
-			Funcionario funcResponsavel, String obs) {
+			Funcionario registroFunc, String obs) {
 		this.numeroPedido = numeroPedido;
 		this.codCliente = codCliente;
 		this.descServico = descServico;
@@ -34,7 +34,7 @@ public class OrdemServicoCliente implements Serializable {
 		this.prazoEntrega = prazoEntrega;
 		this.statusServico = statusServico;
 		this.valorTotal = valorTotal;
-		this.funcResponsavel = funcResponsavel;
+		this.registroFunc = registroFunc;
 		this.obs = obs;
 	}
 
@@ -118,12 +118,12 @@ public class OrdemServicoCliente implements Serializable {
 		this.valorTotal = valorTotal;
 	}
 
-	public Funcionario getFuncResponsavel() {
-		return funcResponsavel;
+	public Funcionario getRegistroFunc() {
+		return registroFunc;
 	}
 
-	public void setFuncResponsavel(Funcionario funcResponsavel) {
-		this.funcResponsavel = funcResponsavel;
+	public void setRegistroFunc(Funcionario registroFunc) {
+		this.registroFunc = registroFunc;
 	}
 
 	public String getObs() {
@@ -157,7 +157,7 @@ public class OrdemServicoCliente implements Serializable {
 		return "OrdemServicoCliente [id=" + id + ", numeroPedido=" + numeroPedido + ", codCliente=" + codCliente
 				+ ", descServico=" + descServico + ", dataOrdem=" + dataOrdem + ", dataInicio=" + dataInicio
 				+ ", prazoEntrega=" + prazoEntrega + ", dataEntrega=" + dataEntrega + ", statusServico=" + statusServico
-				+ ", valorTotal=" + valorTotal + ", funcResponsavel=" + funcResponsavel + ", obs=" + obs + "]";
+				+ ", valorTotal=" + valorTotal + ", registroFunc=" + registroFunc + ", obs=" + obs + "]";
 	}
 
 }
