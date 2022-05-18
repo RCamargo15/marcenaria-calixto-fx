@@ -341,20 +341,10 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 		gpInfoEmpresa.prefHeightProperty().bind(stage.heightProperty());
 		gpInfoEmpresa.prefWidthProperty().bind(stage.widthProperty());
 		
-		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-		tableColumnNumOrcamento.setCellValueFactory(new PropertyValueFactory<>("numOrcamento"));
-		tableColumnCodEmpresa.setCellValueFactory(new PropertyValueFactory<>("codEmpresa"));
-		tableColumnNomeResponsavel.setCellValueFactory(new PropertyValueFactory<>("nomeResponsavel"));
-		tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-		tableColumnCelular.setCellValueFactory(new PropertyValueFactory<>("celular"));
-		tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-		tableColumnDescServico.setCellValueFactory(new PropertyValueFactory<>("descServico"));
-		tableColumnDataOrcamento.setCellValueFactory(new PropertyValueFactory<>("dataOrcamento"));
 		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valor"));
-		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
+		
 	}
 	
 	private void createEditarProdutoOrcamentoForm(OrcamentoEmpresa obj, Stage parentStage, String absoluteName) {

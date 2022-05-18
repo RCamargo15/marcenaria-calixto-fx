@@ -2,6 +2,8 @@ package guiOrdemDeServicoEmpresa;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +79,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 	private TableColumn<OrdemServicoEmpresa, Double> tableColumnValorTotal;
 
 	@FXML
-	private TableColumn<Funcionario, String> tableColumnFuncResponsavel;
+	private TableColumn<Funcionario, Integer> tableColumnFuncResponsavel;
 
 	@FXML
 	private TableColumn<OrdemServicoEmpresa, String> tableColumnObs;
@@ -151,7 +153,6 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 		tableColumnDataOrdem.setCellValueFactory(new PropertyValueFactory<>("dataOrdem"));
 		tableColumnDataInicio.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
 		tableColumnPrazoEntrega.setCellValueFactory(new PropertyValueFactory<>("prazoEntrega"));
-		tableColumnDataEntrega.setCellValueFactory(new PropertyValueFactory<>("dataEntrega"));
 		tableColumnStatusServico.setCellValueFactory(new PropertyValueFactory<>("statusServico"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("funcResponsavel"));
@@ -166,6 +167,23 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 		Utils.formatTableColumnDate(tableColumnDataOrdem, "dd/MM/yyyy");
 		Utils.formatTableColumnDate(tableColumnPrazoEntrega, "dd/MM/yyyy");
 		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+		
+		tableColumnDataEntrega.setCellValueFactory(new PropertyValueFactory<>("dataEntrega"));
+		tableColumnDataEntrega.setCellFactory(coluna -> {
+		    return new TableCell<OrdemServicoEmpresa, Date>(){
+		        @Override
+		        protected void updateItem(Date item, boolean empty) {
+		            super.updateItem(item, empty);
+		            if(item != null && !empty) {
+		                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		                 String dataFormatada = dateFormat.format(item);
+		                setText(dataFormatada);
+		            } else {
+		                setText("");
+		            }
+		        }
+		    };
+		 });
 	}
 
 	private void createEditarOrdemServicoEmpresaForm(OrdemServicoEmpresa obj, Stage parentStage, String absoluteName) {

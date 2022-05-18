@@ -2,6 +2,8 @@ package guiOrdemDeServicoCliente;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -150,7 +152,6 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 		tableColumnDataOrdem.setCellValueFactory(new PropertyValueFactory<>("dataOrdem"));
 		tableColumnDataInicio.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
 		tableColumnPrazoEntrega.setCellValueFactory(new PropertyValueFactory<>("prazoEntrega"));
-		tableColumnDataEntrega.setCellValueFactory(new PropertyValueFactory<>("dataEntrega"));
 		tableColumnStatusServico.setCellValueFactory(new PropertyValueFactory<>("statusServico"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("registroFunc"));
@@ -168,6 +169,23 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrdemServicoCliente.prefWidthProperty().bind(stage.widthProperty());
 		tableViewOrdemServicoCliente.prefHeightProperty().bind(stage.heightProperty());
+		
+		tableColumnDataEntrega.setCellValueFactory(new PropertyValueFactory<>("dataEntrega"));
+		tableColumnDataEntrega.setCellFactory(coluna -> {
+		    return new TableCell<OrdemServicoCliente, Date>(){
+		        @Override
+		        protected void updateItem(Date item, boolean empty) {
+		            super.updateItem(item, empty);
+		            if(item != null && !empty) {
+		                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		                 String dataFormatada = dateFormat.format(item);
+		                setText(dataFormatada);
+		            } else {
+		                setText("");
+		            }
+		        }
+		    };
+		 });
 	}
 
 	private void createEditarOrdemServicoClienteForm(OrdemServicoCliente obj, Stage parentStage, String absoluteName) {

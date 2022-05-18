@@ -39,7 +39,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Empresa;
 import marcenaria.entities.OrcamentoEmpresa;
-import marcenaria.entities.OrdemServicoEmpresa;
 
 public class OrcamentoEmpresaVisualizarController implements Initializable, DataChangeListener {
 
@@ -251,13 +250,10 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 			VBox vBox = loader.load();
 			
 			GerarOrdemDeServicoEmpresaController controller = loader.getController();
-			controller.setOrcamentoEmpresa(obj);
-			controller.setOrdemServicoEmpresa(new OrdemServicoEmpresa());
 			controller.setServicos(new OrdemServicoEmpresaService(), empresaService, new FuncionarioService());
-			controller.loadEmpresaOrcamento();
 			controller.loadFuncionariosOrcamento();
 			controller.loadStatusServico();
-			controller.receberDadosParaCriarOS();
+			controller.receberDadosParaCriarOS(obj);
 			
 			Stage stage = new Stage();
 			stage.setTitle("Gerar ordem de serviço");

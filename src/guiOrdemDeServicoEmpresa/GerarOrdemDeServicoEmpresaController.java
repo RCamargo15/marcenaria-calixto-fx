@@ -39,8 +39,6 @@ import model.exceptions.ValidationException;
 
 public class GerarOrdemDeServicoEmpresaController implements Initializable {
 
-	private OrcamentoEmpresa orcamentoEmpresa;
-	private OrdemServicoEmpresa ordemServicoEmpresa;
 	private OrdemServicoEmpresaService ordemServicoEmpresaService;
 	private EmpresaService empresaService;
 	private FuncionarioService funcionarioService;
@@ -96,14 +94,6 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 
 	private ObservableList<String> statusList;
 
-	public void setOrcamentoEmpresa(OrcamentoEmpresa orcamentoEmpresa) {
-		this.orcamentoEmpresa = orcamentoEmpresa;
-	}
-
-	public void setOrdemServicoEmpresa(OrdemServicoEmpresa ordemServicoEmpresa) {
-		this.ordemServicoEmpresa = ordemServicoEmpresa;
-	}
-
 	public void setServicos(OrdemServicoEmpresaService ordemServicoEmpresaService, EmpresaService empresaService,
 			FuncionarioService funcionarioService) {
 		this.ordemServicoEmpresaService = ordemServicoEmpresaService;
@@ -121,7 +111,7 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 		}
 	}
 
-	public void receberDadosParaCriarOS() {
+	public void receberDadosParaCriarOS(OrcamentoEmpresa orcamentoEmpresa) {
 		if (orcamentoEmpresa == null) {
 			throw new IllegalStateException("Orcamento inexistente");
 		}
@@ -137,6 +127,11 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 		txtObs.setText(orcamentoEmpresa.getObs());
 		txtValorTotalOrcamento.setText(String.valueOf("R$ " + orcamentoEmpresa.getValorTotal()));
 
+		
+		List<Empresa> list = new ArrayList<>();
+		list.add(orcamentoEmpresa.getCodEmpresa());
+		cbListEmpresa = FXCollections.observableArrayList(list);
+		cbEmpresa.setItems(cbListEmpresa);
 	}
 
 	public OrdemServicoEmpresa getOrdemServicoEmpresaData() {
@@ -210,7 +205,7 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 			if (errors.size() > 0) {
 				setErrorMessages(errors);
 			} else {
-				ordemServicoEmpresa = getOrdemServicoEmpresaData();
+				OrdemServicoEmpresa ordemServicoEmpresa = getOrdemServicoEmpresaData();
 				ordemServicoEmpresaService.saveOrUpdate(ordemServicoEmpresa);
 				System.out.println("Cadastrado");
 				notificarDataChangeListener();
@@ -230,18 +225,6 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 		Utils.formatDatePicker(dpDataInicio, "dd/MM/yyyy");
 		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
 		Utils.formatDatePicker(dpPrazoEntrega, "dd/MM/yyyy");
-	}
-
-	// ORCAMENTO
-	public void loadEmpresaOrcamento() {
-		if (empresaService == null) {
-			throw new IllegalStateException("Empresa service null");
-		}
-
-		List<Empresa> list = new ArrayList<>();
-		list.add(orcamentoEmpresa.getCodEmpresa());
-		cbListEmpresa = FXCollections.observableArrayList(list);
-		cbEmpresa.setItems(cbListEmpresa);
 	}
 
 	public void loadFuncionariosOrcamento() {
