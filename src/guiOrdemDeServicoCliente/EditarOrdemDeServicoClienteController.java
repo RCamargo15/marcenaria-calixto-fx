@@ -97,6 +97,8 @@ public class EditarOrdemDeServicoClienteController implements Initializable {
 	private ObservableList<Funcionario> cbListFuncionario;
 
 	private ObservableList<String> statusList;
+	
+	String dataPattern = "dd/MM/yyyy";
 
 	public void setOrcamentoCliente(OrcamentoCliente orcamentoCliente) {
 		this.orcamentoCliente = orcamentoCliente;
@@ -149,7 +151,7 @@ public class EditarOrdemDeServicoClienteController implements Initializable {
 		}
 
 		statusServico.setValue(ordemServicoCliente.getStatusServico());
-		txtValorTotalOrcamento.setText(String.valueOf(ordemServicoCliente.getValorTotal()));
+		txtValorTotalOrcamento.setText("R$ "+String.valueOf(ordemServicoCliente.getValorTotal()));
 		cbFuncionarioResp.setValue(ordemServicoCliente.getRegistroFunc());
 		txtObs.setText(ordemServicoCliente.getObs());
 	}
@@ -187,7 +189,7 @@ public class EditarOrdemDeServicoClienteController implements Initializable {
 		}
 
 		obj.setStatusServico(statusServico.getValue());
-		obj.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+		obj.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 		obj.setRegistroFunc(cbFuncionarioResp.getValue());
 		obj.setObs(txtObs.getText());
 
@@ -211,7 +213,6 @@ public class EditarOrdemDeServicoClienteController implements Initializable {
 								new ClienteService());
 						controller.updateTableViewOrdemClienteVisualizar();
 					});
-			Utils.currentStage(event).close();
 
 		} catch (DbException e) {
 			e.getMessage();
@@ -223,6 +224,11 @@ public class EditarOrdemDeServicoClienteController implements Initializable {
 		initializeComboBoxCliente();
 		initializeComboBoxFuncionario();
 		initializeComboBoxStatus();
+		
+		Utils.formatDatePicker(dpDataEntrega, dataPattern);
+		Utils.formatDatePicker(dpDataInicio, dataPattern);
+		Utils.formatDatePicker(dpDataOrcamento, dataPattern);
+		Utils.formatDatePicker(dpPrazoEntrega, dataPattern);
 	}
 
 	// ORCAMENTO

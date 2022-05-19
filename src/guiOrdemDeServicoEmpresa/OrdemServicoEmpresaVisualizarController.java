@@ -155,7 +155,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 		tableColumnPrazoEntrega.setCellValueFactory(new PropertyValueFactory<>("prazoEntrega"));
 		tableColumnStatusServico.setCellValueFactory(new PropertyValueFactory<>("statusServico"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
-		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("funcResponsavel"));
+		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("registroFunc"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
@@ -201,7 +201,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 			controller.subscribeDataChangeListener(this);
 
 			Stage stage = new Stage();
-			stage.setTitle("Gerar ordem de serviço");
+			stage.setTitle("Editar ordem de serviço");
 			stage.setScene(new Scene(vBox));
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);

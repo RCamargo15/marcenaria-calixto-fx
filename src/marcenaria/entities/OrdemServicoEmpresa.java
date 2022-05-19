@@ -18,7 +18,7 @@ public class OrdemServicoEmpresa implements Serializable {
 	private Date dataEntrega;
 	private String statusServico;
 	private Double valorTotal;
-	private Funcionario funcResponsavel;
+	private Funcionario registroFunc;
 	private String obs;
 
 	public OrdemServicoEmpresa() {
@@ -27,7 +27,7 @@ public class OrdemServicoEmpresa implements Serializable {
 
 	public OrdemServicoEmpresa(Integer id, Integer numeroPedido, Empresa codEmpresa, String nomeResponsavel,
 			String descServico, Date dataOrdem, Date dataInicio, Date prazoEntrega, 
-			String statusServico, Double valorTotal, Funcionario funcResponsavel, String obs) {
+			String statusServico, Double valorTotal, Funcionario registroFunc, String obs) {
 		;
 		this.numeroPedido = numeroPedido;
 		this.codEmpresa = codEmpresa;
@@ -38,7 +38,7 @@ public class OrdemServicoEmpresa implements Serializable {
 		this.prazoEntrega = prazoEntrega;
 		this.statusServico = statusServico;
 		this.valorTotal = valorTotal;
-		this.funcResponsavel = funcResponsavel;
+		this.registroFunc = registroFunc;
 		this.obs = obs;
 	}
 
@@ -130,12 +130,12 @@ public class OrdemServicoEmpresa implements Serializable {
 		this.valorTotal = valorTotal;
 	}
 
-	public Funcionario getFuncResponsavel() {
-		return funcResponsavel;
+	public Funcionario getRegistroFunc() {
+		return registroFunc;
 	}
 
-	public void setFuncResponsavel(Funcionario funcResponsavel) {
-		this.funcResponsavel = funcResponsavel;
+	public void setRegistroFunc(Funcionario registroFunc) {
+		this.registroFunc = registroFunc;
 	}
 
 	public String getObs() {
@@ -148,7 +148,7 @@ public class OrdemServicoEmpresa implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codEmpresa, funcResponsavel, id, nomeResponsavel, numeroPedido);
+		return Objects.hash(codEmpresa, registroFunc, id, nomeResponsavel, numeroPedido);
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class OrdemServicoEmpresa implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		OrdemServicoEmpresa other = (OrdemServicoEmpresa) obj;
-		return Objects.equals(codEmpresa, other.codEmpresa) && Objects.equals(funcResponsavel, other.funcResponsavel)
+		return Objects.equals(codEmpresa, other.codEmpresa) && Objects.equals(registroFunc, other.registroFunc)
 				&& Objects.equals(id, other.id) && Objects.equals(nomeResponsavel, other.nomeResponsavel)
 				&& Objects.equals(numeroPedido, other.numeroPedido);
 	}
@@ -170,8 +170,8 @@ public class OrdemServicoEmpresa implements Serializable {
 		return "OrdemServicoEmpresa [id=" + id + ", numeroPedido=" + numeroPedido + ", codEmpresa=" + codEmpresa
 				+ ", nomeResponsavel=" + nomeResponsavel + ", descServico=" + descServico + ", dataOrdem=" + dataOrdem
 				+ ", dataInicio=" + dataInicio + ", prazoEntrega=" + prazoEntrega + ", dataEntrega=" + dataEntrega
-				+ ", statusServico=" + statusServico + ", valorTotal=" + valorTotal + ", funcResponsavel="
-				+ funcResponsavel + ", obs=" + obs + "]";
+				+ ", statusServico=" + statusServico + ", valorTotal=" + valorTotal + ", registroFunc="
+				+ registroFunc + ", obs=" + obs + "]";
 	}
 
 }

@@ -162,7 +162,7 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 		obj.setDataEntrega(null);
 		obj.setStatusServico(statusServico.getValue());
 		obj.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
-		obj.setFuncResponsavel(cbFuncionarioResp.getValue());
+		obj.setRegistroFunc(cbFuncionarioResp.getValue());
 		obj.setObs(txtObs.getText());
 
 		return obj;

@@ -96,7 +96,6 @@
                </font>
             </Label>
             <DatePicker fx:id="dpDataOrcamento" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-            <TextField fx:id="txtId" GridPane.columnIndex="3" />
             <Label text="Nº ORÇAMENTO">
                <font>
                   <Font name="System Bold" size="14.0" />

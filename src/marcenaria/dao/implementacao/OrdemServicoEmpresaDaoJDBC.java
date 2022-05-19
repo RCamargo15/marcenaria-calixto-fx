@@ -30,7 +30,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO MARCENARIA.ORDEM_SERVICO_EMPRESA(NUM_PEDIDO, COD_EMPRESA, NOME_RESPONSAVEL, DESC_SERVICO, DATA_ORDEM, DATA_INICIO, PRAZO_ENTREGA, DATA_ENTREGA, STATUS_SERVICO, VALOR_TOTAL, FUNC_RESPONSAVEL, OBS) "
+					"INSERT INTO MARCENARIA.ORDEM_SERVICO_EMPRESA(NUM_PEDIDO, COD_EMPRESA, NOME_RESPONSAVEL, DESC_SERVICO, DATA_ORDEM, DATA_INICIO, PRAZO_ENTREGA, DATA_ENTREGA, STATUS_SERVICO, VALOR_TOTAL, REGISTRO_FUNC, OBS) "
 							+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
@@ -58,7 +58,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 			}
 			st.setString(9, obj.getStatusServico().toUpperCase());
 			st.setDouble(10, obj.getValorTotal());
-			st.setInt(11, obj.getFuncResponsavel().getRegistroFunc());
+			st.setInt(11, obj.getRegistroFunc().getRegistroFunc());
 			st.setString(12, obj.getObs());
 			if (obj.getObs() != null) {
 				st.setString(12, obj.getObs().toUpperCase());
@@ -88,8 +88,8 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("UPDATE MARCENARIA.ORDEM_SERVICO_EMPRESA "
-					+ "SET NUM_PEDIDO = ?, COD_EMPRESA = ?, NOME_RESPONSAVEL = ?, DESC_SERVICO = ?, DATA_ORDEM = ?, DATA_INICIO = ?, PRAZO_ENTREGA = ?, DATA_ENTREGA = ?, STATUS_SERVICO = ?, VALOR_TOTAL = ?, FUNC_RESPONSAVEL = ?, OBS = ? "
-					+ "WHERE NUM_PEDIDO = ?");
+					+ "SET NUM_PEDIDO = ?, COD_EMPRESA = ?, NOME_RESPONSAVEL = ?, DESC_SERVICO = ?, DATA_ORDEM = ?, DATA_INICIO = ?, PRAZO_ENTREGA = ?, DATA_ENTREGA = ?, STATUS_SERVICO = ?, VALOR_TOTAL = ?, REGISTRO_FUNC = ?, OBS = ? "
+					+ "WHERE ORDEM_SERVICO_EMPRESA.ID = ?");
 
 			st.setInt(1, obj.getNumeroPedido());
 			st.setInt(2, obj.getCodEmpresa().getCodEmpresa());
@@ -115,7 +115,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 			}
 			st.setString(9, obj.getStatusServico().toUpperCase());
 			st.setDouble(10, obj.getValorTotal());
-			st.setInt(11, obj.getFuncResponsavel().getRegistroFunc());
+			st.setInt(11, obj.getRegistroFunc().getRegistroFunc());
 			st.setString(12, obj.getObs());
 			if (obj.getObs() != null) {
 				st.setString(12, obj.getObs().toUpperCase());
@@ -154,7 +154,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORDEM_SERVICO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORDEM_SERVICO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_EMPRESA.FUNC_RESPONSAVEL "
+					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_EMPRESA.REGISTRO_FUNC "
 					+ " WHERE NUM_PEDIDO = ? GROUP BY ORDEM_SERVICO_EMPRESA.NUM_PEDIDO ORDER BY NUM_PEDIDO");
 
 			st.setInt(1, numPedido);
@@ -172,7 +172,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 					empresaMap.put(rs.getInt("COD_EMPRESA"), empresa);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt("FUNC_RESPONSAVEL"));
+				Funcionario funcionario = funcionarioMap.get(rs.getInt("REGISTRO_FUNC"));
 				if (funcionario == null) {
 					funcionario = criarFuncionario(rs);
 					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);
@@ -198,7 +198,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORDEM_SERVICO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORDEM_SERVICO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_EMPRESA.FUNC_RESPONSAVEL "
+					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_EMPRESA.REGISTRO_FUNC "
 					+ "WHERE ORDEM_SERVICO_EMPRESA.COD_EMPRESA = ? GROUP BY ORDEM_SERVICO_EMPRESA.NUM_PEDIDO ORDER BY NUM_PEDIDO");
 
 			st.setInt(1, codEmpresa);
@@ -216,7 +216,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 					empresaMap.put(rs.getInt("COD_EMPRESA"), empresa);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt("FUNC_RESPONSAVEL"));
+				Funcionario funcionario = funcionarioMap.get(rs.getInt("REGISTRO_FUNC"));
 				if (funcionario == null) {
 					funcionario = criarFuncionario(rs);
 					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);
@@ -245,7 +245,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORDEM_SERVICO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORDEM_SERVICO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_CLIENTE.FUNC_RESPONSAVEL "
+					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_CLIENTE.REGISTRO_FUNC "
 					+ "WHERE STATUS_SERVICO = ? GROUP BY ORDEM_SERVICO_EMPRESA.NUM_PEDIDO ORDER BY NUM_PEDIDO");
 
 			st.setString(1, status);
@@ -263,7 +263,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 					empresaMap.put(rs.getInt("COD_EMPRESA"), empresa);
 				}
 
-				Funcionario funcionario = funcionarioMap.get(rs.getInt("FUNC_RESPONSAVEL"));
+				Funcionario funcionario = funcionarioMap.get(rs.getInt("REGISTRO_FUNC"));
 				if (funcionario == null) {
 					funcionario = criarFuncionario(rs);
 					funcionarioMap.put(rs.getInt("REGISTRO_FUNC"), funcionario);
@@ -290,7 +290,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORDEM_SERVICO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORDEM_SERVICO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_EMPRESA.FUNC_RESPONSAVEL GROUP BY ORDEM_SERVICO_EMPRESA.NUM_PEDIDO ORDER BY NUM_PEDIDO");
+					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = ORDEM_SERVICO_EMPRESA.REGISTRO_FUNC");
 
 			rs = st.executeQuery();
 
@@ -346,7 +346,7 @@ public class OrdemServicoEmpresaDaoJDBC implements OrdemServicoEmpresaDao {
 		}
 		obj.setStatusServico(rs.getString("STATUS_SERVICO"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
-		obj.setFuncResponsavel(funcionario);
+		obj.setRegistroFunc(funcionario);
 		obj.setObs(rs.getString("OBS"));
 
 		return obj;

@@ -31,9 +31,15 @@
             </ToolBar>
             <ToolBar prefHeight="70.0" prefWidth="336.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/OrdemServicoEmpresa/ordemServicoEmpresa.css">
                <items>
-                  <Button fx:id="btMostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodosAction" text="Mostrar todos " />
+                  <Button fx:id="btMostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodosAction" text="Mostrar todos ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                   <TextField fx:id="txtBuscarCodOrdem" />
-                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscarAction" text="Buscar" />
+                  <Button fx:id="btBuscar" mnemonicParsing="false" onAction="#onBtBuscarAction" text="Buscar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                </items>
             </ToolBar>
          </items>
