@@ -62,8 +62,9 @@
             <TableColumn fx:id="tableColumnValorTotal" text="VALOR TOTAL" />
             <TableColumn fx:id="tableColumnObs" prefWidth="300.0" text="OBS" />
             <TableColumn fx:id="tableColumnEditar" prefWidth="120.0" />
-            <TableColumn fx:id="tableColumnRemover" />
+            <TableColumn fx:id="tableColumnOrcamentoEmPDF" prefWidth="100.0" />
             <TableColumn fx:id="tableColumnGerarOS" prefWidth="180.0" />
+            <TableColumn fx:id="tableColumnRemover" />
         </columns>
       </TableView>
    </children>

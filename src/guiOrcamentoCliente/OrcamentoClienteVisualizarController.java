@@ -1,11 +1,16 @@
 package guiOrcamentoCliente;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import Db.DbException;
 import application.Main;
@@ -87,6 +92,9 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 
 	@FXML
 	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnRemover;
+	
+	@FXML
+	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnOrcamentoEmPDF;
 
 	@FXML
 	private TextField searchByCod;
@@ -163,6 +171,10 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initializeNodes();
+		initEditButtons();
+		initRemoveButtons();
+		initGerarOrcamentoButtons();
+		initOrcamentoPDFButtons();
 	}
 
 	private void initializeNodes() {
@@ -284,6 +296,23 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		});
 	}
 	
+	@FXML
+	private void onBtGerarPDFaction() {
+		try {
+	        PDDocument pDDocument = PDDocument.load(new File("F:/Users/rafae/Desktop/TestePDF/TestePDF.pdf"));
+	        PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
+	        PDField field = pDAcroForm.getField("txt_1");
+	        field.setValue("This is a first field printed by Java");
+	        field = pDAcroForm.getField("txt_2");
+	        field.setValue("This is a second field printed by Java");
+	        pDDocument.save("F:/Users/rafae/Desktop/TestePDF/TestePDFOutput.pdf");
+	        pDDocument.close();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
@@ -335,5 +364,23 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
 				}
 			}
+	}
+	
+	private void initOrcamentoPDFButtons() {
+		tableColumnOrcamentoEmPDF.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnOrcamentoEmPDF.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
+			private final Button button = new Button("Gerar PDF");
+
+			@Override
+			protected void updateItem(OrcamentoCliente obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction( e -> onBtGerarPDFaction());
+			}
+		});
 	}
 }

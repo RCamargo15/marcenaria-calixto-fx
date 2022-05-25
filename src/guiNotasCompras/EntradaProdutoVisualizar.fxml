@@ -32,7 +32,7 @@
                   </Label>
               </items>
             </ToolBar>
-            <ToolBar prefHeight="70.0" prefWidth="624.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/entradaProduto/entradaProduto.css">
+            <ToolBar prefHeight="70.0" prefWidth="629.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/entradaProduto/entradaProduto.css">
               <items>
                   <Button fx:id="btRetornarAsNotasFiscais" mnemonicParsing="false" onAction="#onBtRetornarAsNotasFiscaisAction" text="Retornar para notas fiscais">
                      <font>
