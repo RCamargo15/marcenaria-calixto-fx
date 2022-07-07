@@ -65,7 +65,7 @@
             <TableColumn fx:id="tableColumnChaveNF" prefWidth="300.0" text="CHAVE NF" />
             <TableColumn fx:id="tableColumnDataEmissao" prefWidth="120.0" text="DATA DE EMISSÃO" />
             <TableColumn fx:id="tableColumnDataEntrada" prefWidth="120.0" text="DATA DE ENTRADA" />
-            <TableColumn fx:id="tableColumnObs" prefWidth="120.0" text="OBS" />
+            <TableColumn fx:id="tableColumnObs" prefWidth="180.0" text="OBSERVAÇÕES" />
             <TableColumn fx:id="tableColumnEditar" prefWidth="75.0" />
             <TableColumn fx:id="tableColumnRemover" prefWidth="75.0" />
         </columns>

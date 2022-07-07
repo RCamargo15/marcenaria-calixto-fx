@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="463.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrdemDeServicoEmpresa.OrdemServicoEmpresaVisualizarController">
+<VBox prefHeight="463.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiOrdemDeServicoEmpresa.OrdemServicoEmpresaVisualizarController">
    <children>
       <ToolBar prefHeight="90.0" prefWidth="823.0" styleClass="toolBarCliente" stylesheets="@../gui.styles/OrdemServicoEmpresa/ordemServicoEmpresa.css">
          <items>
@@ -29,7 +29,7 @@
                   </Label>
                </items>
             </ToolBar>
-            <ToolBar prefHeight="70.0" prefWidth="336.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/OrdemServicoEmpresa/ordemServicoEmpresa.css">
+            <ToolBar prefHeight="70.0" prefWidth="350.0" styleClass="toolBarTopo" stylesheets="@../gui.styles/OrdemServicoEmpresa/ordemServicoEmpresa.css">
                <items>
                   <Button fx:id="btMostrarTodos" mnemonicParsing="false" onAction="#onBtMostrarTodosAction" text="Mostrar todos ">
                      <font>

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javax.swing.JFileChooser;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
@@ -40,6 +42,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Cliente;
@@ -50,10 +53,10 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	private OrcamentoClienteService orcamentoClienteService;
 	private ClienteService clienteService;
 	private ProdutoService produtoService;
-	
+
 	@FXML
 	private TableView<OrcamentoCliente> tableViewOrcamentoCliente;
-	
+
 	@FXML
 	private TableColumn<OrcamentoCliente, Integer> tableColumnId;
 
@@ -86,13 +89,13 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 
 	@FXML
 	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnEditar;
-	
+
 	@FXML
 	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnGerarOS;
 
 	@FXML
 	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnRemover;
-	
+
 	@FXML
 	private TableColumn<OrcamentoCliente, OrcamentoCliente> tableColumnOrcamentoEmPDF;
 
@@ -122,7 +125,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		Stage parentStage = Utils.currentStage(event);
 		OrcamentoCliente obj = new OrcamentoCliente();
 		createCadastroOrcamentoClienteForm(obj, parentStage, "/guiOrcamentoCliente/GerarNovoOrcamentoCliente.fxml");
-		
+
 	}
 
 	@FXML
@@ -187,13 +190,13 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		tableColumnDataOrcamento.setCellValueFactory(new PropertyValueFactory<>("dataOrcamento"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
-		
+
 		searchByCod.setPromptText("Insira código busca");
-		
+
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrcamentoCliente.prefHeightProperty().bind(stage.heightProperty());
 		tableViewOrcamentoCliente.prefWidthProperty().bind(stage.widthProperty());
-		
+
 		Utils.formatTableColumnDate(tableColumnDataOrcamento, "dd/MM/yyyy");
 		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
 	}
@@ -202,14 +205,14 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(string));
 			VBox vBox = loader.load();
-			
+
 			GerarNovoOrcamentoClienteController orcamentoController = loader.getController();
 			orcamentoController.setOrcamentoCliente(obj);
 			orcamentoController.setServices(orcamentoClienteService, clienteService, produtoService);
 			orcamentoController.loadClientes();
 			orcamentoController.loadProdutos();
 			orcamentoController.subscribeDataChangeListener(this);
-			
+
 			Stage orcamentoClienteStage = new Stage();
 			orcamentoClienteStage.setTitle("Novo orçamento");
 			orcamentoClienteStage.setScene(new Scene(vBox));
@@ -217,26 +220,25 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			orcamentoClienteStage.initOwner(parentStage);
 			orcamentoClienteStage.initModality(Modality.WINDOW_MODAL);
 			orcamentoClienteStage.showAndWait();
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 
 	}
-	
+
 	private void createEditarOrcamentoClienteForm(OrcamentoCliente obj, Stage parentStage, String string) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(string));
 			VBox vBox = loader.load();
-			
+
 			EditarOrcamentoClienteController editarController = loader.getController();
 			editarController.setOrcamentoCliente(obj);
 			editarController.setServices(orcamentoClienteService, clienteService, produtoService);
 			editarController.loadClientes();
 			editarController.updateOrcamentoClienteData();
 			editarController.subscribeDataChangeListener(this);
-			
+
 			Stage editarOrcamentoStage = new Stage();
 			editarOrcamentoStage.setTitle("Editar orçamento");
 			editarOrcamentoStage.setScene(new Scene(vBox));
@@ -244,24 +246,23 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			editarOrcamentoStage.initOwner(parentStage);
 			editarOrcamentoStage.initModality(Modality.WINDOW_MODAL);
 			editarOrcamentoStage.showAndWait();
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
-	
+
 	private void createGerarOrdemServicoClienteForm(OrcamentoCliente obj, Stage parentStage, String absoluteName) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			VBox vBox = loader.load();
-			
+
 			GerarOrdemDeServicoClienteController controller = loader.getController();
 			controller.setServicos(new OrdemServicoClienteService(), new ClienteService(), new FuncionarioService());
 			controller.loadFuncionariosOrcamento();
 			controller.loadStatusServico();
 			controller.receberDadosParaCriarOS(obj);
-			
+
 			Stage stage = new Stage();
 			stage.setTitle("Gerar ordem de serviço");
 			stage.setScene(new Scene(vBox));
@@ -269,9 +270,8 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			stage.initModality(Modality.WINDOW_MODAL);
 			stage.initOwner(parentStage);
 			stage.showAndWait();
-			
-		}
-		catch(IOException e) {
+
+		} catch (IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
@@ -295,24 +295,34 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			}
 		});
 	}
-	
+
 	@FXML
-	private void onBtGerarPDFaction() {
+	private void onBtGerarPDFaction(OrcamentoCliente obj) {
 		try {
-	        PDDocument pDDocument = PDDocument.load(new File("F:/Users/rafae/Desktop/TestePDF/TestePDF.pdf"));
-	        PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
-	        PDField field = pDAcroForm.getField("txt_1");
-	        field.setValue("This is a first field printed by Java");
-	        field = pDAcroForm.getField("txt_2");
-	        field.setValue("This is a second field printed by Java");
-	        pDDocument.save("F:/Users/rafae/Desktop/TestePDF/TestePDFOutput.pdf");
-	        pDDocument.close();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+			JFileChooser fc = new JFileChooser("C:\\Desktop");
+			File fileOrcamento = new File("");
+			int returnValue = fc.showOpenDialog(null);
+			if(returnValue == JFileChooser.APPROVE_OPTION) {
+				fileOrcamento = fc.getSelectedFile();
+				System.out.println(fileOrcamento.getAbsolutePath());
+				System.out.println(fileOrcamento.getName());
+				System.out.println(fileOrcamento.getParentFile());
+			}
+			String fileName = "Orcamento " + obj.getNumOrcamento()+".pdf";
+			PDDocument pDDocument = PDDocument.load(fileOrcamento);
+			PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
+			PDField field = pDAcroForm.getField("txtOrcamento");
+			field.setValue(obj.getNumOrcamento().toString());
+			field = pDAcroForm.getField("txtNome");
+			field.setValue(obj.getCodCliente().getNome());
+			pDDocument.save(fileOrcamento.getParentFile()+"/"+fileName);
+			pDDocument.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
@@ -349,23 +359,23 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			}
 		});
 	}
-	
+
 	private void excluirOrcamentoCliente(OrcamentoCliente obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO", "Tem certeza que deseja remover esse orçamento?");
-			if(result.get() == ButtonType.OK) {
-				if(orcamentoClienteService == null) {
-					throw new IllegalStateException("Orcamento vazio");
-				}
-				try {
-					orcamentoClienteService.removerOrcamento(obj);
-					updateTableViewOrcamentoCliente();
-				}
-				catch(DbException e) {
-					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
-				}
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO",
+				"Tem certeza que deseja remover esse orçamento?");
+		if (result.get() == ButtonType.OK) {
+			if (orcamentoClienteService == null) {
+				throw new IllegalStateException("Orcamento vazio");
 			}
+			try {
+				orcamentoClienteService.removerOrcamento(obj);
+				updateTableViewOrcamentoCliente();
+			} catch (DbException e) {
+				Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+			}
+		}
 	}
-	
+
 	private void initOrcamentoPDFButtons() {
 		tableColumnOrcamentoEmPDF.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnOrcamentoEmPDF.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
@@ -379,7 +389,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 					return;
 				}
 				setGraphic(button);
-				button.setOnAction( e -> onBtGerarPDFaction());
+				button.setOnAction(e -> onBtGerarPDFaction(obj));
 			}
 		});
 	}

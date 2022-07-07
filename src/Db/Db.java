@@ -14,6 +14,10 @@ public class Db {
 
 	private static Connection conn = null;
 	
+	private Db() {
+		
+	}
+	
 	public static Connection getConnection() {
 		if (conn == null) {
 			try {

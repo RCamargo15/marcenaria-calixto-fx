@@ -94,7 +94,7 @@
                   <TableColumn fx:id="tableColumnSalario" prefWidth="120.0" text="REMUNERAÇÃO" />
                </columns>
             </TableColumn>
-            <TableColumn fx:id="tableColumnObs" prefWidth="160.0" text="OBS" />
+            <TableColumn fx:id="tableColumnObs" prefWidth="160.0" text="OBSERVAÇÕES" />
             <TableColumn fx:id="tableColumnEditar" />
             <TableColumn fx:id="tableColumnRemover" editable="false" resizable="false" />
         </columns>

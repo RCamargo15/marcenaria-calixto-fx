@@ -83,7 +83,7 @@
                   <TableColumn fx:id="tableColumnEmail" prefWidth="160.0" text="E-MAIL" />
                </columns>
             </TableColumn>
-            <TableColumn fx:id="tableColumnObs" prefWidth="160.0" text="OBS" />
+            <TableColumn fx:id="tableColumnObs" prefWidth="160.0" text="OBSERVAÇÕES" />
             <TableColumn fx:id="tableColumnEditar" prefWidth="70.0" />
             <TableColumn fx:id="tableColumnRemover" prefWidth="70.0" />
         </columns>
