@@ -73,7 +73,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbCodCliente" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cbCodCliente" prefHeight="25.0" prefWidth="316.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtTelefoneCliente" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <TextField fx:id="txtCelularCliente" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="txtEmailCliente" GridPane.columnIndex="3" GridPane.rowIndex="4" />

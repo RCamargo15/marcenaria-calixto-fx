@@ -1,11 +1,20 @@
 package guiOrcamentoEmpresa;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javax.swing.JFileChooser;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import Db.DbException;
 import application.Main;
@@ -38,6 +47,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Empresa;
+import marcenaria.entities.OrcamentoCliente;
 import marcenaria.entities.OrcamentoEmpresa;
 
 public class OrcamentoEmpresaVisualizarController implements Initializable, DataChangeListener {
@@ -90,6 +100,9 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 	
 	@FXML
 	private TableColumn<OrcamentoEmpresa, OrcamentoEmpresa> tableColumnGerarOrdemServico;
+	
+	@FXML
+	private TableColumn<OrcamentoEmpresa, OrcamentoEmpresa> tableColumnOrcamentoEmPDF;
 
 	@FXML
 	private TextField searchByCod;
@@ -156,6 +169,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 		initEditButtons();
 		initRemoveButtons();
 		initGerarOrcamentoButtons();
+		initOrcamentoPDFButtons();
 	}
 
 	@Override
@@ -288,6 +302,52 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 			}
 		});
 	}
+	
+	@FXML
+	private void onBtGerarPDFAction(OrcamentoEmpresa obj) {
+		try {
+			JFileChooser fc = new JFileChooser("F:\\Users\\rafae\\Desktop\\Exe Teste");
+			File fileOrcamento = new File("");
+			int returnValue = fc.showOpenDialog(null);
+			if(returnValue == JFileChooser.APPROVE_OPTION) {
+				fileOrcamento = fc.getSelectedFile();
+			}
+			String fileName = "Orcamento " + obj.getCodEmpresa().getNomeFantasia()+".pdf";
+			PDDocument pDDocument = PDDocument.load(fileOrcamento);
+			PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
+			PDField field = pDAcroForm.getField("txtOrcamento");
+			field.setValue(obj.getNumOrcamento().toString());
+			field = pDAcroForm.getField("txtData");
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			String dataFormatada = dateFormat.format(obj.getDataOrcamento());
+			field.setValue(dataFormatada);
+			field = pDAcroForm.getField("txtRazaoSocial");
+			field.setValue(obj.getCodEmpresa().getRazaoSocial());
+			field = pDAcroForm.getField("txtNomeFantasia");
+			field.setValue(obj.getCodEmpresa().getNomeFantasia());
+			field = pDAcroForm.getField("txtCnpj");
+			field.setValue(obj.getCodEmpresa().getCnpj());
+			field = pDAcroForm.getField("txtSoliciante");
+			field.setValue(obj.getNomeResponsavel());
+			field = pDAcroForm.getField("txtEndereco");
+			field.setValue(obj.getCodEmpresa().getRua()+", Nº"+obj.getCodEmpresa().getNumero());
+			field = pDAcroForm.getField("txtTelefone");
+			field.setValue("("+obj.getCodEmpresa().getDdd()+")"+obj.getCodEmpresa().getTelefone());
+			field = pDAcroForm.getField("txtEmail");
+			field.setValue(obj.getCodEmpresa().getEmail());
+			field = pDAcroForm.getField("txtDescricao");
+			field.setValue(obj.getDescServico());
+			field = pDAcroForm.getField("txtValorTotal");
+			field.setValue("R$"+String.format("%.2f", obj.getValorTotal()));
+			pDDocument.save(fileOrcamento.getParentFile()+"/"+fileName);
+			pDDocument.close();
+			
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
@@ -341,4 +401,23 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 				}
 			}
 	}
+	
+	private void initOrcamentoPDFButtons() {
+		tableColumnOrcamentoEmPDF.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+		tableColumnOrcamentoEmPDF.setCellFactory(param -> new TableCell<OrcamentoEmpresa, OrcamentoEmpresa>() {
+			private final Button button = new Button("Gerar PDF");
+
+			@Override
+			protected void updateItem(OrcamentoEmpresa obj, boolean empty) {
+				super.updateItem(obj, empty);
+				if (obj == null) {
+					setGraphic(null);
+					return;
+				}
+				setGraphic(button);
+				button.setOnAction(e -> onBtGerarPDFAction(obj));
+			}
+		});
+	}
 }
+

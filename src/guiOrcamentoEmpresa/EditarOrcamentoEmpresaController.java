@@ -47,7 +47,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import marcenaria.entities.Empresa;
 import marcenaria.entities.OrcamentoEmpresa;
-import marcenaria.entities.OrdemServicoEmpresa;
 import model.exceptions.ValidationException;
 
 public class EditarOrcamentoEmpresaController implements Initializable, DataChangeListener {

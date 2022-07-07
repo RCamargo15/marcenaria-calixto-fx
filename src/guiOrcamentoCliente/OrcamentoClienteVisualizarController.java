@@ -3,6 +3,8 @@ package guiOrcamentoCliente;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +44,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Cliente;
@@ -299,25 +300,35 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	@FXML
 	private void onBtGerarPDFaction(OrcamentoCliente obj) {
 		try {
-			JFileChooser fc = new JFileChooser("C:\\Desktop");
+			JFileChooser fc = new JFileChooser("F:\\Users\\rafae\\Desktop\\Exe Teste");
 			File fileOrcamento = new File("");
 			int returnValue = fc.showOpenDialog(null);
 			if(returnValue == JFileChooser.APPROVE_OPTION) {
 				fileOrcamento = fc.getSelectedFile();
-				System.out.println(fileOrcamento.getAbsolutePath());
-				System.out.println(fileOrcamento.getName());
-				System.out.println(fileOrcamento.getParentFile());
 			}
 			String fileName = "Orcamento " + obj.getNumOrcamento()+".pdf";
 			PDDocument pDDocument = PDDocument.load(fileOrcamento);
 			PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
 			PDField field = pDAcroForm.getField("txtOrcamento");
 			field.setValue(obj.getNumOrcamento().toString());
+			field = pDAcroForm.getField("txtData");
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+			String dataFormatada = dateFormat.format(obj.getDataOrcamento());
+			field.setValue(dataFormatada);
 			field = pDAcroForm.getField("txtNome");
 			field.setValue(obj.getCodCliente().getNome());
+			field = pDAcroForm.getField("txtRg");
+			field.setValue(obj.getCodCliente().getRg());
+			field = pDAcroForm.getField("txtTelefone");
+			field.setValue("("+obj.getCodCliente().getDdd()+")"+obj.getCodCliente().getTelefone());
+			field = pDAcroForm.getField("txtEmail");
+			field.setValue(obj.getCodCliente().getEmail());
+			field = pDAcroForm.getField("txtDescricao");
+			field.setValue(obj.getDescServico());
+			field = pDAcroForm.getField("txtValorTotal");
+			field.setValue("R$"+String.format("%.2f", obj.getValorTotal()));
 			pDDocument.save(fileOrcamento.getParentFile()+"/"+fileName);
 			pDDocument.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

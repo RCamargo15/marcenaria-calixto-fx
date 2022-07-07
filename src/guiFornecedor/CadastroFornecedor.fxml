@@ -238,7 +238,7 @@
             <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="RUA" textAlignment="RIGHT">
+            <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="LOGRADOURO" textAlignment="RIGHT">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

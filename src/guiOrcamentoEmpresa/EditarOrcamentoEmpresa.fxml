@@ -74,7 +74,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="cbCodEmpresa" prefHeight="25.0" prefWidth="198.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cbCodEmpresa" prefHeight="25.0" prefWidth="309.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtTelefoneEmpresa" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <TextField fx:id="txtCelularEmpresa" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>

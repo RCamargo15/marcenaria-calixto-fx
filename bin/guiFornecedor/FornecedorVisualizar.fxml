@@ -65,7 +65,7 @@
             </TableColumn>
             <TableColumn prefWidth="75.0" text="ENDEREÇO">
                <columns>
-                  <TableColumn fx:id="tableColumnRua" prefWidth="250.0" text="RUA" />
+                  <TableColumn fx:id="tableColumnRua" prefWidth="250.0" text="LOGRADOURO" />
                   <TableColumn fx:id="tableColumnNumero" prefWidth="55.0" resizable="false" text="Nº" />
                   <TableColumn fx:id="tableColumnComplemento" prefWidth="120.0" text="COMPLEMENTO" />
                   <TableColumn fx:id="tableColumnBairro" prefWidth="130.0" text="BAIRRO" />
