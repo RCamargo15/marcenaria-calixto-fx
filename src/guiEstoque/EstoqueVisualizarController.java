@@ -120,7 +120,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		Estoque buscaEstoque = estoqueService.findByCodEstoque(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaEstoque == null) {
-			Alerts.showAlert("Busca de estoque", null, "Nenhum produto com esse código foi encontrado no estoque!",
+			Alerts.showAlert("Busca no estoque", null, "Nenhum produto com esse cÃ³digo foi encontrado no estoque!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEstoque);
@@ -142,7 +142,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		tableColumnEstoqueAtual.setCellValueFactory(new PropertyValueFactory<>("estoqueAtual"));
 		tableColumnEstoqueMinimo.setCellValueFactory(new PropertyValueFactory<>("estoqueMinimo"));
 
-		searchByCod.setPromptText("Insira o código do estoque");
+		searchByCod.setPromptText("Insira o cÃ³digo do estoque");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEstoque.prefHeightProperty().bind(stage.heightProperty());
@@ -226,7 +226,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 			saidaProdutoController.loadFuncionario();
 			
 			Stage saidaProdutoEstoqueStage = new Stage();
-			saidaProdutoEstoqueStage.setTitle("Registro de saída de produtos do estoque");
+			saidaProdutoEstoqueStage.setTitle("Registro de saÃ­da de produtos do estoque");
 			saidaProdutoEstoqueStage.setScene(new Scene(vBox));
 			saidaProdutoEstoqueStage.setResizable(false);
 			saidaProdutoEstoqueStage.initOwner(parentStage);
@@ -285,7 +285,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 				"Tem certeza que deseja remover esse produto do seu estoque?");
 		if (result.get() == ButtonType.OK) {
 			if (estoqueService == null) {
-				throw new IllegalStateException("Estoque está vazio");
+				throw new IllegalStateException("Estoque estï¿½ vazio");
 			}
 			try {
 				estoqueService.removerEstoque(obj);

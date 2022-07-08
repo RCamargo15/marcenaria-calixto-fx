@@ -137,7 +137,7 @@ public class FornecedorVisualizarController implements Initializable, DataChange
 
 		if (buscaFornecedor == null) {
 			Alerts.showAlert("Busca de fornecedor", null,
-					"Nenhuma fornecedor com esse cÛdigo foi encontrado no sistema!", AlertType.INFORMATION);
+					"Nenhuma fornecedor com esse c√≥digo foi encontrado no sistema!", AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaFornecedor);
 			tableViewFornecedor.setItems(obsList);
@@ -176,7 +176,7 @@ public class FornecedorVisualizarController implements Initializable, DataChange
 		tableColumnSite.setCellValueFactory(new PropertyValueFactory<>("site"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o cÛdigo da fornecedor");
+		searchByCod.setPromptText("Insira o c√≥digo da fornecedor");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewFornecedor.prefHeightProperty().bind(stage.heightProperty());
@@ -266,7 +266,7 @@ public class FornecedorVisualizarController implements Initializable, DataChange
 				"Tem certeza que deseja remover esse fornecedor do seu banco de dados?");
 		if (result.get() == ButtonType.OK) {
 			if (fornecedorService == null) {
-				throw new IllegalStateException("Fornecedor est· vazio");
+				throw new IllegalStateException("Fornecedor est√° vazio");
 			}
 			try {
 				fornecedorService.removerFornecedor(obj);

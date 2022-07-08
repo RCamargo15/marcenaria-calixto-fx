@@ -194,58 +194,57 @@ public class CadastroClienteController implements Initializable {
 		obj.setEmail(txtEmail.getText());
 		obj.setObs(txtObs.getText());
 
-		ValidationException exception = new ValidationException("Erro de validaÁ„o");
-
+		ValidationException exception = new ValidationException("Erro de valida√ß√£o");
 		if (txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addError("Nome", "O nome n„o pode estar vazio.");
+			exception.addError("Nome", "O nome n√£o pode estar vazio.");
 		}
 
 		if (txtRg.getText() == null || txtRg.getText().trim().equals("")) {
-			exception.addError("RG", "Insira um n˙mero de RG");
+			exception.addError("RG", "Insira um n√∫mero de RG");
 		}
 
 		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
-			exception.addError("CPF", "Insira um n˙mero de CPF");
+			exception.addError("CPF", "Insira um n√∫mero de CPF");
 		}
 
 		if (txtRua.getText() == null || txtRua.getText().trim().equals("")) {
-			exception.addError("Rua", "A rua n„o pode estar vazia.");
+			exception.addError("Rua", "A rua n√£o pode estar vazia.");
 		}
 
 		if (txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
-			exception.addError("Numero", "Insira um n˙mero da rua");
+			exception.addError("Numero", "Insira um n√∫mero da rua");
 		}
 
 		if (txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
-			exception.addError("Bairro", "O bairro n„o pode estar vazio");
+			exception.addError("Bairro", "O bairro n√£o pode estar vazio");
 		}
 
 		if (txtCep.getText() == null || txtCep.getText().trim().equals("")) {
-			exception.addError("CEP", "O CEP n„o pode estar vazio");
+			exception.addError("CEP", "O CEP n√£o pode estar vazio");
 		}
 
 		if (txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
-			exception.addError("Cidade", "O campo cidade n„o pode estar vazio");
+			exception.addError("Cidade", "O campo cidade n√£o pode estar vazio");
 		}
 
 		if (txtEstado.getText() == null || txtEstado.getText().trim().equals("")) {
-			exception.addError("Estado", "O campo estado n„o pode estar vazio");
+			exception.addError("Estado", "O campo estado n√£o pode estar vazio");
 		}
 
 		if (txtUF.getText() == null || txtUF.getText().trim().equals("")) {
-			exception.addError("UF", "Necess·rio adicionar a sigla do estado");
+			exception.addError("UF", "Necess√°rio adicionar a sigla do estado");
 		}
 
 		if (txtDdd.getText() == null || txtDdd.getText().trim().equals("")) {
-			exception.addError("DDD", "Insira um DDD v·lido");
+			exception.addError("DDD", "Insira um DDD v√°lido");
 		}
 
 		if (txtTelefone.getText() == null || txtTelefone.getText().trim().equals("")) {
-			exception.addError("Contatos", "Pelo menos um n˙mero para contato deve ser inserido.");
+			exception.addError("Contatos", "Pelo menos um n√∫mero para contato deve ser inserido.");
 		}
 
 		if (dpDataCadastro.getValue() == null) {
-			exception.addError("dataCadastro", "A data n„o pode estar vazia.");
+			exception.addError("dataCadastro", "A data n√£o pode estar vazia.");
 		} else {
 			Instant instant = Instant.from(dpDataCadastro.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataCadastro(Date.from(instant));
@@ -292,7 +291,6 @@ public class CadastroClienteController implements Initializable {
 
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
-
 		errorNome.setText(fields.contains("Nome") ? errors.get("Nome") : "");
 		errorRg.setText(fields.contains("RG") ? errors.get("RG") : "");
 		errorCpf.setText(fields.contains("CPF") ? errors.get("CPF") : "");
@@ -306,13 +304,11 @@ public class CadastroClienteController implements Initializable {
 		errorCidade.setText(fields.contains("Cidade") ? errors.get("Cidade") : "");
 		errorEstado.setText(fields.contains("Estado") ? errors.get("Estado") : "");
 		errorUF.setText(fields.contains("UF") ? errors.get("UF") : ""); 
-
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		initializeNodes();
-
 	}
 
 	private void initializeNodes() {
@@ -320,7 +316,6 @@ public class CadastroClienteController implements Initializable {
 		Constraints.setTextFieldInteger(txtDdd);
 		Constraints.setTextFieldInteger(txtCelular);
 		Constraints.setTextFieldInteger(txtTelefone);
-
 		Constraints.setTextFieldMaxLength(txtDdd, 2);
 		Constraints.setTextFieldMaxLength(txtCelular, 9);
 		Constraints.setTextFieldMaxLength(txtCep, 9);
@@ -328,9 +323,6 @@ public class CadastroClienteController implements Initializable {
 		Constraints.setTextFieldMaxLength(txtCpf, 15);
 		Constraints.setTextFieldMaxLength(txtRg, 15);
 		Constraints.setTextFieldMaxLength(txtUF, 2);
-		
-
 		Utils.formatDatePicker(dpDataCadastro, "dd/MM/yyyy");
-
 	}
 }

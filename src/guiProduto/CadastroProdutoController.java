@@ -112,12 +112,12 @@ public class CadastroProdutoController implements Initializable {
 
 	private Produto getProdutoData() {
 
-		ValidationException exception = new ValidationException("Erro de validaÁ„o");
+		ValidationException exception = new ValidationException("Erro de valida√ß√£o");
 		Produto obj = new Produto();
 		obj.setDescProduto(txtDescProduto.getText());
 
 		if (txtDescProduto.getText() == null || txtDescProduto.getText().trim().equals("")) {
-			exception.addError("Desc", "Insira uma descriÁ„o para esse produto");
+			exception.addError("Desc", "Insira uma descri√ß√£o para esse produto");
 		}
 
 		if (txtPrecoUnit.getText() == null || txtPrecoUnit.getText().trim().equals("")) {
@@ -127,10 +127,10 @@ public class CadastroProdutoController implements Initializable {
 		}
 		
 		if(txtEstoqueAtual.getText() == null || txtEstoqueAtual.getText().trim().equals("")) {
-			exception.addError("estoqueAtual", "Caso possua esse produto em estoque, informe a quantidade. Caso contr·rio, quantidade deve ser 0");
+			exception.addError("estoqueAtual", "Caso possua esse produto em estoque, informe a quantidade. Caso contr√°rio, quantidade deve ser 0");
 		}
 		if(txtEstoqueMinimo.getText() == null || txtEstoqueMinimo.getText().trim().equals("")) {
-			exception.addError("estoqueMin", "EstabeleÁa uma quantidade mÌnima desse produto no estoque para controle");
+			exception.addError("estoqueMin", "Estabele√ßa uma quantidade mÔøΩnima desse produto no estoque para controle");
 		}
 
 		if (exception.getErrors().size() > 0) {
@@ -157,7 +157,6 @@ public class CadastroProdutoController implements Initializable {
 
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
-
 		errorDescProduto.setText(fields.contains("Desc") ? errors.get("Desc") : "");
 		errorPrecoUnit.setText(fields.contains("Preco") ? errors.get("Preco") : "");
 		errorEstoqueAtual.setText(fields.contains("estoqueAtual") ? errors.get("estoqueAtual") : "");
@@ -169,5 +168,6 @@ public class CadastroProdutoController implements Initializable {
 		Constraints.setTextFieldDouble(txtPrecoUnit);
 		Constraints.setTextFieldInteger(txtEstoqueAtual);
 		Constraints.setTextFieldInteger(txtEstoqueMinimo);
+		errorEstoqueAtual.setText("Caso possua esse produto em estoque, informe a quantidade. Caso contr√°rio, quantidade deve ser 0");
 	}
 }

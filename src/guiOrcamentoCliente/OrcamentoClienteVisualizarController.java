@@ -144,7 +144,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 				.findByNumOrcamento(Integer.parseInt(searchByCod.getText()));
 
 		if (buscaOrcamentoCliente == null) {
-			Alerts.showAlert("Busca de orçamentos", null, "Nenhum orçamento encontrado no sistema", AlertType.ERROR);
+			Alerts.showAlert("Busca de orÃ§amentos", null, "Nenhum orÃ§amento encontrado no sistema", AlertType.ERROR);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaOrcamentoCliente);
 			tableViewOrcamentoCliente.setItems(obsList);
@@ -192,7 +192,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira código busca");
+		searchByCod.setPromptText("Insira o cÃ³digo de orÃ§amento");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrcamentoCliente.prefHeightProperty().bind(stage.heightProperty());
@@ -215,7 +215,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			orcamentoController.subscribeDataChangeListener(this);
 
 			Stage orcamentoClienteStage = new Stage();
-			orcamentoClienteStage.setTitle("Novo orçamento");
+			orcamentoClienteStage.setTitle("Novo orÃ§amento");
 			orcamentoClienteStage.setScene(new Scene(vBox));
 			orcamentoClienteStage.setResizable(false);
 			orcamentoClienteStage.initOwner(parentStage);
@@ -241,7 +241,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			editarController.subscribeDataChangeListener(this);
 
 			Stage editarOrcamentoStage = new Stage();
-			editarOrcamentoStage.setTitle("Editar orçamento");
+			editarOrcamentoStage.setTitle("Editar orÃ§amento");
 			editarOrcamentoStage.setScene(new Scene(vBox));
 			editarOrcamentoStage.setResizable(false);
 			editarOrcamentoStage.initOwner(parentStage);
@@ -265,7 +265,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			controller.receberDadosParaCriarOS(obj);
 
 			Stage stage = new Stage();
-			stage.setTitle("Gerar ordem de serviço");
+			stage.setTitle("Gerar ordem de serviÃ§o");
 			stage.setScene(new Scene(vBox));
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -281,7 +281,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	private void initGerarOrcamentoButtons() {
 		tableColumnGerarOS.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnGerarOS.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
-			private final Button button = new Button("Gerar Ordem de Serviço");
+			private final Button button = new Button("Gerar Ordem de ServiÃ§o");
 
 			@Override
 			protected void updateItem(OrcamentoCliente obj, boolean empty) {
@@ -300,13 +300,13 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	@FXML
 	private void onBtGerarPDFaction(OrcamentoCliente obj) {
 		try {
-			JFileChooser fc = new JFileChooser("F:\\Users\\rafae\\Desktop\\Exe Teste");
+			JFileChooser fc = new JFileChooser("C:\\Users\\ew21\\Desktop\\OrÃ§amentos\\Pessoa Fisica");
 			File fileOrcamento = new File("");
 			int returnValue = fc.showOpenDialog(null);
 			if(returnValue == JFileChooser.APPROVE_OPTION) {
 				fileOrcamento = fc.getSelectedFile();
 			}
-			String fileName = "Orcamento " + obj.getNumOrcamento()+".pdf";
+			String fileName = "Orcamento " + obj.getCodCliente().getNome()+".pdf";
 			PDDocument pDDocument = PDDocument.load(fileOrcamento);
 			PDAcroForm pDAcroForm = pDDocument.getDocumentCatalog().getAcroForm();
 			PDField field = pDAcroForm.getField("txtOrcamento");
@@ -329,6 +329,8 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 			field.setValue("R$"+String.format("%.2f", obj.getValorTotal()));
 			pDDocument.save(fileOrcamento.getParentFile()+"/"+fileName);
 			pDDocument.close();
+			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -372,8 +374,8 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	}
 
 	private void excluirOrcamentoCliente(OrcamentoCliente obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO",
-				"Tem certeza que deseja remover esse orçamento?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÃ‡AMENTO",
+				"Tem certeza que deseja remover esse orÃ§amento?");
 		if (result.get() == ButtonType.OK) {
 			if (orcamentoClienteService == null) {
 				throw new IllegalStateException("Orcamento vazio");
@@ -382,7 +384,7 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 				orcamentoClienteService.removerOrcamento(obj);
 				updateTableViewOrcamentoCliente();
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir orÃ§amento", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

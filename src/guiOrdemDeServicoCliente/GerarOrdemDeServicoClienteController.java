@@ -166,14 +166,14 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 	}
 
 	public Map<String, String> validateExceptions() {
-		ValidationException exception = new ValidationException("Erro de validaÁ„o");
+		ValidationException exception = new ValidationException("Erro de valida√ß√£o");
 
 		if (dpDataInicio.getValue() == null) {
-			exception.addError("dataInicio", "A data de inÌcio de produÁ„o deve ser inserida");
+			exception.addError("dataInicio", "A data de in√≠cio de produ√ß√£o deve ser inserida");
 		}
 
 		if (dpPrazoEntrega.getValue() == null) {
-			exception.addError("prazoEntrega", "Um prazo de entrega deve ser estabelelecido");
+			exception.addError("prazoEntrega", "Um prazo de entrega deve ser estabelecido");
 		}
 
 		setErrorMessages(exception.getErrors());
@@ -258,7 +258,7 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 	}
 
 	public void loadStatusServico() {
-		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "PRODU«√O");
+		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "PRODU√á√ÉO");
 		statusList = FXCollections.observableArrayList(list);
 		statusServico.setItems(statusList);
 	}

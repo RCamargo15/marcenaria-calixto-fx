@@ -187,10 +187,10 @@ public class CadastroFuncionarioController implements Initializable {
 	@FXML
 	public void onBtCadastrarAction(ActionEvent event) {
 		if (funcionario == null) {
-			throw new IllegalStateException("Funcionario não foi injetado no sistema");
+			throw new IllegalStateException("Funcionario nÃ£o foi injetado no sistema");
 		}
 		if (funcionarioService == null) {
-			throw new IllegalStateException("FuncionarioService não foi injetado no sistema");
+			throw new IllegalStateException("FuncionarioService nÃ£o foi injetado no sistema");
 		}
 
 		try {
@@ -239,90 +239,86 @@ public class CadastroFuncionarioController implements Initializable {
 		obj.setSetor(txtSetor.getText());
 		obj.setObs(txtObs.getText());
 
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 
 		if (txtNome.getText() == null || txtNome.getText().trim().equals("")) {
-			exception.addError("Nome", "O nome não pode estar vazio.");
+			exception.addError("Nome", "O nome nÃ£o pode estar vazio.");
 		}
 
 		if (txtRg.getText() == null || txtRg.getText().trim().equals("")) {
-			exception.addError("RG", "Insira um número de RG");
+			exception.addError("RG", "Insira um nÃºmero de RG");
 		}
 
 		if (txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {
-			exception.addError("CPF", "Insira um número de CPF");
-		}
-
-		if (txtCtps.getText() == null || txtCtps.getText().trim().equals("")) {
-			exception.addError("CTPS", "Insira o número da carteira de trabalho do profissional");
+			exception.addError("CPF", "Insira um nÃºmero de CPF");
 		}
 
 		if (txtRua.getText() == null || txtRua.getText().trim().equals("")) {
-			exception.addError("Rua", "A rua não pode estar vazia.");
+			exception.addError("Rua", "A rua nÃ£o pode estar vazia.");
 		}
 
 		if (txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
-			exception.addError("Numero", "Insira um número da rua");
+			exception.addError("Numero", "Insira um nÃºmero da rua");
 		}
 
 		if (txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
-			exception.addError("Bairro", "O bairro não pode estar vazio");
+			exception.addError("Bairro", "O bairro nÃ£o pode estar vazio");
 		}
 
 		if (txtCep.getText() == null || txtCep.getText().trim().equals("")) {
-			exception.addError("CEP", "O CEP não pode estar vazio");
+			exception.addError("CEP", "O CEP nÃ£o pode estar vazio");
 		}
 
 		if (txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
-			exception.addError("Cidade", "O campo cidade não pode estar vazio");
+			exception.addError("Cidade", "O campo cidade nÃ£o pode estar vazio");
 		}
 
 		if (txtEstado.getText() == null || txtEstado.getText().trim().equals("")) {
-			exception.addError("Estado", "O campo estado não pode estar vazio");
+			exception.addError("Estado", "O campo estado nÃ£o pode estar vazio");
 		}
 
 		if (txtUF.getText() == null || txtUF.getText().trim().equals("")) {
-			exception.addError("UF", "Necessário adicionar a sigla do estado");
+			exception.addError("UF", "NecessÃ¡rio adicionar a sigla do estado");
 		}
 
 		if (txtDdd.getText() == null || txtDdd.getText().trim().equals("")) {
-			exception.addError("DDD", "Insira um DDD válido");
+			exception.addError("DDD", "Insira um DDD vÃ¡lido");
 		}
 
 		if ((txtTelefone.getText() == null || txtTelefone.getText().trim().equals(""))
 				&& (txtCelular.getText() == null || txtCelular.getText().trim().equals(""))) {
-			exception.addError("Contatos", "Pelo menos um número para contato deve ser inserido.");
+			exception.addError("Contatos", "Pelo menos um nÃºmero para contato deve ser inserido.");
 		}
 
 		if (dpDataNasc.getValue() == null) {
-			exception.addError("dataNasc", "A data de nascimento não pode estar vazia.");
+			exception.addError("dataNasc", "A data de nascimento nÃ£o pode estar vazia.");
 		} else {
 			Instant instant = Instant.from(dpDataNasc.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataNasc(Date.from(instant));
 		}
 
 		if (dpDataAdmissao.getValue() == null) {
-			exception.addError("dataAdmissao", "A data de nascimento não pode estar vazia.");
+			exception.addError("dataAdmissao", "A data de nascimento nÃ£o pode estar vazia.");
 		} else {
 			Instant instant = Instant.from(dpDataAdmissao.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataAdmissao(Date.from(instant));
 		}
 		
 		if(txtTipoSang.getText() == null || txtTipoSang.getText().trim().equals("")) {
-			exception.addError("tipo", "Informar a tipagem sanguínea do funcionário");
+			exception.addError("tipo", "Informar a tipagem sanguÃ­nea do funcionÃ¡rio");
 		}
 		
 		if(txtSalario.getText() == null || txtSalario.getText().trim().equals("")) {
-			exception.addError("salario", "Informar a remuneração do funcionário");
+			exception.addError("salario", "Informar a remuneraÃ§Ã£o do funcionÃ¡rio");
 		}
 		else {
 			obj.setSalario(Double.parseDouble(txtSalario.getText()));
 		}
 		if(txtSetor.getText() == null || txtSetor.getText().trim().equals("")) {
-			exception.addError("setor", "Informe o setor de atuação");
+			exception.addError("setor", "Informe o setor de atuaÃ§Ã£o");
 		}
 		if(txtFuncao.getText() == null || txtFuncao.getText().trim().equals("")) {
-			exception.addError("funcao", "Informe a função");
+			exception.addError("funcao", "Informe a funÃ§Ã£o");
 		}
 
 		if (exception.getErrors().size() > 0) {

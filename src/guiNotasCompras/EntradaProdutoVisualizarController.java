@@ -102,8 +102,8 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 				.findByCodEntrada(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaEntradaProduto == null) {
-			Alerts.showAlert("Busca de saidaProduto", null,
-					"Nenhum saidaProduto com esse código foi encontrado no sistema!", AlertType.INFORMATION);
+			Alerts.showAlert("Busca de entrada de produtos", null,
+					"Nenhuma entrada com esse cÃ³digo foi encontrada no sistema!", AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEntradaProduto);
 			tableViewEntradaProduto.setItems(obsList);
@@ -124,7 +124,7 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 		tableColumnDataEntrada.setCellValueFactory(new PropertyValueFactory<>("dataEntrada"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 
-		searchByCod.setPromptText("Insira o código de saída");
+		searchByCod.setPromptText("Insira o cï¿½digo de saï¿½da");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEntradaProduto.prefHeightProperty().bind(stage.heightProperty());

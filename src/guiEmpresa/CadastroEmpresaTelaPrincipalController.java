@@ -192,58 +192,58 @@ public class CadastroEmpresaTelaPrincipalController implements Initializable {
 		obj.setEmail(txtEmail.getText());
 		obj.setObs(txtObs.getText());
 
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 
 		if (txtRazaoSocial.getText() == null || txtRazaoSocial.getText().trim().equals("")) {
-			exception.addError("razaoSocial", "O campo RAZÃO SOCIAL não pode estar vazio.");
+			exception.addError("razaoSocial", "O campo RAZÃƒO SOCIAL nÃ£o pode estar vazio.");
 		}
 
 		if (txtNomeFantasia.getText() == null || txtNomeFantasia.getText().trim().equals("")) {
-			exception.addError("nomeFantasia", "O campo NOME FANTASIA não pode estar vazio");
+			exception.addError("nomeFantasia", "O campo NOME FANTASIA nÃ£o pode estar vazio");
 		}
 
 		if (txtAtividadeFim.getText() == null || txtAtividadeFim.getText().trim().equals("")) {
-			exception.addError("atividadeFim", "Insira um ramo de atuação para esta empresa");
+			exception.addError("atividadeFim", "Insira um ramo de atuaÃ§Ã£oo para esta empresa");
 		}
 
 		if (txtCnpj.getText() == null || txtCnpj.getText().trim().equals("")) {
-			exception.addError("CNPJ", "Insira um número de CNPJ");
+			exception.addError("CNPJ", "Insira um nÃºmero de CNPJ");
 		}
 
 		if (txtRua.getText() == null || txtRua.getText().trim().equals("")) {
-			exception.addError("Rua", "A rua não pode estar vazia.");
+			exception.addError("Rua", "A rua nÃ£o pode estar vazia.");
 		}
 
 		if (txtNumero.getText() == null || txtNumero.getText().trim().equals("")) {
-			exception.addError("Numero", "Insira um número da rua");
+			exception.addError("Numero", "Insira um nÃºmero da rua");
 		}
 
 		if (txtBairro.getText() == null || txtBairro.getText().trim().equals("")) {
-			exception.addError("Bairro", "O bairro não pode estar vazio");
+			exception.addError("Bairro", "O bairro nÃ£o pode estar vazio");
 		}
 
 		if (txtCep.getText() == null || txtCep.getText().trim().equals("")) {
-			exception.addError("CEP", "O CEP não pode estar vazio");
+			exception.addError("CEP", "O CEP nÃ£o pode estar vazio");
 		}
 
 		if (txtCidade.getText() == null || txtCidade.getText().trim().equals("")) {
-			exception.addError("Cidade", "O campo cidade não pode estar vazio");
+			exception.addError("Cidade", "O campo cidade nÃ£o pode estar vazio");
 		}
 
 		if (txtEstado.getText() == null || txtEstado.getText().trim().equals("")) {
-			exception.addError("Estado", "O campo estado não pode estar vazio");
+			exception.addError("Estado", "O campo estado nÃ£o pode estar vazio");
 		}
 
 		if (txtUF.getText() == null || txtUF.getText().trim().equals("")) {
-			exception.addError("UF", "Necessário adicionar a sigla do estado");
+			exception.addError("UF", "NecessÃ¡rio adicionar a sigla do estado");
 		}
 
 		if (txtDdd.getText() == null || txtDdd.getText().trim().equals("")) {
-			exception.addError("DDD", "Insira um DDD válido");
+			exception.addError("DDD", "Insira um DDD vÃ¡lido");
 		}
 
 		if (txtTelefone.getText() == null || txtTelefone.getText().trim().equals("")) {
-			exception.addError("Contatos", "Pelo menos um número para contato deve ser inserido.");
+			exception.addError("Contatos", "Pelo menos um nÃºmero para contato deve ser inserido.");
 		}
 
 		if (exception.getErrors().size() > 0) {

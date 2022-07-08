@@ -29,7 +29,6 @@ public class Main extends Application {
 			primaryStage.setTitle("Marcenaria Calixto");
 			primaryStage.setMaximized(true);
 			primaryStage.show();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

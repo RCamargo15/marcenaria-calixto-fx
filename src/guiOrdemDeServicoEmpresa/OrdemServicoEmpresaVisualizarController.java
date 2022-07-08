@@ -106,7 +106,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 	public void onBtBuscarAction() {
 		
 		if(txtBuscarCodOrdem == null || txtBuscarCodOrdem.getText().equals("")) {
-			Alerts.showAlert("Erro ao buscar", null, "Campo de busca não pode estar vazio. Insira o número de orçamento", AlertType.INFORMATION);
+			Alerts.showAlert("Erro ao buscar", null, "Campo de busca nÃ£o pode estar vazio. Insira o nÃºmero da ordem de serviÃ§o", AlertType.INFORMATION);
 		}
 		OrdemServicoEmpresa osc = ordemServicoEmpresaService.findByNumPedido(Integer.parseInt(txtBuscarCodOrdem.getText()));
 		obsListBuscar.add(osc);
@@ -142,7 +142,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 		initializeNodes();
 		initEditButtons();
 		initRemoveButtons();
-		txtBuscarCodOrdem.setPromptText("Insira Nº de orçamento");
+		txtBuscarCodOrdem.setPromptText("Insira NÂº da ordem de serviÃ§o");
 	}
 
 	public void initializeNodes() {
@@ -201,7 +201,7 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 			controller.subscribeDataChangeListener(this);
 
 			Stage stage = new Stage();
-			stage.setTitle("Editar ordem de serviço");
+			stage.setTitle("Editar ordem de serviÃ§o");
 			stage.setScene(new Scene(vBox));
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -254,18 +254,18 @@ public class OrdemServicoEmpresaVisualizarController implements DataChangeListen
 	}
 
 	private void excluirOrdemServicoEmpresa(OrdemServicoEmpresa obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO",
-				"Tem certeza que deseja remover esse orçamento?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORDEM DE SERVIÃ‡O",
+				"Tem certeza que deseja remover essa ordem de serviÃ§o");
 		if (result.get() == ButtonType.OK) {
 			if (ordemServicoEmpresaService == null) {
-				throw new IllegalStateException("Orcamento vazio");
+				throw new IllegalStateException("Ordem de serviÃ§o vazio");
 			}
 			try {
 				ordemServicoEmpresaService.removerOrdemServicoEmpresa(obj);
 				updateTableViewOrdemEmpresaVisualizar();
 
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir ordem de serviÃ§o", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

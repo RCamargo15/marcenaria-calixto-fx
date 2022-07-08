@@ -98,13 +98,13 @@ public class EditarProdutoController implements Initializable {
 
 	private Produto getProdutoData() {
 
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 		Produto obj = new Produto();
 		obj.setCodProduto(Utils.tryParseToInt(txtCodProduto.getText()));
 		obj.setDescProduto(txtDescProduto.getText());
 
 		if (txtDescProduto.getText() == null || txtDescProduto.getText().trim().equals("")) {
-			exception.addError("Desc", "Insira uma descrição para esse produto");
+			exception.addError("Desc", "Insira uma descriÃ§Ã£o para esse produto");
 		}
 
 		if (txtPrecoUnit.getText() == null || txtPrecoUnit.getText().trim().equals("")) {

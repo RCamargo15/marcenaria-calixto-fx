@@ -147,7 +147,7 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 			}
 
 			catch (DbException e) {
-				Alerts.showAlert("Erro ao registrar saída do produto", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao registrar saÃ­da do produto", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}
@@ -171,10 +171,10 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 	}
 
 	public Map<String, String> ValidateException() {
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 
 		if (comboBoxFuncionario.getValue() == null) {
-			exception.addError("func", "Selecione o funcionário que irá receber esse material");
+			exception.addError("func", "Selecione o funcionÃ¡rio que irÃ¡ receber esse material");
 		}
 
 		if (dpDataSaida.getValue() == null) {
@@ -182,7 +182,7 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 		}
 
 		if (comboBoxFuncionario.getValue() == null) {
-			exception.addError("func", "Selecione o funcionário que irá receber esse material");
+			exception.addError("func", "Selecione o funcionÃ¡rio que irÃ¡ receber esse material");
 		}
 		
 		
@@ -237,7 +237,7 @@ public class SaidaDeProdutoEstoqueController implements Initializable {
 			int quantidade = Integer.parseInt(txtQuantidade.getText());
 			
 			if(quantidade > estoque.getEstoqueAtual()){
-				errorQuantidade.setText("Você só possui " + estoque.getEstoqueAtual() + " " + estoque.getCodProduto().getDescProduto() + " em estoque!");
+				errorQuantidade.setText("VocÃª sÃ³ possui " + estoque.getEstoqueAtual() + " " + estoque.getCodProduto().getDescProduto() + " em estoque!");
 				atualizarComboBox();
 			}
 			else {

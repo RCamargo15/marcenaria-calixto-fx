@@ -112,7 +112,7 @@ public class EditarEstoqueController implements Initializable {
 
 	private Estoque getEstoqueData() {
 
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 		Estoque obj = new Estoque();
 
 		obj.setId(Utils.tryParseToInt(txtCodEstoque.getText()));
@@ -125,7 +125,7 @@ public class EditarEstoqueController implements Initializable {
 		}
 
 		if (txtEstoqueMinimo.getText() == null || txtEstoqueMinimo.getText().trim().equals("")) {
-			exception.addError("EstoqueMinimo", "Estabeleça uma quantidade mínima desse produto em seu estoque");
+			exception.addError("EstoqueMinimo", "EstabeleÃ§a uma quantidade mÃ­nima desse produto em seu estoque");
 		} else {
 			obj.setEstoqueMinimo(Integer.parseInt(txtEstoqueMinimo.getText()));
 		}

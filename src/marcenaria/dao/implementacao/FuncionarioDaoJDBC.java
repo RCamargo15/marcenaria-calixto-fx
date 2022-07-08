@@ -69,7 +69,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 					obj.setRegistroFunc(codFuncionarioGerado);
 				}
 			} else {
-				throw new DbException("Erro. Nenhum funcion·rio foi cadastrado!");
+				throw new DbException("Erro. Nenhum funcion√°rio foi cadastrado!");
 			}
 
 		} catch (SQLException e) {

@@ -152,7 +152,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 		Funcionario buscaFuncionario = FuncionarioService.findByCodFuncionario(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaFuncionario == null) {
-			Alerts.showAlert("Busca de Funcionario", null, "Nenhum funcion·rio com esse cÛdigo foi encontrado no sistema!",
+			Alerts.showAlert("Busca de Funcion√°rio", null, "Nenhum funcion√°rio com esse c√≥digo foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaFuncionario);
@@ -200,7 +200,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 		Utils.formatTableColumnDouble(tableColumnSalario, 2);
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o registro do funcion·rio");
+		searchByCod.setPromptText("Insira o registro do funcion√°rio");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewFuncionario.prefHeightProperty().bind(stage.heightProperty());
@@ -231,7 +231,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 			cadastroController.subscribeDataChangeListener(this);
 
 			Stage cadastroFuncionarioStage = new Stage();
-			cadastroFuncionarioStage.setTitle("Cadastro de funcion·rio");
+			cadastroFuncionarioStage.setTitle("Cadastro de funcion√°rio");
 			cadastroFuncionarioStage.setScene(new Scene(vBox));
 			cadastroFuncionarioStage.setResizable(false);
 			cadastroFuncionarioStage.initOwner(parentStage);
@@ -254,7 +254,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 			cadastroController.updateFuncionarioData();
 
 			Stage cadastroFuncionarioStage = new Stage();
-			cadastroFuncionarioStage.setTitle("Cadastro de funcion·rio");
+			cadastroFuncionarioStage.setTitle("Cadastro de funcion√°rio");
 			cadastroFuncionarioStage.setScene(new Scene(vBox));
 			cadastroFuncionarioStage.setResizable(false);
 			cadastroFuncionarioStage.initOwner(parentStage);
@@ -308,11 +308,11 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 	}
 
 	private void excluirFuncionario(Funcionario obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR FUNCION¡RIO",
-				"Tem certeza que deseja remover esse funcion·rio do seu banco de dados?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR FUNCION√ÅRIO",
+				"Tem certeza que deseja remover esse funcion√°rio do seu banco de dados?");
 		if (result.get() == ButtonType.OK) {
 			if (FuncionarioService == null) {
-				throw new IllegalStateException("Funcionario est· vazio");
+				throw new IllegalStateException("Funcionario est√° vazio");
 			}
 			try {
 				FuncionarioService.removerFuncionario(obj);

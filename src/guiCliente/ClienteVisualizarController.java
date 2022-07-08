@@ -30,8 +30,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -143,7 +141,7 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 		Cliente buscaCliente = clienteService.findByCodCliente(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaCliente == null) {
-			Alerts.showAlert("Busca de cliente", null, "Nenhum cliente com esse código foi encontrado no sistema!",
+			Alerts.showAlert("Busca de cliente", null, "Nenhum cliente com esse cÃ³digo foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaCliente);
@@ -184,7 +182,7 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 		Utils.formatTableColumnDate(tableColumnDataCadastro, "dd/MM/yyyy");
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o código do cliente");
+		searchByCod.setPromptText("Insira o cÃ³digo do cliente");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewCliente.prefHeightProperty().bind(stage.heightProperty());
@@ -273,7 +271,7 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 				"Tem certeza que deseja remover esse cliente?");
 		if (result.get() == ButtonType.OK) {
 			if (clienteService == null) {
-				throw new IllegalStateException("Não existe esse cliente");
+				throw new IllegalStateException("NÃ£o existe esse cliente");
 			}
 			try {
 				clienteService.removerCliente(obj);

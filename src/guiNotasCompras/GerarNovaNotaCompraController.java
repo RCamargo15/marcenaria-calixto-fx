@@ -195,7 +195,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 
 	public ProdutoOrcamento criarProdutoOrcamento() {
 
-		ValidationException exception = new ValidationException("Erro de validaÁ„o");
+		ValidationException exception = new ValidationException("Erro de valida√ß√£o");
 
 		ProdutoOrcamento produtoTemp = new ProdutoOrcamento();
 		produtoTemp = cbCodProduto.getValue();
@@ -217,11 +217,11 @@ public class GerarNovaNotaCompraController implements Initializable {
 		cbCodProduto.setItems(obsList);
 
 		if (cbCodProduto.getValue() == null) {
-			exception.addError("Produto", "Escolha um produto da lista para compor o orÁamento");
+			exception.addError("Produto", "Escolha um produto da lista para cadastrar na NF");
 		}
 
 		if (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) {
-			exception.addError("Qtd", "Insira a quantidade de material a ser utilizado");
+			exception.addError("Qtd", "Insira a quantidade de material que est√° sendo comprado");
 		}
 
 		return produtoTemp;
@@ -240,7 +240,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		Map<String, String> errors = validateExceptions();
 		
 			if(errors.size() > 0) {
-				Alerts.showAlert("Erro ao inserir produto", null, "Preencha as informaÁıes da nota fiscal antes de cadastrar os produtos", AlertType.INFORMATION);
+				Alerts.showAlert("Erro ao inserir produto", null, "Preencha as informa√ß√µes da nota fiscal antes de cadastrar os produtos", AlertType.INFORMATION);
 			}
 			else {
 			double valorTotalNota = 0;
@@ -260,7 +260,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 				valorTotalNota = valorTotalNota + valorMoment;
 			}
 			notaCompra.setValorTotal(valorTotal);
-			txtValorTotalNotaFiscal.setText("R$ " + String.valueOf(valorTotalNota));
+			txtValorTotalNotaFiscal.setText("R$ " + String.format("%.2f", valorTotalNota));
 			listaParaCadastro.add(notaCompra);
 			
 			txtQuantidade.setText("");
@@ -271,18 +271,18 @@ public class GerarNovaNotaCompraController implements Initializable {
 	}
 
 	private Map<String, String> validateExceptions() {
-		ValidationException exception = new ValidationException("Erro de validaÁ„o");
+		ValidationException exception = new ValidationException("Erro de valida√ß√£o");
 
 		if (txtNumeroNF.getText() == null || txtNumeroNF.getText().trim().equals("")) {
-			exception.addError("NumeroNF", "Insira o n˙mero da nota fiscal");
+			exception.addError("NumeroNF", "Insira o n√∫mero da nota fiscal");
 		}
 
 		if (dpDataEmissao.getValue() == null) {
-			exception.addError("DataEmissao", "… necess·rio inserir a data de emiss„o da nota fiscal");
+			exception.addError("DataEmissao", "√â necess√°rio inserir a data de emiss√£o da nota fiscal");
 		}
 		
 		if (dpDataEntrada.getValue() == null) {
-			exception.addError("DataEntrada", "… necess·rio inserir a data em que est· sendo cadastrada essa nota fiscal");
+			exception.addError("DataEntrada", "√â necess√°rio inserir a data de entrada no sistema dessa nota fiscal");
 		}
 
 		if (cbCodFornecedor.getValue() == null) {
@@ -295,7 +295,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 			exception.addError("Qtd", "Insira a quantidade");
 		}
 		if (txtValorUnit.getText() == null || txtQuantidade.getText().trim().equals("")) {
-			exception.addError("ValorUnit", "Insira o valor unit·rio conforme nota fiscal");
+			exception.addError("ValorUnit", "Insira o valor unit√°rio conforme nota fiscal");
 		}
 
 		setErrorMessages(exception.getErrors());
@@ -349,7 +349,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());
 		} catch (DbException e) {
-			Alerts.showAlert("Erro ao gerar orÁamento", null, e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Erro ao cadastrar nota fiscal", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 

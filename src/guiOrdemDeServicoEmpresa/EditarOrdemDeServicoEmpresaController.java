@@ -275,7 +275,7 @@ public class EditarOrdemDeServicoEmpresaController implements Initializable {
 	}
 
 	public void loadStatusServico() {
-		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "EM PRODU«√O");
+		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "EM PRODU√á√ÉO");
 		statusList = FXCollections.observableArrayList(list);
 		statusServico.setItems(statusList);
 	}

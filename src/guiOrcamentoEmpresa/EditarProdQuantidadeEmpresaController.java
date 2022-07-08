@@ -98,7 +98,7 @@ public class EditarProdQuantidadeEmpresaController implements Initializable {
 			notificarDataChangeListener();
 			Utils.currentStage(event).close();
 		} catch (DbException e) {
-			Alerts.showAlert("Erro ao gerar orçamento", null, e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Erro ao gerar orÃ§amento", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 	

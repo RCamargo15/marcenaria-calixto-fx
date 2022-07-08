@@ -106,7 +106,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 
 		if (txtBuscarCodOrdem == null || txtBuscarCodOrdem.getText().equals("")) {
 			Alerts.showAlert("Erro ao buscar", null,
-					"Campo de busca não pode estar vazio. Insira o número de orçamento", AlertType.INFORMATION);
+					"Campo de busca nÃ£o pode estar vazio. Insira o cÃ³digo da ordem de serviÃ§o", AlertType.INFORMATION);
 		}
 		OrdemServicoCliente osc = ordemServicoClienteService
 				.findByNumPedido(Integer.parseInt(txtBuscarCodOrdem.getText()));
@@ -142,7 +142,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 		initializeNodes();
 		initEditButtons();
 		initRemoveButtons();
-		txtBuscarCodOrdem.setPromptText("Insira Nº de orçamento");
+		txtBuscarCodOrdem.setPromptText("Insira NÂº de ordem de serviÃ§o");
 	}
 
 	public void initializeNodes() {
@@ -203,7 +203,7 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 			controller.subscribeDataChangeListener(this);
 
 			Stage stage = new Stage();
-			stage.setTitle("Editar ordem de serviço");
+			stage.setTitle("Editar ordem de serviÃ§o");
 			stage.setScene(new Scene(vBox));
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -256,18 +256,18 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 	}
 
 	private void excluirOrdemServicoCliente(OrdemServicoCliente obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORDEM DE SERVIÇO",
-				"Tem certeza que deseja remover essa ordem de serviço?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORDEM DE SERVIÃ‡O",
+				"Tem certeza que deseja remover essa ordem de serviÃ§o?");
 		if (result.get() == ButtonType.OK) {
 			if (ordemServicoClienteService == null) {
-				throw new IllegalStateException("Orcamento vazio");
+				throw new IllegalStateException("Ordem de servico vazio");
 			}
 			try {
 				ordemServicoClienteService.removerOrdemServicoCliente(obj);
 				updateTableViewOrdemClienteVisualizar();
 
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir ordem de serviço", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir ordem de serviÃ§o", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

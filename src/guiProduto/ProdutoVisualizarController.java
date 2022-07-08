@@ -96,7 +96,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 		Produto buscaProduto = produtoService.findByCodProduto(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaProduto == null) {
-			Alerts.showAlert("Busca de produto", null, "Nenhum produto com esse cÛdigo foi encontrado no sistema!",
+			Alerts.showAlert("Busca de produto", null, "Nenhum produto com esse c√≥digo foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaProduto);
@@ -116,7 +116,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("descProduto"));
 		tableColumnPrecoUnit.setCellValueFactory(new PropertyValueFactory<>("precoUnit"));
 
-		searchByCod.setPromptText("Insira o cÛdigo do produto");
+		searchByCod.setPromptText("Insira o c√≥digo do produto");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewProduto.prefHeightProperty().bind(stage.heightProperty());
@@ -173,7 +173,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 			cadastroController.updateProdutoData();
 
 			Stage cadastroProdutoStage = new Stage();
-			cadastroProdutoStage.setTitle("Cadastro de produto");
+			cadastroProdutoStage.setTitle("Editar produto");
 			cadastroProdutoStage.setScene(new Scene(vBox));
 			cadastroProdutoStage.setResizable(false);
 			cadastroProdutoStage.initOwner(parentStage);
@@ -231,7 +231,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 				"Tem certeza que deseja remover esse produto?");
 		if (result.get() == ButtonType.OK) {
 			if (produtoService == null) {
-				throw new IllegalStateException("Produto est· vazio");
+				throw new IllegalStateException("Produto est√° vazio");
 			}
 			try {
 				produtoService.removerProduto(obj);

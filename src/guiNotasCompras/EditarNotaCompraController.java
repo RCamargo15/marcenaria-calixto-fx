@@ -173,10 +173,10 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 	@FXML
 	public void onBtAtualizarAction(ActionEvent event) {
 		if (notasCompras == null) {
-			throw new IllegalStateException("Orcamento null");
+			throw new IllegalStateException("NotaFiscal null");
 		}
 		if (notasComprasService == null) {
-			throw new IllegalStateException("Orcamento null");
+			throw new IllegalStateException("NotaFiscal null");
 		}
 		String nf2 = notasCompras.getNumeroNF();
 		List<NotasCompras> listaAtualizacao = notasComprasService.findByNumeroNFList(nf2);
@@ -204,19 +204,18 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 	}
 
 	private Map<String, String> validateExceptions() {
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 
 		if (txtNumeroNF.getText() == null || txtNumeroNF.getText().trim().equals("")) {
-			exception.addError("NumeroNF", "Insira o número da nota fiscal");
+			exception.addError("NumeroNF", "Insira o nÃºmero da nota fiscal");
 		}
 
 		if (dpDataEmissao.getValue() == null) {
-			exception.addError("DataEmissao", "É necessário inserir a data de emissão da nota fiscal");
+			exception.addError("DataEmissao","Ã‰ necessÃ¡rio inserir a data de emissÃ£o da nota fiscal");
 		}
 
 		if (dpDataEntrada.getValue() == null) {
-			exception.addError("DataEntrada",
-					"É necessário inserir a data em que está sendo cadastrada essa nota fiscal");
+			exception.addError("DataEntrada", "Ã‰ necessÃ¡rio inserir a data de entrada dessa nota no sistema");
 		}
 
 		if (cbCodFornecedor.getValue() == null) {
@@ -401,11 +400,11 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 	}
 
 	private void excluirNotasCompras(NotasCompras obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO",
-				"Tem certeza que deseja remover esse orçamento?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR NOTA FISCAL",
+				"Tem certeza que deseja remover essa nota fiscal?");
 		if (result.get() == ButtonType.OK) {
 			if (notasComprasService == null) {
-				throw new IllegalStateException("Orcamento vazio");
+				throw new IllegalStateException("NF vazio");
 			}
 
 			List<EntradaProduto> listaEntrada = entradaProdutoService.findAll();
@@ -420,7 +419,7 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 				}
 
 			} catch (DbException e) {
-				Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+				Alerts.showAlert("Erro ao excluir nota fiscal", null, e.getMessage(), AlertType.ERROR);
 			}
 		}
 	}

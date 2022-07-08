@@ -93,7 +93,7 @@ public class EditarProdQuantidadeNotaCompraController implements Initializable {
 	@FXML
 	private void onBtAtualizarAction(ActionEvent event) {
 		if (notasCompras == null || notasComprasService == null) {
-			throw new IllegalStateException("Orcamentos null");
+			throw new IllegalStateException("Nota fiscal null");
 		}
 
 		double valorTotalNota = 0;
@@ -140,7 +140,7 @@ public class EditarProdQuantidadeNotaCompraController implements Initializable {
 			notificarDataChangeListener();
 			Utils.currentStage(event).close();
 		} catch (DbException e) {
-			Alerts.showAlert("Erro ao gerar orçamento", null, e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Erro ao editar quantidade de produto", null, e.getMessage(), AlertType.ERROR);
 			e.printStackTrace();
 		}
 	}

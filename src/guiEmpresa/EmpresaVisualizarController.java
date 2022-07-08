@@ -136,7 +136,7 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 		Empresa buscaEmpresa = empresaService.findByCodEmpresa(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaEmpresa == null) {
-			Alerts.showAlert("Busca de empresa", null, "Nenhuma empresa com esse código foi encontrado no sistema!",
+			Alerts.showAlert("Busca de empresa", null, "Nenhuma empresa com esse cÃ³digo foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEmpresa);
@@ -176,7 +176,7 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 		tableColumnSite.setCellValueFactory(new PropertyValueFactory<>("site"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o código da empresa");
+		searchByCod.setPromptText("Insira o cï¿½digo da empresa");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEmpresa.prefHeightProperty().bind(stage.heightProperty());
@@ -266,7 +266,7 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 				"Tem certeza que deseja remover essa empresa?");
 		if (result.get() == ButtonType.OK) {
 			if (empresaService == null) {
-				throw new IllegalStateException("Empresa está vazio");
+				throw new IllegalStateException("Empresa estÃ¡ vazio");
 			}
 			try {
 				empresaService.removerEmpresa(obj);

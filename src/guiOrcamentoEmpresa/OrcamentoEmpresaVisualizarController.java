@@ -47,7 +47,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Empresa;
-import marcenaria.entities.OrcamentoCliente;
 import marcenaria.entities.OrcamentoEmpresa;
 
 public class OrcamentoEmpresaVisualizarController implements Initializable, DataChangeListener {
@@ -148,7 +147,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 				.findByNumOrcamento(Integer.parseInt(searchByCod.getText()));
 
 		if (buscaOrcamentoEmpresa == null) {
-			Alerts.showAlert("Busca de orçamentos", null, "Nenhum orçamento encontrado no sistema", AlertType.ERROR);
+			Alerts.showAlert("Busca de orÃ§amentos", null, "Nenhum orÃ§amento encontrado no sistema", AlertType.ERROR);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaOrcamentoEmpresa);
 			tableViewOrcamentoEmpresa.setItems(obsList);
@@ -194,7 +193,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 		
-		searchByCod.setPromptText("Insira código busca");
+		searchByCod.setPromptText("Insira o cÃ³digo do orÃ§amento");
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrcamentoEmpresa.prefHeightProperty().bind(stage.heightProperty());
@@ -218,7 +217,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 			orcamentoController.subscribeDataChangeListener(this);
 			
 			Stage orcamentoEmpresaStage = new Stage();
-			orcamentoEmpresaStage.setTitle("Novo orçamento");
+			orcamentoEmpresaStage.setTitle("Novo orÃ§amento");
 			orcamentoEmpresaStage.setScene(new Scene(vBox));
 			orcamentoEmpresaStage.setResizable(false);
 			orcamentoEmpresaStage.initOwner(parentStage);
@@ -245,7 +244,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 			editarController.subscribeDataChangeListener(this);
 			
 			Stage editarOrcamentoStage = new Stage();
-			editarOrcamentoStage.setTitle("Editar orçamento");
+			editarOrcamentoStage.setTitle("Editar orÃ§amento");
 			editarOrcamentoStage.setScene(new Scene(vBox));
 			editarOrcamentoStage.setResizable(false);
 			editarOrcamentoStage.initOwner(parentStage);
@@ -270,7 +269,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 			controller.receberDadosParaCriarOS(obj);
 			
 			Stage stage = new Stage();
-			stage.setTitle("Gerar ordem de serviço");
+			stage.setTitle("Gerar ordem de serviÃ§o");
 			stage.setScene(new Scene(vBox));
 			stage.setResizable(false);
 			stage.initModality(Modality.WINDOW_MODAL);
@@ -287,7 +286,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 	private void initGerarOrcamentoButtons() {
 		tableColumnGerarOrdemServico.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnGerarOrdemServico.setCellFactory(param -> new TableCell<OrcamentoEmpresa, OrcamentoEmpresa>() {
-			private final Button button = new Button("Gerar Ordem de Serviço");
+			private final Button button = new Button("Gerar Ordem de ServiÃ§o");
 
 			@Override
 			protected void updateItem(OrcamentoEmpresa obj, boolean empty) {
@@ -306,7 +305,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 	@FXML
 	private void onBtGerarPDFAction(OrcamentoEmpresa obj) {
 		try {
-			JFileChooser fc = new JFileChooser("F:\\Users\\rafae\\Desktop\\Exe Teste");
+			JFileChooser fc = new JFileChooser("C:\\Users\\ew21\\Desktop\\OrÃ§amentos\\Pessoa Juridica Empresas");
 			File fileOrcamento = new File("");
 			int returnValue = fc.showOpenDialog(null);
 			if(returnValue == JFileChooser.APPROVE_OPTION) {
@@ -330,7 +329,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 			field = pDAcroForm.getField("txtSoliciante");
 			field.setValue(obj.getNomeResponsavel());
 			field = pDAcroForm.getField("txtEndereco");
-			field.setValue(obj.getCodEmpresa().getRua()+", Nº"+obj.getCodEmpresa().getNumero());
+			field.setValue(obj.getCodEmpresa().getRua()+", NÂº "+obj.getCodEmpresa().getNumero());
 			field = pDAcroForm.getField("txtTelefone");
 			field.setValue("("+obj.getCodEmpresa().getDdd()+")"+obj.getCodEmpresa().getTelefone());
 			field = pDAcroForm.getField("txtEmail");
@@ -387,7 +386,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 	}
 	
 	private void excluirOrcamentoEmpresa(OrcamentoEmpresa obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO", "Tem certeza que deseja remover esse orçamento?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÃ‡AMENTO", "Tem certeza que deseja remover esse orÃ§amento?");
 			if(result.get() == ButtonType.OK) {
 				if(orcamentoEmpresaService == null) {
 					throw new IllegalStateException("Orcamento vazio");
@@ -397,7 +396,7 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 					updateTableViewOrcamentoEmpresa();
 				}
 				catch(DbException e) {
-					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+					Alerts.showAlert("Erro ao excluir orÃ§amento", null, e.getMessage(), AlertType.ERROR);
 				}
 			}
 	}

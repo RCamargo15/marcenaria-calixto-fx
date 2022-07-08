@@ -216,7 +216,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 
 	public ProdutoOrcamento criarProdutoOrcamento() {
 
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 
 		ProdutoOrcamento produtoTemp = new ProdutoOrcamento();
 		produtoTemp = cbCodProduto.getValue();
@@ -237,7 +237,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		cbCodProduto.setItems(obsList);
 
 		if (cbCodProduto.getValue() == null) {
-			exception.addError("Produto", "Escolha um produto da lista para compor o orçamento");
+			exception.addError("Produto", "Escolha um produto da lista para compor o orÃ§amento");
 		}
 
 		if (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) {
@@ -302,7 +302,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 			valorFinal = valorTotal + metroQuad;
 		}
 	
-		txtValorTotalOrcamento.setText("R$ " + String.valueOf(valorFinal));
+		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f", valorFinal));
 
 		for (OrcamentoEmpresa orcamento : listaParaCadastro) {
 			orcamento.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
@@ -314,14 +314,14 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 	
 
 	private Map<String, String> ValidateExceptions() {
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 
 		if (txtNumOrcamento.getText() == null || txtNumOrcamento.getText().trim().equals("")) {
-			exception.addError("NumOrcamento", "Insira um número de orçamento");
+			exception.addError("NumOrcamento", "Insira um nÃºmero de orÃ§amento");
 		}
 
 		if (dpDataOrcamento.getValue() == null) {
-			exception.addError("DataOrcamento", "É necessário inserir uma data");
+			exception.addError("DataOrcamento","Ã‰ necessÃ¡rio inserir uma data");
 		}
 
 		if ((txtTelefoneEmpresa.getText() == null || txtTelefoneEmpresa.getText().trim().equals(""))
@@ -334,7 +334,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		}
 
 		if (txtDescricaoServico.getText() == null || txtDescricaoServico.getText().trim().equals("")) {
-			exception.addError("DescServico", "Descreva o serviço a ser realizado");
+			exception.addError("DescServico", "Descreva o serviÃ‡o a ser realizado");
 		}
 
 		if (cbCodEmpresa.getValue() == null) {
@@ -365,7 +365,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 			if (errors.size() > 0) {
 				setErrorMessages(errors);
 				Alerts.showAlert("Erro ao cadastrar", null,
-						"É necessário inserir todos os dados pendentes antes de cadastrar", AlertType.INFORMATION);
+						"Ã‰ necessÃ¡rio inserir todos os dados pendentes antes de cadastrar", AlertType.INFORMATION);
 			} else {
 				for (OrcamentoEmpresa empresa : listaParaInserir) {
 					empresa.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
@@ -377,7 +377,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());
 		} catch (DbException e) {
-			Alerts.showAlert("Erro ao gerar orçamento", null, e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Erro ao gerar orÃ§amento", null, e.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -465,7 +465,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		initRemoverButtons();
 		initializeTables();
 
-		erroSomaValores.setText("O orçamento deve ser calculado ou pelo valor do M² ou pela mão de obra, sendo este multiplicado pelo valor inserido. Ex: Mão de obra: 1.5");
+		erroSomaValores.setText("O orÃ§amento deve ser calculado ou pelo valor do MÂ² ou pela mÃ£o de obra, sendo este multiplicado pelo valor inserido. Ex: MÃ£o de obra: 1.5");
 		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
 		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
 		

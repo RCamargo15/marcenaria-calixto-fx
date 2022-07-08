@@ -150,7 +150,11 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 	@Override
 	public void deleteByCodNotasCompras(Integer codNotasCompras) {
 		PreparedStatement st = null;
+		PreparedStatement st1 = null;
 		try {
+			st1 = conn.prepareStatement("DELETE FROM MARCENARIA.ENTRADA_PRODUTO WHERE NUMERO_NF = ?");
+			st1.setInt(1, codNotasCompras);
+			st1.executeUpdate();
 			st = conn.prepareStatement("DELETE FROM MARCENARIA.NOTA_COMPRA_MATERIAL WHERE COD_NOTA = ?");
 			st.setInt(1, codNotasCompras);
 			st.executeUpdate();

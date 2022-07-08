@@ -134,7 +134,7 @@ public class EditarSaidaDeProdutoEstoqueController implements Initializable {
 	}
 
 	private SaidaProduto getSaidaProdutoData() {
-		ValidationException exception = new ValidationException("Erro de validaÁ„o");
+		ValidationException exception = new ValidationException("Erro de valida√ß√£o");
 
 		SaidaProduto obj = new SaidaProduto();
 
@@ -152,7 +152,7 @@ public class EditarSaidaDeProdutoEstoqueController implements Initializable {
 		obj.setQuantidade(Utils.tryParseToInt(txtQuantidade.getText()));
 
 		if (comboBoxFuncionario.getValue() == null) {
-			exception.addError("func", "Selecione o funcion·rio que ir· receber esse material");
+			exception.addError("func", "Selecione o funcion√°rio que ir√° receber esse material");
 		} else {
 			obj.setRespSaida(comboBoxFuncionario.getValue());
 		}

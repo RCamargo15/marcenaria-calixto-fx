@@ -123,7 +123,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 		SaidaProduto buscaSaidaProduto = saidaProdutoService.findByCodSaida(Utils.tryParseToInt(searchByCod.getText()));
 
 		if (buscaSaidaProduto == null) {
-			Alerts.showAlert("Busca de saidaProduto", null, "Nenhum registro de saída com esse código foi encontrado no sistema!",
+			Alerts.showAlert("Busca de saÃ­da de produto", null, "Nenhum registro de saÃ­da com esse cÃ³digo foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaSaidaProduto);
@@ -148,7 +148,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("respSaida"));
 
-		searchByCod.setPromptText("Insira o código de saída");
+		searchByCod.setPromptText("Insira o cï¿½digo de saï¿½da");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewSaidaProduto.prefHeightProperty().bind(stage.heightProperty());
@@ -184,7 +184,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 			saidaProdutoController.updateSaidaProdutoData();
 			
 			Stage saidaProdutoEstoqueStage = new Stage();
-			saidaProdutoEstoqueStage.setTitle("Editar reigstro de saída de produtos do estoque");
+			saidaProdutoEstoqueStage.setTitle("Editar reigstro de saï¿½da de produtos do estoque");
 			saidaProdutoEstoqueStage.setScene(new Scene(vBox));
 			saidaProdutoEstoqueStage.setResizable(false);
 			saidaProdutoEstoqueStage.initOwner(parentStage);
@@ -243,7 +243,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 				"Tem certeza que deseja remover esse registro de retirada de produto?");
 		if (result.get() == ButtonType.OK) {
 			if (saidaProdutoService == null) {
-				throw new IllegalStateException("SaidaProduto está vazio");
+				throw new IllegalStateException("SaidaProduto estï¿½ vazio");
 			}
 			try {
 				saidaProdutoService.removerSaida(obj);

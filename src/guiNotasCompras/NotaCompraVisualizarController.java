@@ -40,6 +40,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.EntradaProduto;
+import marcenaria.entities.Estoque;
 import marcenaria.entities.Fornecedor;
 import marcenaria.entities.NotasCompras;
 
@@ -135,13 +136,13 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 	@FXML
 	public void onBtBuscar() {
 		if (notasComprasService == null) {
-			throw new IllegalStateException("Orcamento Fornecedor null");
+			throw new IllegalStateException("Nota fiscal null");
 		}
 
 		NotasCompras buscaNotasCompras = notasComprasService.findByNumeroNFSingle(txtSearchByCod.getText());
 
 		if (buscaNotasCompras == null) {
-			Alerts.showAlert("Busca de orçamentos", null, "Nenhum nota fiscal encontrada no sistema", AlertType.ERROR);
+			Alerts.showAlert("Busca de notas fiscais", null, "Nenhum nota fiscal encontrada no sistema", AlertType.ERROR);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaNotasCompras);
 			tableViewNotasCompras.setItems(obsList);
@@ -182,7 +183,7 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 		tableColumnDataEntrada.setCellValueFactory(new PropertyValueFactory<>("dataEntrada"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 		
-		txtSearchByCod.setPromptText("Insira código busca");
+		txtSearchByCod.setPromptText("Insira de cÃ³digo de busca");
 		
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewNotasCompras.prefHeightProperty().bind(stage.heightProperty());
@@ -233,7 +234,7 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 			editarController.subscribeDataChangeListener(this);
 			
 			Stage editarOrcamentoStage = new Stage();
-			editarOrcamentoStage.setTitle("Editar orçamento");
+			editarOrcamentoStage.setTitle("Editar nota fiscal");
 			editarOrcamentoStage.setScene(new Scene(vBox));
 			editarOrcamentoStage.setResizable(false);
 			editarOrcamentoStage.initOwner(parentStage);
@@ -305,21 +306,27 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 	}
 	
 	private void excluirNotasCompras(NotasCompras obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO", "Tem certeza que deseja remover esse orçamento?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR NOTA FISCAL", "Tem certeza que deseja remover essa nota fiscal?");
 			if(result.get() == ButtonType.OK) {
 				if(notasComprasService == null) {
-					throw new IllegalStateException("Orcamento vazio");
+					throw new IllegalStateException("NF vazio");
 				}
 				try {
 					notasComprasService.removerNotaCompra(obj);
 					List<EntradaProduto> entradaProdutoList = entradaProdutoService.findByNumeroNF(obj.getNumeroNF());
 					for(EntradaProduto entry : entradaProdutoList) {
 						entradaProdutoService.removerEntrada(entry);
+						Estoque s = estoqueService.findByCodProduto(entry.getCodProduto().getCodProduto());
+						Integer atual = s.getEstoqueAtual() - entry.getQuantidade().getQuantidade();
+						s.setEstoqueAtual(atual);
+						estoqueService.saveOrUpdate(s);
+						entradaProdutoService.removerEntrada(entry);
 					}
+					
 					updateTableViewNotasCompras();
 				}
 				catch(DbException e) {
-					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+					Alerts.showAlert("Erro ao excluir nota fiscal", null, e.getMessage(), AlertType.ERROR);
 				}
 			}
 	}

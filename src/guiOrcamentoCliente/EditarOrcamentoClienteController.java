@@ -159,7 +159,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 	}
 	
 	public OrcamentoCliente getOrcamentoClienteData() {
-		ValidationException exception = new ValidationException("Erro de validação");
+		ValidationException exception = new ValidationException("Erro de validaÃ§Ã£o");
 		
 		OrcamentoCliente obj = new OrcamentoCliente();
 		
@@ -171,7 +171,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 		obj.setDescServico(txtDescricaoServico.getText());
 		
 		if(dpDataOrcamento == null) {
-			exception.addError("dataOrcamento", "Insira a data em que esse orçamento está sendo realizado");
+			exception.addError("dataOrcamento", "Insira a data em que esse orÃ§amento estÃ¡ sendo realizado");
 		}else {
 			Instant instant = Instant.from(dpDataOrcamento.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataOrcamento(Date.from(instant));
@@ -181,11 +181,11 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 		obj.setObs(txtObs.getText());
 		
 		if (cbCodCliente.getValue() == null) {
-			exception.addError("codCliente", "Você deve selecionar um cliente para esse orçamento");
+			exception.addError("codCliente", "VocÃª deve selecionar um cliente para esse orÃ§amento");
 		}
 		
 		if (txtDescricaoServico.getText() == null || txtDescricaoServico.getText().trim().equals("")) {
-			exception.addError("descServico", "Descreva o serviço solicitado pelo cliente");
+			exception.addError("descServico", "Descreva o serviÃ§o solicitado pelo cliente");
 		}
 		
 		if(exception.getErrors().size() > 0) {
@@ -378,7 +378,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 	}
 	
 	private void excluirOrcamentoCliente(OrcamentoCliente obj) {
-		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÇAMENTO", "Tem certeza que deseja remover esse orçamento?");
+		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR ORÃ‡AMENTO", "Tem certeza que deseja remover esse orÃ§amento?");
 			if(result.get() == ButtonType.OK) {
 				if(orcamentoClienteService == null) {
 					throw new IllegalStateException("Orcamento vazio");
@@ -389,7 +389,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 
 				}
 				catch(DbException e) {
-					Alerts.showAlert("Erro ao excluir orçamento", null, e.getMessage(), AlertType.ERROR);
+					Alerts.showAlert("Erro ao excluir orÃ§amento", null, e.getMessage(), AlertType.ERROR);
 				}
 			}
 	}
