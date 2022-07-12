@@ -30,8 +30,8 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement(
-					"INSERT INTO MARCENARIA.NOTA_COMPRA_MATERIAL(COD_FORNECEDOR, NUMERO_NF, COD_PRODUTO, QUANTIDADE, VALOR_UNIT, VALOR_TOTAL, VALOR_TOTAL_NOTA, "
-							+ "CHAVE_NF, DATA_EMISSAO, DATA_ENTRADA, OBS)" + "VALUES(?, ?, ? ,?, ?, ?, ?, ?, ?, ? ,?)",
+					"INSERT INTO MARCENARIA.NOTA_COMPRA_MATERIAL(COD_FORNECEDOR, NUMERO_NF, COD_PRODUTO, QUANTIDADE, VALOR_UNIT, VALOR_TOTAL, VALOR_DESCONTO, VALOR_TOTAL_NOTA, "
+							+ "CHAVE_NF, DATA_EMISSAO, DATA_ENTRADA, OBS)" + "VALUES(?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setInt(1, obj.getCodFornecedor().getCodFornecedor());
@@ -40,13 +40,14 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 			st.setInt(4, obj.getQuantidade());
 			st.setDouble(5, obj.getValorUnit());
 			st.setDouble(6, obj.getValorTotal());
-			st.setDouble(7, obj.getValorTotalNota());
-			st.setString(8, obj.getChaveNF());
-			st.setDate(9, new java.sql.Date(obj.getDataEmissao().getTime()));
-			st.setDate(10, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setString(11, obj.getObs());
+			st.setDouble(7, obj.getValorDesconto());
+			st.setDouble(8, obj.getValorTotalNota());
+			st.setString(9, obj.getChaveNF());
+			st.setDate(10, new java.sql.Date(obj.getDataEmissao().getTime()));
+			st.setDate(11, new java.sql.Date(obj.getDataEntrada().getTime()));
+			st.setString(12, obj.getObs());
 			if (obj.getObs() != null) {
-				st.setString(11, obj.getObs().toUpperCase());
+				st.setString(12, obj.getObs().toUpperCase());
 			}
 
 			int rowsAffected = st.executeUpdate();
@@ -101,14 +102,15 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		try {
 			st = conn.prepareStatement(
 					"UPDATE MARCENARIA.NOTA_COMPRA_MATERIAL" + " SET  COD_PRODUTO = ?, QUANTIDADE = ?, "
-							+ " VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_TOTAL_NOTA = ? WHERE COD_NOTA = ?");
+							+ " VALOR_UNIT = ?, VALOR_TOTAL = ?, VALOR_DESCONTO = ?, VALOR_TOTAL_NOTA = ? WHERE COD_NOTA = ?");
 
 			st.setInt(1, obj.getCodProduto().getCodProduto());
 			st.setInt(2, obj.getQuantidade());
 			st.setDouble(3, obj.getValorUnit());
 			st.setDouble(4, obj.getQuantidade() * obj.getValorUnit());
-			st.setDouble(5, obj.getValorTotalNota());
-			st.setInt(6, obj.getCodNota());
+			st.setDouble(5, obj.getValorDesconto());
+			st.setDouble(6, obj.getValorTotalNota());
+			st.setInt(7, obj.getCodNota());
 
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -361,6 +363,7 @@ public class NotasComprasDaoJDBC implements NotasComprasDao {
 		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setValorUnit(rs.getDouble("VALOR_UNIT"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
+		obj.setValorDesconto(rs.getDouble("VALOR_DESCONTO"));
 		obj.setValorTotalNota(rs.getDouble("VALOR_TOTAL_NOTA"));
 		obj.setChaveNF(rs.getString("CHAVE_NF"));
 		obj.setDataEmissao(new java.util.Date(rs.getTimestamp("DATA_EMISSAO").getTime()));

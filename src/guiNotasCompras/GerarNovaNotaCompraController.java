@@ -101,6 +101,11 @@ public class GerarNovaNotaCompraController implements Initializable {
 	private TextField txtValorUnit;
 	@FXML
 	private Label erroValorUnit;
+	
+	@FXML
+	private TextField txtValorDesconto;
+	@FXML
+	private Label erroValorDesconto;
 
 	@FXML
 	private TableColumn<ProdutoOrcamento, ProdutoOrcamento> tableColumnEditar;
@@ -118,7 +123,13 @@ public class GerarNovaNotaCompraController implements Initializable {
 	private TableColumn<ProdutoOrcamento, Double> tableColumnValorUnit;
 	
 	@FXML
+	private TableColumn<ProdutoOrcamento, Double> tableColumnValorDesconto;
+	
+	@FXML
 	private TableColumn<ProdutoOrcamento, Double> tableColumnValorTotal;
+	
+	@FXML
+	private TableColumn<ProdutoOrcamento, Double> tableColumnValorTotalFinal;
 
 	@FXML
 	private TableColumn<ProdutoOrcamento, Integer> tableColumnQuantidade;
@@ -175,6 +186,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		double valorTotal = 1;
 		double valorUnit = 1;
 		double valorTotalNota = 1;
+		double valorDesconto = 1;
 
 		obj.setNumeroNF(txtNumeroNF.getText());
 		obj.setCodFornecedor(cbCodFornecedor.getValue());
@@ -182,6 +194,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		obj.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
 		obj.setValorUnit(valorUnit);
 		obj.setValorTotal(valorTotal);
+		obj.setValorDesconto(valorDesconto);
 		obj.setValorTotalNota(valorTotalNota);
 		Instant instant = Instant.from(dpDataEmissao.getValue().atStartOfDay(ZoneId.systemDefault()));
 		obj.setDataEmissao(Date.from(instant));
@@ -197,13 +210,29 @@ public class GerarNovaNotaCompraController implements Initializable {
 
 		ValidationException exception = new ValidationException("Erro de validação");
 
+		Double valorDesconto = 0.0;
 		ProdutoOrcamento produtoTemp = new ProdutoOrcamento();
 		produtoTemp = cbCodProduto.getValue();
 		produtoTemp.setCodProduto(cbCodProduto.getValue().getCodProduto());
 		produtoTemp.setDescProduto(cbCodProduto.getValue().getDescProduto());
 		produtoTemp.setPrecoProd(Double.parseDouble(txtValorUnit.getText()));
 		produtoTemp.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-		produtoTemp.setValorTotal( (Integer.parseInt(txtQuantidade.getText())*(Double.parseDouble(txtValorUnit.getText()))));
+		if(txtValorDesconto.getText().equals("") || txtValorDesconto.getText() == null) {
+			produtoTemp.setValorDesconto(0.0);
+		} else {
+			produtoTemp.setValorDesconto(Double.parseDouble(txtValorDesconto.getText()));
+		}
+		
+		Double valorTotal = Integer.parseInt(txtQuantidade.getText()) * Double.parseDouble(txtValorUnit.getText());
+		
+		if(txtValorDesconto.getText() == null || txtValorDesconto.getText().equals("")) {
+			valorDesconto = 0.0;
+		} else {
+			valorDesconto = Double.parseDouble(txtValorDesconto.getText());
+		}
+		
+		produtoTemp.setValorTotal(valorTotal);
+		produtoTemp.setValorTotalFinal(valorTotal - valorDesconto);
 
 		prodOrcamento.add(produtoTemp);
 		updateTableViewNotasCompras();
@@ -223,9 +252,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 		if (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) {
 			exception.addError("Qtd", "Insira a quantidade de material que está sendo comprado");
 		}
-
 		return produtoTemp;
-
 	}
 
 	public void updateTableViewNotasCompras() {
@@ -245,26 +272,39 @@ public class GerarNovaNotaCompraController implements Initializable {
 			else {
 			double valorTotalNota = 0;
 			double valorTotal = 0;
-			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
+			double valorTotalFinal = 0;
+			double valorDesconto = 0;
 			NotasCompras notaCompra = getNotasComprasData();
+			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
 
 			Produto produto = produtoService.findByCodProduto(produtoTemp.getCodProduto());
 
 			notaCompra.setCodProduto(produto);
 			notaCompra.setValorUnit(Double.parseDouble(txtValorUnit.getText()));
 			
-			valorTotal = (Double.parseDouble(txtValorUnit.getText())) * (Integer.parseInt(txtQuantidade.getText()));
+			if(txtValorDesconto.getText() == null || txtValorDesconto.getText().equals("")) {
+				valorDesconto = 0.0;
+				notaCompra.setValorDesconto(0.0);
+			}
+			else {
+				valorDesconto = Double.parseDouble(txtValorDesconto.getText());
+				notaCompra.setValorDesconto(Double.parseDouble(txtValorDesconto.getText()));
+			}
+			
+			valorTotal = Double.parseDouble(txtValorUnit.getText()) * Integer.parseInt(txtQuantidade.getText());
+			valorTotalFinal = valorTotal - valorDesconto;
 			
 			for (ProdutoOrcamento prod : prodOrcamento) {
-				double valorMoment = prod.getPrecoProd() * prod.getQuantidade();
+				double valorMoment = prod.getPrecoProd() * prod.getQuantidade() - prod.getValorDesconto();
 				valorTotalNota = valorTotalNota + valorMoment;
 			}
-			notaCompra.setValorTotal(valorTotal);
-			txtValorTotalNotaFiscal.setText("R$ " + String.valueOf(valorTotalNota));
+			notaCompra.setValorTotal(valorTotalFinal);
+			txtValorTotalNotaFiscal.setText("R$ " + String.format("%.2f",valorTotalNota));
 			listaParaCadastro.add(notaCompra);
 			
 			txtQuantidade.setText("");
 			txtValorUnit.setText("");
+			txtValorDesconto.setText("");
 			}
 		
 		return listaParaCadastro;
@@ -314,38 +354,31 @@ public class GerarNovaNotaCompraController implements Initializable {
 		List<Estoque> listaEstoque = estoqueService.findAll();
 		listaParaInserir.addAll(listaParaCadastro);
 		try {
-				for (NotasCompras nf : listaParaInserir) {
-					nf.setValorTotalNota(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalNotaFiscal.getText())));
-					EntradaProduto entradaProduto = new EntradaProduto();
-					Estoque estoque = new Estoque();
-					
-					int qtdEstoque = 0;
-					entradaProduto.setNumeroNF(nf);
-					entradaProduto.setCodProduto(nf.getCodProduto());
-					entradaProduto.setDataEntrada(nf.getDataEntrada());
-					entradaProduto.setQuantidade(nf.getQuantidade());
-					entradaProduto.setValorUnit(nf);
-					entradaProduto.setValorTotal(nf);
-					entradaProduto.setValorTotalNota(nf);
-					
-					
-					estoque.setCodProduto(entradaProduto.getCodProduto());
-					qtdEstoque = entradaProduto.getQuantidade();
-				
-					
-					for(Estoque stock : listaEstoque) {
-						if(stock.getCodProduto().equals(estoque.getCodProduto())) {
-							stock.setEstoqueAtual(stock.getEstoqueAtual() + qtdEstoque);
-							estoqueService.saveOrUpdate(stock);
-						}
+			for (NotasCompras nf : listaParaInserir) {
+				nf.setValorTotalNota(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalNotaFiscal.getText())));
+				EntradaProduto entradaProduto = new EntradaProduto();
+				Estoque estoque = new Estoque();
+				int qtdEstoque = 0;
+				entradaProduto.setNumeroNF(nf);
+				entradaProduto.setCodProduto(nf.getCodProduto());
+				entradaProduto.setDataEntrada(nf.getDataEntrada());
+				entradaProduto.setQuantidade(nf);
+				entradaProduto.setValorUnit(nf);
+				entradaProduto.setValorTotal(nf);
+				entradaProduto.setValorTotalNota(nf);
+				estoque = estoqueService.findByCodProduto(entradaProduto.getCodProduto().getCodProduto());
+				qtdEstoque = entradaProduto.getQuantidade().getQuantidade();
+				for (Estoque stock : listaEstoque) {
+					if (stock.getId().equals(estoque.getId())) {
+						stock.setEstoqueAtual(stock.getEstoqueAtual() + qtdEstoque);
+						estoqueService.saveOrUpdate(stock);
 					}
-					
-					notasComprasService.saveOrUpdate(nf);
-					entradaProdutoService.saveOrUpdate(entradaProduto);
 				}
+				notasComprasService.saveOrUpdate(nf);
+				entradaProdutoService.saveOrUpdate(entradaProduto);
+			}
 				notificarDataChangeListener();
 				Utils.currentStage(event).close();
-			
 		} catch (ValidationException e) {
 			setErrorMessages(e.getErrors());
 		} catch (DbException e) {
@@ -441,6 +474,8 @@ public class GerarNovaNotaCompraController implements Initializable {
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("precoProd"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+		tableColumnValorTotalFinal.setCellValueFactory(new PropertyValueFactory<>("valorTotalFinal"));
+		tableColumnValorDesconto.setCellValueFactory(new PropertyValueFactory<>("valorDesconto"));
 		
 		Constraints.setTextFieldInteger(txtNumeroNF);
 		Constraints.setTextFieldInteger(txtChaveNF);
@@ -449,6 +484,8 @@ public class GerarNovaNotaCompraController implements Initializable {
 	
 		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
 		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+		Utils.formatTableColumnDouble(tableColumnValorTotalFinal, 2);
+		Utils.formatTableColumnDouble(tableColumnValorDesconto, 2);
 		Utils.formatDatePicker(dpDataEmissao, "dd/MM/yyyy");
 		Utils.formatDatePicker(dpDataEntrada, "dd/MM/yyyy");
 	}
@@ -471,22 +508,21 @@ public class GerarNovaNotaCompraController implements Initializable {
 					prodOrcamento.remove(obj);
 					updateTableViewNotasCompras();
 
-					double valorTotal = Double.parseDouble(txtValorTotalNotaFiscal.getText());
-					double valorRem = obj.getPrecoProd() * obj.getQuantidade();
+					double valorTotal = Double.parseDouble(Utils.getValorTotalNota(txtValorTotalNotaFiscal.getText()));
+					double valorRem = obj.getPrecoProd() * obj.getQuantidade() - obj.getValorDesconto();
 					valorTotal = valorTotal - valorRem;
-					txtValorTotalNotaFiscal.setText(String.valueOf(valorTotal));
-					
-					double verify = Double.parseDouble(txtValorTotalNotaFiscal.getText());
+					txtValorTotalNotaFiscal.setText("R$ " + String.format("%.2f",valorTotal));
+					double verify = Double.parseDouble(Utils.getValorTotalNota(txtValorTotalNotaFiscal.getText()));
 					
 					//Safety verification
 					if(verify == 0.0 && !prodOrcamento.isEmpty()) {
 						double valorTotal2 = 0;
 						double valorTemp = 0;
 						for(ProdutoOrcamento prod : prodOrcamento) {
-							valorTemp = prod.getPrecoProd() * prod.getQuantidade();
+							valorTemp = prod.getPrecoProd() * prod.getQuantidade() - prod.getValorDesconto();
 							valorTotal2 = valorTotal2 + valorTemp;
 						}
-						txtValorTotalNotaFiscal.setText(String.valueOf(valorTotal2));
+						txtValorTotalNotaFiscal.setText("R$ " + String.format("%.2f",valorTotal2));
 					}
 
 					ObservableList<ProdutoOrcamento> list = cbCodProduto.getItems();

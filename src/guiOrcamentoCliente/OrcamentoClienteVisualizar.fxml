@@ -58,8 +58,8 @@
             <TableColumn fx:id="tableColumnCelular" prefWidth="100.0" text="CELULAR" />
             <TableColumn fx:id="tableColumnEmail" prefWidth="150.0" text="E-MAIL" />
             <TableColumn fx:id="tableColumnDescServico" prefWidth="250.0" text="DESCRIÇÃO DO SERVIÇO" />
-            <TableColumn fx:id="tableColumnDataOrcamento" text="DATA DO ORÇAMENTO" />
-            <TableColumn fx:id="tableColumnValorTotal" text="VALOR TOTAL" />
+            <TableColumn fx:id="tableColumnDataOrcamento" prefWidth="120.0" text="DATA DO ORÇAMENTO" />
+            <TableColumn fx:id="tableColumnValorTotal" prefWidth="120.0" text="VALOR TOTAL" />
             <TableColumn fx:id="tableColumnObs" prefWidth="300.0" text="OBSERVAÇÕES" />
             <TableColumn fx:id="tableColumnEditar" prefWidth="120.0" />
             <TableColumn fx:id="tableColumnOrcamentoEmPDF" prefWidth="100.0" />

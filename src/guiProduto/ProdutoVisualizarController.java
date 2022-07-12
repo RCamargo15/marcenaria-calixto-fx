@@ -34,11 +34,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import marcenaria.entities.Estoque;
 import marcenaria.entities.Produto;
 
 public class ProdutoVisualizarController implements Initializable, DataChangeListener {
 
 	private ProdutoService produtoService;
+	private EstoqueService estoqueService;
 
 	@FXML
 	private TableView<Produto> tableViewProduto;
@@ -72,8 +74,9 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 
 	private ObservableList<Produto> obsList;
 	
-	public void setProdutoService(ProdutoService produtoService) {
+	public void setServices(ProdutoService produtoService, EstoqueService estoqueService) {
 		this.produtoService = produtoService;
+		this.estoqueService = estoqueService;
 	}
 
 	@FXML
@@ -242,6 +245,8 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 				throw new IllegalStateException("Produto está vazio");
 			}
 			try {
+				Estoque estoque = estoqueService.findByCodProduto(obj.getCodProduto());
+				estoqueService.removerEstoque(estoque);
 				produtoService.removerProduto(obj);
 				updateTableViewProduto();
 			} catch (DbException e) {

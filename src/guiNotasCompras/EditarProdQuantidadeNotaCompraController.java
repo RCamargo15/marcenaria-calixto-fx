@@ -127,7 +127,7 @@ public class EditarProdQuantidadeNotaCompraController implements Initializable {
 			
 			for(EntradaProduto ep : listaEntrada) {
 				if( (ep.getCodProduto().equals(obj.getCodProduto()) && (ep.getNumeroNF().getNumeroNF().equals(obj.getNumeroNF())))) {
-					ep.setQuantidade(obj.getQuantidade());
+					ep.setQuantidade(obj);
 					ep.setValorTotalNota(obj);
 					ep.setValorTotal(obj);
 					ep.setValorUnit(obj);

@@ -55,7 +55,7 @@
         <columns>
           <TableColumn fx:id="tableColumnNumOrcamento" prefWidth="100.0" text="Nº ORÇAMENTO" />
           <TableColumn fx:id="tableColumnCodEmpresa" prefWidth="300.0" text="EMPRESA" />
-            <TableColumn fx:id="tableColumnNomeResponsavel" prefWidth="150.0" text="CONTATO NA EMPRESA" />
+            <TableColumn fx:id="tableColumnNomeResponsavel" prefWidth="150.0" text="SOLICITANTE" />
             <TableColumn fx:id="tableColumnTelefone" prefWidth="100.0" text="TELEFONE" />
             <TableColumn fx:id="tableColumnCelular" prefWidth="100.0" text="CELULAR" />
             <TableColumn fx:id="tableColumnEmail" prefWidth="150.0" text="E-MAIL" />

@@ -206,7 +206,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	@FXML
 	public void onMenuItemProdutoVisualizarAction() {
 		loadProdutoVisualizar("/guiProduto/ProdutoVisualizar.fxml", (ProdutoVisualizarController controller) -> {
-			controller.setProdutoService(new ProdutoService());
+			controller.setServices(new ProdutoService(), new EstoqueService());
 			controller.updateTableViewProduto();
 		});
 

@@ -216,7 +216,6 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 	
 	
 	public void updateOrcamentoClienteData() {
-//		
 		if(orcamentoClienteService == null) {
 			throw new IllegalStateException("Orcamentoservice null");
 		}
@@ -251,22 +250,18 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 			double valorMoment = orc.getValor() * orc.getQuantidade();
 			valorTotal = valorTotal + valorMoment;
 		}
-		txtValorTotalOrcamento.setText("R$ " + String.valueOf(valorTotal));
+		double obra = orcamentoCliente.getValorMetroQuad() + orcamentoCliente.getValorObra();
+		double valorFinal = valorTotal + obra;
+		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f",valorFinal));
 		txtObs.setText(orcamentoCliente.getObs());
-		
-		
 	}
-	
-//	private void setErrorMessages(Map<String, String> errors) {
-//		Set<String> fields = errors.keySet();
-//	}
+
 	
 	
 	public void loadClientes() {
 		if(clienteService == null) {
 			throw new IllegalStateException("Cliente Service null");
 		}
-		
 		List<Cliente> list = clienteService.findAll();
 		obsListCliente = FXCollections.observableArrayList(list);
 		cbCodCliente.setItems(obsListCliente);
@@ -297,17 +292,13 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrcamentoCliente.prefHeightProperty().bind(stage.heightProperty());
 		tableViewOrcamentoCliente.prefWidthProperty().bind(stage.widthProperty());
-		
 		gpInfoCliente.prefHeightProperty().bind(stage.heightProperty());
 		gpInfoCliente.prefWidthProperty().bind(stage.widthProperty());
-		
 		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valor"));
-		
 		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
 		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
-		
 	}
 	
 	private void createEditarProdutoOrcamentoForm(OrcamentoCliente obj, Stage parentStage, String absoluteName) {

@@ -73,8 +73,14 @@
       </GridPane>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-          <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR" />
-            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR" />
+          <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualizarAction" text="ATUALIZAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="btCancelar" mnemonicParsing="false" onAction="#onBtCancelarAction" text="CANCELAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
         </items>
       </ToolBar>
    </children>

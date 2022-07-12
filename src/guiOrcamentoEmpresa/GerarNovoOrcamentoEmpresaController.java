@@ -126,6 +126,9 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 
 	@FXML
 	private Button btCalcular;
+	
+	@FXML
+	private TextField txtQtdMetrosQuad;
 
 	@FXML
 	private TableColumn<ProdutoOrcamento, ProdutoOrcamento> tableColumnEditar;
@@ -255,22 +258,16 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 
 	@FXML
 	public List<OrcamentoEmpresa> onBtInserirAction() {
-
-			double valorTotal = 0;
-			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
-			OrcamentoEmpresa orcamento = getOrcamentoEmpresaData();
-			
-
-			Produto produto = produtoService.findByCodProduto(produtoTemp.getCodProduto());
-
-			orcamento.setCodProduto(produto);
-			orcamento.setValor(produto);
-			orcamento.setValorTotal(valorTotal);
-			listaParaCadastro.add(orcamento);
-			
-			cbCodProduto.setValue(null);
-			txtQuantidade.setText("");
-			
+		double valorTotal = 0;
+		ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
+		OrcamentoEmpresa orcamento = getOrcamentoEmpresaData();
+		Produto produto = produtoService.findByCodProduto(produtoTemp.getCodProduto());
+		orcamento.setCodProduto(produto);
+		orcamento.setValor(produto);
+		orcamento.setValorTotal(valorTotal);
+		listaParaCadastro.add(orcamento);
+		cbCodProduto.setValue(null);
+		txtQuantidade.setText("");
 		return listaParaCadastro;
 	}
 	
@@ -295,21 +292,19 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 			valorFinal = valorTotal * maoDeObra;
 		}
 
-		if (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) {
+		if ( (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("") && (txtQtdMetrosQuad.getText().equals("") || txtQtdMetrosQuad.getText() == null) )) {
 
 		} else {
-			metroQuad = Double.parseDouble(txtMetroQuad.getText());
+			metroQuad = Double.parseDouble(txtMetroQuad.getText()) * Integer.parseInt(txtQtdMetrosQuad.getText());
 			valorFinal = valorTotal + metroQuad;
 		}
 	
 		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f", valorFinal));
-
 		for (OrcamentoEmpresa orcamento : listaParaCadastro) {
 			orcamento.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 			orcamento.setValorMetroQuad(metroQuad);
 			orcamento.setValorObra(maoDeObra);
 		}
-
 	}
 	
 
@@ -340,14 +335,7 @@ public class GerarNovoOrcamentoEmpresaController implements Initializable {
 		if (cbCodEmpresa.getValue() == null) {
 			exception.addError("Cliente", "Escolha um cliente do seu cadastro");
 		}
-		
-		if(cbCodProduto.getValue() == null && (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) && 
-			(txtMaoDeObra.getText() == null || txtMaoDeObra.getText().trim().equals("")) && (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) ) {
-			exception.addError("valorOrcamento", "valorOrcamento" );
-		}
-
 		setErrorMessages(exception.getErrors());
-
 		return exception.getErrors();
 	}
 

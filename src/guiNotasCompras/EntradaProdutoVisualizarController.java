@@ -2,6 +2,8 @@ package guiNotasCompras;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -93,23 +95,23 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 
 	@FXML
 	public void onBtBuscar() {
-
 		if (entradaProdutoService == null) {
 			throw new IllegalStateException("Service null");
 		}
-
-		EntradaProduto buscaEntradaProduto = entradaProdutoService
-				.findByCodEntrada(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaEntradaProduto == null) {
+		List<EntradaProduto> buscaEntradaProduto = new ArrayList<>();
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaEntradaProduto = Collections.emptyList();
+		} else {
+			entradaProdutoService.findByNomeProduto(searchByCod.getText());
+		}
+		if (buscaEntradaProduto.isEmpty()) {
 			Alerts.showAlert("Busca de entrada de produtos", null,
-					"Nenhuma entrada com esse código foi encontrada no sistema!", AlertType.INFORMATION);
+					"Nenhum registro desse produto foi encontrado no sistema!", AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEntradaProduto);
 			tableViewEntradaProduto.setItems(obsList);
 			searchByCod.setText("");
 		}
-
 	}
 
 	@Override
@@ -123,15 +125,11 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 		tableColumnNumeroNF.setCellValueFactory(new PropertyValueFactory<>("numeroNF"));
 		tableColumnDataEntrada.setCellValueFactory(new PropertyValueFactory<>("dataEntrada"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-
-		searchByCod.setPromptText("Insira o c�digo de sa�da");
-
+		searchByCod.setPromptText("Insira o nome do produto");
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEntradaProduto.prefHeightProperty().bind(stage.heightProperty());
 		tableViewEntradaProduto.prefWidthProperty().bind(stage.widthProperty());
-
 		Utils.formatTableColumnDate(tableColumnDataEntrada, "dd/MM/yyyy");
-
 	}
 
 	public void updateTableViewEntradaProduto() {

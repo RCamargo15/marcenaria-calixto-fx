@@ -61,7 +61,7 @@
           <TableColumn fx:id="tableColumnCodNota" prefWidth="75.0" text="COD" />
           <TableColumn fx:id="tableColumnCodFornecedor" prefWidth="300.0" text="FORNECEDOR" />
             <TableColumn fx:id="tableColumnNumeroNF" prefWidth="110.0" text="Nº NOTA FISCAL" />
-            <TableColumn fx:id="tableColumnValorTotalNota" prefWidth="90.0" text="VALOR TOTAL " />
+            <TableColumn fx:id="tableColumnValorTotalNota" prefWidth="150.0" text="VALOR TOTAL DA NOTA" />
             <TableColumn fx:id="tableColumnChaveNF" prefWidth="300.0" text="CHAVE NF" />
             <TableColumn fx:id="tableColumnDataEmissao" prefWidth="120.0" text="DATA DE EMISSÃO" />
             <TableColumn fx:id="tableColumnDataEntrada" prefWidth="120.0" text="DATA DE ENTRADA" />

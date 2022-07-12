@@ -198,7 +198,7 @@
                <GridPane.margin>
                   <Insets right="50.0" />
                </GridPane.margin></TextField>
-            <Button fx:id="btInserirProduto" mnemonicParsing="false" onAction="#onBtInserirAction" prefHeight="25.0" prefWidth="92.0" text="INSERIR" GridPane.columnIndex="4">
+            <Button fx:id="btInserirProduto" mnemonicParsing="false" onAction="#onBtInserirAction" prefHeight="25.0" prefWidth="92.0" text="INSERIR" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -220,11 +220,6 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="btCalcular" mnemonicParsing="false" onAction="#onBtCalcularAction" prefHeight="25.0" prefWidth="90.0" text="CALCULAR" GridPane.columnIndex="4" GridPane.rowIndex="2">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
             <TextField fx:id="txtMaoDeObra" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="100.0" />
@@ -237,13 +232,23 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Label>
+            <Label text="METROS" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtQtdMetrosQuad" GridPane.columnIndex="3" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="50.0" />
+               </GridPane.margin>
+            </TextField>
          </children>
       </GridPane>
       <TableView fx:id="tableViewOrcamentoEmpresa" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn fx:id="tableColumnDescProduto" prefWidth="75.0" text="PRODUTO" />
-          <TableColumn fx:id="tableColumnValorUnit" prefWidth="147.0" text="VALOR UNITÁRIO" />
+          <TableColumn fx:id="tableColumnDescProduto" prefWidth="350.0" text="PRODUTO" />
             <TableColumn fx:id="tableColumnQuantidade" prefWidth="147.0" text="QUANTIDADE" />
+          <TableColumn fx:id="tableColumnValorUnit" prefWidth="147.0" text="VALOR UNITÁRIO" />
             <TableColumn fx:id="tableColumnEditar" prefWidth="147.0" />
         </columns>
       </TableView>
@@ -255,6 +260,11 @@
                </font>
             </Label>
             <TextField fx:id="txtValorTotalOrcamento" />
+            <Button fx:id="btCalcular" mnemonicParsing="false" onAction="#onBtCalcularAction" prefHeight="25.0" prefWidth="90.0" text="CALCULAR">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
          </items>
       </ToolBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">

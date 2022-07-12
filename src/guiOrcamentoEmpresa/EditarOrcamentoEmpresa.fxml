@@ -138,8 +138,8 @@
             <TableColumn fx:id="tableColumnDescProduto" prefWidth="300.0" text="PRODUTO" />
             <TableColumn fx:id="tableColumnQuantidade" prefWidth="100.0" text="QUANTIDADE" />
             <TableColumn fx:id="tableColumnValorUnit" prefWidth="120.0" text="VALOR UNITÁRIO" />
-            <TableColumn fx:id="tableColumnEditar" text="EDITAR" />
-            <TableColumn fx:id="tableColumnRemover" text="REMOVER" />
+            <TableColumn fx:id="tableColumnEditar" />
+            <TableColumn fx:id="tableColumnRemover" />
         </columns>
       </TableView>
       <ToolBar prefHeight="40.0" prefWidth="200.0">

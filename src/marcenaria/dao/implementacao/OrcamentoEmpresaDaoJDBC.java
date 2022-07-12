@@ -32,9 +32,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 			st = conn.prepareStatement("INSERT INTO MARCENARIA.ORCAMENTO_EMPRESA(NUM_ORCAMENTO, COD_EMPRESA, NOME_RESPONSAVEL, TELEFONE, CELULAR, EMAIL, "
 					+ "DESC_SERVICO, DATA_ORCAMENTO, COD_PRODUTO, QUANTIDADE, VALOR, VALOR_QUAD, VALOR_OBRA, VALOR_TOTAL, OBS)"
 					+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-			
-	
-			
+
 			st.setInt(1, obj.getNumOrcamento());
 			st.setInt(2, obj.getCodEmpresa().getCodEmpresa());
 			st.setString(3, obj.getNomeResponsavel().toUpperCase());
@@ -185,9 +183,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 					+ "WHERE NUM_ORCAMENTO = ?");
 			
 			st.setInt(1, numOrcamento);
-			
 			rs = st.executeQuery();
-			
 			Map<Integer, Empresa> empresaMap = new HashMap<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			List<OrcamentoEmpresa> list = new ArrayList<>();
@@ -251,8 +247,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
 				}
 				
-				OrcamentoEmpresa obj = criarOrcamentoEmpresa(rs, empresa, produto);
-				return obj;
+				return criarOrcamentoEmpresa(rs, empresa, produto);
 			}
 			return null;
 		}
@@ -413,6 +408,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		obj.setDataOrcamento(new java.util.Date(rs.getTimestamp("DATA_ORCAMENTO").getTime()));
 		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setValor(produto);
+		obj.setCodProduto(produto);
 		obj.setValorObra(rs.getDouble("VALOR_OBRA"));
 		obj.setValorMetroQuad(rs.getDouble("VALOR_QUAD"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));

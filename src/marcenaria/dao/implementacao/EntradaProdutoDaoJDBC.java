@@ -12,6 +12,7 @@ import java.util.Map;
 
 import Db.Db;
 import Db.DbException;
+import entities.services.ProdutoService;
 import marcenaria.dao.EntradaProdutoDao;
 import marcenaria.entities.EntradaProduto;
 import marcenaria.entities.Fornecedor;
@@ -21,6 +22,8 @@ import marcenaria.entities.Produto;
 public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 
 	private Connection conn;
+	
+	ProdutoService produtoService = new ProdutoService();
 
 	public EntradaProdutoDaoJDBC(Connection conn) {
 		this.conn = conn;
@@ -38,14 +41,11 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
 			st.setInt(2, obj.getCodProduto().getCodProduto());
 			st.setDate(3, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setInt(4, obj.getQuantidade());
+			st.setInt(4, obj.getQuantidade().getQuantidade());
 			st.setDouble(5, obj.getValorUnit().getValorUnit());
 			st.setDouble(6, obj.getValorTotal().getValorTotal());
 			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
-			
-
 			int rowsAffected = st.executeUpdate();
-
 			if (rowsAffected > 0) {
 				ResultSet rs = st.getGeneratedKeys();
 				if (rs.next()) {
@@ -73,12 +73,11 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
 			st.setInt(2, obj.getCodProduto().getCodProduto());
 			st.setDate(3, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setInt(4, obj.getQuantidade());
+			st.setInt(4, obj.getQuantidade().getQuantidade());
 			st.setDouble(5, obj.getValorUnit().getValorUnit());
 			st.setDouble(6, obj.getValorTotal().getValorTotal());
 			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
 			st.setInt(8, obj.getCodEntrada());
-
 			st.executeUpdate();
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -105,44 +104,34 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 	public EntradaProduto findByCodEntradaProduto(Integer codEntradaProduto) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
-
 		try {
 			st = conn.prepareStatement(
 					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
 							+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = entrada_produto.NUMERO_NF "
 							+ "INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
 							+ " WHERE COD_ENTRADA = ?  GROUP BY entrada_produto.COD_ENTRADA");
-
 			st.setInt(1, codEntradaProduto);
-
 			rs = st.executeQuery();
-
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
-
 			while (rs.next()) {
-
 				Fornecedor fornecedor = fornecedorMap.get(rs.getInt("COD_FORNECEDOR"));
 				if (fornecedor == null) {
 					fornecedor = criarFornecedor(rs);
 					fornecedorMap.put(rs.getInt("COD_FORNECEDOR"), fornecedor);
 				}
-
 				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
 				if (produto == null) {
 					produto = criarProduto(rs);
 					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
 				}
-
 				NotasCompras notaCompra = notasComprasMap.get(rs.getInt("COD_NOTA"));
 				if (notaCompra == null) {
 					notaCompra = criarNotasCompras(rs, fornecedor, produto);
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
-
-				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
-				return obj;
+				return criarEntradaProduto(rs, produto, notaCompra);
 			}
 			return null;
 		} catch (SQLException e) {
@@ -157,44 +146,34 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 	public List<EntradaProduto> findByNumeroNF(String numeroNF) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
-
 		try {
 			st = conn.prepareStatement(
 					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
 							+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = entrada_produto.NUMERO_NF "
 							+ "INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
 							+ " WHERE ENTRADA_PRODUTO.NUMERO_NF = ?  GROUP BY entrada_produto.COD_ENTRADA");
-
 			st.setString(1, numeroNF);
-
 			rs = st.executeQuery();
-
 			List<EntradaProduto> listaEntrada = new ArrayList<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
-
 			while (rs.next()) {
-
 				Fornecedor fornecedor = fornecedorMap.get(rs.getInt("COD_FORNECEDOR"));
 				if (fornecedor == null) {
 					fornecedor = criarFornecedor(rs);
 					fornecedorMap.put(rs.getInt("COD_FORNECEDOR"), fornecedor);
 				}
-
 				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
 				if (produto == null) {
 					produto = criarProduto(rs);
 					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
 				}
-
 				NotasCompras notaCompra = notasComprasMap.get(rs.getInt("COD_NOTA"));
 				if (notaCompra == null) {
 					notaCompra = criarNotasCompras(rs, fornecedor, produto);
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
-
-
 				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				listaEntrada.add(obj);
 			}
@@ -208,64 +187,22 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 	}
 	
 	@Override
-	public List<EntradaProduto> findByNomeProduto(String numeroNF) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-
-		try {
-			st = conn.prepareStatement(
-					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
-							+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = entrada_produto.NUMERO_NF "
-							+ "INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
-							+ " WHERE ENTRADA_PRODUTO.NUMERO_NF = ?  GROUP BY entrada_produto.COD_ENTRADA");
-
-			st.setString(1, numeroNF);
-
-			rs = st.executeQuery();
-
-			List<EntradaProduto> listaEntrada = new ArrayList<>();
-			Map<Integer, Produto> produtoMap = new HashMap<>();
-			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
-			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
-
-			while (rs.next()) {
-
-				Fornecedor fornecedor = fornecedorMap.get(rs.getInt("COD_FORNECEDOR"));
-				if (fornecedor == null) {
-					fornecedor = criarFornecedor(rs);
-					fornecedorMap.put(rs.getInt("COD_FORNECEDOR"), fornecedor);
-				}
-
-				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
-				if (produto == null) {
-					produto = criarProduto(rs);
-					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
-				}
-
-				NotasCompras notaCompra = notasComprasMap.get(rs.getInt("COD_NOTA"));
-				if (notaCompra == null) {
-					notaCompra = criarNotasCompras(rs, fornecedor, produto);
-					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
-				}
-
-
-				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
-				listaEntrada.add(obj);
+	public List<EntradaProduto> findByNomeProduto(String nomeProduto) {
+		List<Produto> listaProduto = produtoService.findByNomeProduto(nomeProduto);
+		List<EntradaProduto> listaEntradas = findAll();
+		List<EntradaProduto> listaEntradasFinal = new ArrayList<>();
+		for(EntradaProduto entradas : listaEntradas) {
+			if(listaProduto.contains(entradas.getCodProduto())) {
+				listaEntradasFinal.add(entradas);
 			}
-			return listaEntrada;
-		} catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		} finally {
-			Db.closeStatement(st);
-			Db.closeResultSet(rs);
 		}
+		return listaEntradasFinal;
 	}
 
 	@Override
 	public List<EntradaProduto> findByCodProd(Integer codProduto) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
-
 		try {
 			st = conn.prepareStatement(
 					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
@@ -275,34 +212,26 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 
 			st.setInt(1, codProduto);
 			rs = st.executeQuery();
-
 			List<EntradaProduto> listaEntrada = new ArrayList<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
-
 			while (rs.next()) {
-
 				Fornecedor fornecedor = fornecedorMap.get(rs.getInt("COD_FORNECEDOR"));
 				if (fornecedor == null) {
 					fornecedor = criarFornecedor(rs);
 					fornecedorMap.put(rs.getInt("COD_FORNECEDOR"), fornecedor);
 				}
-
 				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
 				if (produto == null) {
 					produto = criarProduto(rs);
 					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
 				}
-
 				NotasCompras notaCompra = notasComprasMap.get(rs.getInt("COD_NOTA"));
 				if (notaCompra == null) {
 					notaCompra = criarNotasCompras(rs, fornecedor, produto);
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
-
-				
-
 				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				listaEntrada.add(obj);
 			}
@@ -324,30 +253,24 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ENTRADA_PRODUTO "
 					+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = ENTRADA_PRODUTO.NUMERO_NF "
 					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
-					+ "INNER JOIN FORNECEDOR ON nota_compra_material.COD_FORNECEDOR = FORNECEDOR.COD_FORNECEDOR "
-					+ "GROUP BY COD_ENTRADA");
-
+					+ "INNER JOIN FORNECEDOR ON nota_compra_material.COD_FORNECEDOR = FORNECEDOR.COD_FORNECEDOR"
+					);
 			rs = st.executeQuery();
-
 			List<EntradaProduto> listaEntrada = new ArrayList<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
 			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
 			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
-
 			while (rs.next()) {
-
 				Fornecedor fornecedor = fornecedorMap.get(rs.getInt("COD_FORNECEDOR"));
 				if (fornecedor == null) {
 					fornecedor = criarFornecedor(rs);
 					fornecedorMap.put(rs.getInt("COD_FORNECEDOR"), fornecedor);
 				}
-
 				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
 				if (produto == null) {
 					produto = criarProduto(rs);
 					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
 				}
-
 				NotasCompras notaCompra = notasComprasMap.get(rs.getInt("COD_NOTA"));
 				if (notaCompra == null) {
 					notaCompra = criarNotasCompras(rs, fornecedor, produto);
@@ -356,7 +279,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				listaEntrada.add(obj);
 			}
-
 			return listaEntrada;
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
@@ -364,7 +286,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			Db.closeStatement(st);
 			Db.closeResultSet(rs);
 		}
-
 	}
 
 	private EntradaProduto criarEntradaProduto(ResultSet rs, Produto prod, NotasCompras notaCompra)
@@ -374,11 +295,10 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setNumeroNF(notaCompra);
 		obj.setCodProduto(prod);
 		obj.setDataEntrada(new java.util.Date(rs.getTimestamp("DATA_ENTRADA").getTime()));
-		obj.setQuantidade(rs.getInt("QUANTIDADE"));
+		obj.setQuantidade(notaCompra);
 		obj.setValorUnit(notaCompra);
 		obj.setValorTotal(notaCompra);
 		obj.setValorTotalNota(notaCompra);
-	
 		return obj;
 	}
 
@@ -399,6 +319,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setValorUnit(rs.getDouble("VALOR_UNIT"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
+		obj.setValorDesconto(rs.getDouble("VALOR_DESCONTO"));
 		obj.setValorTotalNota(rs.getDouble("VALOR_TOTAL_NOTA"));
 		obj.setChaveNF(rs.getString("CHAVE_NF"));
 		obj.setDataEmissao(new java.util.Date(rs.getTimestamp("DATA_EMISSAO").getTime()));

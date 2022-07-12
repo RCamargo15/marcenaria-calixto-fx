@@ -14,6 +14,7 @@ public class NotasCompras implements Serializable {
 	private Integer quantidade;
 	private Double valorUnit;
 	private Double valorTotal;
+	private Double valorDesconto;
 	private Double valorTotalNota;
 	private String chaveNF;
 	private Date dataEmissao;
@@ -89,6 +90,14 @@ public class NotasCompras implements Serializable {
 
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public Double getValorDesconto() {
+		return valorDesconto;
+	}
+
+	public void setValorDesconto(Double valorDesconto) {
+		this.valorDesconto = valorDesconto;
 	}
 
 	public Double getValorTotalNota() {

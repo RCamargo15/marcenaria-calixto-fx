@@ -216,7 +216,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 			obj.setDataOrcamento(Date.from(instant));
 		}
 		
-		obj.setValorTotal(Double.parseDouble(txtValorTotalOrcamento.getText()));
+		obj.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 		obj.setObs(txtObs.getText());
 		
 		if (cbCodEmpresa.getValue() == null) {
@@ -253,22 +253,18 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 			}
 		}
 	
-	
 	public void updateOrcamentoEmpresaData() {
 		if(orcamentoEmpresaService == null) {
 			throw new IllegalStateException("Orcamentoservice null");
 		}
-		
 		List<OrcamentoEmpresa> listOrcamentos = orcamentoEmpresaService.findByNumOrcamentoList(orcamentoEmpresa.getNumOrcamento());
 		obsListProdutoOrcamento = FXCollections.observableArrayList(listOrcamentos);
 		tableViewOrcamentoEmpresa.setItems(obsListProdutoOrcamento);
 		initEditButtons();
 		initRemoveButtons();
+		
 		double valorTotal = 0;
-		
-		
 		txtNumOrcamento.setText(String.valueOf(orcamentoEmpresa.getNumOrcamento()));
-		
 		if(orcamentoEmpresa.getCodEmpresa() == null) {
 			cbCodEmpresa.getSelectionModel().selectFirst();
 		}
@@ -280,16 +276,17 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 		txtCelularEmpresa.setText(orcamentoEmpresa.getCelular());
 		txtEmailEmpresa.setText(orcamentoEmpresa.getEmail());
 		txtDescricaoServico.setText(orcamentoEmpresa.getDescServico());
-		
 		if(orcamentoEmpresa.getDataOrcamento() != null) {
 			dpDataOrcamento.setValue(LocalDate.ofInstant(orcamentoEmpresa.getDataOrcamento().toInstant(), ZoneId.systemDefault()));
 		}
-		
 		for(OrcamentoEmpresa orc : listOrcamentos) {
 			double valorMoment = orc.getValor() * orc.getQuantidade();
 			valorTotal = valorTotal + valorMoment;
 		}
-		txtValorTotalOrcamento.setText(String.valueOf(valorTotal));
+		
+		double obra = orcamentoEmpresa.getValorMetroQuad() + orcamentoEmpresa.getValorObra();
+		double valorFinal = valorTotal + obra;
+		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f", valorFinal));
 		txtObs.setText(orcamentoEmpresa.getObs());
 	}
 
@@ -324,18 +321,16 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initializeComboBoxEmpresa();	
-	
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewOrcamentoEmpresa.prefHeightProperty().bind(stage.heightProperty());
 		tableViewOrcamentoEmpresa.prefWidthProperty().bind(stage.widthProperty());
-		
 		gpInfoEmpresa.prefHeightProperty().bind(stage.heightProperty());
 		gpInfoEmpresa.prefWidthProperty().bind(stage.widthProperty());
-		
 		tableColumnDescProduto.setCellValueFactory(new PropertyValueFactory<>("codProduto"));
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valor"));
-		
+		Utils.formatDatePicker(dpDataOrcamento, "dd/MM/yyyy");
+		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
 	}
 	
 	private void createEditarProdutoOrcamentoForm(OrcamentoEmpresa obj, Stage parentStage, String absoluteName) {

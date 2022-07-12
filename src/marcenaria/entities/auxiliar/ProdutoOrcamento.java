@@ -9,7 +9,9 @@ public class ProdutoOrcamento implements Serializable {
 	private Integer codProduto;
 	private String descProduto;
 	private Double precoProd;
+	private Double valorDesconto;
 	private Double valorTotal;
+	private Double valorTotalFinal;
 	private Integer quantidade;
 
 	public ProdutoOrcamento() {
@@ -62,6 +64,22 @@ public class ProdutoOrcamento implements Serializable {
 
 	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
+	}
+
+	public Double getValorDesconto() {
+		return valorDesconto;
+	}
+
+	public void setValorDesconto(Double valorDesconto) {
+		this.valorDesconto = valorDesconto;
+	}
+
+	public Double getValorTotalFinal() {
+		return valorTotalFinal;
+	}
+
+	public void setValorTotalFinal(Double valorTotalFinal) {
+		this.valorTotalFinal = valorTotalFinal;
 	}
 
 	@Override

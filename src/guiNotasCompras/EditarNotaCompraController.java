@@ -110,6 +110,9 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 
 	@FXML
 	private TableColumn<NotasCompras, Double> tableColumnValorTotal;
+	
+	@FXML
+	private TableColumn<NotasCompras, Double> tableColumnValorDesconto;
 
 	@FXML
 	private TableColumn<NotasCompras, Integer> tableColumnQuantidade;
@@ -156,7 +159,6 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 	}
 
 	public NotasCompras getNotasComprasData() {
-
 		NotasCompras obj = new NotasCompras();
 		obj.setNumeroNF(txtNumeroNF.getText());
 		obj.setCodFornecedor(cbCodFornecedor.getValue());
@@ -166,7 +168,6 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 		obj.setDataEntrada(Date.from(instant2));
 		obj.setChaveNF(txtChaveNF.getText());
 		obj.setObs(txtObs.getText());
-
 		return obj;
 	}
 
@@ -267,7 +268,7 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 		}
 
 		for (NotasCompras orc : listNotasFiscais) {
-			double valorMoment = orc.getValorUnit() * orc.getQuantidade();
+			double valorMoment = orc.getValorUnit() * orc.getQuantidade() - orc.getValorDesconto();
 			valorTotal = valorTotal + valorMoment;
 		}
 
@@ -324,12 +325,15 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnValorUnit.setCellValueFactory(new PropertyValueFactory<>("valorUnit"));
 		tableColumnValorTotal.setCellValueFactory(new PropertyValueFactory<>("valorTotal"));
+		tableColumnValorDesconto.setCellValueFactory(new PropertyValueFactory<>("valorDesconto"));
+		
 
 		Constraints.setTextFieldInteger(txtNumeroNF);
 		Constraints.setTextFieldInteger(txtChaveNF);
 
 		Utils.formatTableColumnDouble(tableColumnValorUnit, 2);
 		Utils.formatTableColumnDouble(tableColumnValorTotal, 2);
+		Utils.formatTableColumnDouble(tableColumnValorDesconto, 2);
 		Utils.formatDatePicker(dpDataEmissao, "dd/MM/yyyy");
 		Utils.formatDatePicker(dpDataEntrada, "dd/MM/yyyy");
 	}

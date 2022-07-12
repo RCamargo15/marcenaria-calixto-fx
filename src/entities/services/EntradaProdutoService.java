@@ -33,11 +33,13 @@ public class EntradaProdutoService {
 	
 	public List<EntradaProduto> findByCodProduto(Integer codProduto) {
 		return entradaProdutoDao.findByCodProd(codProduto);
-	
 	}
 	
 	public List<EntradaProduto> findByNumeroNF(String numeroNF){
 		return entradaProdutoDao.findByNumeroNF(numeroNF);
 	}
 	
+	public List<EntradaProduto> findByNomeProduto(String nomeProduto){
+		return entradaProdutoDao.findByNomeProduto(nomeProduto);
+	}
 }

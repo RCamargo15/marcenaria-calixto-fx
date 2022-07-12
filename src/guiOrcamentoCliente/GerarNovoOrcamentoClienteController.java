@@ -120,6 +120,9 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 	private TextField txtMetroQuad;
 	
 	@FXML
+	private TextField txtQtdMetroQuad;
+	
+	@FXML
 	private Label erroSomaValores;
 
 	@FXML
@@ -203,10 +206,8 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		obj.setCelular(txtCelularCliente.getText());
 		obj.setEmail(txtEmailCliente.getText());
 		obj.setDescServico(txtDescricaoServico.getText());
-
 		Instant instant = Instant.from(dpDataOrcamento.getValue().atStartOfDay(ZoneId.systemDefault()));
 		obj.setDataOrcamento(Date.from(instant));
-
 		obj.setCodProduto(prod);
 		obj.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
 		obj.setValor(prod);
@@ -214,24 +215,19 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		obj.setValorMetroQuad(metroQuad);
 		obj.setValorObra(maoDeObra);
 		obj.setObs(txtObs.getText());
-
 		return obj;
 	}
 
 	public ProdutoOrcamento criarProdutoOrcamento() {
-
 		ValidationException exception = new ValidationException("Erro de validação");
-
 		ProdutoOrcamento produtoTemp = new ProdutoOrcamento();
 		produtoTemp = cbCodProduto.getValue();
 		produtoTemp.setCodProduto(cbCodProduto.getValue().getCodProduto());
 		produtoTemp.setDescProduto(cbCodProduto.getValue().getDescProduto());
 		produtoTemp.setPrecoProd(cbCodProduto.getValue().getPrecoProd());
 		produtoTemp.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-
 		prodOrcamento.add(produtoTemp);
 		updateTableViewOrcamentoCliente();
-
 		ObservableList<ProdutoOrcamento> obsList = cbCodProduto.getItems();
 		for (ProdutoOrcamento prod : prodOrcamento) {
 			if (obsList.contains(prod)) {
@@ -262,13 +258,10 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 	public void onBtInserirAction() {
 			ProdutoOrcamento produtoTemp = criarProdutoOrcamento();
 			OrcamentoCliente orcamento = getOrcamentoClienteData();
-
 			Produto produto = produtoService.findByCodProduto(produtoTemp.getCodProduto());
-
 			orcamento.setCodProduto(produto);
 			orcamento.setValor(produto);
 			listaParaCadastro.add(orcamento);
-			
 			txtQuantidade.setText("");
 			cbCodProduto.setValue(null);
 		}
@@ -294,10 +287,10 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 			valorFinal = valorTotal * maoDeObra;
 		}
 
-		if (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) {
+		if ( (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("") && (txtQtdMetroQuad.getText().equals("") || txtQtdMetroQuad.getText() == null) )) {
 
 		} else {
-			metroQuad = Double.parseDouble(txtMetroQuad.getText());
+			metroQuad = Double.parseDouble(txtMetroQuad.getText()) * Integer.parseInt(txtQtdMetroQuad.getText());
 			valorFinal = valorTotal + metroQuad;
 		}
 	
@@ -309,13 +302,16 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 			orcamento.setValorObra(maoDeObra);
 		}
 
+		txtQtdMetroQuad.setText("");
+		txtMaoDeObra.setText("");
+		txtMetroQuad.setText("");
 	}
 
 	private Map<String, String> ValidateExceptions() {
 		ValidationException exception = new ValidationException("Erro de validação");
 
 		if (txtNumOrcamento.getText() == null || txtNumOrcamento.getText().trim().equals("")) {
-			exception.addError("NumOrcamento", "Insira um número de or�amento");
+			exception.addError("NumOrcamento", "Insira um número de orçamento");
 		}
 
 		if (dpDataOrcamento.getValue() == null) {
@@ -338,14 +334,7 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		if (cbCodCliente.getValue() == null) {
 			exception.addError("Cliente", "Escolha um cliente cadastrado");
 		}
-		
-		if(cbCodProduto.getValue() == null && (txtQuantidade.getText() == null || txtQuantidade.getText().trim().equals("")) && 
-			(txtMaoDeObra.getText() == null || txtMaoDeObra.getText().trim().equals("")) && (txtMetroQuad.getText() == null || txtMetroQuad.getText().trim().equals("")) ) {
-			exception.addError("valorOrcamento", "valorOrcamento" );
-		}
-
 		setErrorMessages(exception.getErrors());
-
 		return exception.getErrors();
 	}
 
@@ -363,7 +352,7 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 			if (errors.size() > 0) {
 				setErrorMessages(errors);
 				Alerts.showAlert("Erro ao cadastrar", null,
-						"� necess�rio inserir todos os dados pendentes antes de cadastrar", AlertType.INFORMATION);
+						"É necessário inserir todos os dados antes de gerar o orçamento", AlertType.INFORMATION);
 			} else {
 				for (OrcamentoCliente cliente : listaParaInserir) {
 					cliente.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
@@ -381,17 +370,12 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 
 	private void setErrorMessages(Map<String, String> errors) {
 		Set<String> fields = errors.keySet();
-
 		errorNumOrcamento.setText(fields.contains("NumOrcamento") ? errors.get("NumOrcamento") : "");
 		errorCelular.setText(fields.contains("Contato") ? errors.get("Contato") : "");
 		errorEmail.setText(fields.contains("Email") ? errors.get("Email") : "");
 		errorDescServico.setText(fields.contains("DescServico") ? errors.get("DescServico") : "");
 		erroDataOrcamento.setText(fields.contains("DataOrcamento") ? errors.get("DataOrcamento") : "");
 		errorCodCliente.setText(fields.contains("Cliente") ? errors.get("Cliente") : "");
-		
-		if(fields.contains("valorOrcamento")) {
-			Alerts.showAlert("Erro ao gerar orçamento", null, "Não é possível gerar um orçamento sem antes calcular o valor final", AlertType.ERROR);
-		}
 	}
 
 	public void loadClientes() {
