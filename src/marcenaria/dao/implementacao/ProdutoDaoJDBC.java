@@ -84,6 +84,30 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 	}
 
 	@Override
+	public List<Produto> findByNomeProduto(String nomeProduto) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.PRODUTO WHERE PRODUTO.DESC_PRODUTO LIKE '"+nomeProduto+"%'");
+
+			rs = st.executeQuery();
+
+			List<Produto> listaProdutos = new ArrayList<>();
+
+			while (rs.next()) {
+				Produto obj = criarProduto(rs);
+				listaProdutos.add(obj);
+			}
+			return listaProdutos;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			Db.closeStatement(st);
+			Db.closeResultSet(rs);
+		}
+	}
+	
+	@Override
 	public Produto findByCodProduto(Integer codProduto) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -94,8 +118,7 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Produto obj = criarProduto(rs);
-				return obj;
+			return criarProduto(rs);
 			}
 			return null;
 		} catch (SQLException e) {
@@ -105,6 +128,7 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 			Db.closeResultSet(rs);
 		}
 	}
+
 
 	@Override
 	public List<Produto> findAll() {
@@ -128,7 +152,6 @@ public class ProdutoDaoJDBC implements ProdutoDao {
 			Db.closeStatement(st);
 			Db.closeResultSet(rs);
 		}
-
 	}
 
 	private Produto criarProduto(ResultSet rs) throws SQLException {

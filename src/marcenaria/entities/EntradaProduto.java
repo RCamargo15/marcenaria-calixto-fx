@@ -11,7 +11,7 @@ public class EntradaProduto implements Serializable {
 	private NotasCompras numeroNF;
 	private Produto codProduto;
 	private Date dataEntrada;
-	private NotasCompras quantidade;
+	private Integer quantidade;
 	private NotasCompras valorUnit;
 	private NotasCompras valorTotal;
 	private NotasCompras valorTotalNota;
@@ -21,7 +21,7 @@ public class EntradaProduto implements Serializable {
 	}
 
 	public EntradaProduto(Integer codEntrada, NotasCompras numeroNF, Produto codProduto, Date dataEntrada,
-			NotasCompras quantidade, NotasCompras valorUnit, NotasCompras valorTotal, NotasCompras valorTotalNota,
+			Integer quantidade, NotasCompras valorUnit, NotasCompras valorTotal, NotasCompras valorTotalNota,
 			Funcionario respRecebimento) {
 		this.numeroNF = numeroNF;
 		this.codProduto = codProduto;
@@ -64,11 +64,11 @@ public class EntradaProduto implements Serializable {
 		this.dataEntrada = dataEntrada;
 	}
 
-	public NotasCompras getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(NotasCompras quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
 

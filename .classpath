@@ -10,6 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQLConnector"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PDF"/>
-	<classpathentry kind="lib" path="C:/java-libs/ApachePDF/pdfbox-app-2.0.26.jar"/>
+	<classpathentry kind="lib" path="C:/java-libs/pdfBoxlib/pdfbox-app-2.0.26.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

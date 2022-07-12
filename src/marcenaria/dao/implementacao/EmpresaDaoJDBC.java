@@ -132,6 +132,30 @@ public class EmpresaDaoJDBC implements EmpresaDao {
 	}
 
 	@Override
+	public List<Empresa> findByNomeEmpresa(String nomeEmpresa) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.EMPRESA WHERE EMPRESA.NOME_FANTASIA LIKE '"+nomeEmpresa+"%'");
+			rs = st.executeQuery();
+
+			List<Empresa> lista = new ArrayList<>();
+
+			while (rs.next()) {
+				Empresa obj = criarEmpresa(rs);
+				lista.add(obj);
+			}
+			return lista;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			Db.closeStatement(st);
+			Db.closeResultSet(rs);
+		}
+	}
+	
+	@Override
 	public Empresa findByCodEmpresa(Integer codEmpresa) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -141,8 +165,7 @@ public class EmpresaDaoJDBC implements EmpresaDao {
 			st.setInt(1, codEmpresa);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Empresa obj = criarEmpresa(rs);
-				return obj;
+			return criarEmpresa(rs);
 			}
 			return null;
 		} catch (SQLException e) {

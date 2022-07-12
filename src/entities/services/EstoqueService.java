@@ -34,4 +34,8 @@ public class EstoqueService {
 	public Estoque findByCodProduto(Integer produto) {
 		return estoqueDao.findByCodProduto(produto);
 	}
+	
+	public List<Estoque> findByNomeProduto(String nomeProduto) {
+		return estoqueDao.findByNomeProduto(nomeProduto);
+	}
 }

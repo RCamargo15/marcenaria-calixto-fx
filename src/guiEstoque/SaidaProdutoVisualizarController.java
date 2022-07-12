@@ -2,6 +2,8 @@ package guiEstoque;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -110,20 +112,26 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 
 	@FXML
 	public void onBtMostrarTodos() {
+		searchByCod.setText("");
 		updateTableViewSaidaProduto();
 	}
 
 	@FXML
 	public void onBtBuscar() {
-
 		if (saidaProdutoService == null) {
 			throw new IllegalStateException("Service null");
 		}
+		List<SaidaProduto> buscaSaidaProduto = new ArrayList<>();
+		
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaSaidaProduto = Collections.emptyList();
+		}
+		else {
+			buscaSaidaProduto = saidaProdutoService.findByNomeProduto(searchByCod.getText());
+		}
 
-		SaidaProduto buscaSaidaProduto = saidaProdutoService.findByCodSaida(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaSaidaProduto == null) {
-			Alerts.showAlert("Busca de saída de produto", null, "Nenhum registro de saída com esse código foi encontrado no sistema!",
+		if (buscaSaidaProduto.isEmpty()) {
+			Alerts.showAlert("Busca de saída de produto", null, "Nenhum registro de saída desse produto foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaSaidaProduto);
@@ -148,7 +156,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableColumnFuncResponsavel.setCellValueFactory(new PropertyValueFactory<>("respSaida"));
 
-		searchByCod.setPromptText("Insira o c�digo de sa�da");
+		searchByCod.setPromptText("Insira o nome do produto");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewSaidaProduto.prefHeightProperty().bind(stage.heightProperty());
@@ -184,7 +192,7 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 			saidaProdutoController.updateSaidaProdutoData();
 			
 			Stage saidaProdutoEstoqueStage = new Stage();
-			saidaProdutoEstoqueStage.setTitle("Editar reigstro de sa�da de produtos do estoque");
+			saidaProdutoEstoqueStage.setTitle("Editar reigstro de saída de produtos do estoque");
 			saidaProdutoEstoqueStage.setScene(new Scene(vBox));
 			saidaProdutoEstoqueStage.setResizable(false);
 			saidaProdutoEstoqueStage.initOwner(parentStage);
@@ -246,6 +254,10 @@ public class SaidaProdutoVisualizarController implements Initializable, DataChan
 				throw new IllegalStateException("SaidaProduto est� vazio");
 			}
 			try {
+				Estoque estoque = estoqueService.findByCodEstoque(obj.getIdEstoque().getId());
+				int estoqueAtt = estoque.getEstoqueAtual() + obj.getQuantidade();
+				estoque.setEstoqueAtual(estoqueAtt);
+				estoqueService.saveOrUpdate(estoque);
 				saidaProdutoService.removerSaida(obj);
 				updateTableViewSaidaProduto();
 			} catch (DbException e) {

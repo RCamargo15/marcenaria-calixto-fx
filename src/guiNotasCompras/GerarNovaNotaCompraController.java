@@ -260,7 +260,7 @@ public class GerarNovaNotaCompraController implements Initializable {
 				valorTotalNota = valorTotalNota + valorMoment;
 			}
 			notaCompra.setValorTotal(valorTotal);
-			txtValorTotalNotaFiscal.setText("R$ " + String.format("%.2f", valorTotalNota));
+			txtValorTotalNotaFiscal.setText("R$ " + String.valueOf(valorTotalNota));
 			listaParaCadastro.add(notaCompra);
 			
 			txtQuantidade.setText("");
@@ -323,14 +323,14 @@ public class GerarNovaNotaCompraController implements Initializable {
 					entradaProduto.setNumeroNF(nf);
 					entradaProduto.setCodProduto(nf.getCodProduto());
 					entradaProduto.setDataEntrada(nf.getDataEntrada());
-					entradaProduto.setQuantidade(nf);
+					entradaProduto.setQuantidade(nf.getQuantidade());
 					entradaProduto.setValorUnit(nf);
 					entradaProduto.setValorTotal(nf);
 					entradaProduto.setValorTotalNota(nf);
 					
 					
 					estoque.setCodProduto(entradaProduto.getCodProduto());
-					qtdEstoque = entradaProduto.getQuantidade().getQuantidade();
+					qtdEstoque = entradaProduto.getQuantidade();
 				
 					
 					for(Estoque stock : listaEstoque) {

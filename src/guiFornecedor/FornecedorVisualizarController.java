@@ -2,6 +2,8 @@ package guiFornecedor;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -123,21 +125,27 @@ public class FornecedorVisualizarController implements Initializable, DataChange
 
 	@FXML
 	public void onBtMostrarTodos() {
+		searchByCod.setText("");
 		updateTableViewFornecedor();
 	}
 
 	@FXML
 	public void onBtBuscar() {
-
 		if (fornecedorService == null) {
 			throw new IllegalStateException("Service null");
 		}
+		
+		List<Fornecedor> buscaFornecedor = new ArrayList<>();
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaFornecedor = Collections.emptyList();
+		}
+		else {
+			buscaFornecedor = fornecedorService.findByNomeFornecedor(searchByCod.getText());
+		}
 
-		Fornecedor buscaFornecedor = fornecedorService.findByCodFornecedor(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaFornecedor == null) {
+		if (buscaFornecedor.isEmpty()) {
 			Alerts.showAlert("Busca de fornecedor", null,
-					"Nenhuma fornecedor com esse código foi encontrado no sistema!", AlertType.INFORMATION);
+					"Nenhuma fornecedor foi encontrado no sistema!", AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaFornecedor);
 			tableViewFornecedor.setItems(obsList);
@@ -176,7 +184,7 @@ public class FornecedorVisualizarController implements Initializable, DataChange
 		tableColumnSite.setCellValueFactory(new PropertyValueFactory<>("site"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o código da fornecedor");
+		searchByCod.setPromptText("Insira o nome do fornecedor");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewFornecedor.prefHeightProperty().bind(stage.heightProperty());

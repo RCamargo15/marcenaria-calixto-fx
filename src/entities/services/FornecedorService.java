@@ -27,7 +27,7 @@ public class FornecedorService {
 		fornecedorDao.deleteByCodFornecedor(obj.getCodFornecedor());
 	}
 	
-	public Fornecedor findByCodFornecedor(Integer codFornecedor) {
-		return fornecedorDao.findByCodFornecedor(codFornecedor);
+	public List<Fornecedor> findByNomeFornecedor(String nomeFornecedor) {
+		return fornecedorDao.findByNomeFornecedor(nomeFornecedor);
 	}
 }

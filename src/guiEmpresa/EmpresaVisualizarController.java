@@ -2,6 +2,8 @@ package guiEmpresa;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -123,6 +125,7 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 
 	@FXML
 	public void onBtMostrarTodos() {
+		searchByCod.setText("");
 		updateTableViewEmpresa();
 	}
 
@@ -133,10 +136,16 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 			throw new IllegalStateException("EmpresaService null");
 		}
 
-		Empresa buscaEmpresa = empresaService.findByCodEmpresa(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaEmpresa == null) {
-			Alerts.showAlert("Busca de empresa", null, "Nenhuma empresa com esse código foi encontrado no sistema!",
+		List<Empresa> buscaEmpresa = new ArrayList<>();
+		
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaEmpresa = Collections.emptyList();
+		}
+		else {
+			buscaEmpresa = empresaService.findByNomeEmpresa(searchByCod.getText());
+		}
+		if (buscaEmpresa.isEmpty()) {
+			Alerts.showAlert("Busca de empresa", null, "Nenhuma empresa foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEmpresa);
@@ -176,7 +185,7 @@ public class EmpresaVisualizarController implements Initializable, DataChangeLis
 		tableColumnSite.setCellValueFactory(new PropertyValueFactory<>("site"));
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o c�digo da empresa");
+		searchByCod.setPromptText("Insira nome da empresa");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEmpresa.prefHeightProperty().bind(stage.heightProperty());

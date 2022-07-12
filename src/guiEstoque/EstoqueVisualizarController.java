@@ -2,6 +2,8 @@ package guiEstoque;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -107,20 +109,26 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 
 	@FXML
 	public void onBtMostrarTodos() {
+		searchByCod.setText("");
 		updateTableViewEstoque();
 	}
 
 	@FXML
 	public void onBtBuscar() {
-
 		if (estoqueService == null) {
 			throw new IllegalStateException("Service null");
 		}
+		List<Estoque> buscaEstoque = new ArrayList<>();
+		
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaEstoque = Collections.emptyList();
+		}
+		else {
+			buscaEstoque = estoqueService.findByNomeProduto(searchByCod.getText());
+		}
 
-		Estoque buscaEstoque = estoqueService.findByCodEstoque(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaEstoque == null) {
-			Alerts.showAlert("Busca no estoque", null, "Nenhum produto com esse código foi encontrado no estoque!",
+		if (buscaEstoque.isEmpty()) {
+			Alerts.showAlert("Busca no estoque", null, "Nenhum produto foi encontrado no estoque!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaEstoque);
@@ -142,7 +150,7 @@ public class EstoqueVisualizarController implements Initializable, DataChangeLis
 		tableColumnEstoqueAtual.setCellValueFactory(new PropertyValueFactory<>("estoqueAtual"));
 		tableColumnEstoqueMinimo.setCellValueFactory(new PropertyValueFactory<>("estoqueMinimo"));
 
-		searchByCod.setPromptText("Insira o código do estoque");
+		searchByCod.setPromptText("Insira o nome do produto");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewEstoque.prefHeightProperty().bind(stage.heightProperty());

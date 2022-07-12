@@ -2,6 +2,8 @@ package guiProduto;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -83,6 +85,7 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 
 	@FXML
 	public void onBtMostrarTodos() {
+		searchByCod.setText("");
 		updateTableViewProduto();
 	}
 
@@ -92,11 +95,16 @@ public class ProdutoVisualizarController implements Initializable, DataChangeLis
 		if (produtoService == null) {
 			throw new IllegalStateException("Service null");
 		}
-
-		Produto buscaProduto = produtoService.findByCodProduto(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaProduto == null) {
-			Alerts.showAlert("Busca de produto", null, "Nenhum produto com esse código foi encontrado no sistema!",
+		List<Produto> buscaProduto = new ArrayList<>();
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaProduto = Collections.emptyList();
+		}
+		else {
+			buscaProduto = produtoService.findByNomeProduto(searchByCod.getText());
+		}
+		
+		if (buscaProduto.isEmpty()) {
+			Alerts.showAlert("Busca de produto", null, "Nenhum produto foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaProduto);

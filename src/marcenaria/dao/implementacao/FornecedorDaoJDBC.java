@@ -132,6 +132,30 @@ public class FornecedorDaoJDBC implements FornecedorDao {
 	}
 
 	@Override
+	public List<Fornecedor> findByNomeFornecedor(String nomeFornecedor) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.FORNECEDOR WHERE FORNECEDOR.NOME_FANTASIA LIKE '"+nomeFornecedor+"%'");
+			rs = st.executeQuery();
+
+			List<Fornecedor> lista = new ArrayList<>();
+
+			while (rs.next()) {
+				Fornecedor obj = criarFornecedor(rs);
+				lista.add(obj);
+			}
+			return lista;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			Db.closeStatement(st);
+			Db.closeResultSet(rs);
+		}
+	}
+	
+	@Override
 	public Fornecedor findByCodFornecedor(Integer codFornecedor) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -141,8 +165,7 @@ public class FornecedorDaoJDBC implements FornecedorDao {
 			st.setInt(1, codFornecedor);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Fornecedor obj = criarFornecedor(rs);
-				return obj;
+			return criarFornecedor(rs);
 			}
 			return null;
 		} catch (SQLException e) {

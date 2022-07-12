@@ -2,6 +2,8 @@ package guiCliente;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -128,6 +130,7 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 
 	@FXML
 	public void onBtMostrarTodos() {
+		searchByCod.setText("");
 		updateTableViewCliente();
 	}
 
@@ -137,11 +140,17 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 		if (clienteService == null) {
 			throw new IllegalStateException("Cliente Service null");
 		}
+		List<Cliente> buscaCliente = new ArrayList<>();
+		
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaCliente = Collections.emptyList();
+		}
+		else {
+			buscaCliente = clienteService.findByNomeCliente(searchByCod.getText());
+		}
 
-		Cliente buscaCliente = clienteService.findByCodCliente(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaCliente == null) {
-			Alerts.showAlert("Busca de cliente", null, "Nenhum cliente com esse código foi encontrado no sistema!",
+		if (buscaCliente.isEmpty()) {
+			Alerts.showAlert("Busca de cliente", null, "Nenhum cliente foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaCliente);
@@ -182,7 +191,7 @@ public class ClienteVisualizarController implements Initializable, DataChangeLis
 		Utils.formatTableColumnDate(tableColumnDataCadastro, "dd/MM/yyyy");
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o código do cliente");
+		searchByCod.setPromptText("Insira o nome do cliente");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewCliente.prefHeightProperty().bind(stage.heightProperty());

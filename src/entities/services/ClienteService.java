@@ -27,7 +27,7 @@ public class ClienteService {
 		clienteDao.deleteByCodCliente(obj.getCodCliente());
 	}
 	
-	public Cliente findByCodCliente(Integer codCliente) {
-		return clienteDao.findByCodCliente(codCliente);
+	public List<Cliente> findByNomeCliente(String nomeCliente) {
+		return clienteDao.findByNomeCliente(nomeCliente);
 	}
 }

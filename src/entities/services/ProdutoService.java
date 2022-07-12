@@ -30,4 +30,8 @@ public class ProdutoService {
 	public Produto findByCodProduto(Integer codProduto) {
 		return produtoDao.findByCodProduto(codProduto);
 	}
+	
+	public List<Produto> findByNomeProduto(String nomeProduto) {
+		return produtoDao.findByNomeProduto(nomeProduto);
+	}
 }

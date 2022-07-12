@@ -12,6 +12,7 @@ import java.util.Map;
 
 import Db.Db;
 import Db.DbException;
+import entities.services.ProdutoService;
 import marcenaria.dao.DaoFactory;
 import marcenaria.dao.EstoqueDao;
 import marcenaria.dao.SaidaProdutoDao;
@@ -21,7 +22,8 @@ import marcenaria.entities.Produto;
 import marcenaria.entities.SaidaProduto;
 
 public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
-
+	ProdutoService produtoService = new ProdutoService();
+	
 	private Connection conn;
 
 	public SaidaProdutoDaoJDBC(Connection conn) {
@@ -56,11 +58,11 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 					int idSaidaGerado = rs.getInt(1);
 					obj.setCodSaida(idSaidaGerado);
 				} else {
-					throw new DbException("Nenhuma saída foi registrada no sistema");
+					throw new DbException("Nenhuma saï¿½da foi registrada no sistema");
 				}
 			}
 
-			// ATUALIZAÇÃO AUTOMÁTICA DO ESTOQUE ATRAVÉS DO PRODUTO E QUANTIDADE RECEBIDA
+			// ATUALIZAï¿½ï¿½O AUTOMï¿½TICA DO ESTOQUE ATRAVï¿½S DO PRODUTO E QUANTIDADE RECEBIDA
 			qtdRemovida = obj.getQuantidade();
 			codProdutoEstoque = obj.getCodProduto().getCodProduto().getCodProduto();
 
@@ -224,7 +226,19 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 			Db.closeStatement(st);
 			Db.closeResultSet(rs);
 		}
-
+	}
+	
+	@Override
+	public List<SaidaProduto> findByNomeProduto(String nomeProduto) {
+		List<Produto> listaProduto = produtoService.findByNomeProduto(nomeProduto);
+		List<SaidaProduto> saidaProduto = findAll();
+		List<SaidaProduto> saidaProdutoFinal = new ArrayList<>();
+		for(SaidaProduto saida : saidaProduto) {
+			if(listaProduto.contains(saida.getCodProduto().getCodProduto())) {
+				saidaProdutoFinal.add(saida);
+			}
+		}
+		return saidaProdutoFinal;
 	}
 
 	@Override
@@ -236,7 +250,7 @@ public class SaidaProdutoDaoJDBC implements SaidaProdutoDao {
 					+ "INNER JOIN ESTOQUE ON ESTOQUE.ID = SAIDA_PRODUTO.ID_ESTOQUE "
 					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = SAIDA_PRODUTO.COD_PRODUTO "
 					+ "INNER JOIN FUNCIONARIO ON FUNCIONARIO.REGISTRO_FUNC = SAIDA_PRODUTO.RESP_SAIDA "
-					+ "GROUP BY COD_SAIDA");
+					+ "ORDER BY DATA_SAIDA");
 
 			rs = st.executeQuery();
 

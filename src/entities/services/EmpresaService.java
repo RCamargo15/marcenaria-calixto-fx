@@ -27,7 +27,7 @@ public class EmpresaService {
 		empresaDao.deleteByCodEmpresa(obj.getCodEmpresa());
 	}
 	
-	public Empresa findByCodEmpresa(Integer codEmpresa) {
-		return empresaDao.findByCodEmpresa(codEmpresa);
+	public List<Empresa> findByNomeEmpresa(String nomeEmpresa) {
+		return empresaDao.findByNomeEmpresa(nomeEmpresa);
 	}
 }

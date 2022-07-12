@@ -12,7 +12,9 @@ public interface EmpresaDao {
 
 	void deleteByCodEmpresa(Integer codEmpresa);
 
-	Empresa findByCodEmpresa(Integer codEmpresa);
+	List<Empresa> findByNomeEmpresa(String nomeEmpresa);
 
 	List<Empresa> findAll();
+
+	Empresa findByCodEmpresa(Integer codEmpresa);
 }

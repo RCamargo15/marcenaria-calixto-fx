@@ -15,6 +15,8 @@ public interface SaidaProdutoDao {
 	SaidaProduto findByCodSaidaProduto(Integer codSaidaProduto);
 	
 	List<SaidaProduto> findByCodProduto(Integer codProduto);
+	
+	List<SaidaProduto> findByNomeProduto(String nomeProduto);
 
 	List<SaidaProduto> findAll();
 }

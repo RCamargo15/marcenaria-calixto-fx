@@ -12,7 +12,9 @@ public interface FornecedorDao {
 
 	void deleteByCodFornecedor(Integer codFornecedor);
 
-	Fornecedor findByCodFornecedor(Integer codFornecedor);
+	List<Fornecedor> findByNomeFornecedor(String nomeFornecedor);
 
 	List<Fornecedor> findAll();
+
+	Fornecedor findByCodFornecedor(Integer codFornecedor);
 }

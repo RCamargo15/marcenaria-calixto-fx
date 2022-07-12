@@ -27,6 +27,10 @@ public class FuncionarioService {
 		funcionarioDao.deleteByCodFuncionario(obj.getRegistroFunc());
 	}
 	
+	public List<Funcionario> findByNomeFuncionario(String nomeFuncionario) {
+		return funcionarioDao.findByNomeFuncionario(nomeFuncionario);
+	}
+	
 	public Funcionario findByCodFuncionario(Integer codFuncionario) {
 		return funcionarioDao.findByCodFuncionario(codFuncionario);
 	}

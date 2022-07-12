@@ -271,7 +271,7 @@ public class EditarNotaCompraController implements Initializable, DataChangeList
 			valorTotal = valorTotal + valorMoment;
 		}
 
-		txtValorTotalNotaFiscal.setText("R$ " + String.valueOf(valorTotal));
+		txtValorTotalNotaFiscal.setText("R$ " + String.format("%.2f", valorTotal));
 	}
 
 	private void setErrorMessages(Map<String, String> errors) {

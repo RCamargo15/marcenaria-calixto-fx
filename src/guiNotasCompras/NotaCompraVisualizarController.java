@@ -312,17 +312,15 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 					throw new IllegalStateException("NF vazio");
 				}
 				try {
-					notasComprasService.removerNotaCompra(obj);
 					List<EntradaProduto> entradaProdutoList = entradaProdutoService.findByNumeroNF(obj.getNumeroNF());
 					for(EntradaProduto entry : entradaProdutoList) {
-						entradaProdutoService.removerEntrada(entry);
 						Estoque s = estoqueService.findByCodProduto(entry.getCodProduto().getCodProduto());
-						Integer atual = s.getEstoqueAtual() - entry.getQuantidade().getQuantidade();
+						int atual = s.getEstoqueAtual() - entry.getQuantidade();
 						s.setEstoqueAtual(atual);
 						estoqueService.saveOrUpdate(s);
 						entradaProdutoService.removerEntrada(entry);
 					}
-					
+					notasComprasService.removerNotaCompra(obj);
 					updateTableViewNotasCompras();
 				}
 				catch(DbException e) {

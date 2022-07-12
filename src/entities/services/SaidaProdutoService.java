@@ -35,4 +35,8 @@ public class SaidaProdutoService {
 		return saidaProdutoDao.findByCodProduto(codProduto);
 	}
 	
+	public List<SaidaProduto> findByNomeProduto(String nomeProduto) {
+		return saidaProdutoDao.findByNomeProduto(nomeProduto);
+	}
+	
 }

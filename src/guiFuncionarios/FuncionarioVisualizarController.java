@@ -2,6 +2,8 @@ package guiFuncionarios;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +38,7 @@ import marcenaria.entities.Funcionario;
 
 public class FuncionarioVisualizarController implements Initializable, DataChangeListener {
 
-	private FuncionarioService FuncionarioService;
+	private FuncionarioService funcionarioService;
 
 	@FXML
 	private TableView<Funcionario> tableViewFuncionario;
@@ -139,20 +141,26 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 
 	@FXML
 	public void onBtMostrarTodos() {
+		searchByCod.setText("");
 		updateTableViewFuncionario();
 	}
 
 	@FXML
 	public void onBtBuscar() {
 
-		if (FuncionarioService == null) {
+		if (funcionarioService == null) {
 			throw new IllegalStateException("FuncionarioService null");
 		}
+		List<Funcionario> buscaFuncionario = new ArrayList<>();
+		if(searchByCod.getText().equals("") || searchByCod.getText() == null) {
+			buscaFuncionario = Collections.emptyList();
+		}
+		else {
+			buscaFuncionario = funcionarioService.findByNomeFuncionario(searchByCod.getText());
+		}
 
-		Funcionario buscaFuncionario = FuncionarioService.findByCodFuncionario(Utils.tryParseToInt(searchByCod.getText()));
-
-		if (buscaFuncionario == null) {
-			Alerts.showAlert("Busca de Funcionário", null, "Nenhum funcionário com esse código foi encontrado no sistema!",
+		if (buscaFuncionario.isEmpty()) {
+			Alerts.showAlert("Busca de Funcionário", null, "Nenhum funcionário foi encontrado no sistema!",
 					AlertType.INFORMATION);
 		} else {
 			obsList = FXCollections.observableArrayList(buscaFuncionario);
@@ -163,8 +171,8 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 
 	}
 
-	public void setFuncionarioService(FuncionarioService FuncionarioService) {
-		this.FuncionarioService = FuncionarioService;
+	public void setFuncionarioService(FuncionarioService funcionarioService) {
+		this.funcionarioService = funcionarioService;
 	}
 
 	@Override
@@ -200,7 +208,7 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 		Utils.formatTableColumnDouble(tableColumnSalario, 2);
 		tableColumnObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
 
-		searchByCod.setPromptText("Insira o registro do funcionário");
+		searchByCod.setPromptText("Insira o nome do funcionário");
 
 		Stage stage = (Stage) Main.getMainScene().getWindow();
 		tableViewFuncionario.prefHeightProperty().bind(stage.heightProperty());
@@ -209,11 +217,11 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 	}
 
 	public void updateTableViewFuncionario() {
-		if (FuncionarioService == null) {
+		if (funcionarioService == null) {
 			throw new IllegalStateException("Service null");
 		}
 
-		List<Funcionario> list = FuncionarioService.findAll();
+		List<Funcionario> list = funcionarioService.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewFuncionario.setItems(obsList);
 		initEditButtons();
@@ -311,11 +319,11 @@ public class FuncionarioVisualizarController implements Initializable, DataChang
 		Optional<ButtonType> result = Alerts.showConfirmation("EXCLUIR FUNCIONÁRIO",
 				"Tem certeza que deseja remover esse funcionário do seu banco de dados?");
 		if (result.get() == ButtonType.OK) {
-			if (FuncionarioService == null) {
+			if (funcionarioService == null) {
 				throw new IllegalStateException("Funcionario está vazio");
 			}
 			try {
-				FuncionarioService.removerFuncionario(obj);
+				funcionarioService.removerFuncionario(obj);
 				updateTableViewFuncionario();
 			} catch (DbException e) {
 				Alerts.showAlert("Erro ao excluir funcionario", null, e.getMessage(), AlertType.ERROR);

@@ -17,4 +17,6 @@ public interface EstoqueDao {
 	Estoque findByCodProduto(Integer codProduto);
 
 	List<Estoque> findAll();
+	
+	List<Estoque> findByNomeProduto(String nomeProduto);
 }

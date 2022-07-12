@@ -103,15 +103,14 @@ public class OrdemServicoClienteVisualizarController implements DataChangeListen
 
 	@FXML
 	public void onBtBuscarAction() {
-
 		if (txtBuscarCodOrdem == null || txtBuscarCodOrdem.getText().equals("")) {
 			Alerts.showAlert("Erro ao buscar", null,
 					"Campo de busca não pode estar vazio. Insira o código da ordem de serviço", AlertType.INFORMATION);
-		}
-		OrdemServicoCliente osc = ordemServicoClienteService
-				.findByNumPedido(Integer.parseInt(txtBuscarCodOrdem.getText()));
+		}else {
+		OrdemServicoCliente osc = ordemServicoClienteService.findByNumPedido(Integer.parseInt(txtBuscarCodOrdem.getText()));
 		obsListBuscar.add(osc);
 		tableViewOrdemServicoCliente.setItems(obsListBuscar);
+		}
 	}
 
 	@FXML

@@ -28,12 +28,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 
 	@Override
 	public void insert(EntradaProduto obj) {
-//		int codProdutoEstoque = 0;
-//		int qtdRecebida = 0;
-//		int qtdAtual = 0;
 		PreparedStatement st = null;
-//		PreparedStatement atualizaEstoque = null;
-//		EstoqueDao estoqueDao = DaoFactory.createEstoqueDao();
 		try {
 			st = conn.prepareStatement(
 					"INSERT INTO MARCENARIA.ENTRADA_PRODUTO(NUMERO_NF, COD_PRODUTO, DATA_ENTRADA, QUANTIDADE, VALOR_UNIT, VALOR_TOTAL, VALOR_TOTAL_NOTA)"
@@ -43,7 +38,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
 			st.setInt(2, obj.getCodProduto().getCodProduto());
 			st.setDate(3, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setInt(4, obj.getQuantidade().getQuantidade());
+			st.setInt(4, obj.getQuantidade());
 			st.setDouble(5, obj.getValorUnit().getValorUnit());
 			st.setDouble(6, obj.getValorTotal().getValorTotal());
 			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
@@ -78,7 +73,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
 			st.setInt(2, obj.getCodProduto().getCodProduto());
 			st.setDate(3, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setInt(4, obj.getQuantidade().getQuantidade());
+			st.setInt(4, obj.getQuantidade());
 			st.setDouble(5, obj.getValorUnit().getValorUnit());
 			st.setDouble(6, obj.getValorTotal().getValorTotal());
 			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
@@ -211,6 +206,60 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			Db.closeResultSet(rs);
 		}
 	}
+	
+	@Override
+	public List<EntradaProduto> findByNomeProduto(String numeroNF) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+			st = conn.prepareStatement(
+					"SELECT * FROM ENTRADA_PRODUTO INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
+							+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = entrada_produto.NUMERO_NF "
+							+ "INNER JOIN FORNECEDOR ON FORNECEDOR.COD_FORNECEDOR = NOTA_COMPRA_MATERIAL.COD_FORNECEDOR "
+							+ " WHERE ENTRADA_PRODUTO.NUMERO_NF = ?  GROUP BY entrada_produto.COD_ENTRADA");
+
+			st.setString(1, numeroNF);
+
+			rs = st.executeQuery();
+
+			List<EntradaProduto> listaEntrada = new ArrayList<>();
+			Map<Integer, Produto> produtoMap = new HashMap<>();
+			Map<Integer, NotasCompras> notasComprasMap = new HashMap<>();
+			Map<Integer, Fornecedor> fornecedorMap = new HashMap<>();
+
+			while (rs.next()) {
+
+				Fornecedor fornecedor = fornecedorMap.get(rs.getInt("COD_FORNECEDOR"));
+				if (fornecedor == null) {
+					fornecedor = criarFornecedor(rs);
+					fornecedorMap.put(rs.getInt("COD_FORNECEDOR"), fornecedor);
+				}
+
+				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
+				if (produto == null) {
+					produto = criarProduto(rs);
+					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
+				}
+
+				NotasCompras notaCompra = notasComprasMap.get(rs.getInt("COD_NOTA"));
+				if (notaCompra == null) {
+					notaCompra = criarNotasCompras(rs, fornecedor, produto);
+					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
+				}
+
+
+				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
+				listaEntrada.add(obj);
+			}
+			return listaEntrada;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			Db.closeStatement(st);
+			Db.closeResultSet(rs);
+		}
+	}
 
 	@Override
 	public List<EntradaProduto> findByCodProd(Integer codProduto) {
@@ -272,7 +321,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		ResultSet rs = null;
 
 		try {
-			st = conn.prepareStatement("SELECT * FROM ENTRADA_PRODUTO "
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ENTRADA_PRODUTO "
 					+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = ENTRADA_PRODUTO.NUMERO_NF "
 					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
 					+ "INNER JOIN FORNECEDOR ON nota_compra_material.COD_FORNECEDOR = FORNECEDOR.COD_FORNECEDOR "
@@ -304,9 +353,6 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 					notaCompra = criarNotasCompras(rs, fornecedor, produto);
 					notasComprasMap.put(rs.getInt("COD_NOTA"), notaCompra);
 				}
-
-				
-
 				EntradaProduto obj = criarEntradaProduto(rs, produto, notaCompra);
 				listaEntrada.add(obj);
 			}
@@ -328,7 +374,7 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setNumeroNF(notaCompra);
 		obj.setCodProduto(prod);
 		obj.setDataEntrada(new java.util.Date(rs.getTimestamp("DATA_ENTRADA").getTime()));
-		obj.setQuantidade(notaCompra);
+		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setValorUnit(notaCompra);
 		obj.setValorTotal(notaCompra);
 		obj.setValorTotalNota(notaCompra);

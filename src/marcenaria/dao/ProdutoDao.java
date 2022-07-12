@@ -12,7 +12,9 @@ public interface ProdutoDao {
 
 	void deleteByCodProduto(Integer codProduto);
 
-	Produto findByCodProduto(Integer codProduto);
+	List<Produto> findByNomeProduto(String nomeProduto);
 
 	List<Produto> findAll();
+
+	Produto findByCodProduto(Integer codProduto);
 }

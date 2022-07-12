@@ -132,6 +132,27 @@ public class ClienteDaoJDBC implements ClienteDao {
 	}
 
 	@Override
+	public List<Cliente> findByNomeCliente(String nomeCliente) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.CLIENTE WHERE CLIENTE.NOME LIKE '"+nomeCliente+"%' ");
+			rs = st.executeQuery();
+			List<Cliente> lista = new ArrayList<>();
+			while (rs.next()) {
+				Cliente obj = criarCliente(rs);
+				lista.add(obj);
+			}
+			return lista;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			Db.closeStatement(st);
+			Db.closeResultSet(rs);
+		}
+	}
+	
+	@Override
 	public Cliente findByCodCliente(Integer codCliente) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -141,8 +162,7 @@ public class ClienteDaoJDBC implements ClienteDao {
 			st.setInt(1, codCliente);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Cliente obj = criarCliente(rs);
-				return obj;
+			return criarCliente(rs);
 			}
 			return null;
 		} catch (SQLException e) {

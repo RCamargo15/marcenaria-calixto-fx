@@ -75,7 +75,7 @@ public class OrdemServicoClienteDaoJDBC implements OrdemServicoClienteDao {
 					obj.setId(numPedidoGerado);
 				}
 			} else {
-				throw new DbException("Nenhuma ordem de serviço foi cadastrada no sistema!");
+				throw new DbException("Nenhuma ordem de serviï¿½o foi cadastrada no sistema!");
 			}
 
 		} catch (SQLException e) {

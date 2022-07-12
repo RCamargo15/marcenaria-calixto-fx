@@ -12,6 +12,7 @@ import java.util.Map;
 
 import Db.Db;
 import Db.DbException;
+import entities.services.ProdutoService;
 import marcenaria.dao.EstoqueDao;
 import marcenaria.entities.Estoque;
 import marcenaria.entities.Produto;
@@ -19,6 +20,8 @@ import marcenaria.entities.Produto;
 public class EstoqueDaoJDBC implements EstoqueDao {
 
 	private Connection conn;
+	
+	ProdutoService produtoService = new ProdutoService();;
 
 	public EstoqueDaoJDBC(Connection conn) {
 		this.conn = conn;
@@ -52,7 +55,6 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 		} finally {
 			Db.closeStatement(st);
 		}
-
 	}
 
 	@Override
@@ -72,7 +74,9 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
 		}
-
+		finally {
+			Db.closeStatement(st);
+		}
 	}
 
 	@Override
@@ -141,9 +145,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 					produto = criarProduto(rs);
 					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
 				}
-
-				Estoque obj = criarEstoque(rs, produto);
-				return obj;
+				return criarEstoque(rs, produto);
 			}
 			return null;
 
@@ -153,6 +155,20 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 			Db.closeStatement(st);
 			Db.closeResultSet(rs);
 		}
+	}
+	
+	@Override
+	public List<Estoque> findByNomeProduto(String nomeProduto) {
+		List<Produto> listaProduto = produtoService.findByNomeProduto(nomeProduto);
+		List<Estoque> listaEstoque = findAll();
+		List<Estoque> listaEstoqueFinal = new ArrayList<>();
+
+		for (Estoque estock : listaEstoque) {
+			if (listaProduto.contains(estock.getCodProduto())) {
+				listaEstoqueFinal.add(estock);
+			}
+		}
+		return listaEstoqueFinal;
 	}
 
 	@Override

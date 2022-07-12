@@ -143,6 +143,30 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 	}
 
 	@Override
+	public List<Funcionario> findByNomeFuncionario(String nomeFuncionario) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM MARCENARIA.FUNCIONARIO WHERE FUNCIONARIO.NOME LIKE '"+nomeFuncionario+"%'");
+			rs = st.executeQuery();
+
+			List<Funcionario> lista = new ArrayList<>();
+
+			while (rs.next()) {
+				Funcionario obj = criarFuncionario(rs);
+				lista.add(obj);
+			}
+			return lista;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			Db.closeStatement(st);
+			Db.closeResultSet(rs);
+		}
+	}
+	
+	@Override
 	public Funcionario findByCodFuncionario(Integer codFuncionario) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -152,8 +176,7 @@ public class FuncionarioDaoJDBC implements FuncionarioDao {
 			st.setInt(1, codFuncionario);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Funcionario obj = criarFuncionario(rs);
-				return obj;
+			return criarFuncionario(rs);
 			}
 			return null;
 		} catch (SQLException e) {

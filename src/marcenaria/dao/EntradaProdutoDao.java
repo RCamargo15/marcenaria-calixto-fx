@@ -11,8 +11,10 @@ public interface EntradaProdutoDao {
 	void update(EntradaProduto obj);
 
 	void deleteByCodEntradaProduto(Integer codEntradaProduto);
+	
+	EntradaProduto findByCodEntradaProduto(Integer codEntrada);
 
-	EntradaProduto findByCodEntradaProduto(Integer codEntradaProduto);
+	List<EntradaProduto> findByNomeProduto(String nomeProduto);
 
 	List<EntradaProduto> findAll();
 	

@@ -246,7 +246,6 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 
 	@Override
 	public void initialize(URL uri, ResourceBundle rb) {
-   // TODO Tela inicial sem metodos para inicio
  }
 
 	private synchronized void loadCadastroCliente(String absoluteName, Cliente obj) {
