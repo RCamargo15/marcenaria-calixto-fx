@@ -149,7 +149,7 @@ public class EditarOrdemDeServicoEmpresaController implements Initializable {
 		}
 
 		statusServico.setValue(ordemServicoEmpresa.getStatusServico());
-		txtValorTotalOrcamento.setText("R$ " + String.valueOf(ordemServicoEmpresa.getValorTotal()));
+		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f",ordemServicoEmpresa.getValorTotal()));
 		cbFuncionarioResp.setValue(ordemServicoEmpresa.getRegistroFunc());
 		txtObs.setText(ordemServicoEmpresa.getObs());
 	}

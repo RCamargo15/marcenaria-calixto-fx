@@ -86,7 +86,7 @@
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin></TextField>
-            <ComboBox fx:id="cbCliente" prefHeight="25.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbCliente" prefHeight="25.0" prefWidth="276.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtDescServico" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="10.0" />
@@ -94,12 +94,12 @@
             <DatePicker fx:id="dpDataOrcamento" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <DatePicker fx:id="dpDataInicio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <DatePicker fx:id="dpPrazoEntrega" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox fx:id="statusServico" prefHeight="25.0" prefWidth="194.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox fx:id="statusServico" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <TextField fx:id="txtValorTotalOrcamento" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin></TextField>
-            <ComboBox fx:id="cbFuncionarioResp" prefHeight="25.0" prefWidth="254.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <ComboBox fx:id="cbFuncionarioResp" prefHeight="25.0" prefWidth="277.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
             <TextField fx:id="txtObs" GridPane.columnIndex="1" GridPane.rowIndex="9">
                <GridPane.margin>
                   <Insets right="10.0" />

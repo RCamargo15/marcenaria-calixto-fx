@@ -352,7 +352,6 @@ public class OrcamentoEmpresaVisualizarController implements Initializable, Data
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoEmpresa, OrcamentoEmpresa>() {
 			private final Button button = new Button("Editar");
-
 			@Override
 			protected void updateItem(OrcamentoEmpresa obj, boolean empty) {
 				super.updateItem(obj, empty);

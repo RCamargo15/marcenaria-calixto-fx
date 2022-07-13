@@ -20,10 +20,8 @@ import marcenaria.entities.NotasCompras;
 import marcenaria.entities.Produto;
 
 public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
-
 	private Connection conn;
-	
-	ProdutoService produtoService = new ProdutoService();
+	private ProdutoService produtoService = new ProdutoService();
 
 	public EntradaProdutoDaoJDBC(Connection conn) {
 		this.conn = conn;
@@ -41,10 +39,10 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
 			st.setInt(2, obj.getCodProduto().getCodProduto());
 			st.setDate(3, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setInt(4, obj.getQuantidade().getQuantidade());
-			st.setDouble(5, obj.getValorUnit().getValorUnit());
-			st.setDouble(6, obj.getValorTotal().getValorTotal());
-			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
+			st.setInt(4, obj.getQuantidade());
+			st.setDouble(5, obj.getValorUnit());
+			st.setDouble(6, obj.getValorTotal());
+			st.setDouble(7, obj.getValorTotalNota());
 			int rowsAffected = st.executeUpdate();
 			if (rowsAffected > 0) {
 				ResultSet rs = st.getGeneratedKeys();
@@ -73,10 +71,10 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st.setString(1, obj.getNumeroNF().getNumeroNF());
 			st.setInt(2, obj.getCodProduto().getCodProduto());
 			st.setDate(3, new java.sql.Date(obj.getDataEntrada().getTime()));
-			st.setInt(4, obj.getQuantidade().getQuantidade());
-			st.setDouble(5, obj.getValorUnit().getValorUnit());
-			st.setDouble(6, obj.getValorTotal().getValorTotal());
-			st.setDouble(7, obj.getValorTotalNota().getValorTotalNota());
+			st.setInt(4, obj.getQuantidade());
+			st.setDouble(5, obj.getValorUnit());
+			st.setDouble(6, obj.getValorTotal());
+			st.setDouble(7, obj.getValorTotalNota());
 			st.setInt(8, obj.getCodEntrada());
 			st.executeUpdate();
 		} catch (SQLException e) {
@@ -253,8 +251,8 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ENTRADA_PRODUTO "
 					+ "INNER JOIN nota_compra_material ON nota_compra_material.NUMERO_NF = ENTRADA_PRODUTO.NUMERO_NF "
 					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ENTRADA_PRODUTO.COD_PRODUTO "
-					+ "INNER JOIN FORNECEDOR ON nota_compra_material.COD_FORNECEDOR = FORNECEDOR.COD_FORNECEDOR"
-					);
+					+ "INNER JOIN FORNECEDOR ON nota_compra_material.COD_FORNECEDOR = FORNECEDOR.COD_FORNECEDOR "
+					+ "GROUP BY COD_ENTRADA");
 			rs = st.executeQuery();
 			List<EntradaProduto> listaEntrada = new ArrayList<>();
 			Map<Integer, Produto> produtoMap = new HashMap<>();
@@ -295,10 +293,10 @@ public class EntradaProdutoDaoJDBC implements EntradaProdutoDao {
 		obj.setNumeroNF(notaCompra);
 		obj.setCodProduto(prod);
 		obj.setDataEntrada(new java.util.Date(rs.getTimestamp("DATA_ENTRADA").getTime()));
-		obj.setQuantidade(notaCompra);
-		obj.setValorUnit(notaCompra);
-		obj.setValorTotal(notaCompra);
-		obj.setValorTotalNota(notaCompra);
+		obj.setQuantidade(rs.getInt("QUANTIDADE"));
+		obj.setValorUnit(rs.getDouble("VALOR_UNIT"));
+		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
+		obj.setValorTotalNota(rs.getDouble("VALOR_TOTAL_NOTA"));
 		return obj;
 	}
 

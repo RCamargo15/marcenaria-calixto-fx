@@ -17,12 +17,14 @@ import entities.services.ClienteService;
 import entities.services.FuncionarioService;
 import entities.services.OrdemServicoClienteService;
 import gui.listeners.DataChangeListener;
+import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -121,13 +123,12 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 		}
 		txtDescServico.setText(orcamentoCliente.getDescServico());
 		txtObs.setText(orcamentoCliente.getObs());
-		txtValorTotalOrcamento.setText("R$ " + String.valueOf(orcamentoCliente.getValorTotal()));
+		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f", orcamentoCliente.getValorTotal()));
 		
 		List<Cliente> list = new ArrayList<>();
 		list.add(orcamentoCliente.getCodCliente());
 		cbListCliente = FXCollections.observableArrayList(list);
 		cbCliente.setItems(cbListCliente);
-
 	}
 
 	public OrdemServicoCliente getOrdemServicoClienteData() {
@@ -204,9 +205,14 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 				setErrorMessages(errors);
 			} else {
 				OrdemServicoCliente ordemServicoCliente = getOrdemServicoClienteData();
-				ordemServicoClienteService.saveOrUpdate(ordemServicoCliente);
-				notificarDataChangeListener();
-				Utils.currentStage(event).close();
+				OrdemServicoCliente safetyVerification = ordemServicoClienteService.findByNumPedido(ordemServicoCliente.getNumeroPedido());
+				if (safetyVerification != null) {
+					Alerts.showAlert("Erro ao gerar ordem de serviço", null, "Já existe uma ordem de serviço para esse cliente.", AlertType.ERROR);
+				} else {
+					ordemServicoClienteService.saveOrUpdate(ordemServicoCliente);
+					notificarDataChangeListener();
+					Utils.currentStage(event).close();
+				}
 			}
 		} catch (DbException e) {
 			e.getMessage();
@@ -258,7 +264,7 @@ public class GerarOrdemDeServicoClienteController implements Initializable {
 	}
 
 	public void loadStatusServico() {
-		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "PRODUÇÃO");
+		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "EM PRODUÇÃO");
 		statusList = FXCollections.observableArrayList(list);
 		statusServico.setItems(statusList);
 	}

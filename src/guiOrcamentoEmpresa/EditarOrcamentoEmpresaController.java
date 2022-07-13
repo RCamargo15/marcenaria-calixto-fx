@@ -109,45 +109,12 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 	
 	@FXML
 	private TableView<OrcamentoEmpresa> tableViewOrcamentoEmpresa;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Integer> tableColumnId;
-
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Integer> tableColumnNumOrcamento;
-
-	@FXML
-	private TableColumn<Empresa, Integer> tableColumnCodEmpresa;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, String> tableColumnNomeResponsavel;
-
-	@FXML
-	private TableColumn<Empresa, String> tableColumnTelefone;
-
-	@FXML
-	private TableColumn<Empresa, String> tableColumnCelular;
-
-	@FXML
-	private TableColumn<Empresa, String> tableColumnEmail;
-
-	@FXML
-	private TableColumn<OrcamentoEmpresa, String> tableColumnDescServico;
-
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Date> tableColumnDataOrcamento;
 
 	@FXML
 	private TableColumn<OrcamentoEmpresa, Integer> tableColumnDescProduto;
 	
 	@FXML
 	private TableColumn<OrcamentoEmpresa, Double> tableColumnValorUnit;
-	
-	@FXML
-	private TableColumn<OrcamentoEmpresa, Double> tableColumnValorTotal;
-
-	@FXML
-	private TableColumn<OrcamentoEmpresa, String> tableColumnObs;
 	
 	@FXML
 	private TableColumn<OrcamentoEmpresa, Integer> tableColumnQuantidade;
@@ -211,7 +178,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 		
 		if(dpDataOrcamento == null) {
 			exception.addError("dataOrcamento", "Insira a data em que esse orçamento está sendo realizado");
-		}else {
+		} else {
 			Instant instant = Instant.from(dpDataOrcamento.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataOrcamento(Date.from(instant));
 		}
@@ -230,28 +197,26 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 		if(exception.getErrors().size() > 0) {
 			throw exception;
 		}
-		
 		return obj;
 	}
-	
+
 	@FXML
 	public void onBtAtualizarAction(ActionEvent event) {
-		if(orcamentoEmpresa == null) {
+		if (orcamentoEmpresa == null) {
 			throw new IllegalStateException("Orcamento null");
 		}
-		if(orcamentoEmpresaService == null) {
+		if (orcamentoEmpresaService == null) {
 			throw new IllegalStateException("Orcamento null");
 		}
-			try{
-				orcamentoEmpresa = getOrcamentoEmpresaData();
-				orcamentoEmpresaService.saveOrcamento(orcamentoEmpresa);
-				notificarDataChangeListener();
-				Utils.currentStage(event).close();
-			}
-			catch(DbException e) {
-				e.getMessage();
-			}
+		try {
+			orcamentoEmpresa = getOrcamentoEmpresaData();
+			orcamentoEmpresaService.saveOrcamento(orcamentoEmpresa);
+			notificarDataChangeListener();
+			Utils.currentStage(event).close();
+		} catch (DbException e) {
+			e.getMessage();
 		}
+	}
 	
 	public void updateOrcamentoEmpresaData() {
 		if(orcamentoEmpresaService == null) {
@@ -267,8 +232,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 		txtNumOrcamento.setText(String.valueOf(orcamentoEmpresa.getNumOrcamento()));
 		if(orcamentoEmpresa.getCodEmpresa() == null) {
 			cbCodEmpresa.getSelectionModel().selectFirst();
-		}
-		else {
+		} else {
 			cbCodEmpresa.setValue(orcamentoEmpresa.getCodEmpresa());
 		}
 		txtNomeResponsavel.setText(orcamentoEmpresa.getNomeResponsavel());
@@ -352,20 +316,16 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 			editarProdQtdStage.initOwner(parentStage);
 			editarProdQtdStage.initModality(Modality.WINDOW_MODAL);
 			editarProdQtdStage.showAndWait();
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
-		
-		
 	}
 	
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoEmpresa, OrcamentoEmpresa>() {
 			private final Button button = new Button("Editar");
-
 			@Override
 			protected void updateItem(OrcamentoEmpresa obj, boolean empty) {
 				super.updateItem(obj, empty);
@@ -375,8 +335,7 @@ public class EditarOrcamentoEmpresaController implements Initializable, DataChan
 				}
 				setGraphic(button);
 				button.setOnAction(event -> createEditarProdutoOrcamentoForm(obj, Utils.currentStage(event),
-						"/guiOrcamentoEmpresa/EditarProdQuantidadeEmpresa.fxml"));
-				
+						"/guiOrcamentoEmpresa/EditarProdQuantidadeEmpresa.fxml"));	
 			}
 		});
 	}

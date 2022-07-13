@@ -58,7 +58,7 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 	private TableColumn<EntradaProduto, Date> tableColumnDataEntrada;
 
 	@FXML
-	private TableColumn<NotasCompras, NotasCompras> tableColumnQuantidade;
+	private TableColumn<EntradaProduto, Integer> tableColumnQuantidade;
 
 	@FXML
 	private TextField searchByCod;
@@ -136,13 +136,11 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 		if (entradaProdutoService == null) {
 			throw new IllegalStateException("Service null");
 		}
-
 		List<EntradaProduto> list = entradaProdutoService.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewEntradaProduto.setItems(obsList);
-
 		initColumnNumeroNF();
-		initColumnQuantidade();
+		//initColumnQuantidade();
 	}
 
 	@Override
@@ -188,21 +186,21 @@ public class EntradaProdutoVisualizarController implements Initializable, DataCh
 		});
 	}
 
-	private void initColumnQuantidade() {
-		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("numeroNF"));
-		tableColumnQuantidade.setCellFactory(coluna -> {
-			return new TableCell<NotasCompras, NotasCompras>() {
-				@Override
-				protected void updateItem(NotasCompras item, boolean empty) {
-					super.updateItem(item, empty);
-					if (item != null && !empty) {
-						setText(String.valueOf(item.getQuantidade()));
-					} else {
-						setText("");
-					}
-				}
-			};
-		});
-	}
+//	private void initColumnQuantidade() {
+//		tableColumnQuantidade.setCellValueFactory(new PropertyValueFactory<>("numeroNF"));
+//		tableColumnQuantidade.setCellFactory(coluna -> {
+//			return new TableCell<NotasCompras, NotasCompras>() {
+//				@Override
+//				protected void updateItem(NotasCompras item, boolean empty) {
+//					super.updateItem(item, empty);
+//					if (item != null && !empty) {
+//						setText(String.valueOf(item.getQuantidade()));
+//					} else {
+//						setText("");
+//					}
+//				}
+//			};
+//		});
+//	}
 
 }

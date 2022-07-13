@@ -21,7 +21,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 
 	private Connection conn;
 	
-	ProdutoService produtoService = new ProdutoService();;
+	private ProdutoService produtoService = new ProdutoService();;
 
 	public EstoqueDaoJDBC(Connection conn) {
 		this.conn = conn;

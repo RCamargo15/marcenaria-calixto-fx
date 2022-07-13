@@ -362,12 +362,12 @@ public class GerarNovaNotaCompraController implements Initializable {
 				entradaProduto.setNumeroNF(nf);
 				entradaProduto.setCodProduto(nf.getCodProduto());
 				entradaProduto.setDataEntrada(nf.getDataEntrada());
-				entradaProduto.setQuantidade(nf);
-				entradaProduto.setValorUnit(nf);
-				entradaProduto.setValorTotal(nf);
-				entradaProduto.setValorTotalNota(nf);
+				entradaProduto.setQuantidade(nf.getQuantidade());
+				entradaProduto.setValorUnit(nf.getValorUnit());
+				entradaProduto.setValorTotal(nf.getValorTotal());
+				entradaProduto.setValorTotalNota(nf.getValorTotalNota());
 				estoque = estoqueService.findByCodProduto(entradaProduto.getCodProduto().getCodProduto());
-				qtdEstoque = entradaProduto.getQuantidade().getQuantidade();
+				qtdEstoque = entradaProduto.getQuantidade();
 				for (Estoque stock : listaEstoque) {
 					if (stock.getId().equals(estoque.getId())) {
 						stock.setEstoqueAtual(stock.getEstoqueAtual() + qtdEstoque);

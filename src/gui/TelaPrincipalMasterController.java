@@ -231,7 +231,7 @@ public class TelaPrincipalMasterController implements Initializable, DataChangeL
 	@FXML
 	public void onMenuItemOrcamentoPessoaFisica() {
 		loadOrcamentoClienteVisualizar("/guiOrcamentoCliente/OrcamentoClienteVisualizar.fxml", (OrcamentoClienteVisualizarController controller) ->{
-    		controller.setServices(new OrcamentoClienteService(), new ClienteService(), new ProdutoService());
+    		controller.setServices(new OrcamentoClienteService(), new ClienteService(), new ProdutoService(), new OrdemServicoClienteService());
     		controller.updateTableViewOrcamentoCliente();
     	});
 	}

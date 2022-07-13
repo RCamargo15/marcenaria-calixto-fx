@@ -48,12 +48,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import marcenaria.entities.Cliente;
 import marcenaria.entities.OrcamentoCliente;
+import marcenaria.entities.OrdemServicoCliente;
 
 public class OrcamentoClienteVisualizarController implements Initializable, DataChangeListener {
 
 	private OrcamentoClienteService orcamentoClienteService;
 	private ClienteService clienteService;
 	private ProdutoService produtoService;
+	private OrdemServicoClienteService ordemServicoClienteService;
 
 	@FXML
 	private TableView<OrcamentoCliente> tableViewOrcamentoCliente;
@@ -115,10 +117,11 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 	private ObservableList<OrcamentoCliente> obsList;
 
 	public void setServices(OrcamentoClienteService orcamentoClienteService, ClienteService clienteService,
-			ProdutoService produtoService) {
+			ProdutoService produtoService, OrdemServicoClienteService ordemServicoClienteService) {
 		this.orcamentoClienteService = orcamentoClienteService;
 		this.clienteService = clienteService;
 		this.produtoService = produtoService;
+		this.ordemServicoClienteService = ordemServicoClienteService;
 	}
 
 	@FXML
@@ -381,6 +384,8 @@ public class OrcamentoClienteVisualizarController implements Initializable, Data
 				throw new IllegalStateException("Orcamento vazio");
 			}
 			try {
+				OrdemServicoCliente os = ordemServicoClienteService.findByNumPedido(obj.getNumOrcamento());
+				if(os != null) ordemServicoClienteService.removerOrdemServicoCliente(os);
 				orcamentoClienteService.removerOrcamento(obj);
 				updateTableViewOrcamentoCliente();
 			} catch (DbException e) {

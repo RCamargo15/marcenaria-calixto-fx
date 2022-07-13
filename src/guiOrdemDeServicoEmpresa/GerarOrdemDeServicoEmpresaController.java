@@ -17,12 +17,14 @@ import entities.services.EmpresaService;
 import entities.services.FuncionarioService;
 import entities.services.OrdemServicoEmpresaService;
 import gui.listeners.DataChangeListener;
+import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -125,7 +127,7 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 		}
 		txtDescServico.setText(orcamentoEmpresa.getDescServico());
 		txtObs.setText(orcamentoEmpresa.getObs());
-		txtValorTotalOrcamento.setText(String.valueOf("R$ " + orcamentoEmpresa.getValorTotal()));
+		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f", orcamentoEmpresa.getValorTotal()));
 
 		
 		List<Empresa> list = new ArrayList<>();
@@ -206,10 +208,14 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 				setErrorMessages(errors);
 			} else {
 				OrdemServicoEmpresa ordemServicoEmpresa = getOrdemServicoEmpresaData();
-				ordemServicoEmpresaService.saveOrUpdate(ordemServicoEmpresa);
-				System.out.println("Cadastrado");
-				notificarDataChangeListener();
-				Utils.currentStage(event).close();
+				OrdemServicoEmpresa safetyVerification = ordemServicoEmpresaService.findByNumPedido(ordemServicoEmpresa.getNumeroPedido());
+				if (safetyVerification != null) {
+					Alerts.showAlert("Erro ao gerar ordem de serviço", null, "Já existe uma ordem de serviço para esse cliente.", AlertType.ERROR);
+				} else {
+					ordemServicoEmpresaService.saveOrUpdate(ordemServicoEmpresa);
+					notificarDataChangeListener();
+					Utils.currentStage(event).close();
+				}
 			}
 		} catch (DbException e) {
 			e.getMessage();
@@ -260,7 +266,7 @@ public class GerarOrdemDeServicoEmpresaController implements Initializable {
 	}
 
 	public void loadStatusServico() {
-		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "PRODUÇÃO");
+		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "EM PRODUÇÃO");
 		statusList = FXCollections.observableArrayList(list);
 		statusServico.setItems(statusList);
 	}

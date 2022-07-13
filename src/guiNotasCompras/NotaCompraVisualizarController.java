@@ -315,7 +315,7 @@ public class NotaCompraVisualizarController implements Initializable, DataChange
 					List<EntradaProduto> entradaProdutoList = entradaProdutoService.findByNumeroNF(obj.getNumeroNF());
 					for(EntradaProduto entry : entradaProdutoList) {
 						Estoque s = estoqueService.findByCodProduto(entry.getCodProduto().getCodProduto());
-						int entrada = entry.getQuantidade().getQuantidade();
+						int entrada = entry.getQuantidade();
 						int atual = s.getEstoqueAtual() - entrada;
 						s.setEstoqueAtual(atual);
 						estoqueService.saveOrUpdate(s);

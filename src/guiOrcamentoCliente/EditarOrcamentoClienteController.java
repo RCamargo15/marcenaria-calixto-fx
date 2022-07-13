@@ -160,92 +160,76 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 	
 	public OrcamentoCliente getOrcamentoClienteData() {
 		ValidationException exception = new ValidationException("Erro de validação");
-		
 		OrcamentoCliente obj = new OrcamentoCliente();
-		
 		obj.setNumOrcamento(Integer.parseInt(txtNumOrcamento.getText()));
 		obj.setCodCliente(cbCodCliente.getValue());
 		obj.setTelefone(txtTelefoneCliente.getText());
 		obj.setCelular(txtCelularCliente.getText());
 		obj.setEmail(txtEmailCliente.getText());
 		obj.setDescServico(txtDescricaoServico.getText());
-		
 		if(dpDataOrcamento == null) {
 			exception.addError("dataOrcamento", "Insira a data em que esse orçamento está sendo realizado");
-		}else {
+		} else {
 			Instant instant = Instant.from(dpDataOrcamento.getValue().atStartOfDay(ZoneId.systemDefault()));
 			obj.setDataOrcamento(Date.from(instant));
 		}
-		
 		obj.setValorTotal(Double.parseDouble(Utils.getValorTotalNota(txtValorTotalOrcamento.getText())));
 		obj.setObs(txtObs.getText());
 		
 		if (cbCodCliente.getValue() == null) {
 			exception.addError("codCliente", "Você deve selecionar um cliente para esse orçamento");
 		}
-		
 		if (txtDescricaoServico.getText() == null || txtDescricaoServico.getText().trim().equals("")) {
 			exception.addError("descServico", "Descreva o serviço solicitado pelo cliente");
 		}
-		
 		if(exception.getErrors().size() > 0) {
 			throw exception;
 		}
-		
 		return obj;
 	}
 	
 	@FXML
 	public void onBtAtualizarAction(ActionEvent event) {
-		if(orcamentoCliente == null) {
+		if (orcamentoCliente == null) {
 			throw new IllegalStateException("Orcamento null");
 		}
-		if(orcamentoClienteService == null) {
+		if (orcamentoClienteService == null) {
 			throw new IllegalStateException("Orcamento null");
 		}
-			try{
-				orcamentoCliente = getOrcamentoClienteData();
-				orcamentoClienteService.saveOrcamento(orcamentoCliente);
-				notificarDataChangeListener();
-				Utils.currentStage(event).close();
-			}
-			catch(DbException e) {
-				e.getMessage();
-			}
+		try {
+			orcamentoCliente = getOrcamentoClienteData();
+			orcamentoClienteService.saveOrcamento(orcamentoCliente);
+			notificarDataChangeListener();
+			Utils.currentStage(event).close();
+		} catch (DbException e) {
+			e.getMessage();
 		}
+	}
 	
 	
 	public void updateOrcamentoClienteData() {
 		if(orcamentoClienteService == null) {
 			throw new IllegalStateException("Orcamentoservice null");
 		}
-		
 		List<OrcamentoCliente> listOrcamentos = orcamentoClienteService.findByNumOrcamentoList(orcamentoCliente.getNumOrcamento());
 		obsListProdutoOrcamento = FXCollections.observableArrayList(listOrcamentos);
 		tableViewOrcamentoCliente.setItems(obsListProdutoOrcamento);
 		initEditButtons();
 		initRemoveButtons();
 		double valorTotal = 0;
-		
-		
 		txtNumOrcamento.setText(String.valueOf(orcamentoCliente.getNumOrcamento()));
-		
 		if(orcamentoCliente.getCodCliente() == null) {
 			cbCodCliente.getSelectionModel().selectFirst();
-		}
-		else {
+		} else {
 			cbCodCliente.setValue(orcamentoCliente.getCodCliente());
 		}
-		
 		txtTelefoneCliente.setText(orcamentoCliente.getTelefone());
 		txtCelularCliente.setText(orcamentoCliente.getCelular());
 		txtEmailCliente.setText(orcamentoCliente.getEmail());
 		txtDescricaoServico.setText(orcamentoCliente.getDescServico());
-		
 		if(orcamentoCliente.getDataOrcamento() != null) {
 			dpDataOrcamento.setValue(LocalDate.ofInstant(orcamentoCliente.getDataOrcamento().toInstant(), ZoneId.systemDefault()));
 		}
-		
 		for(OrcamentoCliente orc : listOrcamentos) {
 			double valorMoment = orc.getValor() * orc.getQuantidade();
 			valorTotal = valorTotal + valorMoment;
@@ -255,8 +239,6 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 		txtValorTotalOrcamento.setText("R$ " + String.format("%.2f",valorFinal));
 		txtObs.setText(orcamentoCliente.getObs());
 	}
-
-	
 	
 	public void loadClientes() {
 		if(clienteService == null) {
@@ -320,20 +302,16 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 			editarProdQtdStage.initOwner(parentStage);
 			editarProdQtdStage.initModality(Modality.WINDOW_MODAL);
 			editarProdQtdStage.showAndWait();
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 			Alerts.showAlert("IOException", null, e.getMessage(), AlertType.ERROR);
 		}
-		
-		
 	}
 	
 	private void initEditButtons() {
 		tableColumnEditar.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 		tableColumnEditar.setCellFactory(param -> new TableCell<OrcamentoCliente, OrcamentoCliente>() {
 			private final Button button = new Button("Editar");
-
 			@Override
 			protected void updateItem(OrcamentoCliente obj, boolean empty) {
 				super.updateItem(obj, empty);
@@ -343,8 +321,7 @@ public class EditarOrcamentoClienteController implements Initializable, DataChan
 				}
 				setGraphic(button);
 				button.setOnAction(event -> createEditarProdutoOrcamentoForm(obj, Utils.currentStage(event),
-						"/guiOrcamentoCliente/EditarProdQuantidadeCliente.fxml"));
-				
+					"/guiOrcamentoCliente/EditarProdQuantidadeCliente.fxml"));
 			}
 		});
 	}

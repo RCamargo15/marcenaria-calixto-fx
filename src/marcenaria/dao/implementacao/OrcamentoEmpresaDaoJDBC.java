@@ -179,7 +179,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORCAMENTO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORCAMENTO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_EMPRESA "
+					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_PRODUTO "
 					+ "WHERE NUM_ORCAMENTO = ?");
 			
 			st.setInt(1, numOrcamento);
@@ -223,7 +223,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORCAMENTO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORCAMENTO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_EMPRESA "
+					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_PRODUTO "
 					+ "WHERE NUM_ORCAMENTO = ?");
 			
 			st.setInt(1, numOrcamento);
@@ -267,7 +267,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORCAMENTO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORCAMENTO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_EMPRESA "
+					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_PRODUTO "
 					+ "WHERE ID = ?");
 			
 			st.setInt(1, numOrcamento);
@@ -312,7 +312,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORCAMENTO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORCAMENTO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_EMPRESA GROUP BY NUM_ORCAMENTO "
+					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_PRODUTO GROUP BY NUM_ORCAMENTO "
 					);
 			
 			rs = st.executeQuery();
@@ -323,17 +323,18 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 			
 			while(rs.next()) {
 				
+				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
+				if(produto == null) {
+					produto = criarProduto(rs);
+					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
+				}
+				
 				Empresa empresa = empresaMap.get(rs.getInt("COD_EMPRESA"));
 				if(empresa == null) {
 					empresa = criarEmpresa(rs);
 					empresaMap.put(rs.getInt("COD_EMPRESA"), empresa);
 				}
 				
-				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
-				if(produto == null) {
-					produto = criarProduto(rs);
-					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
-				}
 				
 				OrcamentoEmpresa obj = criarOrcamentoEmpresa(rs, empresa, produto);
 				
@@ -357,7 +358,7 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		try {
 			st = conn.prepareStatement("SELECT * FROM MARCENARIA.ORCAMENTO_EMPRESA "
 					+ "INNER JOIN EMPRESA ON EMPRESA.COD_EMPRESA = ORCAMENTO_EMPRESA.COD_EMPRESA "
-					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_EMPRESA "
+					+ "INNER JOIN PRODUTO ON PRODUTO.COD_PRODUTO = ORCAMENTO_EMPRESA.COD_PRODUTO "
 					);
 			
 			rs = st.executeQuery();
@@ -368,28 +369,24 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 			
 			while(rs.next()) {
 				
-				Empresa empresa = empresaMap.get(rs.getInt("COD_EMPRESA"));
-				if(empresa == null) {
-					empresa = criarEmpresa(rs);
-					empresaMap.put(rs.getInt("COD_EMPRESA"), empresa);
-				}
-				
 				Produto produto = produtoMap.get(rs.getInt("COD_PRODUTO"));
 				if(produto == null) {
 					produto = criarProduto(rs);
 					produtoMap.put(rs.getInt("COD_PRODUTO"), produto);
 				}
 				
+				Empresa empresa = empresaMap.get(rs.getInt("COD_EMPRESA"));
+				if(empresa == null) {
+					empresa = criarEmpresa(rs);
+					empresaMap.put(rs.getInt("COD_EMPRESA"), empresa);
+				}
 				OrcamentoEmpresa obj = criarOrcamentoEmpresa(rs, empresa, produto);
-				
 				listEmpresa.add(obj);
 			}
 			return listEmpresa;
-		}
-		catch(SQLException e) {
+		} catch(SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			Db.closeResultSet(rs);
 			Db.closeStatement(st);
 		}
@@ -406,9 +403,9 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		obj.setEmail(rs.getString("EMAIL"));
 		obj.setDescServico(rs.getString("DESC_SERVICO"));
 		obj.setDataOrcamento(new java.util.Date(rs.getTimestamp("DATA_ORCAMENTO").getTime()));
+		obj.setCodProduto(produto);
 		obj.setQuantidade(rs.getInt("QUANTIDADE"));
 		obj.setValor(produto);
-		obj.setCodProduto(produto);
 		obj.setValorObra(rs.getDouble("VALOR_OBRA"));
 		obj.setValorMetroQuad(rs.getDouble("VALOR_QUAD"));
 		obj.setValorTotal(rs.getDouble("VALOR_TOTAL"));
@@ -446,6 +443,4 @@ public class OrcamentoEmpresaDaoJDBC implements OrcamentoEmpresaDao {
 		obj.setPrecoUnit(rs.getDouble("PRECO_UNIT"));
 		return obj;
 	}
-
-
 }

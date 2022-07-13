@@ -222,7 +222,11 @@ public class GerarNovoOrcamentoClienteController implements Initializable {
 		ValidationException exception = new ValidationException("Erro de validação");
 		ProdutoOrcamento produtoTemp = new ProdutoOrcamento();
 		produtoTemp = cbCodProduto.getValue();
-		produtoTemp.setCodProduto(cbCodProduto.getValue().getCodProduto());
+		if(cbCodProduto.getValue() == null) {
+			produtoTemp.setCodProduto(null);
+		} else {
+			produtoTemp.setCodProduto(cbCodProduto.getValue().getCodProduto());
+		}
 		produtoTemp.setDescProduto(cbCodProduto.getValue().getDescProduto());
 		produtoTemp.setPrecoProd(cbCodProduto.getValue().getPrecoProd());
 		produtoTemp.setQuantidade(Integer.parseInt(txtQuantidade.getText()));

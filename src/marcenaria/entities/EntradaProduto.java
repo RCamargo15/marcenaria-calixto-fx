@@ -11,17 +11,17 @@ public class EntradaProduto implements Serializable {
 	private NotasCompras numeroNF;
 	private Produto codProduto;
 	private Date dataEntrada;
-	private NotasCompras quantidade;
-	private NotasCompras valorUnit;
-	private NotasCompras valorTotal;
-	private NotasCompras valorTotalNota;
+	private Integer quantidade;
+	private Double valorUnit;
+	private Double valorTotal;
+	private Double valorTotalNota;
 
 	public EntradaProduto() {
 
 	}
 
 	public EntradaProduto(Integer codEntrada, NotasCompras numeroNF, Produto codProduto, Date dataEntrada,
-			NotasCompras quantidade, NotasCompras valorUnit, NotasCompras valorTotal, NotasCompras valorTotalNota,
+			Integer quantidade, Double valorUnit, Double valorTotal, Double valorTotalNota,
 			Funcionario respRecebimento) {
 		this.numeroNF = numeroNF;
 		this.codProduto = codProduto;
@@ -64,35 +64,35 @@ public class EntradaProduto implements Serializable {
 		this.dataEntrada = dataEntrada;
 	}
 
-	public NotasCompras getQuantidade() {
+	public Integer getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(NotasCompras quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
 
-	public NotasCompras getValorUnit() {
+	public Double getValorUnit() {
 		return valorUnit;
 	}
 
-	public void setValorUnit(NotasCompras valorUnit) {
+	public void setValorUnit(Double valorUnit) {
 		this.valorUnit = valorUnit;
 	}
 
-	public NotasCompras getValorTotal() {
+	public Double getValorTotal() {
 		return valorTotal;
 	}
 
-	public void setValorTotal(NotasCompras valorTotal) {
+	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 
-	public NotasCompras getValorTotalNota() {
+	public Double getValorTotalNota() {
 		return valorTotalNota;
 	}
 
-	public void setValorTotalNota(NotasCompras valorTotalNota) {
+	public void setValorTotalNota(Double valorTotalNota) {
 		this.valorTotalNota = valorTotalNota;
 	}
 

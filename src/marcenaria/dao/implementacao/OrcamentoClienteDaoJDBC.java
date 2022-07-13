@@ -393,13 +393,10 @@ public class OrcamentoClienteDaoJDBC implements OrcamentoClienteDao {
 					OrcamentoCliente obj = criarOrcamentoCliente(rs, cliente, produto);
 					listOrcamento.add(obj);	
 				}
-			
 				return listOrcamento;
-		}
-		catch(SQLException e) {
+		} catch(SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			Db.closeResultSet(rs);
 			Db.closeStatement(st);
 		}

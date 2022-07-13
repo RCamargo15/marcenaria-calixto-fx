@@ -151,7 +151,7 @@ public class EditarOrdemDeServicoClienteController implements Initializable {
 		}
 
 		statusServico.setValue(ordemServicoCliente.getStatusServico());
-		txtValorTotalOrcamento.setText("R$ "+String.valueOf(ordemServicoCliente.getValorTotal()));
+		txtValorTotalOrcamento.setText("R$ "+String.format("%.2f",ordemServicoCliente.getValorTotal()));
 		cbFuncionarioResp.setValue(ordemServicoCliente.getRegistroFunc());
 		txtObs.setText(ordemServicoCliente.getObs());
 	}
@@ -276,7 +276,7 @@ public class EditarOrdemDeServicoClienteController implements Initializable {
 	}
 
 	public void loadStatusServico() {
-		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "PRODUÇÃO");
+		List<String> list = Arrays.asList("ENTREGUE", "MONTAGEM", "RECEBIDO", "EM PRODUÇÃO");
 		statusList = FXCollections.observableArrayList(list);
 		statusServico.setItems(statusList);
 	}
