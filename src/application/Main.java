@@ -18,12 +18,9 @@ public class Main extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/TelaPrincipalMaster.fxml"));
 			ScrollPane scrollPane = loader.load();
-			
 			scrollPane.setFitToHeight(true);
 			scrollPane.setFitToWidth(true);
-		
 			primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/gui.styles/Calixto_mini_logo_3 (2).png")));
-			
 			mainScene = new Scene(scrollPane);
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Marcenaria Calixto");
@@ -33,7 +30,6 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
 	public static Scene getMainScene() {
 		return mainScene;
 	}

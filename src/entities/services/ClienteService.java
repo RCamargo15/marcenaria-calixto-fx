@@ -17,8 +17,7 @@ public class ClienteService {
 	public void saveOrUpdate(Cliente obj) {
 		if (obj.getCodCliente() == null) {
 			clienteDao.insert(obj);
-		}
-		else {
+		} else {
 			clienteDao.update(obj);
 		}
 	}

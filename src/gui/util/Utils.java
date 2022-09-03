@@ -23,8 +23,7 @@ public class Utils {
 	public static Integer tryParseToInt(String nmr) {
 		try {
 			return Integer.parseInt(nmr);
-		}
-		catch(NumberFormatException e) {
+		} catch(NumberFormatException e) {
 			return null;
 		}
 	}
@@ -32,8 +31,7 @@ public class Utils {
 	public static Double tryParseToDouble(String str) {
 		try {
 			return Double.parseDouble(str);
-		}
-		catch(NumberFormatException e) {
+		} catch(NumberFormatException e) {
 			return null;
 		}
 	}
@@ -42,7 +40,6 @@ public class Utils {
 		tableColumn.setCellFactory(column -> {
 			TableCell<T, Date> cell = new TableCell<T, Date>() {
 				private SimpleDateFormat sdf = new SimpleDateFormat(format);
-
 				@Override
 				protected void updateItem(Date item, boolean empty) {
 					super.updateItem(item, empty);
